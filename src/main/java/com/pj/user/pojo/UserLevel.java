@@ -1,5 +1,9 @@
 package com.pj.user.pojo;
 
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.Getter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -9,49 +13,22 @@ import javax.persistence.Id;
  * 用户信用等级表
  */
 @Entity
+@Data
 public class UserLevel {
 
     @Id //@id注意选择这个javax.persistence
     @GeneratedValue
+    @ApiModelProperty(value = "序列号id", required = false)
     private  Integer  id;
 
+    @ApiModelProperty(value = "用户信用等级", required = false)
     private  String   level;    // 用户信用等级
 
+    @ApiModelProperty(value = "协议类型 1-协议 2-付款买单 3-签约在途 ", required = false)
     private  Integer   Protocol_type; // 协议类型
 
+    @ApiModelProperty(value = "是否有效  默认 0 -  无效 ，  1 - 有效  ", required = false)
     private  Integer   effectiveness;  // 是否有效
 
 
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
-    public Integer getProtocol_type() {
-        return Protocol_type;
-    }
-
-    public void setProtocol_type(Integer protocol_type) {
-        Protocol_type = protocol_type;
-    }
-
-    public Integer getEffectiveness() {
-        return effectiveness;
-    }
-
-    public void setEffectiveness(Integer effectiveness) {
-        this.effectiveness = effectiveness;
-    }
 }
