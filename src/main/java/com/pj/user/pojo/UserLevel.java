@@ -7,17 +7,18 @@ import lombok.Getter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Created by SenevBoy on 2017/11/8.
  * 用户信用等级表
  */
-@Entity
+@Table(name  ="user_level")
 @Data
 public class UserLevel {
 
     @Id //@id注意选择这个javax.persistence
-    @GeneratedValue
+    @GeneratedValue(generator = "JDBC")
     @ApiModelProperty(value = "序列号id", required = false)
     private  Integer  id;
 
