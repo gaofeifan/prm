@@ -6,6 +6,7 @@ import com.pj.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 
 /**
@@ -15,10 +16,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
 
     @Autowired
-    private UsaerLevelMapper usaerLevelMapper;
+    private UsaerLevelMapper userLevelMapper;
 
     @Override
     public List<UserLevel> findUserLevelList() {
-        return usaerLevelMapper.selectAll();
+        return userLevelMapper.selectAll();
     }
 }

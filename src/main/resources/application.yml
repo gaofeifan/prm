@@ -52,7 +52,7 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://10.0.0.18:3306/eams
+    url: jdbc:mysql://10.0.0.18:3306/prm
   
   redis:
     host: 10.0.0.18
