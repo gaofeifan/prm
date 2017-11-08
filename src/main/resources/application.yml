@@ -14,7 +14,7 @@ spring:
     cache: false      
     
   profiles:
-    active: master
+    active: dev
     
 
 logging:
@@ -64,7 +64,7 @@ spring:
   datasource:
     username: eams
     password: pjdb@EAMS
-    url: jdbc:mysql://139.129.236.180:3306/eams
+    url: jdbc:mysql://139.129.236.180:3306/prm
   
   redis:
     host: 139.129.236.180
