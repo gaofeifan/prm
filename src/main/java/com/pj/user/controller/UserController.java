@@ -20,7 +20,7 @@ public class UserController {
    private  UserService userservice;
 
 
-    // 用户信用等级
+    //  用 hu信用等级
     @RequestMapping("/level")
     public List<UserLevel> findUserLevelList(){
      return userservice.findUserLevelList();
