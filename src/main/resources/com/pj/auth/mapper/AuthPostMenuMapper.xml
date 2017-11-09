@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pj.auth.mapper.AuthPostMenuMapper">
+    <resultMap id="BaseResultMap" type="com.pj.auth.pojo.AuthPostMenuVo" >
+        <result  column="id" property="id" jdbcType="INTEGER" />
+        <result  column="name" property="name" jdbcType="VARCHAR" />
+        <result  column="is_menu" property="isMenu" jdbcType="INTEGER" />
+        <result  column="href" property="href" jdbcType="VARCHAR" />
+        <result  column="p_id" property="pId" jdbcType="INTEGER" />
+        <result  column="post_id" property="postId" jdbcType="INTEGER" />
+        <result  column="menu_id" property="menuId" jdbcType="INTEGER" />
+        <result  column="checks" property="checks" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="findMenuByPostId" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+        auth_menu am
+        left JOIN auth_post_menu apm ON apm.menu_id = am.id AND apm.post_id = 11114
+    </select>
+</mapper>

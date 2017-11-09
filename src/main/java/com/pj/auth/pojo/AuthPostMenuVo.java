@@ -11,28 +11,31 @@ import javax.persistence.Table;
 /**
  * Created by Administrator on 2017/11/8.
  */
-public @Data @Table(name = "auth_menu")
-class AuthMenu {
+public
+@Data
+class AuthPostMenuVo {
+
+    @ApiModelProperty(value = "菜单id")
+    private Integer menuId;
+
+    @ApiModelProperty(value = "岗位id")
+    private Integer postId;
 
     @ApiModelProperty(value = "id")
-    @GeneratedValue(generator = "JDBC")
-    @Id
     private Integer id;
 
     @ApiModelProperty(value = "名称")
-    @Column
     private String name;
 
     @ApiModelProperty(value = "是否是菜单")
-    @Column
     private Integer isMenu;
 
     @ApiModelProperty(value = "超链接")
-    @Column
     private String href;
 
     @ApiModelProperty(value = "父id")
-    @Column
     private Integer pId;
 
+    @ApiModelProperty(value = "选中 1 0 未选中")
+    private Integer checks;
 }
