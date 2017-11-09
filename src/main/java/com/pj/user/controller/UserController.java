@@ -1,5 +1,6 @@
 package com.pj.user.controller;
 
+import com.pj.user.pojo.Hierarchy;
 import com.pj.user.pojo.UserLevel;
 import com.pj.user.service.UserService;
 import io.swagger.annotations.Api;
@@ -32,6 +33,15 @@ public class UserController {
     @ApiOperation(value = "用户信用权限列表查询接口" , httpMethod = "GET" , response = Object.class)
     public List<UserLevel> findUserLevelList(){
      return userservice.findUserLevelList();
+    }
+
+
+    //  用 hu信用等级
+    @RequestMapping("/hierarchy")
+    @ResponseBody
+    @ApiOperation(value = "层级位数管理" , httpMethod = "GET" , response = Object.class)
+    public List<Hierarchy> findHierarchyList(){
+        return userservice.findHierarchyList();
     }
 
 }

@@ -8,5 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
  * Created by Administrator on 2017/11/8.
  */
 @Mapper
-public interface AuthPostMenuMapper implements BaseMapper<AuthPostMenu> {
+public interface AuthPostMenuMapper extends BaseMapper<AuthPostMenu> {
 }

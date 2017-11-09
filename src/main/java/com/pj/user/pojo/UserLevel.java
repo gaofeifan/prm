@@ -3,7 +3,7 @@ package com.pj.user.pojo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.Getter;
-import org.apache.xpath.operations.String;
+
 
 import javax.persistence.*;
 
@@ -27,6 +27,11 @@ public class UserLevel {
     @Column(name = "effectiveness")
     @ApiModelProperty(value = "是否有效  默认 0 -  无效 ，  1 - 有效  ", required = false)
     private  Integer   effectiveness;  // 是否有效
+
+
+    @Column(name = "level")
+    @ApiModelProperty(value = "是否有效  默认 0 -  无效 ，  1 - 有效  ", required = false)
+    private String level;  // 是否有效
 
 
 }
