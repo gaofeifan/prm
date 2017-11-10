@@ -6,11 +6,16 @@ import com.pj.conf.base.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 
 /**
  * Created by Administrator on 2017/11/8.
  */
 @Mapper
 public interface AuthPostMenuMapper extends BaseMapper<AuthPostMenu> {
-   AuthPostMenuVo findMenuByPostId(@Param("postId") Integer postId);
+
+   List<AuthPostMenuVo> findMenuByPostId(@Param("postId") Integer postId,@Param("menuIds") Integer[] menuIds);
+
+   List<AuthPostMenuVo> findMenuOrButtonByPostId(@Param("postId")Integer postId, @Param("menuId") Integer menuId, @Param("isMenu") boolean isMenu);
 }
