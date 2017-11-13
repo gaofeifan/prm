@@ -46,7 +46,7 @@ class PartnerAddress implements Serializable {
     private String zipCode;
 
     @Column
-    @ApiModelProperty(value = "联系地址 detailsId")
+    @ApiModelProperty(value = " detailsId")
     private Integer detailsId;
 
     private static final long serialVersionUID = 1L;

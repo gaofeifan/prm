@@ -226,6 +226,8 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     private BigDecimal hwdlTaxRate;
 
     @Column
+
+
     @ApiModelProperty(value = "互为代理  客户分类")
     private String hwdlCustomerClass;
 

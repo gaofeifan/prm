@@ -80,10 +80,15 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     public void updateByPrimaryKey(PartnerDetails record, HttpServletRequest request){
         List<PartnerAddress> address = record.getAddress();
         List<PartnerLinkman> linkmans = record.getLinkmans();
+        /**
+         *  将原数据与新数据添加到作用与中
+         */
         request.getSession().setAttribute("old_partnerLinkman",this.partnerLinkmanService.selectPartnerLinkmansByDetailsId(record.getId()));
         request.getSession().setAttribute("new_partnerLinkman",linkmans);
         request.getSession().setAttribute("old_partnerAddress",this.partnerAddressService.selectPartnerAddressesByDetailsId(record.getId()));
         request.getSession().setAttribute("new_partnerAddress",address);
+        request.getSession().setAttribute("old_partnerDetails",this.partnerDetailsMapper.selectByPrimaryKey(record.getId()));
+        request.getSession().setAttribute("new_partnerDetails",record);
         this.partnerLinkmanService.deletePartnerLinkmanByDetailsId(record.getId());
         this.partnerAddressService.deletePartnerAddressByDetails(record.getId());
         this.partnerAddressService.insertList(address);
@@ -98,6 +103,8 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         List<PartnerAddress> address = partnerDetails.getAddress();
         request.getSession().setAttribute("new_partnerAddress",address);
         request.getSession().setAttribute("new_partnerLinkman",linkmans);
+        request.getSession().setAttribute("old_partnerDetails",this.partnerDetailsMapper.selectByPrimaryKey(partnerDetails.getId()));
+        request.getSession().setAttribute("new_partnerDetails",partnerDetails);
         for(PartnerLinkman pl : linkmans){
             pl.setDetailsId(partnerDetails.getId());
             this.partnerLinkmanService.insert(pl);

@@ -77,4 +77,5 @@ public class PartnerDetailsController extends BaseController {
         return this.success();
     }
 
+
 }
