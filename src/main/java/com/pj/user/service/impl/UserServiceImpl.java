@@ -1,6 +1,5 @@
 package com.pj.user.service.impl;
 
-import com.pj.user.Utils.RequestDate;
 import com.pj.user.mapper.HierarchyMapper;
 import com.pj.user.mapper.UsaerLevelMapper;
 import com.pj.user.pojo.Hierarchy;
@@ -44,9 +43,16 @@ public class UserServiceImpl implements UserService{
     @Override
     public void updateLevelById(UserLevel usel, HttpServletRequest request) {
 
-       request.getSession().setAttribute("oldData",userLevelMapper.selectByPrimaryKey(usel.getId()));
+       request.getSession().setAttribute("oldUserLevelData",userLevelMapper.selectByPrimaryKey(usel.getId()));
         userLevelMapper.updateByPrimaryKey(usel);
-        request.getSession().setAttribute("newData", userLevelMapper.selectByPrimaryKey(usel.getId()));
+        request.getSession().setAttribute("newUserLevelData", userLevelMapper.selectByPrimaryKey(usel.getId()));
 
+    }
+
+    @Override
+    public void updateHierarchyList(Hierarchy hierarchy, HttpServletRequest request) {
+        request.getSession().setAttribute("oldHierarchyData",hierarchyMapper.selectByPrimaryKey(hierarchy.getId()));
+        hierarchyMapper.updateByPrimaryKey(hierarchy);
+        request.getSession().setAttribute("newHierarchyData", hierarchyMapper.selectByPrimaryKey(hierarchy.getId()));
     }
 }

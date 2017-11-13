@@ -21,4 +21,7 @@ public interface UserService {
     UserLevel findOneOldDataById(UserLevel usel);
     // 更新用户等级
     void updateLevelById(UserLevel usel, HttpServletRequest request);
+
+    // 更新层级位数
+    void updateHierarchyList(Hierarchy hierarchy, HttpServletRequest request);
 }
