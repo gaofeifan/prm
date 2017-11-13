@@ -3,6 +3,8 @@ package com.pj.partner.controller;
 import com.pj.conf.base.BaseController;
 import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.service.PartnerDetailsService;
+import com.pj.user.mapper.HierarchyMapper;
+import com.pj.user.pojo.Hierarchy;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class PartnerDetailsController extends BaseController {
 
     @Autowired
     private PartnerDetailsService partnerDetailsService;
+    @Autowired
+    private HierarchyMapper hierarchyMapper;
+
     /**
      *  查询树桩数据
      * @user  GFF
@@ -75,6 +80,17 @@ public class PartnerDetailsController extends BaseController {
     public Object updatePartnerDetails(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails){
         this.partnerDetailsService.insertSelective(partnerDetails,getRequest());
         return this.success();
+    }
+
+    /**
+     * 获取代码长度
+     * @User  GFF
+     * @return
+     */
+    public Object getCodeLength(){
+        Hierarchy hierarchy = this.hierarchyMapper.selectAll().get(0);
+        int codeLength = hierarchy.getLayerFour() + hierarchy.getLayerOne() + hierarchy.getLayerTwo() + hierarchy.getLayerThree();
+        return this.success(codeLength);
     }
 
 
