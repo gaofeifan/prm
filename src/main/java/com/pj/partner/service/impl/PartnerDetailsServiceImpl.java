@@ -3,7 +3,10 @@ package com.pj.partner.service.impl;
 import com.pj.conf.base.AbstractBaseServiceImpl;
 import com.pj.conf.base.BaseMapper;
 import com.pj.partner.mapper.PartnerDetailsMapper;
+import com.pj.partner.pojo.PartnerAddress;
 import com.pj.partner.pojo.PartnerDetails;
+import com.pj.partner.pojo.PartnerLinkman;
+import com.pj.partner.service.PartnerAddressService;
 import com.pj.partner.service.PartnerDetailsService;
 import com.pj.partner.service.PartnerLinkmanService;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +25,10 @@ import java.util.List;
 public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDetails,Integer> implements PartnerDetailsService {
     @Autowired
     private PartnerDetailsMapper partnerDetailsMapper;
-
+    @Autowired
+    private PartnerAddressService partnerAddressService;
+    @Autowired
+    private PartnerLinkmanService partnerLinkmanService;
     @Override
     public BaseMapper<PartnerDetails> getMapper() {
         return partnerDetailsMapper;
@@ -52,5 +58,47 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         criteria.andCondition("is_dir",0);
         List<PartnerDetails> pds = this.partnerDetailsMapper.selectByExample(example);
         return pds;
+    }
+
+    @Override
+    public PartnerDetails selectByPrimaryKey(Integer key) {
+        PartnerDetails pd = super.selectByPrimaryKey(key);
+        PartnerAddress address = new PartnerAddress();
+        address.setDetailsId(key);
+        List<PartnerAddress> addresss = this.partnerAddressService.select(address);
+        pd.setAddress(addresss);
+        PartnerLinkman linkman = new PartnerLinkman();
+        linkman.setDetailsId(key);
+        List<PartnerLinkman> linkmens = this.partnerLinkmanService.select(linkman);
+        pd.setLinkmans(linkmens);
+        return pd;
+    }
+
+
+    @Override
+    public int updateByPrimaryKey(PartnerDetails record) {
+        List<PartnerAddress> address = record.getAddress();
+        List<PartnerLinkman> linkmans = record.getLinkmans();
+        this.partnerLinkmanService.deletePartnerLinkmanByDetailsId(record.getId());
+        this.partnerAddressService.deletePartnerAddressByDetails(record.getId());
+        this.partnerAddressService.insertList(address);
+        this.partnerLinkmanService.insertList(linkmans);
+        return super.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public int insertSelective(PartnerDetails partnerDetails) {
+        super.insertSelective(partnerDetails);
+        List<PartnerLinkman> linkmans = partnerDetails.getLinkmans();
+        List<PartnerAddress> address = partnerDetails.getAddress();
+        for(PartnerLinkman pl : linkmans){
+            pl.setDetailsId(partnerDetails.getId());
+            this.partnerLinkmanService.insert(pl);
+        }
+        for (PartnerAddress pa: address ) {
+            pa.setDetailsId(partnerDetails.getId());
+            this.partnerAddressService.insert(pa);
+        }
+        return 0;
     }
 }

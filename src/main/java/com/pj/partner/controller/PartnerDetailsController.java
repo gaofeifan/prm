@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -43,4 +44,36 @@ public class PartnerDetailsController extends BaseController {
         List<PartnerDetails> list = this.partnerDetailsService.selectPartnerDetailsList();
         return this.success(list);
     }
+
+    /**
+     *  根据id查询合作伙伴详情
+     *  @User  GFF
+     * @return
+     */
+    public Object selectPartnerDetailsById(@ApiParam("id") @RequestParam(name = "id") Integer id ){
+        PartnerDetails pd = this.partnerDetailsService.selectByPrimaryKey(id);
+    }
+
+    /**
+     * 更新合作伙伴详情
+     * @User  GFF
+     * @param partnerDetails
+     * @return
+     */
+    public Object updatePartnerDetailsById(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails){
+        this.partnerDetailsService.updateByPrimaryKey(partnerDetails);
+        return this.success();
+    }
+
+    /**
+     * 新增合作伙伴详情
+     * @User  GFF
+     * @param partnerDetails
+     * @return
+     */
+    public Object updatePartnerDetails(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails){
+        this.partnerDetailsService.insertSelective(partnerDetails);
+        return this.success();
+    }
+
 }

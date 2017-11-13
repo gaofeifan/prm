@@ -22,4 +22,11 @@ public class PartnerLinkmanServiceImpl extends AbstractBaseServiceImpl<PartnerLi
     public BaseMapper<PartnerLinkman> getMapper() {
         return partnerLinkmanMapper;
     }
+
+    @Override
+    public void deletePartnerLinkmanByDetailsId(Integer detailsId) {
+        PartnerLinkman partnerLinkman = new PartnerLinkman();
+        partnerLinkman.setDetailsId(detailsId);
+        this.partnerLinkmanMapper.delete(partnerLinkman);
+    }
 }

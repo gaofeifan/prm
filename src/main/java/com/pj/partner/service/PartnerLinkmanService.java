@@ -8,4 +8,6 @@ import com.pj.partner.pojo.PartnerLinkman;
  * Created by Administrator on 2017/11/8.
  */
 public interface PartnerLinkmanService extends BaseService<PartnerLinkman,Integer> {
+
+    void deletePartnerLinkmanByDetailsId(Integer detailsId);
 }
