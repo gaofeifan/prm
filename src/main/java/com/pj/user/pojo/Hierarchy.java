@@ -22,13 +22,22 @@ public class Hierarchy {
 
 
 
-    @Column(name = "layer")
-    @ApiModelProperty(value = "层级    ", required = false)
-    private  String   layer;
+    @Column(name = "layer_one")
+    @ApiModelProperty(value = "第一层级    ", required = false)
+    private  Integer   layerOne;
 
-    @Column(name = "num")
-    @ApiModelProperty(value = "位数    ", required = false)
-    private  Integer   num;
+    @Column(name = "layer_two")
+    @ApiModelProperty(value = "第二层级    ", required = false)
+    private  Integer layerTwo  ;
+
+    @Column(name = "layer_three")
+    @ApiModelProperty(value = "第三层级    ", required = false)
+    private  Integer  layerThree ;
+
+    @Column(name = "layer_four")
+    @ApiModelProperty(value = "第四层级     ", required = false)
+    private  Integer   layerFour;
+
 
 
 }

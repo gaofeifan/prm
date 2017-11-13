@@ -39,7 +39,7 @@ import static javax.swing.UIManager.get;
 @Component
 public class AspectServer {
 
-  /*  private static String clazzName = AspectServer.class.getName();
+   private static String clazzName = AspectServer.class.getName();
 
     @Autowired(required=false)
     private LogService logService;
@@ -54,42 +54,80 @@ public class AspectServer {
         aspectServer.logService = this.logService;
 
     }
-*/
+
 
     //  private static final Logger log = LoggerFactory.getLogger(AspectServer.class);
-    // 只关注方法名为find前缀的
-  @Pointcut("execution(* com.pj.user.service.*.*(..))")
-  public void executeService()
-  {
 
-  }
 
-    @Before("executeService()")
-    public void beforeAdvide(JoinPoint point){
-        Object[] args = point.getArgs();
-        if (args != null && args.length > 0 && args[0].getClass() == String.class) {
-            for (Object ar : args){
-                System.out.println(ar);
-            }
-        }
 
-    }
 
     // 关注 信用等级的更新操作 记录日志
    @Pointcut("execution(* com.pj.user.service.*.updateLevelById(..))")
     public void updateLevelById(){}
 
 
+   // 关注 层级位数修改操作 记录日志
+   @Pointcut("execution(* com.pj.user.service.*.updateHierarchyList(..))")
+    public void updateHierarchyList(){}
 
-    @After("updateLevelById()")
-    public void updateLevelByIdAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
-        // 数组设定
+
+    @After("updateHierarchyList()")
+    public void updateHierarchyListAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         String actionData = "";
         ServletRequestAttributes attributes = RequestDate.requestInit();
         HttpServletRequest request = attributes.getRequest();
         Enumeration<String> enu=request.getParameterNames();
-        Object oldData = request.getSession().getAttribute("oldData");
-        Object newData = request.getSession().getAttribute("newData");
+        Object oldData = request.getSession().getAttribute("oldHierarchyData");
+        Object newData = request.getSession().getAttribute("newHierarchyData");
+        Field[] oldfields = oldData.getClass().getDeclaredFields();
+        Field[] newfields = newData.getClass().getDeclaredFields();
+        actionData+="层级位数管理：";
+        boolean  flage = false;
+        for (int i = 0 ; i <oldfields.length;i++ ){
+            PropertyDescriptor pd = new PropertyDescriptor(oldfields[i].getName(), oldData.getClass());
+            Method getMethod = pd.getReadMethod();//获得get方法  
+            Object o = getMethod.invoke(oldData);//执行get方法返回一个Object
+            PropertyDescriptor pd2 = new PropertyDescriptor(newfields[i].getName(), oldData.getClass());
+            Method getMethod2 = pd2.getReadMethod();//获得get方法  
+            Object o2 = getMethod.invoke(newData);//执行get方法返回一个Object
+
+            if(!o.toString().equals(o2.toString())){
+                // 判断字段名称
+                for (int j = 0 ; j< BasicProperties.Basic_Operation_paramName.length ;j++){
+                    System.out.println(oldfields[i].getName().toString());
+                    if(oldfields[i].getName().toString().equals(BasicProperties.Basic_Operation_paramName[j].toString())){
+                        actionData+=" "+BasicProperties.Basic_Operation_paramVal[j];
+                        break;
+                    }
+                }
+                actionData+="< "+ o+" >（ "+02+" ） ; ";
+                flage = true;
+            }
+        }
+        if(flage){
+            // 获取  登录人信息
+                User user_object = (User) request.getSession().getAttribute("user_object");
+            Operation operation =  new Operation();
+            operation.setAction(actionData);
+                operation.setUserId(user_object.getEmail());
+                operation.setUserName(user_object.getUsername());
+                operation.setDepartment(user_object.getDempname());
+                operation.setCompany(user_object.getCompanyname());
+                operation.setJobs(user_object.getDempname());
+            // 追加日志记录
+
+            aspectServer.logService.addOperationlLog(operation);
+        }
+    }
+        @After("updateLevelById()")
+    public void updateLevelByIdAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        // 数组设定
+        String actionData = "";
+        ServletRequestAttributes attributes = RequestDate.requestInit();
+            HttpServletRequest request = attributes.getRequest();
+            Enumeration<String> enu=request.getParameterNames();
+        Object oldData = request.getSession().getAttribute("oldUserLevelData");
+        Object newData = request.getSession().getAttribute("newUserLevelData");
         Field[] oldfields = oldData.getClass().getDeclaredFields();
         Field[] newfields = newData.getClass().getDeclaredFields();
         actionData+="信用等级管理：";
@@ -102,7 +140,7 @@ public class AspectServer {
             Method getMethod2 = pd2.getReadMethod();//获得get方法  
             Object o2 = getMethod.invoke(newData);//执行get方法返回一个Object
          //   actionData = startAdd(o, o2, oldfields, actionData, BasicProperties.Basic_UserLevel_paramName, BasicProperties.Basic_UserLevel_paramVal, i, flage);
-      /*      if(!o.toString().equals(o2.toString())){
+          if(!o.toString().equals(o2.toString())){
                 // 判断字段名称
                 for (int j = 0 ; j< BasicProperties.Basic_UserLevel_paramName.length ;j++){
                     if(oldfields[i].getName().toString().equals(BasicProperties.Basic_UserLevel_paramName[j].toString())){
@@ -111,47 +149,24 @@ public class AspectServer {
                 }
                 actionData+="< "+ o+" >（ "+02+" ） ; ";
                 flage = true;
-            }*/
-            if(flage){
-                // 获取  登录人信息
-               /* User user_object = (User) request.getSession().getAttribute("user_object")*/;
-                Operation operation =  new Operation();
+            }
+        }
+        if(flage){
+            // 获取  登录人信息
+               User user_object = (User) request.getSession().getAttribute("user_object");
+                 Operation operation =  new Operation();
                 operation.setAction(actionData);
-     /*           operation.setUserId(user_object.getEmail());
+                operation.setUserId(user_object.getEmail());
                 operation.setUserName(user_object.getUsername());
                 operation.setDepartment(user_object.getDempname());
                 operation.setCompany(user_object.getCompanyname());
-                operation.setJobs(user_object.getDempname());*/
-                // 追加日志记录
-                System.out.println(111111);
-             //  aspectServer.logService.addOperationlLog(operation);
-            }
+                operation.setJobs(user_object.getDempname());
+            // 追加日志记录
+             aspectServer.logService.addOperationlLog(operation);
         }
     }
 
 
-/*
-
-  @After("executeService()")
-    public void after(JoinPoint point)
-    {
-        String realClassName = getRealClassName(point);
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-
-        HttpServletRequest request = attributes.getRequest();
-        Enumeration<String> enu=request.getParameterNames();
-
-        while(enu.hasMoreElements()){
-
-            String paraName=(String)enu.nextElement();
-
-            System.out.println(paraName+": "+request.getParameter(paraName));
-
-        }
-
-       // log.debug("调用-----"+ realClassName + " 执行 " + getMethodName(point) + " 方法之后");
-    }
-*/
 
 
 
@@ -177,7 +192,4 @@ public class AspectServer {
 
         return actionData+"--"+flage;
     }
-
-
-
 }
