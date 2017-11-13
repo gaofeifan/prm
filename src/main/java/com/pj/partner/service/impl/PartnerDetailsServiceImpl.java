@@ -91,7 +91,14 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         request.getSession().setAttribute("new_partnerDetails",record);
         this.partnerLinkmanService.deletePartnerLinkmanByDetailsId(record.getId());
         this.partnerAddressService.deletePartnerAddressByDetails(record.getId());
+        for(PartnerLinkman pl : linkmans){
+            pl.setDetailsId(record.getId());
+        }
+        for (PartnerAddress pa: address ) {
+            pa.setDetailsId(record.getId());
+        }
         this.partnerAddressService.insertList(address);
+
         this.partnerLinkmanService.insertList(linkmans);
        super.updateByPrimaryKey(record);
     }
@@ -103,15 +110,14 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         List<PartnerAddress> address = partnerDetails.getAddress();
         request.getSession().setAttribute("new_partnerAddress",address);
         request.getSession().setAttribute("new_partnerLinkman",linkmans);
-        request.getSession().setAttribute("old_partnerDetails",this.partnerDetailsMapper.selectByPrimaryKey(partnerDetails.getId()));
         request.getSession().setAttribute("new_partnerDetails",partnerDetails);
         for(PartnerLinkman pl : linkmans){
             pl.setDetailsId(partnerDetails.getId());
-            this.partnerLinkmanService.insert(pl);
         }
+        this.partnerLinkmanService.insertList(linkmans);
         for (PartnerAddress pa: address ) {
             pa.setDetailsId(partnerDetails.getId());
-            this.partnerAddressService.insert(pa);
         }
+        this.partnerAddressService.insertList(address);
     }
 }
