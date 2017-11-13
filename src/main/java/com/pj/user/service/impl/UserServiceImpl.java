@@ -1,10 +1,12 @@
 package com.pj.user.service.impl;
 
+import com.pj.user.Utils.RequestDate;
 import com.pj.user.mapper.HierarchyMapper;
 import com.pj.user.mapper.UsaerLevelMapper;
 import com.pj.user.pojo.Hierarchy;
 import com.pj.user.pojo.UserLevel;
 import com.pj.user.service.UserService;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +33,20 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<Hierarchy> findHierarchyList() {
         return hierarchyMapper.selectAll();
+    }
+
+
+    @Override
+    public UserLevel findOneOldDataById(UserLevel usel) {
+        return userLevelMapper.selectByPrimaryKey(usel.getId());
+    }
+
+    @Override
+    public void updateLevelById(UserLevel usel, HttpServletRequest request) {
+
+       request.getSession().setAttribute("oldData",userLevelMapper.selectByPrimaryKey(usel.getId()));
+        userLevelMapper.updateByPrimaryKey(usel);
+        request.getSession().setAttribute("newData", userLevelMapper.selectByPrimaryKey(usel.getId()));
+
     }
 }

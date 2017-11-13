@@ -23,6 +23,11 @@ public class Permissions  implements Serializable{
     private  Integer  id;
 
 
+    @Column(name = "type")
+    @ApiModelProperty(value = "操作    ", required = false)
+    private  String  type;
+
+
 
     @Column(name = "create_date")
     @ApiModelProperty(value = "创建时间    ", required = false)
@@ -36,6 +41,7 @@ public class Permissions  implements Serializable{
     @Column(name = "involves_permissions")
     @ApiModelProperty(value = "涉及权限    ", required = false)
     private  String   involvesPermissions;
+
 
 
 

@@ -1,15 +1,18 @@
 package com.pj.user.pojo;
 
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.util.List;
+
 
 /**
  * Created by SenevBoy on 2017/11/9.
  */
 @Data
-public class RequestParam {
+public class RequestParam implements Serializable{
 
     @ApiModelProperty(value = "当前页", required = false)
     private Integer pageNo;
@@ -23,5 +26,6 @@ public class RequestParam {
     @ApiModelProperty(value = "结束时间", required = false)
     private String   endDate;
 
-
+    @ApiModelProperty(value = "信用等级集合", required = false)
+    private List<UserLevel> userLevelList;
 }

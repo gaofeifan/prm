@@ -140,6 +140,14 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 
+		<!-- aop 依赖 -->
+		<dependency>
+
+			<groupId>org.springframework.boot</groupId>
+
+			<artifactId>spring-boot-starter-aop</artifactId>
+
+		</dependency>
 		<!-- HikariCP-java6 -->
 		<dependency>
 			<groupId>com.zaxxer</groupId>

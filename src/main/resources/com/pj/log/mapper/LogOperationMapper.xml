@@ -29,6 +29,9 @@
             <if test="startDate != '' and startDate != null and endDate !=null and endDate !=''" >
                 and  create_date BETWEEN  #{startDate,jdbcType=VARCHAR} and #{endDate,jdbcType=VARCHAR}
             </if>
-
+             <if test="showDay==true" >
+                 and   date(create_date) = curdate()
+              </if>
+        order by create_date desc
     </select>
 </mapper>
