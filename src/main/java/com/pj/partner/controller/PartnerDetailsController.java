@@ -28,18 +28,19 @@ public class PartnerDetailsController extends BaseController {
      * @return
      */
     public Object selectListByQuery(@ApiParam("name") @RequestParam(name = "name",required = false) String name ,
-                                    @ApiParam("offPartner") @RequestParam(name = "offPartner",required = false) Integer offPartner ,
-                                    @ApiParam("blacklistPartner") @RequestParam(name = "blacklistPartner",required = false) Integer blacklistPartner){
-//        this.partnerDetailsService.selectListByQuery();
-
-        return null;
+                                     @ApiParam("offPartner") @RequestParam(name = "offPartner",required = false) Integer offPartner ,
+                                     @ApiParam("blacklistPartner") @RequestParam(name = "blacklistPartner",required = false) Integer blacklistPartner){
+        List<PartnerDetails> list = this.partnerDetailsService.selectListByQuery(name,offPartner,blacklistPartner);
+        return this.success(list);
 
     }
 
+    /**
+     *  查询合作伙伴管理集合
+     * @return
+     */
     public Object selectPartnerDetailsList(){
-//        this.partnerDetailsService.selectListByQuery();
         List<PartnerDetails> list = this.partnerDetailsService.selectPartnerDetailsList();
-        return null;
-
+        return this.success(list);
     }
 }

@@ -558,7 +558,7 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
      */
     @Column
     @ApiModelProperty(value = "结算对象 公司地址")
-    private String jsdxCompan
+    private String jsdxCompan;
 
     /**
      *  是否是目录

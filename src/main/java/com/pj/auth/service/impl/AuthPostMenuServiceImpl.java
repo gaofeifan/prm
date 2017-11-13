@@ -47,4 +47,9 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
             this.authPostMenuMapper.insert(new AuthPostMenu(id,postId));
         }
     }
+    @Override
+    public boolean findOperatingAuthorizationByPostIdAndByButton(Integer postId , Integer button) {
+//     this.
+        return true;
+    }
 }

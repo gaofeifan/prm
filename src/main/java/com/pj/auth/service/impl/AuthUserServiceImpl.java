@@ -1,7 +1,7 @@
 package com.pj.auth.service.impl;
 
 import com.pj.auth.pojo.User;
-import com.pj.auth.service.UserService;
+import com.pj.auth.service.AuthUserService;
 import com.pj.conf.properties.OaProperties;
 import com.pj.conf.utils.HttpClienUtils;
 import com.pj.conf.utils.TypeConversionUtils;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class AuthUserServiceImpl implements AuthUserService {
 
     @Autowired
     private OaProperties oaProperties;

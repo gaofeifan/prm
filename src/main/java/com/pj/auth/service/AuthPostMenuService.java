@@ -24,4 +24,6 @@ public interface AuthPostMenuService extends BaseService<AuthPostMenu,Integer> {
     List<AuthPostMenuVo> findButtonByPostIdAndMenuIds(Integer postId, Integer[] menuIds);
 
     void editPostAuthority(Integer postId, Integer[] menuIds);
+
+    boolean findOperatingAuthorizationByPostIdAndByButton(Integer postId , Integer button);
 }

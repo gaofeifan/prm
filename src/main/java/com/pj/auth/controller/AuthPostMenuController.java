@@ -1,23 +1,19 @@
 package com.pj.auth.controller;
 
-import com.pj.auth.pojo.AuthPostMenu;
 import com.pj.auth.pojo.AuthPostMenuVo;
 import com.pj.auth.pojo.User;
 import com.pj.auth.service.AuthPostMenuService;
-import com.pj.auth.service.UserService;
+import com.pj.auth.service.AuthUserService;
 import com.pj.conf.base.BaseController;
-import com.sun.prism.paint.Stop;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -33,7 +29,7 @@ public class AuthPostMenuController extends BaseController{
     @Autowired
     private AuthPostMenuService authPostMenuService;
     @Autowired
-    private UserService userService;
+    private AuthUserService userService;
     @ApiOperation(value = "根据岗位id查询菜单" ,httpMethod = "GET", response = Object.class)
     @RequestMapping(value = "/findMenuByPostId")
     @ResponseBody
