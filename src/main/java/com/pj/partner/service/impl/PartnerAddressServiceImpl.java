@@ -25,4 +25,11 @@ public class PartnerAddressServiceImpl extends AbstractBaseServiceImpl<PartnerAd
     public BaseMapper<PartnerAddress> getMapper() {
         return partnerAddressMapper;
     }
+
+    @Override
+    public void deletePartnerAddressByDetails(Integer detailsId) {
+        PartnerAddress record = new PartnerAddress();
+        record.setDetailsId(detailsId);
+        this.partnerAddressMapper.delete(record);
+    }
 }

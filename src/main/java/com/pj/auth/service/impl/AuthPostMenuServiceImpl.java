@@ -49,7 +49,11 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
     }
     @Override
     public boolean findOperatingAuthorizationByPostIdAndByButton(Integer postId , Integer button) {
-//     this.
-        return true;
+        List<AuthPostMenu> list = this.authPostMenuMapper.select(new AuthPostMenu(button, postId));
+        if(list.size() > 0){
+            return true;
+        }
+        return false;
+
     }
 }
