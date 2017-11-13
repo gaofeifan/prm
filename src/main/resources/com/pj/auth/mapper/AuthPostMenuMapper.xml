@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pj.auth.mapper.AuthPostMenuMapper">
+    <resultMap id="BaseResultMap" type="com.pj.auth.pojo.AuthPostMenuVo" >
+        <result  column="id" property="id" jdbcType="INTEGER" />
+        <result  column="name" property="name" jdbcType="VARCHAR" />
+        <result  column="is_menu" property="isMenu" jdbcType="INTEGER" />
+        <result  column="href" property="href" jdbcType="VARCHAR" />
+        <result  column="p_id" property="pId" jdbcType="INTEGER" />
+        <result  column="post_id" property="postId" jdbcType="INTEGER" />
+        <result  column="menu_id" property="menuId" jdbcType="INTEGER" />
+        <result  column="checks" property="checks" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="findMenuByPostId" resultMap="BaseResultMap">
+        SELECT
+            *,IF(apm.menu_id is not NULL, '1' , '0') checks
+        FROM
+        auth_menu am
+        left JOIN auth_post_menu apm ON apm.menu_id = am.id AND apm.post_id = #{postId}
+        <if test="menuIds != null">
+            WHERE
+            am.p_id
+            <foreach  collection="menuIds" item="id" open="in (" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+    <select id="findMenuOrButtonByPostId" resultMap="BaseResultMap">
+        SELECT * FROM auth_menu am inner JOIN auth_post_menu apm ON apm.menu_id = am.id AND apm.post_id = #{postId}  AND am.is_menu =#{isMenu}
+        <if test="menuId != null">
+             AND am.p_id = #{menuId}
+        </if>
+       <!-- <choose>
+            <when test="isMenu == ture">
+                AND am.is_menu =1
+            </when>
+            <otherwise>
+                AND am.is_menu =0
+            </otherwise>
+        </choose>-->
+    </select>
+</mapper>

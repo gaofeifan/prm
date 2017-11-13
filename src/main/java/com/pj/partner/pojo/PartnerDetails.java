@@ -3,12 +3,10 @@ package com.pj.partner.pojo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 
 public @Data @Table(name="partner_details") class PartnerDetails implements Serializable {
@@ -532,6 +530,8 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     @ApiModelProperty(value = "收发货人 收货人邮编")
     private String sfhrConsigneeZipCode;
 
+
+
     /**
      * 结算对象 开户银行
      */
@@ -558,7 +558,14 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
      */
     @Column
     @ApiModelProperty(value = "结算对象 公司地址")
-    private String jsdxCompanyAddress;
+    private String jsdxCompan
+
+    /**
+     *  是否是目录
+     */
+    @Column
+    @ApiModelProperty(value = "是否是目录")
+    private Integer isDir;
 
     /**
      * 是否删除  0否 1 是
@@ -566,6 +573,12 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     @Column
     @ApiModelProperty(value = "是否删除  0否 1 是")
     private Integer isDelete;
+
+    @Transient
+    private List<PartnerAddress> address;
+
+    @Transient
+    private List<PartnerLinkman> linkmans;
 
     private static final long serialVersionUID = 1L;
 
