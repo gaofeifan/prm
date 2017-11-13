@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -76,21 +77,27 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
 
 
     @Override
-    public int updateByPrimaryKey(PartnerDetails record) {
+    public void updateByPrimaryKey(PartnerDetails record, HttpServletRequest request){
         List<PartnerAddress> address = record.getAddress();
         List<PartnerLinkman> linkmans = record.getLinkmans();
+        request.getSession().setAttribute("old_partnerLinkman",this.partnerLinkmanService.selectPartnerLinkmansByDetailsId(record.getId()));
+        request.getSession().setAttribute("new_partnerLinkman",linkmans);
+        request.getSession().setAttribute("old_partnerAddress",this.partnerAddressService.selectPartnerAddressesByDetailsId(record.getId()));
+        request.getSession().setAttribute("new_partnerAddress",address);
         this.partnerLinkmanService.deletePartnerLinkmanByDetailsId(record.getId());
         this.partnerAddressService.deletePartnerAddressByDetails(record.getId());
         this.partnerAddressService.insertList(address);
         this.partnerLinkmanService.insertList(linkmans);
-        return super.updateByPrimaryKey(record);
+       super.updateByPrimaryKey(record);
     }
 
     @Override
-    public int insertSelective(PartnerDetails partnerDetails) {
+    public void insertSelective(PartnerDetails partnerDetails, HttpServletRequest request) {
         super.insertSelective(partnerDetails);
         List<PartnerLinkman> linkmans = partnerDetails.getLinkmans();
         List<PartnerAddress> address = partnerDetails.getAddress();
+        request.getSession().setAttribute("new_partnerAddress",address);
+        request.getSession().setAttribute("new_partnerLinkman",linkmans);
         for(PartnerLinkman pl : linkmans){
             pl.setDetailsId(partnerDetails.getId());
             this.partnerLinkmanService.insert(pl);
@@ -99,6 +106,5 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             pa.setDetailsId(partnerDetails.getId());
             this.partnerAddressService.insert(pa);
         }
-        return 0;
     }
 }

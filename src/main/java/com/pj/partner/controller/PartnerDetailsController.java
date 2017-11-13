@@ -62,7 +62,7 @@ public class PartnerDetailsController extends BaseController {
      * @return
      */
     public Object updatePartnerDetailsById(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails){
-        this.partnerDetailsService.updateByPrimaryKey(partnerDetails);
+        this.partnerDetailsService.updateByPrimaryKey(partnerDetails , getRequest());
         return this.success();
     }
 
@@ -73,7 +73,7 @@ public class PartnerDetailsController extends BaseController {
      * @return
      */
     public Object updatePartnerDetails(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails){
-        this.partnerDetailsService.insertSelective(partnerDetails);
+        this.partnerDetailsService.insertSelective(partnerDetails,getRequest());
         return this.success();
     }
 

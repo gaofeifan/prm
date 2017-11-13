@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/11/8.
  */
@@ -31,5 +33,12 @@ public class PartnerAddressServiceImpl extends AbstractBaseServiceImpl<PartnerAd
         PartnerAddress record = new PartnerAddress();
         record.setDetailsId(detailsId);
         this.partnerAddressMapper.delete(record);
+    }
+
+    @Override
+    public List<PartnerAddress> selectPartnerAddressesByDetailsId(Integer detailsId) {
+        PartnerAddress record = new PartnerAddress();
+        record.setDetailsId(detailsId);
+        return this.partnerAddressMapper.select(record);
     }
 }

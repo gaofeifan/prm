@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/11/8.
  */
@@ -28,5 +30,12 @@ public class PartnerLinkmanServiceImpl extends AbstractBaseServiceImpl<PartnerLi
         PartnerLinkman partnerLinkman = new PartnerLinkman();
         partnerLinkman.setDetailsId(detailsId);
         this.partnerLinkmanMapper.delete(partnerLinkman);
+    }
+
+    @Override
+    public List<PartnerLinkman> selectPartnerLinkmansByDetailsId(Integer detailsId) {
+        PartnerLinkman record = new PartnerLinkman();
+        record.setDetailsId(detailsId);
+        return this.partnerLinkmanMapper.select(record);
     }
 }
