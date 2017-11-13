@@ -52,6 +52,7 @@ public class PartnerDetailsController extends BaseController {
      */
     public Object selectPartnerDetailsById(@ApiParam("id") @RequestParam(name = "id") Integer id ){
         PartnerDetails pd = this.partnerDetailsService.selectByPrimaryKey(id);
+        return this.success(pd);
     }
 
     /**
