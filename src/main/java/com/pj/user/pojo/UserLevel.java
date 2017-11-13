@@ -6,6 +6,7 @@ import lombok.Getter;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by SenevBoy on 2017/11/8.
@@ -13,7 +14,7 @@ import javax.persistence.*;
  */
 @Table(name  ="user_level")
 @Data
-public class UserLevel {
+public class UserLevel implements Serializable{
 
     @Id //@id注意选择这个javax.persistence
     @GeneratedValue(generator = "JDBC")
@@ -30,8 +31,8 @@ public class UserLevel {
 
 
     @Column(name = "level")
-    @ApiModelProperty(value = "是否有效  默认 0 -  无效 ，  1 - 有效  ", required = false)
-    private String level;  // 是否有效
+    @ApiModelProperty(value = " 信用等级    ", required = false)
+    private String level;
 
 
 }

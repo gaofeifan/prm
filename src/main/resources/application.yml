@@ -31,7 +31,7 @@ logging:
 #    testOnReturn: false
 
 mybatis:
-  mapper-locations: classpath:com/pj/*/*/mapper/*.xml
+  mapper-locations: classpath:com/pj/*/*.xml
   type-aliases-package: com.pj.*.pojo
 
 

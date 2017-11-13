@@ -2,6 +2,7 @@ package com.pj.user.service;
 
 import com.pj.user.pojo.Hierarchy;
 import com.pj.user.pojo.UserLevel;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 
 import java.util.List;
 
@@ -15,4 +16,9 @@ public interface UserService {
 
     // 获取普通用户模块层级列表
     List<Hierarchy> findHierarchyList();
+
+    // 获取旧数据用以支持日志统计
+    UserLevel findOneOldDataById(UserLevel usel);
+    // 更新用户等级
+    void updateLevelById(UserLevel usel, HttpServletRequest request);
 }
