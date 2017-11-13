@@ -30,4 +30,9 @@ public class LogServiceImpl implements LogService {
     public List<Permissions> findPermissionsBydate(String startDate, String endDate, Boolean showWeekData) {
         return logPermissionsMapper.findPermissionsBydate(startDate,endDate,showWeekData);
     }
+
+    @Override
+    public void addOperationlLog(Operation operation) {
+     //   logOperationMapper.insert(operation);
+    }
 }

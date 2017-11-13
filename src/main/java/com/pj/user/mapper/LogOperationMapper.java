@@ -1,5 +1,6 @@
 package com.pj.user.mapper;
 
+import com.pj.conf.base.BaseMapper;
 import com.pj.user.pojo.Operation;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

@@ -15,4 +15,6 @@ public interface LogService {
     // 分页 获取 权限操作日志
     List<Permissions> findPermissionsBydate(String startDate, String endDate, Boolean showWeekData);
 
+// 添加普通用户操作日志
+    void addOperationlLog(Operation operation);
 }

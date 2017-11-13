@@ -1,14 +1,24 @@
 package com.pj.Aspect;
 
 
+import com.pj.auth.pojo.User;
 import com.pj.user.Utils.RequestDate;
+import com.pj.user.pojo.Operation;
+import com.pj.user.pojo.UserLevel;
+import com.pj.user.service.LogService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
@@ -17,16 +27,36 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Enumeration;
 
+import static com.sun.xml.internal.ws.api.model.wsdl.WSDLBoundOperation.ANONYMOUS.required;
 import static javax.swing.UIManager.get;
 
 /**
  * Created by SenevBoy on 2017/11/9.
  */
+
 @Aspect
 @Configuration
+@Component
 public class AspectServer {
 
-  //  private static final Logger log = LoggerFactory.getLogger(AspectServer.class);
+  /*  private static String clazzName = AspectServer.class.getName();
+
+    @Autowired(required=false)
+    private LogService logService;
+    private static AspectServer aspectServer;
+
+    public void setUserInfo(LogService logService) {
+        this.logService = logService;
+    }
+    @PostConstruct
+    public void init() {
+        aspectServer = this;
+        aspectServer.logService = this.logService;
+
+    }
+*/
+
+    //  private static final Logger log = LoggerFactory.getLogger(AspectServer.class);
     // 只关注方法名为find前缀的
   @Pointcut("execution(* com.pj.user.service.*.*(..))")
   public void executeService()
@@ -72,7 +102,7 @@ public class AspectServer {
             Method getMethod2 = pd2.getReadMethod();//获得get方法  
             Object o2 = getMethod.invoke(newData);//执行get方法返回一个Object
          //   actionData = startAdd(o, o2, oldfields, actionData, BasicProperties.Basic_UserLevel_paramName, BasicProperties.Basic_UserLevel_paramVal, i, flage);
-            if(!o.toString().equals(o2.toString())){
+      /*      if(!o.toString().equals(o2.toString())){
                 // 判断字段名称
                 for (int j = 0 ; j< BasicProperties.Basic_UserLevel_paramName.length ;j++){
                     if(oldfields[i].getName().toString().equals(BasicProperties.Basic_UserLevel_paramName[j].toString())){
@@ -81,13 +111,20 @@ public class AspectServer {
                 }
                 actionData+="< "+ o+" >（ "+02+" ） ; ";
                 flage = true;
-            }
+            }*/
             if(flage){
                 // 获取  登录人信息
-                User user_object = request.getSession().getAttribute("user_object");
-                
+               /* User user_object = (User) request.getSession().getAttribute("user_object")*/;
+                Operation operation =  new Operation();
+                operation.setAction(actionData);
+     /*           operation.setUserId(user_object.getEmail());
+                operation.setUserName(user_object.getUsername());
+                operation.setDepartment(user_object.getDempname());
+                operation.setCompany(user_object.getCompanyname());
+                operation.setJobs(user_object.getDempname());*/
                 // 追加日志记录
-
+                System.out.println(111111);
+             //  aspectServer.logService.addOperationlLog(operation);
             }
         }
     }
