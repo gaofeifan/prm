@@ -11,8 +11,10 @@ import java.util.List;
  * Created by SenevBoy on 2017/11/8.
  */
 @Mapper
-public interface LogOperationMapper {
+public interface LogOperationMapper extends  BaseMapper<Operation> {
 
     // 分頁 查詢
     List<Operation> findOperationBydate(@Param("startDate") String startDate, @Param("endDate") String endDate,  @Param("showDay") Boolean showDay);
+
+
 }

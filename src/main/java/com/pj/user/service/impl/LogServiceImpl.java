@@ -33,6 +33,6 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public void addOperationlLog(Operation operation) {
-     //   logOperationMapper.insert(operation);
+      logOperationMapper.insert(operation);
     }
 }
