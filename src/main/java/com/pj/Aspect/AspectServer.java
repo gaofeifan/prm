@@ -90,7 +90,7 @@ public class AspectServer {
 
 
   // 新增  合伙人信息
-    @After("PartnerDetailsServiceImplInsertSelective()")
+  @AfterReturning("PartnerDetailsServiceImplInsertSelective()")
     public void PartnerDetailsServiceImplInsertSelectiveAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         String actionData = "";
 
@@ -129,7 +129,7 @@ public class AspectServer {
 
 
     // 更新 合伙人信息
-    @After("PartnerDetailsServiceImplUpdateByPrimaryKey()")
+    @AfterReturning("PartnerDetailsServiceImplUpdateByPrimaryKey()")
     public void PartnerDetailsServiceImplUpdateByPrimaryKeyAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         // 数组设定
         String actionData = "";
@@ -166,7 +166,7 @@ public class AspectServer {
     }
 
     // 新增  新增联系地址  日志统计
-    @After("PartnerAddressServiceImplInsert()")
+    @AfterReturning("PartnerAddressServiceImplInsert()")
     public void PartnerAddressServiceImplInsertAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         String actionData = "";
         ServletRequestAttributes attributes = RequestDate.requestInit();
@@ -199,7 +199,7 @@ public class AspectServer {
 
 
     // 删除  刪除联系地址  日志统计
-    @After("deletePartnerAddressByDetails()")
+    @AfterReturning("deletePartnerAddressByDetails()")
     public void deletePartnerAddressByDetailsAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         String actionData = "";
         ServletRequestAttributes attributes = RequestDate.requestInit();
@@ -232,7 +232,7 @@ public class AspectServer {
     }
 
     // 新增  新增联系人  日志统计
-    @After("PartnerLinkmanServiceImplInsertList()")
+    @AfterReturning("PartnerLinkmanServiceImplInsertList()")
     public void PartnerLinkmanServiceImplInsertListAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         String actionData = "";
         ServletRequestAttributes attributes = RequestDate.requestInit();
@@ -265,7 +265,7 @@ public class AspectServer {
 
 
     // 删除  刪除联系人  日志统计
-    @After("deletePartnerLinkmanByDetailsId()")
+    @AfterReturning("deletePartnerLinkmanByDetailsId()")
     public void deletePartnerLinkmanByDetailsIdAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
             String actionData = "";
             ServletRequestAttributes attributes = RequestDate.requestInit();
@@ -298,7 +298,7 @@ public class AspectServer {
     }
 
 
-  /*  @After("updateHierarchyListexecution()")
+    @AfterReturning("updateHierarchyListexecution()")
     public void updateHierarchyListexecutionAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         String actionData = "";
 
@@ -337,9 +337,9 @@ public class AspectServer {
         // 操作日志追加
         addLogMethod(flage,request , actionData);
     }
-*/
 
-        @After("updateLevelById()")
+
+    @AfterReturning("updateLevelById()")
     public void updateLevelByIdAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         // 数组设定
         String actionData = "";

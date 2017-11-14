@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author GFF
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.Bean;
  */
 @SpringBootApplication
 @ServletComponentScan
+@EnableScheduling
 public class Application
 {
 	
