@@ -51,6 +51,13 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     private String chineseAbbreviation;
 
     /**
+     * 识别码
+     */
+    @Column
+    @ApiModelProperty(value = "识别码")
+    private String headingCode;
+
+    /**
      * 英文名称
      */
     @Column
