@@ -6,12 +6,14 @@ import com.pj.partner.service.PartnerDetailsService;
 import com.pj.user.mapper.HierarchyMapper;
 import com.pj.user.pojo.Hierarchy;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -33,6 +35,9 @@ public class PartnerDetailsController extends BaseController {
      * @param blacklistPartner
      * @return
      */
+    @ApiOperation(value = "查询树桩数据" ,httpMethod = "GET", response = Object.class)
+    @RequestMapping(value = "/selectListByQuery")
+    @ResponseBody
     public Object selectListByQuery(@ApiParam("name") @RequestParam(name = "name",required = false) String name ,
                                      @ApiParam("offPartner") @RequestParam(name = "offPartner",required = false) Integer offPartner ,
                                      @ApiParam("blacklistPartner") @RequestParam(name = "blacklistPartner",required = false) Integer blacklistPartner){
@@ -45,6 +50,9 @@ public class PartnerDetailsController extends BaseController {
      *  查询合作伙伴管理集合
      * @return
      */
+    @ApiOperation(value = "查询合作伙伴管理集合" ,httpMethod = "GET", response = Object.class)
+    @RequestMapping(value = "/selectPartnerDetailsList")
+    @ResponseBody
     public Object selectPartnerDetailsList(){
         List<PartnerDetails> list = this.partnerDetailsService.selectPartnerDetailsList();
         return this.success(list);
@@ -55,6 +63,9 @@ public class PartnerDetailsController extends BaseController {
      *  @User  GFF
      * @return
      */
+    @ApiOperation(value = "根据id查询合作伙伴详情" ,httpMethod = "GET", response = Object.class)
+    @RequestMapping(value = "/selectPartnerDetailsById")
+    @ResponseBody
     public Object selectPartnerDetailsById(@ApiParam("id") @RequestParam(name = "id") Integer id ){
         PartnerDetails pd = this.partnerDetailsService.selectByPrimaryKey(id);
         return this.success(pd);
@@ -66,6 +77,9 @@ public class PartnerDetailsController extends BaseController {
      * @param partnerDetails
      * @return
      */
+    @ApiOperation(value = "更新合作伙伴详情" ,httpMethod = "POST", response = Object.class)
+    @RequestMapping(value = "/updatePartnerDetailsById")
+    @ResponseBody
     public Object updatePartnerDetailsById(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails){
         this.partnerDetailsService.updateByPrimaryKey(partnerDetails , getRequest());
         return this.success();
@@ -77,6 +91,9 @@ public class PartnerDetailsController extends BaseController {
      * @param partnerDetails
      * @return
      */
+    @ApiOperation(value = "新增合作伙伴详情" ,httpMethod = "POST", response = Object.class)
+    @RequestMapping(value = "/updatePartnerDetails")
+    @ResponseBody
     public Object updatePartnerDetails(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails){
         this.partnerDetailsService.insertSelective(partnerDetails,getRequest());
         return this.success();
@@ -87,6 +104,9 @@ public class PartnerDetailsController extends BaseController {
      * @User  GFF
      * @return
      */
+    @ApiOperation(value = "获取代码长度" ,httpMethod = "GET", response = Object.class)
+    @RequestMapping(value = "/getCodeLength")
+    @ResponseBody
     public Object getCodeLength(){
         Hierarchy hierarchy = this.hierarchyMapper.selectAll().get(0);
         int codeLength = hierarchy.getLayerFour() + hierarchy.getLayerOne() + hierarchy.getLayerTwo() + hierarchy.getLayerThree();
