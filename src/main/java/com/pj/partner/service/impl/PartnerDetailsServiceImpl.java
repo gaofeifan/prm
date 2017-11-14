@@ -56,7 +56,6 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             criteria.andLike("name",name);
         }
         criteria.andCondition("is_delete",0);
-        criteria.andCondition("is_dir",0);
         List<PartnerDetails> pds = this.partnerDetailsMapper.selectByExample(example);
         return pds;
     }
@@ -91,15 +90,18 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         request.getSession().setAttribute("new_partnerDetails",record);
         this.partnerLinkmanService.deletePartnerLinkmanByDetailsId(record.getId());
         this.partnerAddressService.deletePartnerAddressByDetails(record.getId());
-        for(PartnerLinkman pl : linkmans){
-            pl.setDetailsId(record.getId());
+        if(linkmans != null){
+            for(PartnerLinkman pl : linkmans){
+                pl.setDetailsId(record.getId());
+            }
+            this.partnerLinkmanService.insertList(linkmans);
         }
-        for (PartnerAddress pa: address ) {
-            pa.setDetailsId(record.getId());
+        if(address != null){
+            for (PartnerAddress pa: address ) {
+                pa.setDetailsId(record.getId());
+            }
+            this.partnerAddressService.insertList(address);
         }
-        this.partnerAddressService.insertList(address);
-
-        this.partnerLinkmanService.insertList(linkmans);
        super.updateByPrimaryKey(record);
     }
 
@@ -111,13 +113,17 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         request.getSession().setAttribute("new_partnerAddress",address);
         request.getSession().setAttribute("new_partnerLinkman",linkmans);
         request.getSession().setAttribute("new_partnerDetails",partnerDetails);
-        for(PartnerLinkman pl : linkmans){
-            pl.setDetailsId(partnerDetails.getId());
+        if(linkmans != null){
+            for(PartnerLinkman pl : linkmans){
+                pl.setDetailsId(partnerDetails.getId());
+            }
+            this.partnerLinkmanService.insertList(linkmans);
         }
-        this.partnerLinkmanService.insertList(linkmans);
-        for (PartnerAddress pa: address ) {
-            pa.setDetailsId(partnerDetails.getId());
+        if(address != null){
+            for (PartnerAddress pa: address ) {
+                pa.setDetailsId(partnerDetails.getId());
+            }
+            this.partnerAddressService.insertList(address);
         }
-        this.partnerAddressService.insertList(address);
     }
 }

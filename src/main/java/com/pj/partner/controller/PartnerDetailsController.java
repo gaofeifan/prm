@@ -43,7 +43,6 @@ public class PartnerDetailsController extends BaseController {
                                      @ApiParam("blacklistPartner") @RequestParam(name = "blacklistPartner",required = false) Integer blacklistPartner){
         List<PartnerDetails> list = this.partnerDetailsService.selectListByQuery(name,offPartner,blacklistPartner);
         return this.success(list);
-
     }
 
     /**
@@ -92,9 +91,9 @@ public class PartnerDetailsController extends BaseController {
      * @return
      */
     @ApiOperation(value = "新增合作伙伴详情" ,httpMethod = "POST", response = Object.class)
-    @RequestMapping(value = "/updatePartnerDetails")
+    @RequestMapping(value = "/insertPartnerDetails")
     @ResponseBody
-    public Object updatePartnerDetails(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails){
+    public Object insertPartnerDetails(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails){
         this.partnerDetailsService.insertSelective(partnerDetails,getRequest());
         return this.success();
     }
