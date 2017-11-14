@@ -1,6 +1,5 @@
 package com.pj.user.pojo;
 
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
