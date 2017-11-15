@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 
@@ -576,6 +577,12 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     @ApiModelProperty(value = "是否是目录")
     private Integer isDir;
 
+    /**
+     *创建时间
+     */
+    @Column
+    @ApiModelProperty(value = "创建时间")
+    private Date createDate;
     /**
      * 是否删除  0否 1 是
      */

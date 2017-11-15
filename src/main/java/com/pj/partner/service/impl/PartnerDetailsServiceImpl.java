@@ -21,6 +21,7 @@ import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -112,6 +113,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
 
     @Override
     public void insertSelective(PartnerDetails partnerDetails, HttpServletRequest request) {
+        partnerDetails.setCreateDate(new Date());
         super.insertSelective(partnerDetails);
         List<PartnerLinkman> linkmans = partnerDetails.getLinkmans();
         List<PartnerAddress> address = partnerDetails.getAddress();
