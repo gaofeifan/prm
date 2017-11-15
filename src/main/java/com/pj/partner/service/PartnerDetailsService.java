@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface PartnerDetailsService extends BaseService<PartnerDetails,Integer> {
 
+    public static final char UNDERLINE='_';
+
     List<PartnerDetails> selectPartnerDetailsList();
 
     List<PartnerDetails> selectListByQuery(String name, Integer offPartner, Integer blacklistPartner);
@@ -19,4 +21,11 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
 
     void insertSelective(PartnerDetails partnerDetails , HttpServletRequest request);
 
+    /**
+     *  校验字段值
+     * @param fieldName
+     * @param fieldValue
+     * @return
+     */
+    boolean verifyValueRepeat(String fieldName, String fieldValue);
 }

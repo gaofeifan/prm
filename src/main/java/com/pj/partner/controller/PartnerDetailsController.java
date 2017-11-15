@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -70,6 +71,8 @@ public class PartnerDetailsController extends BaseController {
         return this.success(pd);
     }
 
+
+
     /**
      * 更新合作伙伴详情
      * @User  GFF
@@ -110,6 +113,21 @@ public class PartnerDetailsController extends BaseController {
         Hierarchy hierarchy = this.hierarchyMapper.selectAll().get(0);
         int codeLength = hierarchy.getLayerFour() + hierarchy.getLayerOne() + hierarchy.getLayerTwo() + hierarchy.getLayerThree();
         return this.success(codeLength);
+    }
+
+    /**
+     *  校验字段是否重复
+     * @param fieldName
+     * @param fieldValue
+     * @return
+     */
+    @ApiOperation(value = "校验字段是否重复" ,httpMethod = "GET", response = Object.class)
+    @RequestMapping(value = "/verifyValueRepeat")
+    @ResponseBody
+    public Object verifyValueRepeat(@ApiParam("字段名称") @RequestParam(name = "fieldName") String fieldName ,
+                                     @ApiParam("字段值") @RequestParam(name = "fieldValue") String fieldValue ){
+        boolean flag = this.partnerDetailsService.verifyValueRepeat(fieldName,fieldValue);
+        return this.success(flag);
     }
 
 
