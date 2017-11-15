@@ -47,4 +47,30 @@ public class AuthUserServiceImpl implements AuthUserService {
         user.setEmail(email);
         return user;
     }
+
+    @Override
+    public User selectUserByEmail(Integer id) {
+        User user = new User();
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        JSONObject object = HttpClienUtils.doGet(oaProperties.getFindUserById(), map);
+        Object obj = TypeConversionUtils.jsonToString(object, null);
+        map = JSON.parseObject(obj.toString());
+        String postname = VerifyUtils.objectToString(map.get("postname"));
+        String companyname = VerifyUtils.objectToString(map.get("companyname"));
+        String companyEmail = VerifyUtils.objectToString(map.get("companyEmail"));
+        String dempname = VerifyUtils.objectToString(map.get("dempname"));
+        String username = VerifyUtils.objectToString(map.get("username"));
+        String postId = VerifyUtils.objectToString(map.get("postid"));
+        if (StringUtils.isNoneBlank(postId)) {
+            Integer postid = Integer.decode(VerifyUtils.objectToString(map.get("postid")));
+            user.setPostid(postid);
+        }
+        user.setCompanyname(companyname);
+        user.setDempname(dempname);
+        user.setPostname(postname);
+        user.setUsername(username);
+        user.setEmail(companyEmail);
+        return user;
+    }
 }

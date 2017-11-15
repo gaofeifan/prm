@@ -33,6 +33,8 @@ public class OaProperties {
 
 	private String findUserByemail = "/oa/user/findUserByemail.do";
 
+	private String findUserById = "/oa/user/find.do";
+
 	private String selectUserByUsername = ""
 			+ "/oa/user/selectUserByUsername.do";
 
@@ -46,6 +48,9 @@ public class OaProperties {
 
 	public String getSelectUserByUsername() {
 		return url + selectUserByUsername;
+	}
+	public String getFindUserById() {
+		return url + findUserById;
 	}
 
 	public String getSelectUserByPostId() {
