@@ -7,13 +7,14 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * Created by SenevBoy on 2017/11/9.
  */
 @Data
 @Table(name  = "log_operation")
-public class Operation {
+public class Operation  implements Serializable {
     @Id
     @GeneratedValue(generator = "JDBC")
     @ApiModelProperty(value = "序列号id", required = false)

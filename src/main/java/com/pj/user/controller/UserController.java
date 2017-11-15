@@ -1,10 +1,13 @@
 package com.pj.user.controller;
 
 import com.google.gson.JsonObject;
+import com.pj.Aspect.AspectServer;
 import com.pj.conf.base.BaseController;
 import com.pj.user.pojo.Hierarchy;
 import com.pj.user.pojo.RequestParam;
 import com.pj.user.pojo.UserLevel;
+import com.pj.user.service.EmailService;
+import com.pj.user.service.LogService;
 import com.pj.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +16,7 @@ import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +32,14 @@ public class UserController extends BaseController{
 
     @Autowired
 private  UserService userservice;
+
+    @Autowired
+    private EmailService emailService;
+
+
+
+
+
 
 
     //  用 hu信用等级
