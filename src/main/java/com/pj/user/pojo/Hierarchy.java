@@ -7,13 +7,14 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * Created by SenevBoy on 2017/11/9.
  */
 @Table(name  ="hierarchy")
 @Data
-public class Hierarchy {
+public class Hierarchy implements Serializable{
 
     @Id
     @GeneratedValue(generator = "JDBC")

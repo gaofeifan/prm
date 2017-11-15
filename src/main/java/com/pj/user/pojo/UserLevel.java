@@ -22,8 +22,8 @@ public class UserLevel implements Serializable{
     private  Integer  id;
 
     @Column(name = "protocol_type")
-    @ApiModelProperty(value = "协议类型 1-协议 2-付款买单 3-签约在途 ", required = false)
-    private  Integer   protocolType; // 协议类型
+    @ApiModelProperty(value = "协议类型 ", required = false)
+    private  String   protocolType; // 协议类型  1-协议/保函 2-付款买单 3-签约在途
 
     @Column(name = "effectiveness")
     @ApiModelProperty(value = "是否有效  默认 0 -  无效 ，  1 - 有效  ", required = false)

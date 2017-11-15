@@ -52,7 +52,7 @@ public class AspectServer {
 
     // 关注 信用等级的更新操作 记录日志
    @Pointcut("execution(* com.pj.user.service.*.updateLevelById(..))")
-    public void updateLevelById(){}
+    public void updateLevelByIdexecution(){}
 
 
 
@@ -94,36 +94,37 @@ public class AspectServer {
     public void PartnerDetailsServiceImplInsertSelectiveAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         String actionData = "";
 
-
         HttpServletRequest request  = requestinit();
 
         Object newData =   getDateMethod(request, "new_partnerDetails");
 
         Field[] declaredFields=  getfieldsMethod(newData);
 
-
         boolean flage = false;
         // 循环 已删除的旧数据
         actionData+="合作伙伴管理：";
 
-            for (int i = 0 ; i <declaredFields.length;i++ ){
-                PropertyDescriptor pd = new PropertyDescriptor(declaredFields[i].getName(), newData.getClass());
-                Method getMethod = pd.getReadMethod();//获得get方法  
-                Object o = getMethod.invoke(newData);//执行get方法返回一个Object
-                // 判断字段名称
-                for (int j = 0 ; j< BasicProperties.Basic_PartnerDeta_paramName.length ;j++){
+            for (int i = 0 ; i <declaredFields.length;i++ ) {
 
-                    if(declaredFields[i].getName().toString().equals(BasicProperties.Basic_PartnerDeta_paramName[j].toString())){
-                        actionData+=" "+BasicProperties.Basic_PartnerDeta_paramVal[j];
-                        break;
+                if(checkSeralize(declaredFields[i].getName())){
+                    PropertyDescriptor pd = new PropertyDescriptor(declaredFields[i].getName(), newData.getClass());
+                    Method getMethod = pd.getReadMethod();//获得get方法  
+                    Object o = getMethod.invoke(newData);//执行get方法返回一个Object
+                    // 判断字段名称
+                    for (int j = 0; j < BasicProperties.Basic_PartnerDeta_paramName.length; j++) {
+                        if (declaredFields[i].getName().toString().equals(BasicProperties.Basic_PartnerDeta_paramName[j].toString())) {
+                            actionData += " " + BasicProperties.Basic_PartnerDeta_paramVal[j];
+                            break;
+                        }
+
                     }
+                    actionData += "< 新增数据 >（ " + o + " ） ; ";
+                    flage = true;
                 }
-                actionData+="< 新增数据 >（ "+o+" ） ; ";
-                flage = true;
             }
         // 操作日志追加
         addLogMethod(flage,request , actionData);
-
+      removeAttribute("new_partnerDetails",request);
       }
 
 
@@ -143,26 +144,30 @@ public class AspectServer {
 
         actionData+="合作伙伴管理：";
         boolean  flage = false;
-        for (int i = 0 ; i <oldfields.length;i++ ){
-            PropertyDescriptor pd = new PropertyDescriptor(oldfields[i].getName(), oldData.getClass());
-            Method getMethod = pd.getReadMethod();//获得get方法  
-            Object o = getMethod.invoke(oldData);//执行get方法返回一个Object
-            PropertyDescriptor pd2 = new PropertyDescriptor(newfields[i].getName(), oldData.getClass());
-            Method getMethod2 = pd2.getReadMethod();//获得get方法  
-            Object o2 = getMethod.invoke(newData);//执行get方法返回一个Object
-            if(!o.toString().equals(o2.toString())){
-                // 判断字段名称
-                for (int j = 0 ; j< BasicProperties.Basic_PartnerDeta_paramName.length ;j++){
-                    if(oldfields[i].getName().toString().equals(BasicProperties.Basic_PartnerDeta_paramName[j].toString())){
-                        actionData+=" "+BasicProperties.Basic_PartnerDeta_paramVal[j];
+        for (int i = 0 ; i <oldfields.length;i++ ) {
+            if(checkSeralize(oldfields[i].getName())){
+                PropertyDescriptor pd = new PropertyDescriptor(oldfields[i].getName(), oldData.getClass());
+                Method getMethod = pd.getReadMethod();//获得get方法  
+                Object o = getMethod.invoke(oldData);//执行get方法返回一个Object
+                PropertyDescriptor pd2 = new PropertyDescriptor(newfields[i].getName(), oldData.getClass());
+                Method getMethod2 = pd2.getReadMethod();//获得get方法  
+                Object o2 = getMethod.invoke(newData);//执行get方法返回一个Object
+                if (!(o==null?"":o).toString().equals((o2==null?"":o2).toString())) {
+                    // 判断字段名称
+                    for (int j = 0; j < BasicProperties.Basic_PartnerDeta_paramName.length; j++) {
+                        if (oldfields[i].getName().toString().equals(BasicProperties.Basic_PartnerDeta_paramName[j].toString())) {
+                            actionData += " " + BasicProperties.Basic_PartnerDeta_paramVal[j];
+                        }
                     }
+                    actionData += "< " + o + " >（ " + 02 + " ） ; ";
+                    flage = true;
                 }
-                actionData+="< "+ o+" >（ "+02+" ） ; ";
-                flage = true;
             }
         }
         // 操作日志追加
         addLogMethod(flage,request , actionData);
+        removeAttribute("old_partnerDetails",request);
+        removeAttribute("new_partnerDetails",request);
     }
 
     // 新增  新增联系地址  日志统计
@@ -171,30 +176,32 @@ public class AspectServer {
         String actionData = "";
         ServletRequestAttributes attributes = RequestDate.requestInit();
         HttpServletRequest request = attributes.getRequest();
-
         List<Object> newData = (List<Object>) request.getSession().getAttribute("new_partnerAddress");
         boolean flage = false;
 
         actionData+="合作伙伴管理-联系人：";
         for(Object  old  : newData){
-            for (int i = 0 ; i <old.getClass().getDeclaredFields().length;i++ ){
-                PropertyDescriptor pd = new PropertyDescriptor(old.getClass().getDeclaredFields()[i].getName(), old.getClass());
-                Method getMethod = pd.getReadMethod();//获得get方法  
-                Object o = getMethod.invoke(old);//执行get方法返回一个Object
-                // 判断字段名称
-                for (int j = 0 ; j< BasicProperties.Basic_address_paramName.length ;j++){
-
-                    if(old.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_address_paramName[j].toString())){
-                        actionData+=" "+BasicProperties.Basic_address_paramVal[j];
-                        break;
+            for (int i = 0 ; i <old.getClass().getDeclaredFields().length;i++ ) {
+                if (checkSeralize(old.getClass().getDeclaredFields()[i].getName())) {
+                    PropertyDescriptor pd = new PropertyDescriptor(old.getClass().getDeclaredFields()[i].getName(), old.getClass());
+                    Method getMethod = pd.getReadMethod();//获得get方法  
+                    Object o = getMethod.invoke(old);//执行get方法返回一个Object
+                    // 判断字段名称
+                    for (int j = 0; j < BasicProperties.Basic_address_paramName.length; j++) {
+                        if (old.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_address_paramName[j].toString())) {
+                            actionData += " " + BasicProperties.Basic_address_paramVal[j];
+                            break;
+                        }
                     }
+                    actionData += "< 新增数据 >（ " + o + " ） ; ";
+                    flage = true;
                 }
-                actionData+="< 新增数据 >（ "+o+" ） ; ";
-                flage = true;
             }
         }
         // 操作日志追加
         addLogMethod(flage,request , actionData);
+        removeAttribute("new_partnerAddress",request);
+
     }
 
 
@@ -211,24 +218,27 @@ public class AspectServer {
         // 循环 已删除的旧数据
         actionData+="合作伙伴管理-联系人：";
         for(Object  old  : oldData){
-            for (int i = 0 ; i <old.getClass().getDeclaredFields().length;i++ ){
-                PropertyDescriptor pd = new PropertyDescriptor(old.getClass().getDeclaredFields()[i].getName(), old.getClass());
-                Method getMethod = pd.getReadMethod();//获得get方法  
-                Object o = getMethod.invoke(old);//执行get方法返回一个Object
-                // 判断字段名称
-                for (int j = 0 ; j< BasicProperties.Basic_address_paramName.length ;j++){
+            for (int i = 0 ; i <old.getClass().getDeclaredFields().length;i++ ) {
+                if (checkSeralize(old.getClass().getDeclaredFields()[i].getName())) {
+                    PropertyDescriptor pd = new PropertyDescriptor(old.getClass().getDeclaredFields()[i].getName(), old.getClass());
+                    Method getMethod = pd.getReadMethod();//获得get方法  
+                    Object o = getMethod.invoke(old);//执行get方法返回一个Object
+                    // 判断字段名称
+                    for (int j = 0; j < BasicProperties.Basic_address_paramName.length; j++) {
 
-                    if(old.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_address_paramName[j].toString())){
-                        actionData+=" "+BasicProperties.Basic_address_paramVal[j];
-                        break;
+                        if (old.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_address_paramName[j].toString())) {
+                            actionData += " " + BasicProperties.Basic_address_paramVal[j];
+                            break;
+                        }
                     }
+                    actionData += "< " + o + " >（ 信息已删除 ） ; ";
+                    flage = true;
                 }
-                actionData+="< "+ o+" >（ 信息已删除 ） ; ";
-                flage = true;
             }
         }
         // 操作日志追加
         addLogMethod(flage,request , actionData);
+        removeAttribute("old_partnerAddress",request);
     }
 
     // 新增  新增联系人  日志统计
@@ -242,25 +252,28 @@ public class AspectServer {
         boolean flage = false;
         // 循环 已删除的旧数据
         actionData+="合作伙伴管理-联系地址：";
-        for(Object  old  : newData){
-            for (int i = 0 ; i <old.getClass().getDeclaredFields().length;i++ ){
-                PropertyDescriptor pd = new PropertyDescriptor(old.getClass().getDeclaredFields()[i].getName(), old.getClass());
-                Method getMethod = pd.getReadMethod();//获得get方法  
-                Object o = getMethod.invoke(old);//执行get方法返回一个Object
-                // 判断字段名称
-                for (int j = 0 ; j< BasicProperties.Basic_linkmanCN_paramName.length ;j++){
+        for(Object  newdata  : newData){
+            for (int i = 0 ; i <newdata.getClass().getDeclaredFields().length;i++ ) {
+                if (checkSeralize(newdata.getClass().getDeclaredFields()[i].getName())) {
+                    PropertyDescriptor pd = new PropertyDescriptor(newdata.getClass().getDeclaredFields()[i].getName(), newdata.getClass());
+                    Method getMethod = pd.getReadMethod();//获得get方法  
+                    Object o = getMethod.invoke(newdata);//执行get方法返回一个Object
+                    // 判断字段名称
+                    for (int j = 0; j < BasicProperties.Basic_linkmanCN_paramName.length; j++) {
 
-                    if(old.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_linkmanCN_paramName[j].toString())){
-                        actionData+=" "+BasicProperties.Basic_linkmanCN_paramVal[j];
-                        break;
+                        if (newdata.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_linkmanCN_paramName[j].toString())) {
+                            actionData += " " + BasicProperties.Basic_linkmanCN_paramVal[j];
+                            break;
+                        }
                     }
+                    actionData += "< 新增数据 >（ " + o + " ） ; ";
+                    flage = true;
                 }
-                actionData+="< 新增数据 >（ "+o+" ） ; ";
-                flage = true;
             }
         }
         // 操作日志追加
         addLogMethod(flage,request , actionData);
+        removeAttribute("new_partnerLinkman",request);
     }
 
 
@@ -277,24 +290,27 @@ public class AspectServer {
             // 循环 已删除的旧数据
             actionData+="合作伙伴管理-联系地址：";
             for(Object  old  : oldData){
-                for (int i = 0 ; i <old.getClass().getDeclaredFields().length;i++ ){
+                for (int i = 0 ; i <old.getClass().getDeclaredFields().length;i++ ) {
+                    if (checkSeralize(old.getClass().getDeclaredFields()[i].getName())) {
                         PropertyDescriptor pd = new PropertyDescriptor(old.getClass().getDeclaredFields()[i].getName(), old.getClass());
                         Method getMethod = pd.getReadMethod();//获得get方法  
                         Object o = getMethod.invoke(old);//执行get方法返回一个Object
                         // 判断字段名称
-                        for (int j = 0 ; j< BasicProperties.Basic_linkmanCN_paramName.length ;j++){
+                        for (int j = 0; j < BasicProperties.Basic_linkmanCN_paramName.length; j++) {
 
-                            if(old.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_linkmanCN_paramName[j].toString())){
-                                actionData+=" "+BasicProperties.Basic_linkmanCN_paramVal[j];
+                            if (old.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_linkmanCN_paramName[j].toString())) {
+                                actionData += " " + BasicProperties.Basic_linkmanCN_paramVal[j];
                                 break;
                             }
                         }
-                        actionData+="< "+ o+" >（ 信息已删除 ） ; ";
+                        actionData += "< " + o + " >（ 信息已删除 ） ; ";
                         flage = true;
+                    }
                 }
             }
         // 操作日志追加
         addLogMethod(flage,request , actionData);
+        removeAttribute("old_partnerLinkman",request);
     }
 
 
@@ -314,32 +330,36 @@ public class AspectServer {
         actionData+="层级位数管理：";
         boolean  flage = false;
         for (int i = 0 ; i <oldfields.length;i++ ){
-            PropertyDescriptor pd = new PropertyDescriptor(oldfields[i].getName(), oldData.getClass());
-            Method getMethod = pd.getReadMethod();//获得get方法  
-            Object o = getMethod.invoke(oldData);//执行get方法返回一个Object
-            PropertyDescriptor pd2 = new PropertyDescriptor(newfields[i].getName(), oldData.getClass());
-            Method getMethod2 = pd2.getReadMethod();//获得get方法  
-            Object o2 = getMethod.invoke(newData);//执行get方法返回一个Object
+            if (checkSeralize(oldfields[i].getName())) {
+                PropertyDescriptor pd = new PropertyDescriptor(oldfields[i].getName(), oldData.getClass());
+                Method getMethod = pd.getReadMethod();//获得get方法  
+                Object o = getMethod.invoke(oldData);//执行get方法返回一个Object
+                PropertyDescriptor pd2 = new PropertyDescriptor(newfields[i].getName(), oldData.getClass());
+                Method getMethod2 = pd2.getReadMethod();//获得get方法  
+                Object o2 = getMethod.invoke(newData);//执行get方法返回一个Object
 
-            if(!o.toString().equals(o2.toString())){
-                // 判断字段名称
-                for (int j = 0 ; j< BasicProperties.Basic_Operation_paramName.length ;j++){
+                if (!(o == null ? "" : o).toString().equals(o2 == null ? "" : o2.toString())) {
+                    // 判断字段名称
+                    for (int j = 0; j < BasicProperties.Basic_Operation_paramName.length; j++) {
 
-                    if(oldfields[i].getName().toString().equals(BasicProperties.Basic_Operation_paramName[j].toString())){
-                        actionData+=" "+BasicProperties.Basic_Operation_paramVal[j];
-                        break;
+                        if (oldfields[i].getName().toString().equals(BasicProperties.Basic_Operation_paramName[j].toString())) {
+                            actionData += " " + BasicProperties.Basic_Operation_paramVal[j];
+                            break;
+                        }
                     }
+                    actionData += "< " + o + " >（ " + 02 + " ） ; ";
+                    flage = true;
                 }
-                actionData+="< "+ o+" >（ "+02+" ） ; ";
-                flage = true;
             }
         }
         // 操作日志追加
         addLogMethod(flage,request , actionData);
+        removeAttribute("oldHierarchyData",request);
+        removeAttribute("newHierarchyData",request);
     }
 
 
-    @AfterReturning("updateLevelById()")
+    @AfterReturning("updateLevelByIdexecution()")
     public void updateLevelByIdAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         // 数组设定
         String actionData = "";
@@ -353,25 +373,29 @@ public class AspectServer {
         actionData+="信用等级管理：";
         boolean  flage = false;
         for (int i = 0 ; i <oldfields.length;i++ ){
-            PropertyDescriptor pd = new PropertyDescriptor(oldfields[i].getName(), oldData.getClass());
-            Method getMethod = pd.getReadMethod();//获得get方法  
-            Object o = getMethod.invoke(oldData);//执行get方法返回一个Object
-            PropertyDescriptor pd2 = new PropertyDescriptor(newfields[i].getName(), oldData.getClass());
-            Method getMethod2 = pd2.getReadMethod();//获得get方法  
-            Object o2 = getMethod.invoke(newData);//执行get方法返回一个Object
-          if(!o.toString().equals(o2.toString())){
-                // 判断字段名称
-                for (int j = 0 ; j< BasicProperties.Basic_UserLevel_paramName.length ;j++){
-                    if(oldfields[i].getName().toString().equals(BasicProperties.Basic_UserLevel_paramName[j].toString())){
-                        actionData+=" "+BasicProperties.Basic_UserLevel_paramVal[j];
+            if (checkSeralize(oldfields[i].getName())) {
+                PropertyDescriptor pd = new PropertyDescriptor(oldfields[i].getName(), oldData.getClass());
+                Method getMethod = pd.getReadMethod();//获得get方法  
+                Object o = getMethod.invoke(oldData);//执行get方法返回一个Object
+                PropertyDescriptor pd2 = new PropertyDescriptor(newfields[i].getName(), oldData.getClass());
+                Method getMethod2 = pd2.getReadMethod();//获得get方法  
+                Object o2 = getMethod.invoke(newData);//执行get方法返回一个Object
+                if (!((o==null?"":o).toString()).equals(o2==null?"":o2.toString())) {
+                    // 判断字段名称
+                    for (int j = 0; j < BasicProperties.Basic_UserLevel_paramName.length; j++) {
+                        if (oldfields[i].getName().toString().equals(BasicProperties.Basic_UserLevel_paramName[j].toString())) {
+                            actionData += " " + BasicProperties.Basic_UserLevel_paramVal[j];
+                        }
                     }
+                    actionData += "< " + o + " >（ " + o2 + " ） ; ";
+                    flage = true;
                 }
-                actionData+="< "+ o+" >（ "+02+" ） ; ";
-                flage = true;
             }
         }
             // 操作日志追加
             addLogMethod(flage,request , actionData);
+        removeAttribute("oldUserLevelData",request);
+        removeAttribute("newUserLevelData",request);
     }
 
 
@@ -431,4 +455,16 @@ private Field[] getfieldsMethod(Object objectdata) {
     return objectdata.getClass().getDeclaredFields();
 }
 
+    private boolean checkSeralize(String  name){
+        if (name.equals("getSerialVersionUID") || name.equals("serialVersionUID")) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    /*删除作用域*/
+    private void removeAttribute(String key,HttpServletRequest request){
+        request.getSession().removeAttribute(key);
+    }
 }
