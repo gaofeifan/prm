@@ -6,8 +6,10 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.pj.conf.base.AbstractBaseServiceImpl;
 import com.pj.conf.base.BaseMapper;
 import com.pj.partner.mapper.PartnerDetailsMapper;
+import com.pj.partner.mapper.PartnerDetailsShifFileMapper;
 import com.pj.partner.pojo.PartnerAddress;
 import com.pj.partner.pojo.PartnerDetails;
+import com.pj.partner.pojo.PartnerDetailsShifFile;
 import com.pj.partner.pojo.PartnerLinkman;
 import com.pj.partner.service.PartnerAddressService;
 import com.pj.partner.service.PartnerDetailsService;
@@ -21,6 +23,8 @@ import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +40,8 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     private PartnerAddressService partnerAddressService;
     @Autowired
     private PartnerLinkmanService partnerLinkmanService;
+    @Autowired
+    private PartnerDetailsShifFileMapper partnerDetailsShifFileMapper;
     @Override
     public BaseMapper<PartnerDetails> getMapper() {
         return partnerDetailsMapper;
@@ -53,15 +59,15 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         Example example = new Example(PartnerDetails.class);
         Example.Criteria criteria = example.createCriteria();
         if(offPartner != null){
-            criteria.andCondition("is_disable" , offPartner);
+            criteria.andCondition("is_disable =" , offPartner);
         }
         if(blacklistPartner != null){
-            criteria.andCondition("is_blacklist" , blacklistPartner);
+            criteria.andCondition("is_blacklist =" , blacklistPartner);
         }
         if(StringUtils.isNotBlank(name)){
             criteria.andLike("name",name);
         }
-        criteria.andCondition("is_delete",0);
+        criteria.andCondition("is_delete =",0);
         List<PartnerDetails> pds = this.partnerDetailsMapper.selectByExample(example);
         return pds;
     }
@@ -176,5 +182,44 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         return sb.toString();
     }
 
+    @Override
+    public boolean deletePartnerDetailsById(Integer id) {
+        //  判断是否有子集文件 如果没有可以删除
+        PartnerDetails pd = new PartnerDetails();
+        pd.setPId(id);
+        pd.setIsDelete(0);
+        List<PartnerDetails> list = super.select(pd);
+        if(list.size() > 0){
+            return false;
+        }
+        return true;
+    }
 
+    @Override
+    public List<PartnerDetailsShifFile> selectShiftFile(Integer[] ids) {
+        List<Integer> list = Arrays.asList(ids);
+        Example example = new Example(PartnerDetailsShifFile.class);
+        example.createCriteria().andIn("id",list);
+        return this.partnerDetailsShifFileMapper.selectByExample(example);
+
+    }
+
+    @Override
+    public void ShiftPartnerDetailsFileByIds(Integer[] ids, Integer id) {
+        List<PartnerDetailsShifFile> shifFileList = this.selectShiftFile(ids);
+        List<PartnerDetailsShifFile> deleteFileList = new ArrayList<>();
+        for (PartnerDetailsShifFile fds:shifFileList) {
+            List<PartnerDetailsShifFile> childList = this.partnerDetailsShifFileMapper.getChildList(fds.getId());
+            for (PartnerDetailsShifFile childFds:shifFileList) {
+                if(childFds.getId() == id){
+                    deleteFileList.add(childFds);
+                }
+            }
+        }
+        shifFileList.removeAll(deleteFileList);
+        for (PartnerDetailsShifFile childFds:shifFileList) {
+            childFds.setPId(id);
+            this.partnerDetailsShifFileMapper.updateByPrimaryKey(childFds);
+        }
+    }
 }

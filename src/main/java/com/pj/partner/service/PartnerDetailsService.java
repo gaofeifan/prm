@@ -2,6 +2,7 @@ package com.pj.partner.service;
 
 import com.pj.conf.base.BaseService;
 import com.pj.partner.pojo.PartnerDetails;
+import com.pj.partner.pojo.PartnerDetailsShifFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -28,4 +29,24 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
      * @return
      */
     boolean verifyValueRepeat(String fieldName, String fieldValue);
+
+    /**
+     *  根据主键删除id
+     * @param id
+     */
+    boolean deletePartnerDetailsById(Integer id);
+
+    /**
+     *  查询转移文件
+     * @param ids
+     * @return
+     */
+    List<PartnerDetailsShifFile> selectShiftFile(Integer[] ids);
+
+    /**
+     *  转移文件
+     * @param ids
+     * @param id
+     */
+    void ShiftPartnerDetailsFileByIds(Integer[] ids, Integer id);
 }

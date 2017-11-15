@@ -2,6 +2,7 @@ package com.pj.partner.controller;
 
 import com.pj.conf.base.BaseController;
 import com.pj.partner.pojo.PartnerDetails;
+import com.pj.partner.pojo.PartnerDetailsShifFile;
 import com.pj.partner.service.PartnerDetailsService;
 import com.pj.user.mapper.HierarchyMapper;
 import com.pj.user.pojo.Hierarchy;
@@ -130,6 +131,37 @@ public class PartnerDetailsController extends BaseController {
         return this.success(flag);
     }
 
+    /**
+     * 根据主键删除合作伙伴
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "根据主键删除合作伙伴" ,httpMethod = "GET", response = Object.class)
+    @RequestMapping(value = "/deletePartnerDetailsById")
+    @ResponseBody
+    public Object deletePartnerDetailsById(@ApiParam("id") @RequestParam(name = "id") Integer id){
+        boolean b = this.partnerDetailsService.deletePartnerDetailsById(id);
+        return this.success(b);
+    }
 
+
+    /**
+     *  查询转移文件
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "查询转移文件" ,httpMethod = "GET", response = Object.class)
+    @RequestMapping(value = "/selectShiftFile")
+    @ResponseBody
+    public Object selectShiftFile(@ApiParam("ids") @RequestParam(name = "ids") Integer[] ids){
+       List<PartnerDetailsShifFile> pdsf = this.partnerDetailsService.selectShiftFile(ids);
+       return this.success(pdsf);
+    }
+
+    public Object ShiftPartnerDetailsFileByIds(@ApiParam("ids") @RequestParam(name = "ids") Integer[] ids,
+                                                @ApiParam("id") @RequestParam(name = "id") Integer id){
+        this.partnerDetailsService.ShiftPartnerDetailsFileByIds(ids,id);
+        return this.success();
+    }
 
 }

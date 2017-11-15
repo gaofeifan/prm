@@ -233,144 +233,6 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     @ApiModelProperty(value = "互为代理  进项税率")
     private BigDecimal hwdlTaxRate;
 
-    @Column
-
-
-    @ApiModelProperty(value = "互为代理  客户分类")
-    private String hwdlCustomerClass;
-
-    /**
-     * 互为代理 信用等级
-     */
-    @Column
-    @ApiModelProperty(value = "互为代理 信用等级")
-    private Integer hwdlCreditRating;
-
-    /**
-     * 互为代理  开票类型
-     */
-    @Column
-    @ApiModelProperty(value = "互为代理  开票类型")
-    private Integer hwdlInvoiceType;
-
-    /**
-     * 互为代理 信用期限类型
-     */
-    @Column
-    @ApiModelProperty(value = "互为代理 信用期限类型")
-    private Integer hwdlTypeCreditPeriod;
-
-    /**
-     * 互为代理  信用期限
-     */
-    @Column
-    @ApiModelProperty(value = "互为代理  信用期限")
-    private BigDecimal hwdlCreditPeriod;
-
-    /**
-     * 互为代理  信用额度
-     */
-    @Column
-    @ApiModelProperty(value = "互为代理  信用额度")
-    private BigDecimal hwdlLineCredit;
-
-    /**
-     * 互为代理 开户银行
-     */
-    @Column
-    @ApiModelProperty(value = "互为代理 开户银行")
-    private String hwdlDepositBank;
-
-    /**
-     * 互为代理 银行账号
-     */
-    @Column
-    @ApiModelProperty(value = "互为代理 银行账号")
-    private String hwdlBankAccount;
-
-    /**
-     * 互为代理  公司电话
-     */
-    @Column
-    @ApiModelProperty(value = "互为代理  公司电话")
-    private String hwdlCompanyTel;
-
-    /**
-     * 互为代理 公司地址
-     */
-    @Column
-    @ApiModelProperty(value = "互为代理 公司地址")
-    private String hwdlCompanyAddress;
-
-    /**
-     * 互为代理 是否代垫 0 否 1是
-     */
-    @Column
-    @ApiModelProperty(value = "互为代理 是否代垫 0 否 1是")
-    private Integer hwdlIsPayForAnother;
-
-    /**
-     * 互为代理 代付期限
-     */
-    @Column
-    @ApiModelProperty(value = "互为代理 代付期限")
-    private BigDecimal hwdlPaymentTerm;
-
-    /**
-     * 互为代理 代垫额度
-     */
-    @Column
-    @ApiModelProperty(value = "互为代理 代垫额度")
-    private BigDecimal hwdlPaidAmount;
-
-    /**
-     * 海外代理   是否代垫 0 否 1是
-     */
-    @Column
-    @ApiModelProperty(value = "海外代理   是否代垫 0 否 1是")
-    private Integer hwIsPayForAnother;
-
-    /**
-     * 海外代理  代付期限
-     */
-    @Column
-    @ApiModelProperty(value = "海外代理  代付期限")
-    private BigDecimal hwPaymentTerm;
-
-    /**
-     * 海外代理  代垫额度
-     */
-    @Column
-    @ApiModelProperty(value = "海外代理  代垫额度")
-    private BigDecimal hwPaidAmount;
-
-    /**
-     * 海外代理  信用等级
-     */
-    @Column
-    @ApiModelProperty(value = "海外代理  信用等级")
-    private Integer hwCreditRating;
-
-    /**
-     * 海外代理  信用期限类型
-     */
-    @Column
-    @ApiModelProperty(value = "海外代理  信用期限类型")
-    private Integer hwTypeCreditPeriod;
-
-    /**
-     * 海外代理 信用期限
-     */
-    @Column
-    @ApiModelProperty(value = "海外代理 信用期限")
-    private BigDecimal hwCreditPeriod;
-
-    /**
-     * 海外代理   信用额度
-     */
-    @Column
-    @ApiModelProperty(value = "海外代理   信用额度")
-    private BigDecimal hwLineCredit;
 
     /**
      * 干线承运人 服务类别
@@ -378,62 +240,6 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     @Column
     @ApiModelProperty(value = "干线承运人 服务类别")
     private String gxcyrClassOfService;
-
-    /**
-     * 干线承运人 进项税票
-     */
-    @Column
-    @ApiModelProperty(value = "干线承运人 进项税票")
-    private Integer gxcyrTaxReceipt;
-
-    /**
-     * 干线承运人 进项税率
-     */
-    @Column
-    @ApiModelProperty(value = "干线承运人 进项税率")
-    private BigDecimal gxcyrTaxRate;
-
-    /**
-     * 不可控供应商   服务类别
-     */
-    @Column
-    @ApiModelProperty(value = "不可控供应商   服务类别")
-    private String bkkgysClassOfService;
-
-    /**
-     * 不可控供应商  进项税票
-     */
-    @Column
-    @ApiModelProperty(value = "不可控供应商  进项税票")
-    private Integer bkkgysTaxReceipt;
-
-    /**
-     * 不可控供应商 进项税率
-     */
-    @Column
-    @ApiModelProperty(value = "不可控供应商 进项税率")
-    private BigDecimal bkkgysTaxRate;
-
-    /**
-     * 延伸服务供应商  服务类别
-     */
-    @Column
-    @ApiModelProperty(value = "延伸服务供应商  服务类别")
-    private String ysfwgysClassOfService;
-
-    /**
-     * 延伸服务供应商  进项税票
-     */
-    @Column
-    @ApiModelProperty(value = " 延伸服务供应商  进项税票")
-    private Integer ysfwgysTaxReceipt;
-
-    /**
-     * 延伸服务供应商  进项税率
-     */
-    @Column
-    @ApiModelProperty(value = "延伸服务供应商  进项税率")
-    private BigDecimal ysfwgysTaxRate;
 
     /**
      * 收发货人 是否是收货人 0 否 1 是
@@ -540,36 +346,6 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     @ApiModelProperty(value = "收发货人 收货人邮编")
     private String sfhrConsigneeZipCode;
 
-
-
-    /**
-     * 结算对象 开户银行
-     */
-    @Column
-    @ApiModelProperty(value = "结算对象 开户银行")
-    private String jsdxDepositBank;
-
-    /**
-     * 结算对象  银行账号
-     */
-    @Column
-    @ApiModelProperty(value = "结算对象  银行账号")
-    private String jsdxBankAccount;
-
-    /**
-     * 结算对象 公司电话
-     */
-    @Column
-    @ApiModelProperty(value = " 结算对象 公司电话")
-    private String jsdxCompanyTel;
-
-    /**
-     * 结算对象 公司地址
-     */
-    @Column
-    @ApiModelProperty(value = "结算对象 公司地址")
-    private String jsdxCompan;
-
     /**
      *  是否是目录
      */
@@ -583,12 +359,20 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     @Column
     @ApiModelProperty(value = "创建时间")
     private Date createDate;
+
     /**
      * 是否删除  0否 1 是
      */
     @Column
     @ApiModelProperty(value = "是否删除  0否 1 是")
     private Integer isDelete;
+
+    /**
+     * 是否删除  0否 1 是
+     */
+    @Column
+    @ApiModelProperty(value = "父id")
+    private Integer pId;
 
     @Transient
     private List<PartnerAddress> address;
