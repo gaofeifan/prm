@@ -78,4 +78,10 @@ public class AuthPostMenuController extends BaseController{
             session.setMaxInactiveInterval(60*60*24);
         }
     }
+
+    @ApiOperation(value = "跳转login" ,httpMethod = "GET", response = Object.class)
+    @RequestMapping(value = "/index")
+    public String index( ){
+      return "/login";
+    }
 }

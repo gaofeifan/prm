@@ -7,7 +7,7 @@ spring:
     port: 6379
     
   thymeleaf:
-    prefix: classpath:/static/temp/
+    prefix: classpath:/static/prm/
     content-type: text/html
     encoding: UTF-8
     suffix: .html

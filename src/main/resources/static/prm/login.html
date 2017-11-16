@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="style/base.css">
+    <link rel="stylesheet" href="style/login.css">
+    <script src="lib/jquery.js"></script>
+    <script src="lib/jquery.form.js"></script>
+    <script src="lib/jquery.cookie.js"></script>
+    <script>
+        /*var oaPathUrl = '10.0.0.18:8083';
+        var ssoPathUrl = '10.0.0.18:8085';
+        var dPathUrl = '192.168.4.213:8083';*/
+
+        var oaPathUrl = '139.129.236.180:8080';
+        var ssoPathUrl = '139.129.236.180:8081';
+        var dPathUrl = '139.129.236.180:86';
+    </script>
+    <style>
+        .logo{
+            cursor:default;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <div id="logo" class="fl">
+                <a class="logo" href="javascript:void(0);"><img src="image/logo.png" alt=""></a>
+                <h1>文档综合管理平台</h1>
+            </div>
+            <div id="date" class="fr">今天是：<span id="day"></span>&nbsp;&nbsp; <sapn id="week"></sapn></div>
+        </div>
+        <div id="content">
+            <div class="content-layout">
+                <div class="login-box-warp">
+                    <div id="J_LoginBox" class="">
+                        <div class="bd">
+                            <div class="static-form">
+                                <form id="loginForm">
+                                    <p class="warning" id=""></p>
+                                    <input id="account" name="username" type="text" value="" placeholder="请输入用户名">
+                                    <p class="warning name_warning"></p>
+                                    <input id="password" name="password" type="password" value="" placeholder="请输入密码">
+                                    <p class="warning password_warning"></p>
+                                    <input name="flag" value="0" type="text" style="display: none">
+                                    <!--<img src="" alt="">-->
+                                    <!--<p class="forget_password"><a href=""></a></p>-->
+                                    <button id="login" type="button">登录</button>
+                                </form>
+                            </div>
+                            <div class="quick-form"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function(){
+            $('#account').focus();
+            var time = new Date();
+            var year = time.getFullYear();
+            var month = time.getMonth()+1;
+            var getDate = time.getDate();
+            var data = year+"年"+month+"月"+getDate+"日";
+            var week = time.getDay(); //星期
+            var weeks = ["日","一","二","三","四","五","六"];
+            var getWeek = "星期" + weeks[week];
+            $('#day').text(data);
+            $('#week').text(getWeek);
+
+            //登录接口
+            var account;
+            var reg = /[@]+/;
+            var options = {
+                url : 'http://'+ssoPathUrl+'/sso/user/dologin',
+                type : "get",
+                xhrFields:{
+                    withCredentials: true
+                },
+                crossDomain: true,//支持跨域发送cookie
+                jsonp: 'callback',
+                dataType:'jsonp',
+                beforeSend:function(){
+                    if(!$('#account')){
+                        $('.name-warning').text('请输入账号');
+                        return false;
+                    }
+                    if(!$('#password')){
+                        $('.password-warning').text('请输入密码');
+                        return false;
+                    }
+                },
+                success : function(data) {
+                    if(parseInt(data.status) == 200){
+                        if(!reg.test(account)){
+                            //后台
+                            $.cookie('back_id',data.id);
+                            $.cookie('back_username',data.username);
+                            $.cookie('back_useremail',data.email);
+                            window.location.href="./index.html#homePage";
+                        }else{
+                            //前台
+                            $.cookie('front_id',data.id);
+                            $.cookie('front_username',data.username);
+                            $.cookie('front_useremail',data.email);
+                            window.location.href="./index2.html";
+                        }
+                    }else if(parseInt(data.status) == 404){
+                        alert(data.error);
+                    }
+                },error:function(data){
+                    alert('登录失败，请重试！')
+                }
+            };
+            $('#login').click(function(){
+                account = $('#account').val();
+                $("#loginForm").ajaxSubmit(options); // jquery.form.js提价
+            });
+        })
+    </script>
+</body>
+</html>
