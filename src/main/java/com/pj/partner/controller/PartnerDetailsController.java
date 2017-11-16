@@ -111,9 +111,12 @@ public class PartnerDetailsController extends BaseController {
     @RequestMapping(value = "/getCodeLength")
     @ResponseBody
     public Object getCodeLength(){
-        Hierarchy hierarchy = this.hierarchyMapper.selectAll().get(0);
-        int codeLength = hierarchy.getLayerFour() + hierarchy.getLayerOne() + hierarchy.getLayerTwo() + hierarchy.getLayerThree();
-        return this.success(codeLength);
+        List<Hierarchy> list = this.hierarchyMapper.selectAll();
+        int num = 0;
+        for (Hierarchy h: list) {
+            num += h.getLayerNumber();
+        }
+        return this.success(num);
     }
 
     /**
@@ -165,11 +168,11 @@ public class PartnerDetailsController extends BaseController {
      * @return
      */
     @ApiOperation(value = "修改转移目录" ,httpMethod = "GET", response = Object.class)
-    @RequestMapping(value = "/ShiftPartnerDetailsFileByIds")
+    @RequestMapping(value = "/shiftPartnerDetailsFileByIds")
     @ResponseBody
-    public Object ShiftPartnerDetailsFileByIds(@ApiParam("ids") @RequestParam(name = "ids") Integer[] ids,
+    public Object shiftPartnerDetailsFileByIds(@ApiParam("ids") @RequestParam(name = "ids") Integer[] ids,
                                                 @ApiParam("id") @RequestParam(name = "id") Integer id){
-        this.partnerDetailsService.ShiftPartnerDetailsFileByIds(ids,id);
+        this.partnerDetailsService.shiftPartnerDetailsFileByIds(ids,id);
         return this.success();
     }
 }

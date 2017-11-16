@@ -205,7 +205,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     }
 
     @Override
-    public void ShiftPartnerDetailsFileByIds(Integer[] ids, Integer id) {
+    public void shiftPartnerDetailsFileByIds(Integer[] ids, Integer id) {
         List<PartnerDetailsShifFile> shifFileList = this.selectShiftFile(ids);
         List<PartnerDetailsShifFile> deleteFileList = new ArrayList<>();
         for (PartnerDetailsShifFile fds:shifFileList) {

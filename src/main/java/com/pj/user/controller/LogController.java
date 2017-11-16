@@ -29,16 +29,14 @@ import java.util.Map;
 @Api(value ="日志查询模块"  )
 public class LogController extends BaseController {
 
-            @Autowired
-            LogService logService;
-
+    @Autowired
+    LogService logService;
 
     @ApiOperation(value = "日志- 1.操作日志查询 ；" , httpMethod = "POST" , response = Object.class)
     @RequestMapping("/operation")
     @ResponseBody
     public Map<String, Object> findOperationList(@ModelAttribute("requestParam")RequestParam requestParam ){
         // 获取 分页元数据信息
-
             Page<Object> page = PageHelper.startPage(Pagination.cpn(requestParam.getPageNo()), requestParam.getPageSize(), true);
             List<Operation> operationLsit =  logService.findOPerationList(requestParam.getStartDate(),requestParam.getEndDate(),null);
             Pagination pagination = new Pagination(page.getPageNum(), page.getPageSize(), (int) page.getTotal(), operationLsit);

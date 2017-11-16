@@ -42,10 +42,12 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
 
     @Override
     public void editPostAuthority(Integer postId, Integer[] menuIds) {
+
         this.authPostMenuMapper.delete(new AuthPostMenu(postId));
         for(Integer id : menuIds){
             this.authPostMenuMapper.insert(new AuthPostMenu(id,postId));
         }
+
     }
     @Override
     public boolean findOperatingAuthorizationByPostIdAndByButton(Integer postId , Integer button) {
@@ -54,6 +56,5 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
             return true;
         }
         return false;
-
     }
 }

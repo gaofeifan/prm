@@ -48,5 +48,5 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
      * @param ids
      * @param id
      */
-    void ShiftPartnerDetailsFileByIds(Integer[] ids, Integer id);
+    void shiftPartnerDetailsFileByIds(Integer[] ids, Integer id);
 }
