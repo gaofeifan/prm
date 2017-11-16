@@ -14,11 +14,13 @@
     <result  column="scope_business" property="scopeBusiness" jdbcType="VARCHAR" />
     <result  column="partner_category" property="partnerCategory" jdbcType="VARCHAR" />
     <result  column="receiver_id" property="receiverId" jdbcType="INTEGER" />
+    <result  column="create_date" property="createDate" jdbcType="DATE" />
 </resultMap>
 
     <!-- sql -->
     <sql id="baseSelect_email">
-        ID ,code , receiver_id, mnemonic_code , chinese_name  ,chinese_abbreviation  , english_name    , english_abbreviation  , receiver_name  ,scope_business ,partner_category
+        ID ,code , receiver_id, mnemonic_code , chinese_name  ,chinese_abbreviation  , english_name    ,
+        english_abbreviation  , receiver_name  ,scope_business ,partner_category , create_date
     </sql>
 
     <select id="findPartnerDetailsLastMonthDate" resultMap="BaseResultMap">
@@ -36,9 +38,9 @@
         FROM
                    partner_details
         WHERE
-                    wbkhCreditRating = '签约在途'
-                    DATEDIFF(now(),create_date)   &gt;= 15
+                 wbkh_credit_rating = '签约在途'
+        AND           DATEDIFF(now(),create_date)   &gt;= 15
         ORDER BY
-                    receiverId desc
+                    receiver_id desc
     </select>
 </mapper>

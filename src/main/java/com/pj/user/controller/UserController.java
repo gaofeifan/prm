@@ -37,11 +37,6 @@ private  UserService userservice;
     private EmailService emailService;
 
 
-
-
-
-
-
     //  用 hu信用等级
     @RequestMapping("/level")
     @ResponseBody

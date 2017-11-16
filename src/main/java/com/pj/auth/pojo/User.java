@@ -24,6 +24,8 @@ public @Data class User {
 	private String companyname;
 	
 	private String email;
-	
+
+	private String phone; // 手机号 支持 邮件发送 2017年11月16日11:21:20
+
 	
 }
