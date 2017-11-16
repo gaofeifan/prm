@@ -428,7 +428,7 @@ public class AspectServer {
     private void addLogMethod(boolean flage, HttpServletRequest request,String actionData) {
         if(flage){
             // 获取  登录人信息
-         /*   User user_object = (User) request.getSession().getAttribute("user_object");*/
+         /*   User user_object = (User) request.getSession().getAttribute("user");*/
             Operation operation =  new Operation();
             operation.setAction(actionData);
          /*   operation.setUserId(user_object.getEmail());

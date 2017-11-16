@@ -62,6 +62,7 @@ public class AuthUserServiceImpl implements AuthUserService {
         String dempname = VerifyUtils.objectToString(map.get("dempname"));
         String username = VerifyUtils.objectToString(map.get("username"));
         String postId = VerifyUtils.objectToString(map.get("postid"));
+        String phone = VerifyUtils.objectToString(map.get("phone"));
         if (StringUtils.isNoneBlank(postId)) {
             Integer postid = Integer.decode(VerifyUtils.objectToString(map.get("postid")));
             user.setPostid(postid);
@@ -71,6 +72,7 @@ public class AuthUserServiceImpl implements AuthUserService {
         user.setPostname(postname);
         user.setUsername(username);
         user.setEmail(companyEmail);
+        user.setPhone(phone);
         return user;
     }
 }

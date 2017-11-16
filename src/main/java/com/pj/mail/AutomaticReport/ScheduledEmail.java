@@ -1,17 +1,14 @@
 package com.pj.mail.AutomaticReport;
-
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.pj.auth.pojo.User;
 import com.pj.mail.util.SendEmailUtils;
 import com.pj.partner.pojo.PartnerDetails;
 import com.pj.user.service.EmailService;
-
 import com.pj.auth.service.AuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
 import java.text.SimpleDateFormat;
 import java.util.*;
 /**
@@ -20,12 +17,15 @@ import java.util.*;
 @Component
 public class ScheduledEmail {
 
-
     private static final Logger logger = LoggerFactory.getLogger(ScheduledEmail.class);
+    private static final String basic_myEmailAccount = "gaofeifan@pj-l.com";
+    private static final String basic_myEmailPassword ="PJgff.1234";
+    private static final String basic_manager ="sevenboyliu@pj-l.com";
+
+
 
     @Autowired(required=false)
     private EmailService emailService;
-
 
     @Autowired(required=false)
     private AuthUserService authUserService;
@@ -36,15 +36,16 @@ public class ScheduledEmail {
 
     //序号 代码 助记码 中文全称 中文简称 英文全称 英文简称 提醒接受者 业务范畴 合作伙伴分类
 
-   // @Scheduled(cron="60*1000 * * * * ?")
+    @Scheduled(cron="0 15 0 1 * ?")
     public void findPartnerDetailsLastMonthDate() throws Exception {
         // 获取  上月新增的 partner
-        List<PartnerDetails> lastPtData = this.emailService.findPartnerDetailsLastMonthDate();
-        StringBuffer mesagesVal = getMesagesVal(lastPtData);
         try {
-            SendEmailUtils.sendEWmail(mesagesVal, "sevenboyliu@pj-l");
+        List<PartnerDetails> lastPtData = this.emailService.findPartnerDetailsLastMonthDate();
+            String total = lastPtData+"月 新增Partner如下，如有问题，请联系相应Owner.";
+        StringBuffer mesagesVal = getMesagesVal(lastPtData,total);
+            SendEmailUtils.sendEWmail(mesagesVal,basic_myEmailAccount ,basic_myEmailPassword,basic_manager);
         }catch (Exception e){
-            System.out.println(e);
+          logger.error("月新增Partner清单 邮件信息获取异常请检查 exception   :" +e );
         }
     }
 
@@ -57,6 +58,7 @@ public class ScheduledEmail {
     //      序号 代码 助记码 中文全称 中文简称 英文全称 英文简称 提醒接受者 业务范畴 合作伙伴分类
 
     // @Scheduled(cron="60*10 * * * * ?")
+    @Scheduled(cron="0 0 8 * * ?")
     public void signingInTransit() throws Exception {
         // 获取 签约在途 超过15 天的的信息
         List<PartnerDetails>  PartnerDetailsSigningInTransit = this.emailService.findPartnerDetailsGsigningInTransit();
@@ -90,8 +92,12 @@ public class ScheduledEmail {
                         // 调用接口 获取 email 发给 接收者
                         User user = authUserService.selectUserByEmail(PartnerDetailsList.get(0).getReceiverId());
                         // 邮件正文
-                        StringBuffer mesagesVal = getMesagesVal(PartnerDetailsList);
-                        SendEmailUtils.sendEWmail(mesagesVal,user.getEmail());
+                        checkDuplicates2.add(PartnerDetailsList.get(0).getReceiverId());
+                        if(PartnerDetailsList.size()!=0){
+                        String total = " 以下客户信用等级为签约在途，保存时间已经超过15/30个自然日，请注意跟进。";
+                        StringBuffer mesagesVal = getMesagesVal(PartnerDetailsList,total);
+                        SendEmailUtils.sendEWmail(mesagesVal, basic_myEmailAccount, basic_myEmailPassword, user.getEmail()); // user.getEmail()
+                        }
                     }catch (Exception e){
                         // 发送失败之后  存储
                          checkDuplicates2.add(PartnerDetailsList.get(0).getReceiverId());
@@ -103,8 +109,9 @@ public class ScheduledEmail {
                 if(PartnerDetailsList2.size()!=0){
                     try {
                         // 邮件正文
-                        StringBuffer mesagesVal = getMesagesVal(PartnerDetailsList2);
-                        SendEmailUtils.sendEWmail(mesagesVal,"");
+                        String total = " 以下客户信用等级为签约在途，保存时间已经超过15/30个自然日，请注意跟进。";
+                        StringBuffer mesagesVal = getMesagesVal(PartnerDetailsList2,total);
+                        SendEmailUtils.sendEWmail(mesagesVal, basic_myEmailAccount, basic_myEmailPassword, basic_manager);
                     }catch (Exception e){
                         logger.error("---发送给管理者的 签约在途信息统计邮件发送失败   "+e);
 
@@ -118,9 +125,17 @@ public class ScheduledEmail {
                         userList.add( authUserService.selectUserByEmail(ids));
                     }
                         try {
+
+                /*
+                7.5     僵尸Partner提醒邮件（预留）
+                7.5.1     每日，对于300天（等于，只当天提醒一次）没有业务的僵尸Partner，且没有停用，即触发邮件列表给提醒接收者（Owner）；
+                7.5.2     每日，对于365天以上没有业务的僵尸Partner，且没有停用，即触发邮件列表给Admin；
+                7.5.3     预留功能，是否有业务的数据来源于各BSS；
+                */
                             // 邮件正文
+                            String total = " 以下提醒接收者（Owner）无效，请注意跟进。";
                             StringBuffer mesagesVal = getExceptionMesagesVal(userList);
-                            SendEmailUtils.sendEWmail(mesagesVal,"");
+                            SendEmailUtils.sendEWmail(mesagesVal, basic_myEmailAccount, basic_myEmailPassword, basic_manager);
                         }catch (Exception e){
                             logger.error("---发送给管理者的异常信息统计邮件发送失败  ： "+e);
                         }
@@ -133,25 +148,6 @@ public class ScheduledEmail {
     }
 
 
-/*
-
-
-
-            7.3     付款买单告警邮件（预留）
-            7.3.1     每日，信用等级为付款买单的客户（外部客户 / 互为代理 / 海外代理），如应收账龄超过7个自然日的，即触发邮件列表给提醒接收者（Owner）；
-            7.3.2     每日，信用等级为付款买单的客户（外部客户 / 互为代理 / 海外代理），如应收账龄超过15个自然日的，即触发邮件列表给Admin；
-            7.3.3     预留功能，应收数据来源于财务系统或报表系统；
-            序号 姓名 所属公司 所属部门 岗位 手机号 邮箱 名下合作伙伴中文简称
-*/
-
-    /*
-    7.5     僵尸Partner提醒邮件（预留）
-    7.5.1     每日，对于300天（等于，只当天提醒一次）没有业务的僵尸Partner，且没有停用，即触发邮件列表给提醒接收者（Owner）；
-    7.5.2     每日，对于365天以上没有业务的僵尸Partner，且没有停用，即触发邮件列表给Admin；
-    7.5.3     预留功能，是否有业务的数据来源于各BSS；
-    */
-
-
 
     public static String getLastdata( ) {
         Calendar calendar = Calendar.getInstance();//日历对象
@@ -162,10 +158,10 @@ public class ScheduledEmail {
     }
 
     // 获取邮件内容
-    public StringBuffer getMesagesVal(List<PartnerDetails> PartnerDetailsList){
+    public StringBuffer getMesagesVal(List<PartnerDetails> PartnerDetailsList,String total){
         StringBuffer theMessage = new StringBuffer();
         String lastdata = getLastdata();
-        theMessage.append("<h2><font >"+lastdata+"月 新增Partner如下，如有问题，请联系相应Owner.</font></h2>");
+        theMessage.append("<h2><font >"+total+"</font></h2>");
         theMessage.append("<hr>");
         theMessage.append("<table  border='1'>");
         theMessage.append("<tr><td>序号</td><td>代码</td><td>助记码</td><td>中文全称</td><td>中文简称</td><td>英文全称</td><td>英文简称</td>" +
@@ -191,7 +187,7 @@ public class ScheduledEmail {
         Integer i   = 1;
         if(null!=user){
             for (User use : user){
-                theMessage.append("<tr><td>"+ i++ +"</td><td>"+use.getUsername()+"</td><td>"+use.getCompanyname()+"</td><td>"+use.getDempname()+"</td><td>"+use.getPostname()+"</td><td>"+use.getEmail()+"</td></tr>");
+                theMessage.append("<tr><td>"+ i++ +"</td><td>"+use.getUsername()+"</td><td>"+use.getCompanyname()+"</td><td>"+use.getDempname()+"</td><td>"+use.getPostname()+"</td><td>"+use.getPhone()+"</td><td>"+use.getEmail()+"</td></tr>");
             }
         }
         theMessage.append("</table>");
