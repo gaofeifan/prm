@@ -7,5 +7,7 @@ public interface AuthUserService {
 
     public User selectUserByEmail(Integer id);
 
+    public String getEmailsByPostId(String postId);
+
 
 }

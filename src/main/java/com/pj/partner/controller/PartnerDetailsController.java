@@ -147,7 +147,7 @@ public class PartnerDetailsController extends BaseController {
 
     /**
      *  查询转移文件
-     * @param id
+     * @param ids
      * @return
      */
     @ApiOperation(value = "查询转移文件" ,httpMethod = "GET", response = Object.class)
@@ -158,12 +158,18 @@ public class PartnerDetailsController extends BaseController {
        return this.success(pdsf);
     }
 
+    /**
+     *  修改转移目录
+     * @param ids
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "修改转移目录" ,httpMethod = "GET", response = Object.class)
+    @RequestMapping(value = "/ShiftPartnerDetailsFileByIds")
+    @ResponseBody
     public Object ShiftPartnerDetailsFileByIds(@ApiParam("ids") @RequestParam(name = "ids") Integer[] ids,
                                                 @ApiParam("id") @RequestParam(name = "id") Integer id){
         this.partnerDetailsService.ShiftPartnerDetailsFileByIds(ids,id);
         return this.success();
     }
-
-
-
 }
