@@ -36,7 +36,7 @@ public class ScheduledEmail {
 
     //序号 代码 助记码 中文全称 中文简称 英文全称 英文简称 提醒接受者 业务范畴 合作伙伴分类
 
-    @Scheduled(cron="60*1000 * * * * ?")
+   // @Scheduled(cron="60*1000 * * * * ?")
     public void findPartnerDetailsLastMonthDate() throws Exception {
         // 获取  上月新增的 partner
         List<PartnerDetails> lastPtData = this.emailService.findPartnerDetailsLastMonthDate();
@@ -56,7 +56,7 @@ public class ScheduledEmail {
     //   以下客户信用等级为签约在途，保存时间已经超过15/30个自然日，请注意跟进。
     //      序号 代码 助记码 中文全称 中文简称 英文全称 英文简称 提醒接受者 业务范畴 合作伙伴分类
 
-    @Scheduled(cron="60*10 * * * * ?")
+    // @Scheduled(cron="60*10 * * * * ?")
     public void signingInTransit() throws Exception {
         // 获取 签约在途 超过15 天的的信息
         List<PartnerDetails>  PartnerDetailsSigningInTransit = this.emailService.findPartnerDetailsGsigningInTransit();
