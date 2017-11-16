@@ -23,5 +23,5 @@ public interface UserService {
     void updateLevelById(UserLevel usel, HttpServletRequest request);
 
     // 更新层级位数
-    void updateHierarchyList(Hierarchy hierarchy, HttpServletRequest request);
+    void updateHierarchyList(List<Hierarchy> hierarchy, HttpServletRequest request);
 }
