@@ -52,9 +52,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void updateHierarchyList(Hierarchy hierarchy, HttpServletRequest request) {
-        request.getSession().setAttribute("oldHierarchyData",hierarchyMapper.selectByPrimaryKey(hierarchy.getId()));
-        hierarchyMapper.updateByPrimaryKey(hierarchy);
-        request.getSession().setAttribute("newHierarchyData", hierarchyMapper.selectByPrimaryKey(hierarchy.getId()));
+    public void updateHierarchyList(List<Hierarchy> hierarchy, HttpServletRequest request) {
+        request.getSession().setAttribute("oldHierarchyData",hierarchyMapper.selectAll());
+        if(null!=hierarchy){
+            for (Hierarchy hi : hierarchy){
+                hierarchyMapper.updateByPrimaryKey(hi);
+            }
+        }
+        request.getSession().setAttribute("newHierarchyData", hierarchyMapper.selectAll());
     }
 }

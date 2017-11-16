@@ -23,22 +23,12 @@ public class Hierarchy implements Serializable{
 
 
 
-    @Column(name = "layer_one")
-    @ApiModelProperty(value = "第一层级    ", required = false)
-    private  Integer   layerOne;
+    @Column(name = "layer_name")
+    @ApiModelProperty(value = "等級名称    ", required = false)
+    private  String   layerName;
 
-    @Column(name = "layer_two")
-    @ApiModelProperty(value = "第二层级    ", required = false)
-    private  Integer layerTwo  ;
-
-    @Column(name = "layer_three")
-    @ApiModelProperty(value = "第三层级    ", required = false)
-    private  Integer  layerThree ;
-
-    @Column(name = "layer_four")
-    @ApiModelProperty(value = "第四层级     ", required = false)
-    private  Integer   layerFour;
-
-
+    @Column(name = "layer_number")
+    @ApiModelProperty(value = "层级数量    ", required = false)
+    private  Integer   layerNumber;
 
 }

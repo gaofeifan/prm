@@ -87,9 +87,42 @@ public class AspectServer {
         public void PartnerDetailsServiceImplInsertSelective(){}
 
 
+    // 关注 新增权限 记录日
+         @Pointcut("execution(* com.pj.auth.mapper.AuthPostMenuMapper.insert(..))")
+         public void editPostAuthorityInsert() {}
 
 
-  // 新增  合伙人信息
+    // 关注 刪除权限 记录日志
+        @Pointcut("execution(* com.pj.auth.mapper.AuthPostMenuMapper.delete(..))")
+        public void editPostAuthorityDelete(){}
+
+    //  新增权限 记录日志
+    @AfterReturning("editPostAuthorityInsert( )")
+    public void editPostAuthorityInsertAfter( JoinPoint point ) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        Object[] args = point.getArgs();
+        for (Object arg: args){
+            System.out.println("org"+arg.toString());
+            Field[] declaredFields = arg.getClass().getDeclaredFields();
+            for (int i = 0 ; i<declaredFields.length;i++){
+                PropertyDescriptor pd = new PropertyDescriptor(declaredFields[i].getName(), arg.getClass());
+                Method getMethod = pd.getReadMethod();//获得get方法  
+                Object o = getMethod.invoke(arg);//执行get方法返回一个Object
+                System.out.println(o);
+            }
+        }
+        String actionData = "";
+    }
+
+    // 新增  刪除权限 记录日志
+    @AfterReturning("editPostAuthorityDelete()")
+    public void editPostAuthorityDeleteAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        Object[] args = point.getArgs();
+        for (Object arg: args){
+            System.out.println(arg);
+        }
+        String actionData = "";
+    }
+        // 新增  合伙人信息
   @AfterReturning("PartnerDetailsServiceImplInsertSelective()")
     public void PartnerDetailsServiceImplInsertSelectiveAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         String actionData = "";
@@ -320,34 +353,25 @@ public class AspectServer {
 
         HttpServletRequest request  = requestinit();
 
-        Object oldData =   getDateMethod(request, "oldHierarchyData");
-        Object newData =   getDateMethod(request, "newHierarchyData");
-        Field[] oldfields=  getfieldsMethod(oldData);
-        Field[] newfields=  getfieldsMethod(newData);
+        List<Object> oldData = (List<Object>) getDateMethod(request, "oldHierarchyData");
+        List<Object> newData = (List<Object>) getDateMethod(request, "newHierarchyData");
 
-
-
+        boolean flage = false;
         actionData+="层级位数管理：";
-        boolean  flage = false;
-        for (int i = 0 ; i <oldfields.length;i++ ){
-            if (checkSeralize(oldfields[i].getName())) {
-                PropertyDescriptor pd = new PropertyDescriptor(oldfields[i].getName(), oldData.getClass());
-                Method getMethod = pd.getReadMethod();//获得get方法  
-                Object o = getMethod.invoke(oldData);//执行get方法返回一个Object
-                PropertyDescriptor pd2 = new PropertyDescriptor(newfields[i].getName(), oldData.getClass());
-                Method getMethod2 = pd2.getReadMethod();//获得get方法  
-                Object o2 = getMethod.invoke(newData);//执行get方法返回一个Object
+        for(int k = 0 ; k < oldData.size();k++){
+            for (int i = 0; i < oldData.get(i).getClass().getDeclaredFields().length; i++ ) {
+                if (checkSeralize(oldData.get(i).getClass().getDeclaredFields()[i].getName())) {
+                    PropertyDescriptor pd = new PropertyDescriptor(oldData.get(i).getClass().getDeclaredFields()[i].getName(), oldData.get(i).getClass());
+                    Method getMethod = pd.getReadMethod();//获得get方法  
+                    Object o = getMethod.invoke(oldData.get(i));//执行get方法返回一个Object
+                    PropertyDescriptor pd2 = new PropertyDescriptor(newData.get(i).getClass().getDeclaredFields()[i].getName(), newData.get(i).getClass());
+                    Method getMethod2 = pd2.getReadMethod();//获得get方法  
+                    Object o2 = getMethod2.invoke(newData.get(i));//执行get方法返回一个Object
 
-                if (!(o == null ? "" : o).toString().equals(o2 == null ? "" : o2.toString())) {
-                    // 判断字段名称
-                    for (int j = 0; j < BasicProperties.Basic_Operation_paramName.length; j++) {
-
-                        if (oldfields[i].getName().toString().equals(BasicProperties.Basic_Operation_paramName[j].toString())) {
-                            actionData += " " + BasicProperties.Basic_Operation_paramVal[j];
-                            break;
-                        }
+                    if (!(o == null ? "" : o).toString().equals(o2 == null ? "" : o2.toString())) {
+                        actionData += "   第"+k+1+"层 ";
                     }
-                    actionData += "< " + o + " >（ " + 02 + " ） ; ";
+                    actionData += "< " + o + " >（" + o2 + " ） ; ";
                     flage = true;
                 }
             }

@@ -85,14 +85,13 @@ private  UserService userservice;
     @RequestMapping("/hierarchyUpdate")
     @ResponseBody
     @ApiOperation(value = "层级位数管理  --修改" , httpMethod = "POST" , response = Object.class)
-    public  Map<String, Object> updateHierarchyList(@ModelAttribute("hierarchy") Hierarchy hierarchy, HttpServletRequest request){
+    public  Map<String, Object> updateHierarchyList(@RequestBody RequestParam requestParam, HttpServletRequest request){
         try {
-            userservice.updateHierarchyList(hierarchy,request);
+            userservice.updateHierarchyList(requestParam.getHierarchyList(),request);
             return this.success();
         }catch (Exception e){
             System.out.println(e);
             return this.error();
         }
-
     }
 }

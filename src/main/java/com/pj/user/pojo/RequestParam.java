@@ -27,4 +27,7 @@ public class RequestParam implements Serializable{
 
     @ApiModelProperty(value = "信用等级集合", required = false)
     private List<UserLevel> userLevelList;
+
+    @ApiModelProperty(value = "层级位数", required = false)
+    private List<Hierarchy> hierarchyList;
 }
