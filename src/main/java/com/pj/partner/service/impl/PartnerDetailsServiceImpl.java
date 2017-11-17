@@ -203,17 +203,21 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
 
     @Override
     public void shiftPartnerDetailsFileByIds(Integer[] ids, Integer id) {
+        //  查询转移的文件
         List<PartnerDetailsShifFile> shifFileList = this.selectShiftFile(ids);
         List<PartnerDetailsShifFile> deleteFileList = new ArrayList<>();
+        //  获取转移文件所有的子集
         for (PartnerDetailsShifFile fds:shifFileList) {
             List<PartnerDetailsShifFile> childList = this.partnerDetailsShifFileMapper.getChildList(fds.getId());
-            for (PartnerDetailsShifFile childFds:shifFileList) {
+           //   如果子集中存在转移直的目录将其删除
+            for (PartnerDetailsShifFile childFds:childList) {
                 if(childFds.getId() == id){
                     deleteFileList.add(childFds);
                 }
             }
         }
         shifFileList.removeAll(deleteFileList);
+        //  修改转移文件的父集
         for (PartnerDetailsShifFile childFds:shifFileList) {
             childFds.setPId(id);
             this.partnerDetailsShifFileMapper.updateByPrimaryKey(childFds);
