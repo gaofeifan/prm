@@ -17,4 +17,6 @@ public interface LogService {
 
 // 添加普通用户操作日志
     void addOperationlLog(Operation operation);
+    //  添加 权限用户操作权限
+    void addPermissionslLog(Permissions permission);
 }

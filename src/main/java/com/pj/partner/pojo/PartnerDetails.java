@@ -382,9 +382,9 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
 
     private static final long serialVersionUID = 1L;
 
-    @Transient
+/*    @Transient
     @ApiModelProperty(value = "合作伙伴分类")
-    private String[]  partnerCategorys;
+    private String[]  partnerCategorys;*/
     @Transient
     @ApiModelProperty(value = "业务范畴")
     private String[] scopeBusinesss;
@@ -396,18 +396,37 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     private String[] wbkhCustomerClasss;
 
     public String[] getScopeBusinesss() {
-        return scopeBusiness.split(",");
+        if(null!=scopeBusiness){
+            return scopeBusiness.split(",");
+        }else{
+            return null;
+        }
+
+
     }
 
-    public String[] getPartnerCategorys(){
-        return partnerCategory.split(",");
+     public String[] getPartnerCategorys(){
+         if(null!=partnerCategory){
+             return partnerCategory.split(",");
+         }else{
+             return null;
+         }
     }
 
     public String[] getGxcyrClassOfServices() {
-        return gxcyrClassOfService.split(",");
+        if(null!=gxcyrClassOfService){
+            return gxcyrClassOfService.split(",");
+        }else{
+            return null;
+        }
+
     }
 
     public String[] getWbkhCustomerClasss() {
-        return wbkhCustomerClass.split(",");
+        if(null!=wbkhCustomerClass){
+            return wbkhCustomerClass.split(",");
+        }else{
+            return null;
+        }
     }
 }

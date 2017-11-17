@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by SenevBoy on 2017/11/9.
@@ -31,7 +32,7 @@ public class Permissions  implements Serializable{
 
     @Column(name = "create_date")
     @ApiModelProperty(value = "创建时间    ", required = false)
-    private  String   createDate;
+    private Date createDate;
 
 
     @Column(name = "involves_user")
