@@ -80,6 +80,4 @@ class PartnerLinkman implements Serializable {
 
 
 
-
-
 }

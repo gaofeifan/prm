@@ -162,7 +162,7 @@ public class PartnerDetailsController extends BaseController {
     }
 
     /**
-     *  修改转移目录
+     * 修改转移目录
      * @param ids
      * @param id
      * @return

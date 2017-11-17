@@ -83,6 +83,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         linkman.setDetailsId(key);
         List<PartnerLinkman> linkmens = this.partnerLinkmanService.select(linkman);
         pd.setLinkmans(linkmens);
+
         return pd;
     }
 

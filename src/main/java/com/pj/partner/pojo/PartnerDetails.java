@@ -382,5 +382,32 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
 
     private static final long serialVersionUID = 1L;
 
+    @Transient
+    @ApiModelProperty(value = "合作伙伴分类")
+    private String[]  partnerCategorys;
+    @Transient
+    @ApiModelProperty(value = "业务范畴")
+    private String[] scopeBusinesss;
+    @Transient
+    @ApiModelProperty(value = "服务类别")
+    private String[] gxcyrClassOfServices;
+    @Transient
+    @ApiModelProperty(value = "客户分类")
+    private String[] wbkhCustomerClasss;
 
+    public String[] getScopeBusinesss() {
+        return scopeBusiness.split(",");
+    }
+
+    public String[] getPartnerCategorys(){
+        return partnerCategory.split(",");
+    }
+
+    public String[] getGxcyrClassOfServices() {
+        return gxcyrClassOfService.split(",");
+    }
+
+    public String[] getWbkhCustomerClasss() {
+        return wbkhCustomerClass.split(",");
+    }
 }
