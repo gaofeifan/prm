@@ -143,10 +143,22 @@ public class PartnerDetailsController extends BaseController {
     @RequestMapping(value = "/deletePartnerDetailsById")
     @ResponseBody
     public Object deletePartnerDetailsById(@ApiParam("id") @RequestParam(name = "id") Integer id){
-        boolean b = this.partnerDetailsService.deletePartnerDetailsById(id);
-        return this.success(b);
+        this.partnerDetailsService.deletePartnerDetailsById(id);
+        return this.success();
     }
 
+    /**
+     * 根据主键删除合作伙伴
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "判断是否可以删除合作伙伴" ,httpMethod = "GET", response = Object.class)
+    @RequestMapping(value = "/isDeletePartnerDetails")
+    @ResponseBody
+    public Object isDeletePartnerDetails(@ApiParam("id") @RequestParam(name = "id") Integer id){
+        boolean b = this.partnerDetailsService.isDeletePartnerDetails(id);
+        return this.success(b);
+    }
 
     /**
      *  查询转移文件

@@ -82,8 +82,8 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         PartnerLinkman linkman = new PartnerLinkman();
         linkman.setDetailsId(key);
         List<PartnerLinkman> linkmens = this.partnerLinkmanService.select(linkman);
-        pd.setLinkmans(linkmens);
 
+        pd.setLinkmans(linkmens);
         return pd;
     }
 
@@ -184,16 +184,12 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     }
 
     @Override
-    public boolean deletePartnerDetailsById(Integer id) {
+    public void deletePartnerDetailsById(Integer id) {
         //  判断是否有子集文件 如果没有可以删除
-        PartnerDetails pd = new PartnerDetails();
-        pd.setPId(id);
-        pd.setIsDelete(0);
-        List<PartnerDetails> list = super.select(pd);
-        if(list.size() > 0){
-            return false;
-        }
-        return true;
+        PartnerDetails partnerDetails = super.selectByPrimaryKey(id);
+        partnerDetails.setIsDelete(1);
+        super.updateByPrimaryKey(partnerDetails);
+
     }
 
     @Override
@@ -222,5 +218,18 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             childFds.setPId(id);
             this.partnerDetailsShifFileMapper.updateByPrimaryKey(childFds);
         }
+    }
+
+    @Override
+    public boolean isDeletePartnerDetails(Integer id) {
+        //  判断是否有子集文件 如果没有可以删除
+        PartnerDetails pd = new PartnerDetails();
+        pd.setPId(id);
+        pd.setIsDelete(0);
+        List<PartnerDetails> list = super.select(pd);
+        if(list.size() > 0){
+            return false;
+        }
+        return true;
     }
 }

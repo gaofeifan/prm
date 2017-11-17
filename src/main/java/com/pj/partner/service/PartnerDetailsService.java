@@ -34,7 +34,7 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
      *  根据主键删除id
      * @param id
      */
-    boolean deletePartnerDetailsById(Integer id);
+    void deletePartnerDetailsById(Integer id);
 
     /**
      *  查询转移文件
@@ -49,4 +49,10 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
      * @param id
      */
     void shiftPartnerDetailsFileByIds(Integer[] ids, Integer id);
+
+    /**
+     *  判断是否删除id
+     * @param id
+     */
+    boolean isDeletePartnerDetails(Integer id);
 }
