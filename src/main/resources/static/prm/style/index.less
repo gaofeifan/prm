@@ -5,7 +5,10 @@
 @import "hierarchy.less";
 @import "partnerClassify.less";
 @import "partnerManage.less";
-
+@import "homePage.less";
+@import "user.less";
+@import "power.less";
+@import "log.less";
 html,body{
   height: 100%;
   background-color: @boardColor;
@@ -149,21 +152,21 @@ html,body{
           }
         }
         .hierarchy{
-           &::before{
-             background-position: 0 -98px;
-           }
+          &::before{
+            background-position: 0 -98px;
+          }
           &.active::before{
             background-position: -37px -98px ;
           }
-         }
+        }
         .partnerClassify{
-            &::before{
-              background-position: 0 -135px ;
-            }
+          &::before{
+            background-position: 0 -135px ;
+          }
           &.active::before{
             background-position: -37px -135px ;
           }
-          }
+        }
         .partnerManage{
           &::before{
             background-position: 0 -168px ;
@@ -281,21 +284,21 @@ html,body{
 }
 label{
   display: inline-block;
-  height: 40px;
-  line-height: 40px;
+  height: 28px;
+  line-height: 28px;
   margin-right: 10px;
-  color: #31485e;
+  color: #666;
 }
 input{
   border: 1px solid #cfcfcf;
-  height: 38px;
-  border-radius: 5px;
+  height: 28px;
+  border-radius: 3px;
   padding-left: 10px;
 }
 select{
   border: 1px solid #cfcfcf;
-  height: 38px;
-  border-radius: 5px;
+  height: 28px;
+  border-radius: 3px;
   padding-left: 10px;
 }
 button{
@@ -346,7 +349,7 @@ table{
 /*.colorEven{
   background-color: #fff;
 }*/
-h4{
+/*h4{
   display: inline-block;
   margin-left: 20px;
   height: 32px;
@@ -357,7 +360,7 @@ h4{
   border-left:5px solid @h2Color;
   text-indent: 16px;
   margin-top: 20px;
-}
+}*/
 p{
   height: 36px;
   line-height: 36px;

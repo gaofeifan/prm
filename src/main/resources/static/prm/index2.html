@@ -28,11 +28,10 @@
         <div class="fl">
             <a class="logo" href="javascript:void(0);"><img src="image/logo3.png" alt=""></a>
             <h1 class="fl">PRM-商务合作伙伴关系管理系统</h1>
-            <span class="fl time"><em id="day"></em>&nbsp;&nbsp; <em id="time"></em></span>
         </div>
         <div class="fr">
             <div class="fl user_info">
-               <!-- <img src="image/logo.png" alt="">-->
+                <!-- <img src="image/logo.png" alt="">-->
                 <em class="user_name"></em>
             </div>
             <div class="fr exit">
@@ -43,10 +42,10 @@
     <div id="main">
         <div id="left">
             <ul id="home2">
-                <li><a class="tax" href="#homePage"><p>首页</p></a></li>
-                <li><a class="copy" href="#user"><p>用户管理</p></a></li>
-                <li><a class="copy" href="#power"><p>权限管理</p></a></li>
-                <li><a class="copy" href="#log"><p>系统日志</p></a></li>
+                <li><a class="homePage" href="#homePage"><p>首页</p></a></li>
+                <li><a class="user" href="#user"><p>用户管理</p></a></li>
+                <li><a class="power" href="#power"><p>权限管理</p></a></li>
+                <li><a class="log" href="#log"><p>系统日志</p></a></li>
             </ul>
         </div>
         <div class="right" id="ui-view">
@@ -57,38 +56,38 @@
 </body>
 <script>
     /*$('.user_name').text($.cookie('front_username'));
-    //根据登录权限 加载全台链接和左侧菜单
-    var userEmail = $.cookie('front_useremail');
-    if(userEmail == 'pjwl@pj-l.com'){
-        $('<li id="user"><a class="process2 '+isActive('process2')+'" href="#process2"><p>流程文件</p></a></li>').appendTo('#home2');
-    }else{
-        $.ajax({
-            url: 'http://'+dPathUrl+'/auth/selectUserAuthPost.do',
-            type: 'get',
-            xhrFields:{
-                withCredentials: true
-            },
-            crossDomain: true,//支持跨域发送cookie
-            jsonp: 'callback',
-            dataType:'jsonp',
-            data:{
-                email:$.cookie('front_useremail')
-            },
-            success: function (data) {
-                if(!data.data){//普通用户
-                    $('<li id="user"><a class="process '+isActive('process')+'" href="#process"><p>流程文件</p></a></li>').appendTo('#home2');
-                }else{//管理员用户
-                    $('<li id="admin"><a class="maintenance '+isActive('maintenance')+'" href="#maintenance"><p>流程文件</p></a></li>').appendTo('#home2');
-                }
-            },
-            error: function (msg) {
-            }
-        });
-    }
-    function isActive(hash){
-        if(hash == window.location.hash.substr(1)){
-            return 'active';
-        }
-    }*/
+     //根据登录权限 加载全台链接和左侧菜单
+     var userEmail = $.cookie('front_useremail');
+     if(userEmail == 'pjwl@pj-l.com'){
+     $('<li id="user"><a class="process2 '+isActive('process2')+'" href="#process2"><p>流程文件</p></a></li>').appendTo('#home2');
+     }else{
+     $.ajax({
+     url: 'http://'+dPathUrl+'/auth/selectUserAuthPost.do',
+     type: 'get',
+     xhrFields:{
+     withCredentials: true
+     },
+     crossDomain: true,//支持跨域发送cookie
+     jsonp: 'callback',
+     dataType:'jsonp',
+     data:{
+     email:$.cookie('front_useremail')
+     },
+     success: function (data) {
+     if(!data.data){//普通用户
+     $('<li id="user"><a class="process '+isActive('process')+'" href="#process"><p>流程文件</p></a></li>').appendTo('#home2');
+     }else{//管理员用户
+     $('<li id="admin"><a class="maintenance '+isActive('maintenance')+'" href="#maintenance"><p>流程文件</p></a></li>').appendTo('#home2');
+     }
+     },
+     error: function (msg) {
+     }
+     });
+     }
+     function isActive(hash){
+     if(hash == window.location.hash.substr(1)){
+     return 'active';
+     }
+     }*/
 </script>
 </html>
