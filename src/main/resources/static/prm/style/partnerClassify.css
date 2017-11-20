@@ -1,0 +1,47 @@
+#partnerClassify .content {
+  padding: 20px 20px 50px;
+  background-color: #fff;
+}
+#partnerClassify .content .thead-outer {
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 10px;
+}
+#partnerClassify .content .thead-outer .thead-core {
+  height: 48px;
+  line-height: 48px;
+  border-bottom: 1px solid #dddddd;
+}
+#partnerClassify .content .thead-outer .thead-core .thead-content div {
+  float: left;
+  text-align: center;
+  color: #333;
+}
+#partnerClassify .content .thead-outer .thead-core .thead-content .no {
+  width: 10%;
+}
+#partnerClassify .content .thead-outer .thead-core .thead-content .partner {
+  width: 15%;
+}
+#partnerClassify .content .thead-outer .thead-core .thead-content .description {
+  width: 42%;
+}
+#partnerClassify .content .body-box .bodyList {
+  height: 48px;
+  line-height: 48px;
+  border-bottom: 1px solid #dddddd;
+}
+#partnerClassify .content .body-box .bodyList div {
+  float: left;
+  text-align: center;
+  color: #666;
+}
+#partnerClassify .content .body-box .bodyList .no {
+  width: 10%;
+}
+#partnerClassify .content .body-box .bodyList .partner {
+  width: 15%;
+}
+#partnerClassify .content .body-box .bodyList .description {
+  width: 42%;
+}

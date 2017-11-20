@@ -1,0 +1,88 @@
+
+html,body{
+    padding:0;
+    margin:0;
+    height:100%;
+}
+.window_boundingBox{
+    position:fixed;
+    border:1px solid #000;
+    box-shadow: 0 0 12px rgba(0,0,0,.5);
+    background: #fff;
+    z-index: 9999;
+}
+.window_mask {
+    width: 100%;
+    height:100%;
+    background:#000;
+    opacity:0.3;
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+}
+.window_boundingBox input{
+    width:240px;
+    height: 30px;
+    color: #666;
+    font-size: 16px;
+}
+.window_header{
+    background:#333;
+    color:#fff;
+    text-align:left;
+    text-indent: 20px;
+    font-size:16px;
+}
+.window_body{
+    padding:60px 40px 40px;
+    line-height: 28px;
+    color: #31485e;
+}
+.window_closeBtn{
+    position:absolute;
+    top:5px;
+    right:10px;
+    padding:5px 10px;
+    font-size:20px;
+    color:#fff;
+    cursor:pointer;
+}
+
+.window_skin_a.window-boundingBox{
+
+}
+.window_skin_a .window-alertBtn{
+
+}
+.window_skin_a .window_header{
+    background:#7598b9;
+    height: 40px;
+    line-height: 40px;
+}
+.window_footer{
+    width: 300px;
+    margin: 0 auto;
+}
+.window_boundingBox input.window_confirmBtn{
+    float: left;
+    width: 105px;
+    height: 32px;
+    background-color:#fe7272;
+    border: none;
+    padding-left: 0;
+    color: #fff;
+    cursor: pointer;
+}
+.window_boundingBox input.window_cancelBtn{
+    float:right;
+    width: 105px;
+    height: 32px;
+    background-color: #7598b9;
+    border: none;
+    padding-left: 0;
+    color: #fff;
+    cursor: pointer;
+}
+
+

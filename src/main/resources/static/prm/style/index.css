@@ -1,0 +1,562 @@
+#business .content {
+  padding: 20px 20px 50px;
+  background-color: #fff;
+}
+#business .content .thead-outer {
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 10px;
+}
+#business .content .thead-outer .thead-core {
+  height: 48px;
+  line-height: 48px;
+  border-bottom: 1px solid #dddddd;
+}
+#business .content .thead-outer .thead-core .thead-content div {
+  float: left;
+  text-align: center;
+  color: #333;
+}
+#business .content .thead-outer .thead-core .thead-content .no {
+  width: 10%;
+}
+#business .content .thead-outer .thead-core .thead-content .business {
+  width: 20%;
+}
+#business .content .thead-outer .thead-core .thead-content .description {
+  width: 30%;
+}
+#business .content .body-box .bodyList {
+  height: 48px;
+  line-height: 48px;
+  border-bottom: 1px solid #dddddd;
+}
+#business .content .body-box .bodyList div {
+  float: left;
+  text-align: center;
+  color: #666;
+}
+#business .content .body-box .bodyList .no {
+  width: 10%;
+}
+#business .content .body-box .bodyList .business {
+  width: 20%;
+}
+#business .content .body-box .bodyList .description {
+  width: 30%;
+}
+#business .content {
+  padding: 20px 20px 50px;
+  background-color: #fff;
+}
+#business .content table {
+  width: 100%;
+}
+#credit .content {
+  padding: 20px 20px 50px;
+  background-color: #fff;
+}
+#credit .content .thead-outer {
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 10px;
+}
+#credit .content .thead-outer .thead-core {
+  height: 48px;
+  line-height: 48px;
+  border-bottom: 1px solid #dddddd;
+}
+#credit .content .thead-outer .thead-core .thead-content div {
+  float: left;
+  text-align: center;
+  color: #333;
+}
+#credit .content .thead-outer .thead-core .thead-content .no {
+  width: 10%;
+}
+#credit .content .thead-outer .thead-core .thead-content .class {
+  width: 10%;
+}
+#credit .content .thead-outer .thead-core .thead-content .protocolType {
+  width: 30%;
+}
+#credit .content .thead-outer .thead-core .thead-content .valid {
+  width: 10%;
+}
+#credit .content .body-box .bodyList {
+  height: 48px;
+  line-height: 48px;
+  border-bottom: 1px solid #dddddd;
+}
+#credit .content .body-box .bodyList div {
+  float: left;
+  text-align: center;
+  color: #666;
+}
+#credit .content .body-box .bodyList .no {
+  width: 10%;
+}
+#credit .content .body-box .bodyList .class {
+  width: 10%;
+}
+#credit .content .body-box .bodyList .protocolType {
+  width: 30%;
+}
+#credit .content .body-box .bodyList .valid {
+  width: 10%;
+}
+#hierarchy .content {
+  padding: 20px 20px 50px;
+  background-color: #fff;
+}
+#hierarchy .content table {
+  width: 100%;
+}
+#hierarchy .content #remark {
+  padding-left: 20px;
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 10px;
+}
+#hierarchy .content #remark p {
+  height: 25px;
+  line-height: 25px;
+  color: #ed6e56;
+}
+#hierarchy .content .tier .table-header {
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 10px;
+}
+#hierarchy .content .tier .table-header .table-header-box {
+  border-bottom: 1px solid #dddddd;
+}
+#hierarchy .content .tier .selectBox {
+  border-bottom: 1px solid #dddddd;
+}
+#hierarchy .content .tier .item {
+  float: left;
+  width: 18%;
+  height: 48px;
+  line-height: 48px;
+  text-align: center;
+}
+#hierarchy .content .tier .item select {
+  width: 140px;
+  height: 30px;
+  border-radius: 0;
+}
+#partnerClassify .content {
+  padding: 20px 20px 50px;
+  background-color: #fff;
+}
+#partnerClassify .content .thead-outer {
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 10px;
+}
+#partnerClassify .content .thead-outer .thead-core {
+  height: 48px;
+  line-height: 48px;
+  border-bottom: 1px solid #dddddd;
+}
+#partnerClassify .content .thead-outer .thead-core .thead-content div {
+  float: left;
+  text-align: center;
+  color: #333;
+}
+#partnerClassify .content .thead-outer .thead-core .thead-content .no {
+  width: 10%;
+}
+#partnerClassify .content .thead-outer .thead-core .thead-content .partner {
+  width: 15%;
+}
+#partnerClassify .content .thead-outer .thead-core .thead-content .description {
+  width: 42%;
+}
+#partnerClassify .content .body-box .bodyList {
+  height: 48px;
+  line-height: 48px;
+  border-bottom: 1px solid #dddddd;
+}
+#partnerClassify .content .body-box .bodyList div {
+  float: left;
+  text-align: center;
+  color: #666;
+}
+#partnerClassify .content .body-box .bodyList .no {
+  width: 10%;
+}
+#partnerClassify .content .body-box .bodyList .partner {
+  width: 15%;
+}
+#partnerClassify .content .body-box .bodyList .description {
+  width: 42%;
+}
+#partnerManage .content {
+  padding: 20px 20px 50px;
+  background-color: #fff;
+}
+#partnerManage .content .searchBar {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dddddd;
+  font-size: 16px;
+}
+#partnerManage .content .searchBar input {
+  height: 28px;
+  width: 268px;
+  margin-right: 20px;
+}
+#partnerManage .content .searchBar label {
+  color: #ed6e56;
+  margin-right: 120px;
+  height: 28px;
+}
+#partnerManage .content .searchBar .clickLink {
+  color: #ed6e56;
+  margin-right: 26px;
+}
+#partnerManage .content .handleBar {
+  margin-top: 30px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #dddddd;
+}
+#partnerManage .content .handleBar .handle-left a {
+  margin-right: 36px;
+  text-decoration: underline;
+}
+#partnerManage .content .handleBar .handle-right a {
+  margin-left: 60px;
+}
+#partnerManage .content .handleBar a {
+  color: #ed6e56;
+}
+html,
+body {
+  height: 100%;
+  background-color: #f8f7fa;
+}
+#wrapper {
+  height: 100%;
+}
+#wrapper #main {
+  padding-left: 200px;
+  height: 100%;
+}
+#wrapper #header {
+  height: 60px;
+  line-height: 60px;
+  background-color: #fff;
+  border-bottom: 1px solid #dddddd;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  min-width: 1100px;
+}
+#wrapper #header .logo {
+  display: inline-block;
+  height: 60px;
+  width: 199px;
+  float: left;
+  background-color: #ed6e56;
+  text-align: center;
+  cursor: default;
+}
+#wrapper #header h1 {
+  color: #333;
+  font-size: 18px;
+  margin-left: 30px;
+}
+#wrapper #header .time {
+  margin-left: 18px;
+  position: relative;
+  top: 5px;
+}
+#wrapper #header .user_info img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+#wrapper #header em,
+#wrapper #header a {
+  color: #c3221d;
+}
+#wrapper #header .exit {
+  margin-left: 30px;
+  margin-right: 50px;
+}
+#wrapper #header .exit a {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  color: #666;
+}
+#wrapper #header .exit a i {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url('../image/sprite.png');
+  background-position: -196px 0;
+  margin-right: 5px;
+  position: relative;
+  top: 5px;
+}
+#wrapper #left {
+  width: 200px;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  background-color: #fff;
+  padding-top: 80px;
+}
+#wrapper #left ul li {
+  width: 100%;
+  height: 80px;
+  line-height: 80px;
+  text-align: center;
+}
+#wrapper #left ul li a {
+  display: inline-block;
+  width: 100%;
+  height: 80px;
+  font-size: 18px;
+  position: relative;
+}
+#wrapper #left ul li a.active {
+  color: #fff;
+}
+#wrapper #left ul li a.active p {
+  background-color: #f8f7fa;
+  color: #333;
+}
+#wrapper #left ul li a::before {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  left: 26px;
+  top: 32px;
+  background-image: url('../image/sprite.png');
+  background-repeat: no-repeat;
+}
+#wrapper #left ul li a p {
+  height: 50px;
+  line-height: 50px;
+  margin-top: 15px;
+  color: #666;
+  padding-left: 25px;
+}
+#wrapper #left ul li .business::before {
+  background-position: 0 0;
+}
+#wrapper #left ul li .business.active::before {
+  background-position: -37px 0;
+}
+#wrapper #left ul li .serve::before {
+  background-position: 0 -32px;
+}
+#wrapper #left ul li .serve.active::before {
+  background-position: -37px -32px;
+}
+#wrapper #left ul li .credit::before {
+  background-position: 0 -62px;
+}
+#wrapper #left ul li .credit.active::before {
+  background-position: -37px -62px;
+}
+#wrapper #left ul li .hierarchy::before {
+  background-position: 0 -98px;
+}
+#wrapper #left ul li .hierarchy.active::before {
+  background-position: -37px -98px;
+}
+#wrapper #left ul li .partnerClassify::before {
+  background-position: 0 -135px;
+}
+#wrapper #left ul li .partnerClassify.active::before {
+  background-position: -37px -135px;
+}
+#wrapper #left ul li .partnerManage::before {
+  background-position: 0 -168px;
+}
+#wrapper #left ul li .partnerManage.active::before {
+  background-position: -37px -168px;
+}
+#wrapper #left ul#home2 li {
+  width: 100%;
+  height: 80px;
+  text-align: center;
+}
+#wrapper #left ul#home2 li a {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  padding-left: 0;
+  font-size: 18px;
+  position: relative;
+}
+#wrapper #left ul#home2 li a.active {
+  color: #fff;
+}
+#wrapper #left ul#home2 li a.active p {
+  background-color: #f8f7fa;
+  color: #333;
+}
+#wrapper #left ul#home2 li a::before {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  left: 20px;
+  top: 25px;
+  background-image: url('../image/sprite.png');
+  background-repeat: no-repeat;
+}
+#wrapper #left ul#home2 li a p {
+  margin-top: 15px;
+  height: 50px;
+  line-height: 50px;
+  padding-left: 30px;
+  color: #666;
+}
+#wrapper #left ul#home2 li .tax::before {
+  background-position: -78px -332px;
+}
+#wrapper #left ul#home2 li .tax.active::before {
+  background-position: -121px -332px;
+}
+#wrapper #left ul#home2 li .copy::before {
+  background-position: -78px -370px;
+}
+#wrapper #left ul#home2 li .copy.active::before {
+  background-position: -121px -370px;
+}
+#wrapper #left ul#home2 li .process::before {
+  background-position: -78px -417px;
+}
+#wrapper #left ul#home2 li .process.active::before {
+  background-position: -121px -417px;
+}
+#wrapper #left ul#home2 li .process2::before {
+  background-position: -78px -417px;
+}
+#wrapper #left ul#home2 li .process2.active::before {
+  background-position: -121px -417px;
+}
+#wrapper #left ul#home2 li .maintenance::before {
+  background-position: -78px -417px;
+}
+#wrapper #left ul#home2 li .maintenance.active::before {
+  background-position: -121px -417px;
+}
+.right {
+  position: relative;
+  top: 60px;
+}
+.right .right_content {
+  min-height: 100%;
+  background-color: #f8f7fa;
+  padding: 20px 2%;
+  box-sizing: border-box;
+}
+.right .right_content .nav {
+  margin-bottom: 20px;
+}
+.right .right_content .nav h2 {
+  font-size: 18px;
+  color: #666;
+  border-left: 6px solid #ed6e56;
+  text-indent: 16px;
+}
+.right .right_content .nav p {
+  height: 26px;
+  line-height: 26px;
+  color: #aabcce;
+}
+label {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  margin-right: 10px;
+  color: #31485e;
+}
+input {
+  border: 1px solid #cfcfcf;
+  height: 38px;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+select {
+  border: 1px solid #cfcfcf;
+  height: 38px;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+button {
+  width: 130px;
+  height: 44px;
+  background-color: #fe7272;
+  color: #fff;
+  font-size: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+button.blue {
+  background-color: #7598b9;
+}
+.blue {
+  background-color: #7598b9;
+}
+table {
+  width: 100%;
+}
+table thead tr {
+  border-width: 1px;
+  border-style: none none double none;
+  border-color: #dddddd;
+  height: 48px;
+}
+table thead tr th {
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+}
+table tbody tr {
+  border-bottom: 1px solid #dddddd;
+  height: 48px;
+}
+table tbody tr td {
+  text-align: center;
+  color: #666666;
+  font-size: 16px;
+}
+table tbody tr:hover {
+  background-color: #f9f9fb;
+}
+/*.colorEven{
+  background-color: #fff;
+}*/
+h4 {
+  display: inline-block;
+  margin-left: 20px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 20px;
+  color: #fe7272;
+  margin-bottom: 20px;
+  border-left: 5px solid #fe7272;
+  text-indent: 16px;
+  margin-top: 20px;
+}
+p {
+  height: 36px;
+  line-height: 36px;
+  color: #666;
+}
+input.date_in {
+  background-image: url('../image/sprite.png');
+  background-position: 100px -544px;
+}

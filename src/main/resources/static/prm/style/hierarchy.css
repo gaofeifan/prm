@@ -1,0 +1,11 @@
+#hierarchy .content {
+  padding: 20px 20px 50px;
+  background-color: #fff;
+}
+#hierarchy .content table {
+  width: 100%;
+}
+#hierarchy .content #remark p {
+  height: 25px;
+  line-height: 25px;
+}

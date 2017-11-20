@@ -78,6 +78,4 @@ public class AuthPostMenuController extends BaseController{
             session.setMaxInactiveInterval(60*60*24);
         }
     }
-
-
 }

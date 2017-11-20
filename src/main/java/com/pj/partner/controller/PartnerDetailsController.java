@@ -72,8 +72,6 @@ public class PartnerDetailsController extends BaseController {
         return this.success(pd);
     }
 
-
-
     /**
      * 更新合作伙伴详情
      * @User  GFF
@@ -176,7 +174,6 @@ public class PartnerDetailsController extends BaseController {
     /**
      * 修改转移目录
      * @param ids
-     * @param id
      * @return
      */
     @ApiOperation(value = "修改转移目录" ,httpMethod = "GET", response = Object.class)

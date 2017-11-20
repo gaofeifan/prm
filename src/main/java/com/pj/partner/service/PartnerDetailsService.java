@@ -51,8 +51,9 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
     void shiftPartnerDetailsFileByIds(Integer[] ids, Integer id);
 
     /**
-     *  判断是否删除id
+     *  判断是否可以删除
      * @param id
+     * @return
      */
     boolean isDeletePartnerDetails(Integer id);
 }

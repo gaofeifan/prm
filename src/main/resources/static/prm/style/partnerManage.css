@@ -1,0 +1,7 @@
+#partnerManage .content {
+  padding: 20px 20px 50px;
+  background-color: #fff;
+}
+#partnerManage .content .searchBar .clickLink {
+  color: #666;
+}

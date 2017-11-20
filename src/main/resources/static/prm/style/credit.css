@@ -1,0 +1,53 @@
+#credit .content {
+  padding: 20px 20px 50px;
+  background-color: #fff;
+}
+#credit .content .thead-outer {
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 10px;
+}
+#credit .content .thead-outer .thead-core {
+  height: 48px;
+  line-height: 48px;
+  border-bottom: 1px solid #dddddd;
+}
+#credit .content .thead-outer .thead-core .thead-content div {
+  float: left;
+  text-align: center;
+  color: #333;
+}
+#credit .content .thead-outer .thead-core .thead-content .no {
+  width: 10%;
+}
+#credit .content .thead-outer .thead-core .thead-content .class {
+  width: 10%;
+}
+#credit .content .thead-outer .thead-core .thead-content .protocolType {
+  width: 30%;
+}
+#credit .content .thead-outer .thead-core .thead-content .valid {
+  width: 10%;
+}
+#credit .content .body-box .bodyList {
+  height: 48px;
+  line-height: 48px;
+  border-bottom: 1px solid #dddddd;
+}
+#credit .content .body-box .bodyList div {
+  float: left;
+  text-align: center;
+  color: #666;
+}
+#credit .content .body-box .bodyList .no {
+  width: 10%;
+}
+#credit .content .body-box .bodyList .class {
+  width: 10%;
+}
+#credit .content .body-box .bodyList .protocolType {
+  width: 30%;
+}
+#credit .content .body-box .bodyList .valid {
+  width: 10%;
+}

@@ -1,0 +1,369 @@
+@import "basic.less";
+@import "business.less";
+@import "server.less";
+@import "credit.less";
+@import "hierarchy.less";
+@import "partnerClassify.less";
+@import "partnerManage.less";
+
+html,body{
+  height: 100%;
+  background-color: @boardColor;
+}
+#wrapper{
+  height:100%;
+}
+#wrapper #main{
+  padding-left: 200px;
+  height:100%;
+}
+#wrapper #header{
+  height: 60px;
+  line-height: 60px;
+  background-color: #fff;
+  border-bottom: 1px solid @borderColor;
+  color: #fff;
+  position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index: 999;
+  min-width: 1100px;
+  .logo{
+    display: inline-block;
+    height:60px;
+    width: 199px;
+    float: left;
+    background-color: @BrightColor;
+    text-align: center;
+    cursor: default;
+  }
+  h1{
+    color:#333;
+    font-size: 18px;
+    margin-left: 30px;
+  }
+  .time{
+    margin-left: 18px;
+    position: relative;
+    top:5px;
+  }
+  .user_info img{
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  em,a{
+    color:@hColor;
+  }
+  .exit{
+    margin-left: 30px;
+    margin-right: 50px;
+    a{
+      display: inline-block;
+      height: 40px;
+      line-height: 40px;
+      color:#666;
+      i{
+        display: inline-block;
+        width:20px;
+        height:20px;
+        background-image: url('../image/sprite.png');
+        background-position: -196px 0;
+        margin-right: 5px;
+        position: relative;
+        top:5px;
+      }
+    }
+  }
+}
+#wrapper{
+  #left{
+    width: 200px;
+    height: 100%;
+    position: fixed;
+    top:0;
+    left:0;
+    z-index: 99;
+    background-color:#fff;
+    padding-top: 80px;
+    ul{
+      li{
+        width: 100%;
+        height: 80px;
+        line-height: 80px;
+        text-align: center;
+        a{
+          display: inline-block;
+          width:100%;
+          height: 80px;
+          font-size: 18px;
+          position: relative;
+          &.active{
+            color:#fff;
+            p{
+              background-color:@boardColor;
+              color: #333;
+            }
+          }
+          &::before{
+            content: '';
+            position: absolute;
+            width: 22px;
+            height:22px;
+            left:26px;
+            top:32px;
+            background-image: url('../image/sprite.png');
+            background-repeat: no-repeat;
+          }
+          p{
+            height: 50px;
+            line-height: 50px;
+            margin-top: 15px;
+            color: #666;
+            padding-left: 25px;
+          }
+        }
+        .business{
+          &::before{
+            background-position: 0 0;
+          }
+          &.active::before{
+            background-position: -37px 0;
+          }
+        }
+        .serve{
+          &::before{
+            background-position:0 -32px;
+          }
+          &.active::before{
+            background-position: -37px -32px ;
+          }
+        }
+        .credit{
+          &::before{
+            background-position: 0 -62px ;
+          }
+          &.active::before{
+            background-position: -37px -62px ;
+          }
+        }
+        .hierarchy{
+           &::before{
+             background-position: 0 -98px;
+           }
+          &.active::before{
+            background-position: -37px -98px ;
+          }
+         }
+        .partnerClassify{
+            &::before{
+              background-position: 0 -135px ;
+            }
+          &.active::before{
+            background-position: -37px -135px ;
+          }
+          }
+        .partnerManage{
+          &::before{
+            background-position: 0 -168px ;
+          }
+          &.active::before{
+            background-position: -37px -168px ;
+          }
+        }
+      }
+      &#home2{
+        li{
+          width: 100%;
+          height: 80px;
+          text-align: center;
+          a{
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            padding-left: 0;
+            font-size: 18px;
+            position: relative;
+            &.active{
+              color:#fff;
+              p{
+                background-color: @boardColor;
+                color: #333;
+              }
+            }
+            &::before{
+              content: '';
+              position: absolute;
+              width: 30px;
+              height:30px;
+              left:20px;
+              top:25px;
+              background-image: url('../image/sprite.png');
+              background-repeat: no-repeat;
+            }
+            p{
+              margin-top: 15px;
+              height: 50px;
+              line-height: 50px;
+              padding-left: 30px;
+              color:#666;
+            }
+          }
+          .tax{
+            &::before{
+              background-position: -78px -332px;
+            }
+            &.active::before{
+              background-position: -121px -332px;
+            }
+          }
+          .copy{
+            &::before{
+              background-position: -78px -370px;
+            }
+            &.active::before{
+              background-position: -121px -370px;
+            }
+          }
+          .process{
+            &::before{
+              background-position: -78px -417px;
+            }
+            &.active::before{
+              background-position: -121px -417px;
+            }
+          }
+          .process2{
+            &::before{
+              background-position: -78px -417px;
+            }
+            &.active::before{
+              background-position: -121px -417px;
+            }
+          }
+          .maintenance{
+            &::before{
+              background-position: -78px -417px;
+            }
+            &.active::before{
+              background-position: -121px -417px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.right{
+  position: relative;
+  top: 60px;
+  .right_content{
+    min-height:100%;
+    background-color: @boardColor;
+    padding:20px 2%;
+    box-sizing: border-box;
+    .nav{
+      margin-bottom: 20px;
+      h2{
+        font-size: 18px;
+        color:#666;
+        border-left: 6px solid @BrightColor;
+        text-indent: 16px;
+      }
+      p{
+        height: 26px;
+        line-height: 26px;
+        color:#aabcce;
+      }
+    }
+  }
+}
+label{
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  margin-right: 10px;
+  color: #31485e;
+}
+input{
+  border: 1px solid #cfcfcf;
+  height: 38px;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+select{
+  border: 1px solid #cfcfcf;
+  height: 38px;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+button{
+  width: 130px;
+  height: 44px;
+  background-color: @btnColor;
+  color:#fff;
+  font-size: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+button.blue{
+  background-color: #7598b9;
+}
+.blue{
+  background-color: #7598b9;
+}
+table{
+  width: 100%;
+  thead{
+    tr{
+      border-width:1px;
+      border-style:none none double none;
+      border-color:@borderColor;
+      height: 48px;
+      th{
+        color:#333333;
+        font-size: 16px;
+        font-weight:normal;
+      }
+    }
+  }
+  tbody{
+    tr{
+      border-bottom:1px solid @borderColor;
+      height: 48px;
+      td{
+        text-align: center;
+        color:@tableColor;
+        font-size: 16px;
+      }
+      &:hover{
+        background-color:#f9f9fb;
+      }
+    }
+  }
+}
+/*.colorEven{
+  background-color: #fff;
+}*/
+h4{
+  display: inline-block;
+  margin-left: 20px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 20px;
+  color:@h2Color;
+  margin-bottom: 20px;
+  border-left:5px solid @h2Color;
+  text-indent: 16px;
+  margin-top: 20px;
+}
+p{
+  height: 36px;
+  line-height: 36px;
+  color: #666;
+}
+input.date_in{
+  background-image: url('../image/sprite.png');
+  background-position:100px -544px;
+}

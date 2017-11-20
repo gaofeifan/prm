@@ -162,7 +162,6 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     private boolean verifyfeildIsExist(String fieldName) throws NoSuchFieldException {
             Field field =  PartnerDetails.class.getDeclaredField(fieldName);
             return true;
-
     }
 
     private String toUnderlineJSONString(String param){
@@ -189,7 +188,6 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         PartnerDetails partnerDetails = super.selectByPrimaryKey(id);
         partnerDetails.setIsDelete(1);
         super.updateByPrimaryKey(partnerDetails);
-
     }
 
     @Override
@@ -198,7 +196,6 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         Example example = new Example(PartnerDetailsShifFile.class);
         example.createCriteria().andIn("id",list);
         return this.partnerDetailsShifFileMapper.selectByExample(example);
-
     }
 
     @Override
@@ -217,7 +214,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             }
         }
         shifFileList.removeAll(deleteFileList);
-        //  修改转移文件的父集
+        //  更新转移目录的父集
         for (PartnerDetailsShifFile childFds:shifFileList) {
             childFds.setPId(id);
             this.partnerDetailsShifFileMapper.updateByPrimaryKey(childFds);

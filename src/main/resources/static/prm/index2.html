@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PRM-商务合作伙伴关系管理系统</title>
+    <link rel="stylesheet" href="lib/ztree/css/zTreeStyle/zTreeStyle.css">
+    <!--<link rel="stylesheet" href="lib/ztree/css/demo.css">-->
+    <link rel="stylesheet" href="lib/pagination/pagination.css">
+    <link rel="stylesheet" href="lib/dialog/window.css">
+    <link rel="stylesheet" href="style/base.css">
+    <link rel="stylesheet" href="style/index.css">
+    <script src="lib/jquery.js"></script>
+    <script src="lib/vipspa.js"></script>
+    <script src="lib/pagination/jquery.pagination.js"></script>
+    <script src="lib/doT.min.js"></script>
+    <script src="lib/dialog/dialog.js"></script>
+    <script src="lib/jquery.form.js"></script>
+    <script src="lib/My97DatePicker/WdatePicker.js"></script>
+    <script src="lib/jquery.cookie.js"></script>
+    <script src="lib/ztree/js/jquery.ztree.all.js"></script>
+    <script src="script/config.js"></script>
+    <script src="script/common.js"></script>
+    <script src="script/index.js"></script>
+</head>
+<body>
+<div id="wrapper">
+    <div id="header">
+        <div class="fl">
+            <a class="logo" href="javascript:void(0);"><img src="image/logo3.png" alt=""></a>
+            <h1 class="fl">PRM-商务合作伙伴关系管理系统</h1>
+            <span class="fl time"><em id="day"></em>&nbsp;&nbsp; <em id="time"></em></span>
+        </div>
+        <div class="fr">
+            <div class="fl user_info">
+               <!-- <img src="image/logo.png" alt="">-->
+                <em class="user_name"></em>
+            </div>
+            <div class="fr exit">
+                <a id="beforeLogout" href="javascript:void(0);"><i></i>退出登录</a>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div id="left">
+            <ul id="home2">
+                <li><a class="tax" href="#homePage"><p>首页</p></a></li>
+                <li><a class="copy" href="#user"><p>用户管理</p></a></li>
+                <li><a class="copy" href="#power"><p>权限管理</p></a></li>
+                <li><a class="copy" href="#log"><p>系统日志</p></a></li>
+            </ul>
+        </div>
+        <div class="right" id="ui-view">
+
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    /*$('.user_name').text($.cookie('front_username'));
+    //根据登录权限 加载全台链接和左侧菜单
+    var userEmail = $.cookie('front_useremail');
+    if(userEmail == 'pjwl@pj-l.com'){
+        $('<li id="user"><a class="process2 '+isActive('process2')+'" href="#process2"><p>流程文件</p></a></li>').appendTo('#home2');
+    }else{
+        $.ajax({
+            url: 'http://'+dPathUrl+'/auth/selectUserAuthPost.do',
+            type: 'get',
+            xhrFields:{
+                withCredentials: true
+            },
+            crossDomain: true,//支持跨域发送cookie
+            jsonp: 'callback',
+            dataType:'jsonp',
+            data:{
+                email:$.cookie('front_useremail')
+            },
+            success: function (data) {
+                if(!data.data){//普通用户
+                    $('<li id="user"><a class="process '+isActive('process')+'" href="#process"><p>流程文件</p></a></li>').appendTo('#home2');
+                }else{//管理员用户
+                    $('<li id="admin"><a class="maintenance '+isActive('maintenance')+'" href="#maintenance"><p>流程文件</p></a></li>').appendTo('#home2');
+                }
+            },
+            error: function (msg) {
+            }
+        });
+    }
+    function isActive(hash){
+        if(hash == window.location.hash.substr(1)){
+            return 'active';
+        }
+    }*/
+</script>
+</html>

@@ -1,0 +1,47 @@
+#business .content {
+  padding: 20px 20px 50px;
+  background-color: #fff;
+}
+#business .content .thead-outer {
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 10px;
+}
+#business .content .thead-outer .thead-core {
+  height: 48px;
+  line-height: 48px;
+  border-bottom: 1px solid #dddddd;
+}
+#business .content .thead-outer .thead-core .thead-content div {
+  float: left;
+  text-align: center;
+  color: #333;
+}
+#business .content .thead-outer .thead-core .thead-content .no {
+  width: 10%;
+}
+#business .content .thead-outer .thead-core .thead-content .business {
+  width: 20%;
+}
+#business .content .thead-outer .thead-core .thead-content .description {
+  width: 30%;
+}
+#business .content .body-box .bodyList {
+  height: 48px;
+  line-height: 48px;
+  border-bottom: 1px solid #dddddd;
+}
+#business .content .body-box .bodyList div {
+  float: left;
+  text-align: center;
+  color: #666;
+}
+#business .content .body-box .bodyList .no {
+  width: 10%;
+}
+#business .content .body-box .bodyList .business {
+  width: 20%;
+}
+#business .content .body-box .bodyList .description {
+  width: 30%;
+}
