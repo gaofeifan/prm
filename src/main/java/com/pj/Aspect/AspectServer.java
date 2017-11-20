@@ -4,8 +4,11 @@ package com.pj.Aspect;
 import com.pj.auth.pojo.AuthMenu;
 import com.pj.auth.service.AuthMenuService;
 import com.pj.auth.service.AuthUserService;
+import com.pj.partner.mapper.PartnerDetailsShifFileMapper;
 import com.pj.partner.pojo.PartnerDetails;
+import com.pj.partner.pojo.PartnerDetailsShifFile;
 import com.pj.partner.service.PartnerDetailsService;
+import com.pj.partner.service.impl.PartnerDetailsServiceImpl;
 import com.pj.user.Utils.RequestDate;
 import com.pj.user.pojo.Operation;
 import com.pj.user.pojo.Permissions;
@@ -53,6 +56,22 @@ public class AspectServer {
     private PartnerDetailsService partnerDetailsService;
 
 
+
+    @Autowired(required = false)
+    private PartnerDetailsServiceImpl partnerDetailsServiceImpl;
+
+    public PartnerDetailsServiceImpl getPartnerDetailsServiceImpl() {
+        return partnerDetailsServiceImpl;
+    }
+
+    public void setPartnerDetailsServiceImpl(PartnerDetailsServiceImpl partnerDetailsServiceImpl) {
+        this.partnerDetailsServiceImpl = partnerDetailsServiceImpl;
+    }
+    @Autowired(required = false)
+    private PartnerDetailsShifFileMapper partnerDetailsShifFileMapper;
+
+
+
     public void setUserInfo(LogService logService) {
         this.logService = logService;
     }
@@ -61,6 +80,7 @@ public class AspectServer {
     public void init() {
         aspectServer = this;
         aspectServer.logService = this.logService;
+        aspectServer.partnerDetailsServiceImpl = this.partnerDetailsServiceImpl;
 
     }
 
@@ -120,8 +140,77 @@ public class AspectServer {
     public void editPostAuthorityExecution() {
     }
 
+    // 关注 合作伙伴文件转移 记录日
+    @Pointcut("execution(* com.pj.partner.service.impl.PartnerDetailsServiceImpl.shiftPartnerDetailsFileByIds(..))")
+    public void shiftPartnerDetailsFileByIdsexecution() {
+    }
 
-    //  获取已删除的权限 记录日志
+
+
+    // 关注 合作伙伴文件转移   before
+    @Before("shiftPartnerDetailsFileByIdsexecution( )")
+    public void shiftPartnerDetailsFileByIdsexecutionBefore(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        HttpServletRequest request = requestinit();
+        Object[] args = point.getArgs();
+
+        //  查询转移的文件
+        List<PartnerDetailsShifFile> shifFileList = partnerDetailsService.selectShiftFile((Integer[])args[0]);
+        List<PartnerDetailsShifFile> deleteFileList = new ArrayList<>();
+        //  获取转移文件所有的子集
+        for (PartnerDetailsShifFile fds:shifFileList) {
+            List<PartnerDetailsShifFile> childList =partnerDetailsShifFileMapper.getChildList(fds.getId());
+            //   如果子集中存在转移直的目录将其删除
+            for (PartnerDetailsShifFile childFds:childList) {
+                if(childFds.getId() == Integer.parseInt(args[1].toString()) ){
+                    deleteFileList.add(childFds);
+                }
+            }
+        }
+        shifFileList.removeAll(deleteFileList);
+        request.getSession().setAttribute("oldShifFileList",shifFileList);
+    }
+
+    // 关注 合作伙伴文件转移   after
+    @AfterReturning("shiftPartnerDetailsFileByIdsexecution( )")
+    public void shiftPartnerDetailsFileByIdsexecutionAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        HttpServletRequest request = requestinit();
+        Object[] args = point.getArgs();
+
+        String actionData = " 目录转移  ：";
+        // 获取元数据集合
+        List<PartnerDetailsShifFile> oldShifFileList = (List<PartnerDetailsShifFile>) request.getSession().getAttribute("oldShifFileList");
+        boolean flage  = false;
+        // 遍历添加 日志
+        if(null!=oldShifFileList  || oldShifFileList.size()!=0){
+            for (PartnerDetailsShifFile oldfile :oldShifFileList) {
+                Field[] declaredFields = getfieldsMethod(oldfile);
+                // 获取 id序列号
+                for (Field fiel:declaredFields) {
+                    if(fiel.getName().equals("id")){
+                        PropertyDescriptor pd = new PropertyDescriptor(fiel.getName(), oldfile.getClass());
+                        Method getMethod = pd.getReadMethod();//获得get方法  
+                        Object o = getMethod.invoke(oldfile);//执行get方法返回一个Object
+                     // 日志内容拼接
+                        actionData+=""+"ID( "+o+" )-目录等级";
+                    }
+                    if(fiel.getName().equals("pId")){
+                        PropertyDescriptor pd = new PropertyDescriptor(fiel.getName(), oldfile.getClass());
+                        Method getMethod = pd.getReadMethod();//获得get方法  
+                        Object o = getMethod.invoke(oldfile);//执行get方法返回一个Object
+                        // 日志内容拼接
+                        actionData+=""+"< "+o+" >（ " + args[1] + " ） ; ";
+                        flage = true;
+                    }
+                }
+            }
+
+        }
+        // 操作日志追加
+        addLogMethod(flage,request , actionData);
+        removeAttribute("oldShifFileList",request);
+
+    }
+        //  获取已删除的权限 记录日志
     @Before("editPostAuthorityExecution( )")
     public void editPostAuthorityPointcutBefore(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         HttpServletRequest request = requestinit();
