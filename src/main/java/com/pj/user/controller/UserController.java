@@ -1,24 +1,16 @@
 package com.pj.user.controller;
 
-import com.google.gson.JsonObject;
-import com.pj.Aspect.AspectServer;
 import com.pj.conf.base.BaseController;
-import com.pj.user.pojo.Hierarchy;
 import com.pj.user.pojo.RequestParam;
 import com.pj.user.pojo.UserLevel;
 import com.pj.user.service.EmailService;
-import com.pj.user.service.LogService;
 import com.pj.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import net.sf.json.JSONArray;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,8 +33,13 @@ private  UserService userservice;
     @RequestMapping("/level")
     @ResponseBody
     @ApiOperation(value = "用户信用权限--列表查询接口" , httpMethod = "GET" , response = Object.class)
-    public List<UserLevel> findUserLevelList(){
-        return userservice.findUserLevelList();
+    public Map<String, Object> findUserLevelList(){
+        try {
+            return this.success(userservice.findUserLevelList());
+        }catch (Exception e){
+            System.out.println(e);
+            return this.error();
+        }
     }
 
     //  用 hu信用等级 修改
@@ -74,8 +71,7 @@ private  UserService userservice;
     @ApiOperation(value = "层级位数管理  --查询" , httpMethod = "GET" , response = Object.class)
     public  Map<String, Object> findHierarchyList(){
         try {
-            userservice.findHierarchyList();
-            return this.success();
+            return this.success(userservice.findHierarchyList());
         }catch (Exception e){
             System.out.println(e);
             return this.error();
