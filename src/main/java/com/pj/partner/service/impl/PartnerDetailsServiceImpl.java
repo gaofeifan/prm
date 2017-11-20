@@ -1,8 +1,5 @@
 package com.pj.partner.service.impl;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.pj.conf.base.AbstractBaseServiceImpl;
 import com.pj.conf.base.BaseMapper;
 import com.pj.partner.mapper.PartnerDetailsMapper;
@@ -15,7 +12,6 @@ import com.pj.partner.service.PartnerAddressService;
 import com.pj.partner.service.PartnerDetailsService;
 import com.pj.partner.service.PartnerLinkmanService;
 import org.apache.commons.lang3.StringUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -148,7 +144,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         } catch (NoSuchFieldException e) {
             throw new RuntimeException("the field is not exist");
         }
-        fieldName = toUnderlineJSONString(fieldName);
+        fieldName = partnerDetailsMapper.toUnderlineJSONString(fieldName);
         Example example = new Example(PartnerDetails.class);
         example.createCriteria().andCondition(fieldName,fieldValue);
         List<PartnerDetails> pds =super.selectByExample(example);
@@ -162,24 +158,6 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     private boolean verifyfeildIsExist(String fieldName) throws NoSuchFieldException {
             Field field =  PartnerDetails.class.getDeclaredField(fieldName);
             return true;
-    }
-
-    private String toUnderlineJSONString(String param){
-        if (param==null||"".equals(param.trim())){
-            return "";
-        }
-        int len=param.length();
-        StringBuilder sb=new StringBuilder(len);
-        for (int i = 0; i < len; i++) {
-            char c=param.charAt(i);
-            if (Character.isUpperCase(c)){
-                sb.append(UNDERLINE);
-                sb.append(Character.toLowerCase(c));
-            }else{
-                sb.append(c);
-            }
-        }
-        return sb.toString();
     }
 
     @Override
