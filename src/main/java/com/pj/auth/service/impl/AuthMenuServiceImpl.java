@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/11/8.
  */
@@ -22,5 +24,11 @@ public class AuthMenuServiceImpl  extends AbstractBaseServiceImpl<AuthMenu,Integ
     @Override
     public BaseMapper<AuthMenu> getMapper() {
         return authMenuMapper;
+    }
+
+    // 支持  aop切面获取 权限信息 2017年11月17日10:08:27
+    @Override
+    public List<AuthMenu> findAuthMenuListBypostId(int postId) {
+        return authMenuMapper.findAuthMenuListBypostId(postId);
     }
 }

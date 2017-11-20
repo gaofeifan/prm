@@ -1,14 +1,22 @@
 package com.pj.Aspect;
 
 
+import com.pj.auth.pojo.AuthMenu;
+import com.pj.auth.service.AuthMenuService;
+import com.pj.auth.service.AuthUserService;
+import com.pj.partner.mapper.PartnerDetailsShifFileMapper;
+import com.pj.partner.pojo.PartnerDetails;
+import com.pj.partner.pojo.PartnerDetailsShifFile;
+import com.pj.partner.service.PartnerDetailsService;
+import com.pj.partner.service.impl.PartnerDetailsServiceImpl;
 import com.pj.user.Utils.RequestDate;
 import com.pj.user.pojo.Operation;
+import com.pj.user.pojo.Permissions;
 import com.pj.user.service.LogService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -29,135 +37,334 @@ import java.util.*;
 
 @Aspect
 @Configuration
-@Component
 public class AspectServer {
 
-   private static String clazzName = AspectServer.class.getName();
+    private static String clazzName = AspectServer.class.getName();
 
-    @Autowired(required=false)
+    @Autowired(required = false)
     private LogService logService;
     private static AspectServer aspectServer;
+
+    @Autowired(required = false)
+    private AuthMenuService authMenuService;
+
+    @Autowired(required = false)
+    private AuthUserService authUserService;
+
+
+    @Autowired(required = false)
+    private PartnerDetailsService partnerDetailsService;
+
+
+
+    @Autowired(required = false)
+    private PartnerDetailsServiceImpl partnerDetailsServiceImpl;
+
+    public PartnerDetailsServiceImpl getPartnerDetailsServiceImpl() {
+        return partnerDetailsServiceImpl;
+    }
+
+    public void setPartnerDetailsServiceImpl(PartnerDetailsServiceImpl partnerDetailsServiceImpl) {
+        this.partnerDetailsServiceImpl = partnerDetailsServiceImpl;
+    }
+    @Autowired(required = false)
+    private PartnerDetailsShifFileMapper partnerDetailsShifFileMapper;
+
+
 
     public void setUserInfo(LogService logService) {
         this.logService = logService;
     }
+
     @PostConstruct
     public void init() {
         aspectServer = this;
         aspectServer.logService = this.logService;
+        aspectServer.partnerDetailsServiceImpl = this.partnerDetailsServiceImpl;
 
     }
 
     //  private static final Logger log = LoggerFactory.getLogger(AspectServer.class);
 
     // 关注 信用等级的更新操作 记录日志
-   @Pointcut("execution(* com.pj.user.service.*.updateLevelById(..))")
-    public void updateLevelByIdexecution(){}
+    @Pointcut("execution(* com.pj.user.service.*.updateLevelById(..))")
+    public void updateLevelByIdexecution() {
+    }
+
+
+    // 关注 层级位数修改操作 记录日志
+    @Pointcut("execution(* com.pj.user.service.*.updateHierarchyList(..))")
+    public void updateHierarchyListexecution() {
+    }
+
+    // 关注 刪除联系人 记录日志
+    @Pointcut("execution(* com.pj.partner.service.*.deletePartnerLinkmanByDetailsId(..))")
+    public void deletePartnerLinkmanByDetailsId() {
+    }
+
+    // 关注 新增联系人 记录日志
+    @Pointcut("execution(* com.pj.partner.*.*.PartnerLinkmanServiceImpl.insert(..))")
+    public void PartnerLinkmanServiceImplInsertList() {
+    }
+
+
+    // 关注 刪除联系地址 记录日志
+    @Pointcut("execution(* com.pj.partner.*.*.deletePartnerAddressByDetails(..))")
+    public void deletePartnerAddressByDetails() {
+    }
+
+    // 关注 新增联系地址 记录日志
+    @Pointcut("execution(* com.pj.partner.*.*.PartnerAddressServiceImpl.insert(..))")
+    public void PartnerAddressServiceImplInsert() {
+    }
+
+    // 关注 更新合作伙伴 记录日志
+    @Pointcut("execution(* com.pj.partner.*.*.PartnerDetailsServiceImpl.updateByPrimaryKey(..))")
+    public void PartnerDetailsServiceImplUpdateByPrimaryKey() {
+    }
+
+
+    // 关注 新增合作伙伴 记录日志
+    @Pointcut("execution(* com.pj.partner.*.*.PartnerDetailsServiceImpl.insertSelective(..))")
+    public void PartnerDetailsServiceImplInsertSelective() {
+    }
+
+    // 关注 删除合作伙伴 记录日志
+    @Pointcut("execution(* com.pj.partner.service.impl.PartnerDetailsServiceImpl.deletePartnerDetailsById(..))")
+    public void PartnerDetailsServiceImplDeletePartnerDetailsById() {
+    }
+
+
+    // 关注 权限 记录日
+    @Pointcut("execution(* com.pj.auth.service.impl.AuthPostMenuServiceImpl.editPostAuthority(..))")
+    public void editPostAuthorityExecution() {
+    }
+
+    // 关注 合作伙伴文件转移 记录日
+    @Pointcut("execution(* com.pj.partner.service.impl.PartnerDetailsServiceImpl.shiftPartnerDetailsFileByIds(..))")
+    public void shiftPartnerDetailsFileByIdsexecution() {
+    }
 
 
 
-   // 关注 层级位数修改操作 记录日志
-   @Pointcut("execution(* com.pj.user.service.*.updateHierarchyList(..))")
-    public void updateHierarchyListexecution(){}
-
-        // 关注 刪除联系人 记录日志
-        @Pointcut("execution(* com.pj.partner.service.*.deletePartnerLinkmanByDetailsId(..))")
-        public void deletePartnerLinkmanByDetailsId(){}
-
-   // 关注 新增联系人 记录日志
-        @Pointcut("execution(* com.pj.partner.*.*.PartnerLinkmanServiceImpl.insert(..))")
-        public void PartnerLinkmanServiceImplInsertList(){}
-
-
-        // 关注 刪除联系地址 记录日志
-        @Pointcut("execution(* com.pj.partner.*.*.deletePartnerAddressByDetails(..))")
-        public void deletePartnerAddressByDetails(){}
-
-         // 关注 新增联系地址 记录日志
-        @Pointcut("execution(* com.pj.partner.*.*.PartnerAddressServiceImpl.insert(..))")
-         public void PartnerAddressServiceImplInsert(){}
-
-        // 关注 更新合作伙伴 记录日志
-        @Pointcut("execution(* com.pj.partner.*.*.PartnerDetailsServiceImpl.updateByPrimaryKey(..))")
-        public void PartnerDetailsServiceImplUpdateByPrimaryKey(){}
-
-
-        // 关注 新增合作伙伴 记录日志
-        @Pointcut("execution(* com.pj.partner.*.*.PartnerDetailsServiceImpl.insertSelective(..))")
-        public void PartnerDetailsServiceImplInsertSelective(){}
-
-
-    // 关注 新增权限 记录日
-         @Pointcut("execution(* com.pj.auth.mapper.AuthPostMenuMapper.insert(..))")
-         public void editPostAuthorityInsert() {}
-
-
-    // 关注 刪除权限 记录日志
-        @Pointcut("execution(* com.pj.auth.mapper.AuthPostMenuMapper.delete(..))")
-        public void editPostAuthorityDelete(){}
-
-    //  新增权限 记录日志
-    @AfterReturning("editPostAuthorityInsert( )")
-    public void editPostAuthorityInsertAfter( JoinPoint point ) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+    // 关注 合作伙伴文件转移   before
+    @Before("shiftPartnerDetailsFileByIdsexecution( )")
+    public void shiftPartnerDetailsFileByIdsexecutionBefore(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        HttpServletRequest request = requestinit();
         Object[] args = point.getArgs();
-        for (Object arg: args){
-            System.out.println("org"+arg.toString());
-            Field[] declaredFields = arg.getClass().getDeclaredFields();
-            for (int i = 0 ; i<declaredFields.length;i++){
-                PropertyDescriptor pd = new PropertyDescriptor(declaredFields[i].getName(), arg.getClass());
-                Method getMethod = pd.getReadMethod();//获得get方法  
-                Object o = getMethod.invoke(arg);//执行get方法返回一个Object
-                System.out.println(o);
+
+        //  查询转移的文件
+        List<PartnerDetailsShifFile> shifFileList = partnerDetailsService.selectShiftFile((Integer[])args[0]);
+        List<PartnerDetailsShifFile> deleteFileList = new ArrayList<>();
+        //  获取转移文件所有的子集
+        for (PartnerDetailsShifFile fds:shifFileList) {
+            List<PartnerDetailsShifFile> childList =partnerDetailsShifFileMapper.getChildList(fds.getId());
+            //   如果子集中存在转移直的目录将其删除
+            for (PartnerDetailsShifFile childFds:childList) {
+                if(childFds.getId() == Integer.parseInt(args[1].toString()) ){
+                    deleteFileList.add(childFds);
+                }
             }
         }
-        String actionData = "";
+        shifFileList.removeAll(deleteFileList);
+        request.getSession().setAttribute("oldShifFileList",shifFileList);
     }
 
-    // 新增  刪除权限 记录日志
-    @AfterReturning("editPostAuthorityDelete()")
-    public void editPostAuthorityDeleteAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+    // 关注 合作伙伴文件转移   after
+    @AfterReturning("shiftPartnerDetailsFileByIdsexecution( )")
+    public void shiftPartnerDetailsFileByIdsexecutionAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        HttpServletRequest request = requestinit();
         Object[] args = point.getArgs();
-        for (Object arg: args){
-            System.out.println(arg);
+
+        String actionData = " 目录转移  ：";
+        // 获取元数据集合
+        List<PartnerDetailsShifFile> oldShifFileList = (List<PartnerDetailsShifFile>) request.getSession().getAttribute("oldShifFileList");
+        boolean flage  = false;
+        // 遍历添加 日志
+        if(null!=oldShifFileList  || oldShifFileList.size()!=0){
+            for (PartnerDetailsShifFile oldfile :oldShifFileList) {
+                Field[] declaredFields = getfieldsMethod(oldfile);
+                // 获取 id序列号
+                for (Field fiel:declaredFields) {
+                    if(fiel.getName().equals("id")){
+                        PropertyDescriptor pd = new PropertyDescriptor(fiel.getName(), oldfile.getClass());
+                        Method getMethod = pd.getReadMethod();//获得get方法  
+                        Object o = getMethod.invoke(oldfile);//执行get方法返回一个Object
+                     // 日志内容拼接
+                        actionData+=""+"ID( "+o+" )-目录等级";
+                    }
+                    if(fiel.getName().equals("pId")){
+                        PropertyDescriptor pd = new PropertyDescriptor(fiel.getName(), oldfile.getClass());
+                        Method getMethod = pd.getReadMethod();//获得get方法  
+                        Object o = getMethod.invoke(oldfile);//执行get方法返回一个Object
+                        // 日志内容拼接
+                        actionData+=""+"< "+o+" >（ " + args[1] + " ） ; ";
+                        flage = true;
+                    }
+                }
+            }
+
         }
-        String actionData = "";
+        // 操作日志追加
+        addLogMethod(flage,request , actionData);
+        removeAttribute("oldShifFileList",request);
+
     }
-        // 新增  合伙人信息
-  @AfterReturning("PartnerDetailsServiceImplInsertSelective()")
+        //  获取已删除的权限 记录日志
+    @Before("editPostAuthorityExecution( )")
+    public void editPostAuthorityPointcutBefore(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        HttpServletRequest request = requestinit();
+        Object[] args = point.getArgs();
+        String actionData = "权限管理  ：";
+        boolean flage = false;
+        // 获取 未删除的 权限  根基postID 去查询
+        List<AuthMenu> authMenuList = authMenuService.findAuthMenuListBypostId(Integer.parseInt(args[0].toString()));
+        /*获取  权限操作涉及人*/
+        String emailsByPostId = authUserService.getEmailsByPostId(args[0].toString());
+
+
+        if (null != authMenuList || authMenuList.size() != 0) {
+
+            // 循环获取 菜单
+            for (AuthMenu menu : authMenuList) {
+                if (menu.getIsMenu() == 1) {
+
+                    // 循环  获取按钮
+                    for (AuthMenu button : authMenuList) {
+                        if (button.getIsMenu() == 0) {
+                            if ((button.getPId() == null ? 0 : button.getPId()) == menu.getId()) {
+                                actionData += menu.getName() + "-" + button.getName().split("-")[1] + " ; ";
+                                flage = true;
+                            }
+                        }
+
+                    }
+                }
+            }
+            try {
+                addAuthLogMethod(flage, request, actionData, "删除", emailsByPostId);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    //  记录新增的权限···· 记录日志
+    @AfterReturning("editPostAuthorityExecution()")
+    public void editPostAuthorityPointcutAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        HttpServletRequest request = requestinit();
+        Object[] args = point.getArgs();
+        String actionData = "权限管理  ：";
+        boolean flage = false;
+          /*获取  权限操作涉及人*/
+        String emailsByPostId = authUserService.getEmailsByPostId(args[0].toString());
+        // 获取 未删除的 权限  根基postID 去查询
+        List<AuthMenu> authMenuList = authMenuService.findAuthMenuListBypostId(Integer.parseInt(args[0].toString()));
+        if (null != authMenuList || authMenuList.size() != 0) {
+
+            // 循环获取 菜单
+            for (AuthMenu menu : authMenuList) {
+                if (menu.getIsMenu() == 1) {
+
+                    // 循环  获取按钮
+                    for (AuthMenu button : authMenuList) {
+                        if (button.getIsMenu() == 0) {
+                            if ((button.getPId() == null ? 0 : button.getPId()) == menu.getId()) {
+                                actionData += menu.getName() + "-" + button.getName().split("-")[1] + " ; ";
+                                flage = true;
+                            }
+                        }
+                    }
+                }
+            }
+            try {
+                addAuthLogMethod(flage, request, actionData, "新增", emailsByPostId);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        }
+    }
+
+    // 新增  合伙人信息
+    @AfterReturning("PartnerDetailsServiceImplInsertSelective()")
     public void PartnerDetailsServiceImplInsertSelectiveAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         String actionData = "";
 
-        HttpServletRequest request  = requestinit();
+        HttpServletRequest request = requestinit();
 
-        Object newData =   getDateMethod(request, "new_partnerDetails");
+        Object newData = getDateMethod(request, "new_partnerDetails");
 
-        Field[] declaredFields=  getfieldsMethod(newData);
+        Field[] declaredFields = getfieldsMethod(newData);
 
         boolean flage = false;
+        // 循环 已删除的旧数据
+        actionData += "合作伙伴管理：";
+
+        for (int i = 0; i < declaredFields.length; i++) {
+
+            if (checkSeralize(declaredFields[i].getName())) {
+                PropertyDescriptor pd = new PropertyDescriptor(declaredFields[i].getName(), newData.getClass());
+                Method getMethod = pd.getReadMethod();//获得get方法  
+                Object o = getMethod.invoke(newData);//执行get方法返回一个Object
+                // 判断字段名称
+                for (int j = 0; j < BasicProperties.Basic_PartnerDeta_paramName.length; j++) {
+                    if (declaredFields[i].getName().toString().equals(BasicProperties.Basic_PartnerDeta_paramName[j].toString())) {
+                        actionData += " " + BasicProperties.Basic_PartnerDeta_paramVal[j];
+                        actionData += "< 新增数据 >（ " + o + " ） ; ";
+                        flage = true;
+                        break;
+                    }
+
+                }
+
+            }
+        }
+        // 操作日志追加
+        addLogMethod(flage, request, actionData);
+        removeAttribute("new_partnerDetails", request);
+    }
+    // 删除  合伙人信息
+    @Before("PartnerDetailsServiceImplDeletePartnerDetailsById()")
+    public void PartnerDetailsServiceImplDeletePartnerDetailsByIdBefore(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        HttpServletRequest request  = requestinit();
+        Object[] args = point.getArgs();
+        // 获取将要删除的合作伙伴人信息
+        PartnerDetails partnerDetails = partnerDetailsService.selectByPrimaryKey(Integer.parseInt(args[0].toString()));
+        request.getSession().setAttribute("deletepartnerDetails",partnerDetails);
+    }
+    // 删除  合伙人信息
+  @AfterReturning("PartnerDetailsServiceImplDeletePartnerDetailsById()")
+    public void PartnerDetailsServiceImplDeletePartnerDetailsByIdAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        String actionData = "";
+        HttpServletRequest request  = requestinit();
+      Object oldData = request.getSession().getAttribute("deletepartnerDetails");
+      Field[] declaredFields=  getfieldsMethod(oldData);
+      boolean flage = false;
         // 循环 已删除的旧数据
         actionData+="合作伙伴管理：";
 
             for (int i = 0 ; i <declaredFields.length;i++ ) {
-
                 if(checkSeralize(declaredFields[i].getName())){
-                    PropertyDescriptor pd = new PropertyDescriptor(declaredFields[i].getName(), newData.getClass());
+                    PropertyDescriptor pd = new PropertyDescriptor(declaredFields[i].getName(), oldData.getClass());
                     Method getMethod = pd.getReadMethod();//获得get方法  
-                    Object o = getMethod.invoke(newData);//执行get方法返回一个Object
+                    Object o = getMethod.invoke(oldData);//执行get方法返回一个Object
                     // 判断字段名称
                     for (int j = 0; j < BasicProperties.Basic_PartnerDeta_paramName.length; j++) {
                         if (declaredFields[i].getName().toString().equals(BasicProperties.Basic_PartnerDeta_paramName[j].toString())) {
                             actionData += " " + BasicProperties.Basic_PartnerDeta_paramVal[j];
+                            actionData += "< 删除数据 >（ " + o + " ） ; ";
+                            flage = true;
                             break;
                         }
 
                     }
-                    actionData += "< 新增数据 >（ " + o + " ） ; ";
-                    flage = true;
+
                 }
             }
         // 操作日志追加
         addLogMethod(flage,request , actionData);
-      removeAttribute("new_partnerDetails",request);
+      removeAttribute("deletepartnerDetails",request);
       }
 
 
@@ -190,10 +397,12 @@ public class AspectServer {
                     for (int j = 0; j < BasicProperties.Basic_PartnerDeta_paramName.length; j++) {
                         if (oldfields[i].getName().toString().equals(BasicProperties.Basic_PartnerDeta_paramName[j].toString())) {
                             actionData += " " + BasicProperties.Basic_PartnerDeta_paramVal[j];
+                            actionData += "< " + o + " >（ " + o2 + " ） ; ";
+                            flage = true;
+                            break;
                         }
                     }
-                    actionData += "< " + o + " >（ " + 02 + " ） ; ";
-                    flage = true;
+
                 }
             }
         }
@@ -223,11 +432,12 @@ public class AspectServer {
                     for (int j = 0; j < BasicProperties.Basic_address_paramName.length; j++) {
                         if (old.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_address_paramName[j].toString())) {
                             actionData += " " + BasicProperties.Basic_address_paramVal[j];
+                            actionData += "< 新增数据 >（ " + o + " ） ; ";
+                            flage = true;
                             break;
                         }
                     }
-                    actionData += "< 新增数据 >（ " + o + " ） ; ";
-                    flage = true;
+
                 }
             }
         }
@@ -261,11 +471,12 @@ public class AspectServer {
 
                         if (old.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_address_paramName[j].toString())) {
                             actionData += " " + BasicProperties.Basic_address_paramVal[j];
+                            actionData += "< " + o + " >（ 信息已删除 ） ; ";
+                            flage = true;
                             break;
                         }
                     }
-                    actionData += "< " + o + " >（ 信息已删除 ） ; ";
-                    flage = true;
+
                 }
             }
         }
@@ -296,11 +507,12 @@ public class AspectServer {
 
                         if (newdata.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_linkmanCN_paramName[j].toString())) {
                             actionData += " " + BasicProperties.Basic_linkmanCN_paramVal[j];
+                            actionData += "< 新增数据 >（ " + o + " ） ; ";
+                            flage = true;
                             break;
                         }
                     }
-                    actionData += "< 新增数据 >（ " + o + " ） ; ";
-                    flage = true;
+
                 }
             }
         }
@@ -333,11 +545,12 @@ public class AspectServer {
 
                             if (old.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_linkmanCN_paramName[j].toString())) {
                                 actionData += " " + BasicProperties.Basic_linkmanCN_paramVal[j];
+                                actionData += "< " + o + " >（ 信息已删除 ） ; ";
+                                flage = true;
                                 break;
                             }
                         }
-                        actionData += "< " + o + " >（ 信息已删除 ） ; ";
-                        flage = true;
+
                     }
                 }
             }
@@ -370,9 +583,10 @@ public class AspectServer {
 
                     if (!(o == null ? "" : o).toString().equals(o2 == null ? "" : o2.toString())) {
                         actionData += "   第"+k+1+"层 ";
+                        actionData += "< " + o + " >（" + o2 + " ） ; ";
+                        flage = true;
                     }
-                    actionData += "< " + o + " >（" + o2 + " ） ; ";
-                    flage = true;
+
                 }
             }
         }
@@ -409,10 +623,12 @@ public class AspectServer {
                     for (int j = 0; j < BasicProperties.Basic_UserLevel_paramName.length; j++) {
                         if (oldfields[i].getName().toString().equals(BasicProperties.Basic_UserLevel_paramName[j].toString())) {
                             actionData += " " + BasicProperties.Basic_UserLevel_paramVal[j];
+                            actionData += "< " + o + " >（ " + o2 + " ） ; ";
+                            flage = true;
+                            break;
                         }
                     }
-                    actionData += "< " + o + " >（ " + o2 + " ） ; ";
-                    flage = true;
+
                 }
             }
         }
@@ -448,7 +664,19 @@ public class AspectServer {
         return actionData+"--"+flage;
     }
 
-
+/*权限日志*/
+    private void addAuthLogMethod(boolean flage, HttpServletRequest request, String actionData, String type, String involvuser) {
+        if(flage){
+            Permissions permission =  new Permissions();
+            permission.setInvolvesPermissions(actionData);
+            permission.setType(type);
+            permission.setInvolvesUser(involvuser);
+            permission.setCreateDate(new Date());
+            // 追加日志记录
+            aspectServer.logService.addPermissionslLog(permission);
+        }
+    }
+/*用户操作日志*/
     private void addLogMethod(boolean flage, HttpServletRequest request,String actionData) {
         if(flage){
             // 获取  登录人信息

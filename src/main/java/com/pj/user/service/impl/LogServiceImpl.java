@@ -37,4 +37,10 @@ public class LogServiceImpl implements LogService {
     public void addOperationlLog(Operation operation) {
       logOperationMapper.insert(operation);
     }
+
+    //  添加 权限用户操作权限
+    @Override
+    public void addPermissionslLog(Permissions permission) {
+        logPermissionsMapper.insert(permission);
+    }
 }
