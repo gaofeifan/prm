@@ -1,0 +1,78 @@
+#homePage{
+  .content{
+    /*padding: 20px 20px 50px;*/
+    color: #666;
+    background-color: @boardColor;
+    h3{
+      height:26px;
+      color:@BrightColor ;
+    }
+    .account-setting{
+      padding: 10px 20px 20px;
+      background-color: #fff;
+      >div{
+        float:left;
+        width: 30%;
+        padding-left: 3%;
+        label{
+          margin-right:0;
+        }
+        em{
+          color:#333;
+        }
+        a{
+          color: @BrightColor;
+          margin-left:6%;
+        }
+      }
+    }
+    .operation-log{
+      padding: 10px 20px 20px;
+      background-color:#fff;
+      margin-top:16px;
+      .listBox{
+        max-height: 420px;
+        overflow: auto;
+      }
+      .o-l-list{
+        width: 96%;
+        background-color:@boardColor;
+        margin: 10px auto 0;
+        padding: 10px 20px;
+        .fl{
+          width: 40%;
+        }
+        .fr{
+          width:60%;
+          h4{
+            color: #333;
+          }
+        }
+      }
+    }
+    .access-log{
+      padding: 10px 20px 20px;
+      background-color:#fff;
+      margin-top:16px;
+      .listBox{
+        max-height: 430px;
+        overflow: auto;
+      }
+      .a-l-list{
+        width: 96%;
+        border:1px solid #ddd;
+        margin: 10px auto;
+        padding: 10px 20px;
+        .fl{
+          width: 40%;
+        }
+        .fr{
+          width:60%;
+          h4{
+            color: #333;
+          }
+        }
+      }
+    }
+  }
+}

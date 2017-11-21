@@ -229,6 +229,386 @@
 #partnerManage .content .handleBar a {
   color: #ed6e56;
 }
+#homePage .content {
+  /*padding: 20px 20px 50px;*/
+  color: #666;
+  background-color: #f8f7fa;
+}
+#homePage .content h3 {
+  height: 26px;
+  color: #ed6e56;
+}
+#homePage .content .account-setting {
+  padding: 10px 20px 20px;
+  background-color: #fff;
+}
+#homePage .content .account-setting > div {
+  float: left;
+  width: 30%;
+  padding-left: 3%;
+}
+#homePage .content .account-setting > div label {
+  margin-right: 0;
+}
+#homePage .content .account-setting > div em {
+  color: #333;
+}
+#homePage .content .account-setting > div a {
+  color: #ed6e56;
+  margin-left: 6%;
+}
+#homePage .content .operation-log {
+  padding: 10px 20px 20px;
+  background-color: #fff;
+  margin-top: 16px;
+}
+#homePage .content .operation-log .listBox {
+  max-height: 420px;
+  overflow: auto;
+}
+#homePage .content .operation-log .o-l-list {
+  width: 96%;
+  background-color: #f8f7fa;
+  margin: 10px auto 0;
+  padding: 10px 20px;
+}
+#homePage .content .operation-log .o-l-list .fl {
+  width: 40%;
+}
+#homePage .content .operation-log .o-l-list .fr {
+  width: 60%;
+}
+#homePage .content .operation-log .o-l-list .fr h4 {
+  color: #333;
+}
+#homePage .content .access-log {
+  padding: 10px 20px 20px;
+  background-color: #fff;
+  margin-top: 16px;
+}
+#homePage .content .access-log .listBox {
+  max-height: 430px;
+  overflow: auto;
+}
+#homePage .content .access-log .a-l-list {
+  width: 96%;
+  border: 1px solid #ddd;
+  margin: 10px auto;
+  padding: 10px 20px;
+}
+#homePage .content .access-log .a-l-list .fl {
+  width: 40%;
+}
+#homePage .content .access-log .a-l-list .fr {
+  width: 60%;
+}
+#homePage .content .access-log .a-l-list .fr h4 {
+  color: #333;
+}
+#user .content {
+  /*padding: 20px 20px 50px;*/
+  color: #666;
+  background-color: #f8f7fa;
+}
+#user .content .searchBar {
+  background-color: #fff;
+  padding: 20px;
+}
+#user .content .searchBar input {
+  width: 15%;
+  margin-right: 4%;
+}
+#user .content .searchBar button {
+  width: 100px;
+  height: 38px;
+  background-color: #ed6e56;
+}
+#user .content .user {
+  margin-top: 30px;
+  padding: 30px 3%;
+  background-color: #fff;
+}
+#user .content .user .thead-outer {
+  padding-bottom: 10px;
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+}
+#user .content .user .thead-outer .thead-core {
+  border-bottom: 1px solid #dddddd;
+}
+#user .content .user .thead-outer .thead-core > div {
+  height: 48px;
+  line-height: 48px;
+  float: left;
+  text-align: center;
+}
+#user .content .user .body-box .bodyList {
+  border-bottom: 1px solid #dddddd;
+}
+#user .content .user .body-box .bodyList > div {
+  padding: 10px 0;
+  float: left;
+  text-align: center;
+}
+#user .content .user .loginId {
+  width: 8%;
+}
+#user .content .user .name {
+  width: 8%;
+}
+#user .content .user .number {
+  width: 10%;
+}
+#user .content .user .company {
+  width: 20%;
+}
+#user .content .user .department {
+  width: 10%;
+}
+#user .content .user .post {
+  width: 10%;
+}
+#user .content .user .phone {
+  width: 10%;
+  word-wrap: break-word;
+}
+#user .content .user .email {
+  width: 24%;
+}
+#power .content {
+  background-color: #f8f7fa;
+}
+#power .content .content-fl {
+  width: 44%;
+  padding: 20px 2% 50px;
+  margin-right: 2%;
+  background-color: #fff;
+}
+#power .content .content-fl .selectBar .fl {
+  width: 70%;
+}
+#power .content .content-fl .selectBar .fl .s-box1 {
+  margin-bottom: 20px;
+}
+#power .content .content-fl .selectBar .fl select {
+  width: 70%;
+}
+#power .content .content-fl .selectBar .fr {
+  width: 30%;
+}
+#power .content .content-fl .selectBar .fr button {
+  width: 100px;
+  height: 38px;
+  position: relative;
+  top: 16px;
+}
+#power .content .content-fl .listBox {
+  margin-top: 30px;
+}
+#power .content .content-fl .listBox .fl {
+  width: 48.5%;
+}
+#power .content .content-fl .listBox .fl p {
+  height: 40px;
+  color: #333;
+  font-weight: 600;
+  text-align: center;
+}
+#power .content .content-fl .listBox .fl .postList {
+  height: 500px;
+  padding: 5% 10%;
+  overflow: auto;
+  background-color: #f8f7fa;
+}
+#power .content .content-fl .listBox .fl .postList p {
+  text-align: left;
+  color: #666;
+  font-weight: normal;
+}
+#power .content .content-fl .listBox .fl .postList p input {
+  width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  margin-right: 10px;
+  position: relative;
+  top: -1px;
+}
+#power .content .content-fl .listBox .fr {
+  width: 48.5%;
+}
+#power .content .content-fl .listBox .fr p {
+  height: 40px;
+  color: #333;
+  font-weight: 600;
+  text-align: center;
+}
+#power .content .content-fl .listBox .fr .staffList {
+  height: 500px;
+  padding: 5% 10%;
+  overflow: auto;
+  background-color: #f8f7fa;
+}
+#power .content .content-fl .listBox .fr .staffList p {
+  text-align: left;
+  color: #666;
+  font-weight: normal;
+}
+#power .content .content-fr {
+  width: 46%;
+  padding: 20px 2% 50px;
+  background-color: #fff;
+}
+#power .content .content-fr h4 {
+  color: #ed6e56;
+}
+#power .content .content-fr .powerCopy > div {
+  width: 50%;
+  float: left;
+  margin-top: 10px;
+}
+#power .content .content-fr .powerCopy > div label {
+  margin-right: 5px;
+}
+#power .content .content-fr .powerCopy > div select {
+  width: 64%;
+}
+#power .content .content-fr .powerSel {
+  margin-top: 30px;
+}
+#power .content .content-fr .powerSel .powerSelBox .fl {
+  width: 48.5%;
+}
+#power .content .content-fr .powerSel .powerSelBox .fl p {
+  height: 40px;
+  color: #333;
+  font-weight: 600;
+  text-align: center;
+}
+#power .content .content-fr .powerSel .powerSelBox .fl .nemuList {
+  height: 456px;
+  padding: 5% 10%;
+  overflow: auto;
+  background-color: #f8f7fa;
+}
+#power .content .content-fr .powerSel .powerSelBox .fl .nemuList p {
+  text-align: left;
+  color: #666;
+  font-weight: normal;
+}
+#power .content .content-fr .powerSel .powerSelBox .fl .nemuList p input {
+  width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  margin-right: 10px;
+  position: relative;
+  top: -1px;
+}
+#power .content .content-fr .powerSel .powerSelBox .fr {
+  width: 48.5%;
+}
+#power .content .content-fr .powerSel .powerSelBox .fr p {
+  height: 40px;
+  color: #333;
+  font-weight: 600;
+  text-align: center;
+}
+#power .content .content-fr .powerSel .powerSelBox .fr .btnList {
+  height: 456px;
+  padding: 5% 10%;
+  overflow: auto;
+  background-color: #f8f7fa;
+}
+#power .content .content-fr .powerSel .powerSelBox .fr .btnList p {
+  text-align: left;
+  color: #666;
+  font-weight: normal;
+}
+#power .content .content-fr .powerSel .powerSelBox .fr .btnList p input {
+  width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  margin-right: 10px;
+  position: relative;
+  top: -1px;
+}
+#log .content .topBar ol {
+  margin-left: 10px;
+}
+#log .content .topBar ol li {
+  width: 100px;
+  text-align: center;
+  height: 36px;
+  line-height: 36px;
+  margin-right: 4px;
+  background-color: #ed6e56;
+}
+#log .content .topBar input {
+  width: 140px;
+}
+#log .content .topBar .startTime {
+  margin-right: 4px;
+}
+#log .content .topBar .endTime {
+  margin-left: 4px;
+}
+#log .content .topBar a.query {
+  margin-left: 20px;
+  margin-right: 40px;
+  color: #ed6e56;
+}
+#log .content .logList {
+  padding: 30px 3%;
+  background-color: #fff;
+  color: #666;
+}
+#log .content .logList .thead-outer {
+  padding-bottom: 10px;
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+}
+#log .content .logList .thead-outer .thead-core {
+  border-bottom: 1px solid #dddddd;
+}
+#log .content .logList .thead-outer .thead-core > div {
+  height: 48px;
+  line-height: 48px;
+  float: left;
+  text-align: center;
+}
+#log .content .logList .body-box .bodyList {
+  border-bottom: 1px solid #dddddd;
+}
+#log .content .logList .body-box .bodyList > div {
+  /* height: 40px;
+            line-height: 40px;*/
+  padding: 10px 0;
+  float: left;
+  text-align: center;
+}
+#log .content .logList .loginId {
+  width: 8%;
+}
+#log .content .logList .name {
+  width: 8%;
+}
+#log .content .logList .number {
+  width: 10%;
+}
+#log .content .logList .company {
+  width: 20%;
+}
+#log .content .logList .department {
+  width: 10%;
+}
+#log .content .logList .post {
+  width: 10%;
+}
+#log .content .logList .time {
+  width: 10%;
+}
+#log .content .logList .log {
+  width: 24%;
+}
 html,
 body {
   height: 100%;
@@ -478,21 +858,21 @@ body {
 }
 label {
   display: inline-block;
-  height: 40px;
-  line-height: 40px;
+  height: 28px;
+  line-height: 28px;
   margin-right: 10px;
-  color: #31485e;
+  color: #666;
 }
 input {
   border: 1px solid #cfcfcf;
-  height: 38px;
-  border-radius: 5px;
+  height: 28px;
+  border-radius: 3px;
   padding-left: 10px;
 }
 select {
   border: 1px solid #cfcfcf;
-  height: 38px;
-  border-radius: 5px;
+  height: 28px;
+  border-radius: 3px;
   padding-left: 10px;
 }
 button {
@@ -539,18 +919,18 @@ table tbody tr:hover {
 /*.colorEven{
   background-color: #fff;
 }*/
-h4 {
+/*h4{
   display: inline-block;
   margin-left: 20px;
   height: 32px;
   line-height: 32px;
   font-size: 20px;
-  color: #fe7272;
+  color:@h2Color;
   margin-bottom: 20px;
-  border-left: 5px solid #fe7272;
+  border-left:5px solid @h2Color;
   text-indent: 16px;
   margin-top: 20px;
-}
+}*/
 p {
   height: 36px;
   line-height: 36px;
