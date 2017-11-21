@@ -572,17 +572,18 @@ public class AspectServer {
         boolean flage = false;
         actionData+="层级位数管理：";
         for(int k = 0 ; k < oldData.size();k++){
-            for (int i = 0; i < oldData.get(i).getClass().getDeclaredFields().length; i++ ) {
-                if (checkSeralize(oldData.get(i).getClass().getDeclaredFields()[i].getName())) {
-                    PropertyDescriptor pd = new PropertyDescriptor(oldData.get(i).getClass().getDeclaredFields()[i].getName(), oldData.get(i).getClass());
+
+            for (int i = 0; i < oldData.get(k).getClass().getDeclaredFields().length; i++ ) {
+                if (checkSeralize(oldData.get(k).getClass().getDeclaredFields()[i].getName())) {
+                    PropertyDescriptor pd = new PropertyDescriptor(oldData.get(k).getClass().getDeclaredFields()[i].getName(), oldData.get(k).getClass());
                     Method getMethod = pd.getReadMethod();//获得get方法  
-                    Object o = getMethod.invoke(oldData.get(i));//执行get方法返回一个Object
-                    PropertyDescriptor pd2 = new PropertyDescriptor(newData.get(i).getClass().getDeclaredFields()[i].getName(), newData.get(i).getClass());
+                    Object o = getMethod.invoke(oldData.get(k));//执行get方法返回一个Object
+                    PropertyDescriptor pd2 = new PropertyDescriptor(newData.get(k).getClass().getDeclaredFields()[i].getName(), newData.get(k).getClass());
                     Method getMethod2 = pd2.getReadMethod();//获得get方法  
-                    Object o2 = getMethod2.invoke(newData.get(i));//执行get方法返回一个Object
+                    Object o2 = getMethod2.invoke(newData.get(k));//执行get方法返回一个Object
 
                     if (!(o == null ? "" : o).toString().equals(o2 == null ? "" : o2.toString())) {
-                        actionData += "   第"+k+1+"层 ";
+                        actionData += "   第"+(k+1)+"层 ";
                         actionData += "< " + o + " >（" + o2 + " ） ; ";
                         flage = true;
                     }
