@@ -26,11 +26,11 @@ $(function(){
                 $("#base_" + i + "").append('<div class="protocolType" id="base_type_' + i + '"></div>');
 
                 /*追加单选框 判断是否 选中*/
-                $("#base_type_" + i + "").append('<input type="radio" id = "txt1'+i+'" name="type1' + i + '" value="协议/保函"   style="width:18px;height:18px;" ><label for="">协议/保函</label>');
-                $("#base_type_" + i + "").append('<input type="radio" id = "txt2'+i+'"  name="type1' + i + '" value="付款买单" style="width:18px;height:18px;" ><label for="">付款买单</label>');
-                $("#base_type_" + i + "").append('<input type="radio" id = "txt3'+i+'"  name="type1' + i + '" value="签约在途" style="width:18px;height:18px;" ><label for="">签约在途</label>');
+                $("#base_type_" + i + "").append('<input onclick="checkedType(this)" type="radio" id = "txt1'+i+'" name="type1' + i + '" value="协议/保函"   style="width:18px;height:18px;" ><label for="">协议/保函</label>');
+                $("#base_type_" + i + "").append('<input onclick="checkedType(this)"  type="radio" id = "txt2'+i+'"  name="type1' + i + '" value="付款买单" style="width:18px;height:18px;" ><label for="">付款买单</label>');
+                $("#base_type_" + i + "").append('<input  onclick="checkedType(this)" type="radio" id = "txt3'+i+'"  name="type1' + i + '" value="签约在途" style="width:18px;height:18px;" ><label for="">签约在途</label>');
 
-                if (levels[i].protocolType.toString() == "协议/保函") {
+               if (levels[i].protocolType.toString() == "协议/保函") {
                     $("#txt1" + i + "").attr("checked", true);
                 }
                 if (levels[i].protocolType == "付款买单") {
@@ -43,7 +43,7 @@ $(function(){
                 /*z追加是否有效单选框*/
                 $("#base_" + i + "").append('<div class="valid" id="base_boolean_' + i + '"></div>');
                 $("#base_boolean_" + i + "").append('<input type="checkbox" name="type_boolean' + i + '" value="1"  style="width:18px;height:18px;"><label for="">有效</label>');
-                              $("input[name=type_boolean"+i+"][value="+levels[i].effectiveness+"]").attr("checked",true) ;
+                             $("input[name=type_boolean"+i+"][value="+levels[i].effectiveness+"]").attr("checked",true) ;
             }
         },
         error:function(){
@@ -58,7 +58,8 @@ $(function(){
         var commitDate = "{ "+"//userLevelList//"+":[";
 
 /* 循环 div中的所有 input 标签 */
-        $("#credit_body_datas input[type='text'],input[type='radio'], input[type='checkbox']").each(function(){
+        $("#credit_body_datas input[type='text'],input[type='radio'], input[type='checkbox']").each(function(vi,obj){
+
 
                 /*判断标签类分别获取数据*/
               if( $(this)[0].getAttribute("type")=='text'){
@@ -70,14 +71,15 @@ $(function(){
                   }
 
               }else   if( $(this)[0].getAttribute("type")=='radio'){
+
                   /*判断 单选按钮  */
-                    if($(this).attr("checked")){
+                  if($(this).is(":checked")){
                         commitDate+=","+"//protocolType//"+":"+"//"+$(this).val()+"//";
                     }
 
               }else   if( $(this)[0].getAttribute("type")=='checkbox'){
                   /*判断 复选框  */
-                  if($(this).attr("checked")){
+                  if($(this).is(":checked")){
                       commitDate+=","+""+"//effectiveness//"+":"+$(this).val()+"}";
                   }else{
                       commitDate+=","+""+"//effectiveness//"+""+":0"+"}";
@@ -87,7 +89,7 @@ $(function(){
         commitDate+="]}";
         var commitDate2 = commitDate.replace(",", "");
         var commitDate3 = commitDate2.replace(new RegExp("//","g"), '"');
-alert(commitDate3);
+ 
         $.ajax({
             type:'post',
             url:'http://localhost:8083/user/levelUpdate',
@@ -96,7 +98,7 @@ alert(commitDate3);
             data: commitDate3,
             dataType:'json',
             success:function(data){
-            alert(1);
+            location.reload();
             },
             error:function(){
 
@@ -109,4 +111,17 @@ alert(commitDate3);
                 location.reload();
     })
 
+
+
 });
+
+function   checkedType(obj){
+
+ var names =  obj.name;
+    $("input[name="+names+"]").each(function(){
+       $(this).attr("checked",false);
+    })
+
+    $(this).attr("checked",true);
+
+}

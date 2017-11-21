@@ -615,6 +615,9 @@ public class AspectServer {
                 PropertyDescriptor pd = new PropertyDescriptor(oldfields[i].getName(), oldData.getClass());
                 Method getMethod = pd.getReadMethod();//获得get方法  
                 Object o = getMethod.invoke(oldData);//执行get方法返回一个Object
+                if(oldfields[i].getName().equals("id")){
+                    actionData+="序号 "+o+" ";
+                }
                 PropertyDescriptor pd2 = new PropertyDescriptor(newfields[i].getName(), oldData.getClass());
                 Method getMethod2 = pd2.getReadMethod();//获得get方法  
                 Object o2 = getMethod.invoke(newData);//执行get方法返回一个Object
