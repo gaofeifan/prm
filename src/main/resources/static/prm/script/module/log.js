@@ -4,5 +4,8 @@
 /*backCookie();*/
 menuActive('log');
 $(function(){
-
+    $('.topBar ol li').click(function(){
+        $(this).siblings('li').removeClass('active');
+        $(this).addClass('active');
+    })
 });
