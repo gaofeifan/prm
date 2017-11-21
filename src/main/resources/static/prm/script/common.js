@@ -2,7 +2,7 @@
 /**
  * Created by Administrator on 2017/9/13.
  *///异步  加载公司下拉框
-function getComList(idSelector) {
+function getComList(dom) {
     $.ajax({
         type: 'get',
         async:false,
@@ -12,7 +12,7 @@ function getComList(idSelector) {
                 var str ;
                 $.each(data.data, function (index, value) {
                     var option =$('<option value="'+value.id+'" >'+value.name+'</option>');
-                    $('#'+idSelector +'').append(option);
+                    $(dom).append(option);
                 });
             }else{
                 alert("资源路径出错");
@@ -24,8 +24,8 @@ function getComList(idSelector) {
     });
 }
 // 根据公司加载部门
-function getDempByCom(demp,companyId){
-    $('#'+demp).empty().append('<option value="">请选择部门</option>');
+function getDempByCom(dempDom,companyId){
+    $(dempDom).empty().append('<option value="">请选择部门</option>');
     $.ajax({
         type: 'get',
         url: 'http://'+oaPathUrl+'/oa/demp/findDemps.do',
@@ -35,7 +35,33 @@ function getDempByCom(demp,companyId){
         success: function (data) {
             $.each(data.data.demps, function (index, value) {
                 var option =$('<option value="'+value.id+'" >'+value.name+'</option>');
-                $("#"+demp).append(option);
+                $(dempDom).append(option);
+            });
+        },
+        error: function () {
+            alert('获取数据失败');
+        }
+    });
+}
+/**
+ *根据公司和部门查询岗位
+ * @param dempDom
+ * @param companyId
+ * @param dempId
+ */
+function getPostByComAndDemp(dempDom,companyId,dempId){
+    $(dempDom).empty().append('<option value="">请选择岗位</option>');
+    $.ajax({
+        type: 'get',
+        url: 'http://'+oaPathUrl+'/oa/post/list.do',
+        data: {
+            companyId:companyId,
+            dempId:dempId
+        },
+        success: function (data) {
+            $.each(data.data.posts, function (index, value) {
+                var option =$('<option value="'+value.id+'" >'+value.name+'</option>');
+                $(dempDom).append(option);
             });
         },
         error: function () {

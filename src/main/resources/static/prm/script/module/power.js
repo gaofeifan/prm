@@ -4,32 +4,69 @@
 /*backCookie();*/
 menuActive('power');
 $(function(){
-    //加载公司
-    getComList('company');
-    //根据公司加载部门
+    /*加载公司*/
+    getComList('#company');
+    getComList('#companyTo');
+    /*根据公司加载部门*/
     $('#company').change(function(){
-        $('#companyId').val($(this).val());
-        $('#dempId').val('');
-        getDempByCom('demp',$('#company').val());
-        /*$('.listBox').empty();*/
+        if(!!$(this).val()){
+            getDempByCom('#demp',$('#company').val());
+        }else{
+            $('#demp').empty().append('<option value="">请选择公司</option>');
+        }
+        $('.list').empty();
     });
     $('#demp').change(function(){
-        $('#dempId').val($(this).val());
-        /*$('.listBox').empty();*/
+        $('.list').empty();
     });
-    //搜索
+    $('#companyTo').change(function(){
+        if(!!$(this).val()){
+            getDempByCom('#dempTo',$('#companyTo').val());
+        }else{
+            $('#dempTo').empty().append('<option value="">请选择公司</option>');
+        }
+        $('#postTo').empty().append('<option value="">请选择岗位</option>');
+        $('.list-r').empty();
+    });
+    /*根据公司和部门加载岗位*/
+    $('#dempTo').change(function(){
+        if(!!$(this).val()){
+            getPostByComAndDemp('#postTo',$('#companyTo').val(),$(this).val());
+        }else{
+            $('#postTo').empty().append('<option value="">请选择岗位</option>');
+        }
+        $('.list-r').empty();
+    });
+    /*复制权限时显示*/
+    $('#postTo').change(function(){
+        var postId = $(this).val();
+        if(!!postId){
+            power.queryPower(postId);
+        }
+    });
+
+    /*搜索*/
     $('#seek').click(function(){
         power.queryPost();
     });
-    //选中岗位,加载员工和菜单
+    /*选中岗位,加载员工和菜单*/
     $('.postList').on('click','.postIn',function(){
         var postId = $(this).attr('post-id');
         power.queryStaff(postId);
         power.queryPower(postId);
-    })
-
+    });
     $('#confirm').click(function(){
         power.confirm();
+    });
+    $('#menuList').on('click','.nemu',function(){
+        power.queryBtnByMenu();
+    });
+    $('#cancel').click(function(){
+        var checkedPost = $('input:radio[name="post"]:checked').attr('post-id');
+        power.queryPower(checkedPost);
+        $('#companyTo').empty().append('<option value="">请选择公司</option>');
+        $('#dempTo').empty().append('<option value="">请选择部门</option>');
+        $('#postTo').empty().append('<option value="">请选择岗位</option>');
     })
 });
 var power = {
@@ -68,7 +105,7 @@ var power = {
             }
         })
     },
-    queryPower:function(){ //根据postId 查询权限
+    queryPower:function(id){ //根据postId 查询权限
         $('.nemuList').empty();
         $('.btnList').empty();
         $.ajax({
@@ -76,17 +113,16 @@ var power = {
             url: 'http://'+gPathUrl+'/auth/menu/findMenuByPostId',
             dataType:'json',
             data: {
-                postId:''
+                postId:id
             },
             success:function(data){
-                console.log(data)
                 var menuStr = '';
                 var btnStr = '';
                 $.each(data.data,function(index,value){
                     if(parseInt(value.isMenu) == 1){
-                        menuStr = menuStr +'<p><input data-id="'+value.id+'" type="checkbox" '+ (parseInt(value.checks)==1?'checked':'')+'><label for="">'+value.name+'</label></p>';
-                    }else if(parseInt(value.isMenu) == 0){
-                        btnStr = btnStr + '<p><input data-id="'+value.id+'" type="checkbox"'+ (parseInt(value.checks)==1?'checked':'')+'><label for="">'+value.name+'</label></p>';
+                        menuStr = menuStr +'<p><input class="nemu nemuIn" data-id="'+value.id+'" type="checkbox" '+ (parseInt(value.checks)==1?'checked':'')+'><label for="">'+value.name+'</label></p>';
+                    }else if(parseInt(value.isMenu) == 0 && value.checks == 1){
+                        btnStr = btnStr + '<p><input class="nemuIn" data-id="'+value.id+'" type="checkbox" checked><label for="">'+value.name+'</label></p>';
                     }
                 });
                 $(''+menuStr).appendTo('.nemuList');
@@ -97,24 +133,38 @@ var power = {
             }
         })
     },
-    queryPostAfterUser:function(){
+    queryBtnByMenu:function(){ //根据菜单动态加载按钮
+        var checkedPost = $('input:radio[name="post"]:checked').attr('post-id');
+        var checkedMenu = [];
+        $('.nemu').each(function(index,value){
+            if($(this).prop('checked')){
+                checkedMenu.push(parseInt($(this).attr('data-id')));
+            }
+        });
         $.ajax({
             type: "get",
-            url: 'http://'+gPathUrl+'/auth/selectPostByQury.do', //请求的处理数据
-            xhrFields:{
-                withCredentials: true
-            },
-            crossDomain: true,//支持跨域发送cookie
-            jsonp: 'callback',
-            dataType:'jsonp',
+            url: 'http://'+gPathUrl+'/auth/menu/findButtonByMenuIds', //请求的处理数据
+            dataType:'json',
             data: {
-                companyId:$('#company').val(),
-                dempId:$('#demp').val()
+                postId:checkedPost,
+                menuIds:checkedMenu.join(',')
+            },
+            beforeSend:function(){
+                if(!checkedPost){
+                    alert('请选择岗位再确定！');
+                    return false;
+                }
             },
             success:function(data){
-                var arrText = doT.template($("#postTemplate").text());
-                $('#post_body').html(arrText(data));
-                isCheck();
+                var btnStr = '';
+                $.each(data.data,function(index,value){
+                    if(parseInt(value.checks) == 1){
+                        btnStr = btnStr + '<p><input class="nemuIn" data-id="'+value.id+'" type="checkbox" checked><label for="">'+value.name+'</label></p>';
+                    }else if(parseInt(value.checks) == 0){
+                        btnStr = btnStr + '<p><input class="nemuIn" data-id="'+value.id+'" type="checkbox"><label for="">'+value.name+'</label></p>';
+                    }
+                });
+               $('.btnList').empty().append(btnStr);
             },
             error:function(data){
 
@@ -123,26 +173,35 @@ var power = {
     },
     confirm:function(){
         var checkedId = $('input:radio[name="post"]:checked').attr('post-id');
-        console.log(checkedId);
         var checkedMenuId = [];
-        var options = {
+        $('.nemuIn').each(function(index,value){
+            if($(this).prop('checked')){
+                checkedMenuId.push(parseInt($(this).attr('data-id')));
+            }
+        });
+        $.ajax({
             url : 'http://'+gPathUrl+'/auth/menu/editPostAuthority',
             type : "get",
             dataType:'json',
-            /*data:{
-                postId:,
-                menuIds:,
-            },*/
-            success : function(data) {
-                if(data.code =='200'){
-                    alert(data.data)
-                }else{
-                    alert(data.data)
+            data:{
+             postId:checkedId,
+             menuIds:checkedMenuId.join(',')
+             },
+            beforeSend:function(){
+                if(!checkedId){
+                    alert('请选择岗位再确定！');
+                    return false;
                 }
-            },error:function(data){
-                alert('保存失败请重试！')
+            },
+            success:function(data){
+                if(data.code == 200){
+                    alert(data.msg);
+                    window.location.reload();
+                }
+            },
+            error:function(data){
+
             }
-        };
-        $("#jvForm").ajaxSubmit(options); // jquery.form.js提价
+        });
     }
 };

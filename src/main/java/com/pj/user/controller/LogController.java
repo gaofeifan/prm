@@ -12,10 +12,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,13 +29,15 @@ public class LogController extends BaseController {
     @Autowired
     LogService logService;
 
-    @ApiOperation(value = "日志- 1.操作日志查询 ；" , httpMethod = "POST" , response = Object.class)
-    @RequestMapping("/operation")
+
+    @ApiOperation(value = "日志-1.。权限日志查询  " , httpMethod = "POST" , response = Object.class)
+    @RequestMapping("/permissions")
     @ResponseBody
-    public Map<String, Object> findOperationList(@ModelAttribute("requestParam")RequestParam requestParam ){
-        // 获取 分页元数据信息
+    public Map<String, Object> findPermissionsList(@RequestBody RequestParam requestParam ){
+
+            // 获取 分页元数据信息
             Page<Object> page = PageHelper.startPage(Pagination.cpn(requestParam.getPageNo()), requestParam.getPageSize(), true);
-            List<Operation> operationLsit =  logService.findOPerationList(requestParam.getStartDate(),requestParam.getEndDate(),null);
+            List<Permissions> operationLsit = logService.findPermissionsBydate(requestParam.getStartDate(),requestParam.getEndDate(),null);
             Pagination pagination = new Pagination(page.getPageNum(), page.getPageSize(), (int) page.getTotal(), operationLsit);
             return  this.success(pagination);
 
@@ -46,16 +45,17 @@ public class LogController extends BaseController {
 
 
 
-    @ApiOperation(value = "日志-1.。权限日志查询  " , httpMethod = "POST" , response = Object.class)
-    @RequestMapping("/permissions")
-    @ResponseBody
-    public Map<String, Object> findPermissionsList(@ModelAttribute("requestParam")RequestParam requestParam ){
 
-            // 获取 分页元数据信息
-            Page<Object> page = PageHelper.startPage(Pagination.cpn(requestParam.getPageNo()), requestParam.getPageSize(), true);
-            List<Permissions> operationLsit = logService.findPermissionsBydate(requestParam.getStartDate(),requestParam.getEndDate(),null);
-            Pagination pagination = new Pagination(page.getPageNum(), page.getPageSize(), (int) page.getTotal(), operationLsit);
-            return  this.success(pagination);
+
+    @RequestMapping("/operation")
+    @ResponseBody
+    @ApiOperation(value = "日志- 1.操作日志查询 ；" , httpMethod = "POST" , response = Object.class)
+    public Map<String, Object> findOperationList(@RequestBody  RequestParam requestParam ){
+        // 获取 分页元数据信息
+        Page<Object> page = PageHelper.startPage(Pagination.cpn(requestParam.getPageNo()), requestParam.getPageSize(), true);
+        List<Operation> operationLsit =  logService.findOPerationList(requestParam.getStartDate(),requestParam.getEndDate(),null);
+        Pagination pagination = new Pagination(page.getPageNum(), page.getPageSize(), (int) page.getTotal(), operationLsit);
+        return  this.success(pagination);
 
     }
     @ApiOperation(value = "日志-  2. 首页日志 展示当天数据  与 展示一周数据" , httpMethod = "POST" , response = Object.class)
