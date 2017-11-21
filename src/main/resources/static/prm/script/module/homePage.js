@@ -1,11 +1,19 @@
 /**
  * Created by Administrator on 2017/11/16.
  */
-/**
- * Created by Administrator on 2017/9/12.
- */
 /*backCookie();*/
 menuActive('homePage');
 $(function(){
-
+    $('#nameEdit').click(function(){
+        $('.nameShow').hide();
+        $('.nameEdit').show();
+    });
+    $('#passwordEdit').click(function(){
+        $('.passwordShow').hide();
+        $('.passwordEdit').show();
+    });
+    $('#emailEdit').click(function(){
+        $('.emailShow').hide();
+        $('.emailEdit').show();
+    })
 });

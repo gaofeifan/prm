@@ -257,6 +257,15 @@
   color: #ed6e56;
   margin-left: 6%;
 }
+#homePage .content .account-setting .nameEdit {
+  display: none;
+}
+#homePage .content .account-setting .passwordEdit {
+  display: none;
+}
+#homePage .content .account-setting .emailEdit {
+  display: none;
+}
 #homePage .content .operation-log {
   padding: 10px 20px 20px;
   background-color: #fff;
@@ -540,7 +549,12 @@
   height: 36px;
   line-height: 36px;
   margin-right: 4px;
+  background-color: #dddddd;
+  cursor: pointer;
+}
+#log .content .topBar ol li.active {
   background-color: #ed6e56;
+  color: #fff;
 }
 #log .content .topBar input {
   width: 140px;
