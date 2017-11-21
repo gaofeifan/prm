@@ -16,14 +16,12 @@ $(function(){
         $('.emailShow').hide();
         $('.emailEdit').show();
     })
-
-
-    homePage.findLog();
+    operationLog();
 });
 
 
-var homePage = {
-    findLog: function () {
+
+    function  operationLog  () {
         $.ajax({
             type: 'get',
             url: 'http://localhost:8083/log/home',
@@ -72,4 +70,3 @@ var homePage = {
             }
         });
     }
-}
