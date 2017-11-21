@@ -1,101 +1,79 @@
-@charset "utf-8";
-.pages {
-	width:720px;
-	margin:40px auto 0 auto;
+@charset "UTF-8";
+.demo-image{
+    width: 100%;
 }
-.pages #Pagination {
-  float: left;
-  overflow: hidden;
+.M-box,.M-box1,.M-box2,.M-box3,.M-box4{
+    position: absolute;
+    text-align: center;
+    zoom: 1;
+    right:0;
 }
-.pages #Pagination .pagination {
-  height: 40px;
-  text-align: right;
-  font-family: \u5b8b\u4f53,Arial;
+.M-box:before,.M-box:after,.M-box1:before,.M-box1:after ,.M-box2:before,.M-box2:after ,.M-box3:before,.M-box3:after,.M-box4:before,.M-box4:after{
+    content:"";
+    display:table;
 }
-.pages #Pagination .pagination a,
-.pages #Pagination .pagination span {
-  float: left;
-  display: inline;
-  padding: 11px 13px;
-  border: 1px solid #e6e6e6;
-  border-right: none;
-  background: #f6f6f6;
-  color: #666666;
-  font-family: \u5b8b\u4f53,Arial;
-  font-size: 14px;
-  cursor: pointer;
+.M-box:after,.M-box1:after,.M-box2:after,.M-box3:after,.M-box4:after{
+    clear:both;
+    overflow:hidden;
 }
-.pages #Pagination .pagination .current {
-  background: #fa5f51;
-  color: #fff;
+.M-box span,.M-box1 span,.M-box2 span,.M-box3 span,.M-box4 span{
+    float: left;
+    margin:0 5px;
+    width: 38px;
+    height: 38px;
+    line-height: 38px;
+    color: #bdbdbd;
+    font-size: 14px;
 }
-.pages #Pagination .pagination .prev,
-.pages #Pagination .pagination .next {
-  float: left;
-  padding: 10px 13px;
-  border: 1px solid #e6e6e6;
-  background: #f6f6f6;
-  color: #666666;
-  cursor: pointer;
+.M-box .active,.M-box1 .active,.M-box2 .active,.M-box3 .active,.M-box4 .active{
+    float: left;
+    margin:0 5px;
+    width: 38px;
+    height: 38px;
+    line-height: 38px;
+    background: #e91e63;
+    color: #fff;
+    font-size: 14px;
+    border: 1px solid #e91e63;
 }
-.pages #Pagination .pagination .prev i,
-.pages #Pagination .pagination .next i {
-  display: inline-block;
-  width: 4px;
-  height: 11px;
-  margin-right: 5px;
-  background: url(../images/icon.fw.png) no-repeat;
+.M-box a,.M-box1 a,.M-box2 a,.M-box3 a,.M-box4 a{
+    float: left;
+    margin:0 5px;
+    width: 38px;
+    height: 38px;
+    line-height: 38px;
+    background: #fff;
+    border: 1px solid #ebebeb;
+    color: #bdbdbd;
+    font-size: 14px;
 }
-.pages #Pagination .pagination .prev {
-  border-right: none;
+.M-box a:hover,.M-box1 a:hover,.M-box2 a:hover,.M-box3 a:hover,.M-box4 a:hover{
+    color:#fff;
+    background: #e91e63;
 }
-.pages #Pagination .pagination .prev i {
-  background-position: -144px -1px;
-  *background-position: -144px -4px;
+.M-box .next,.M-box .prev,.M-box1 .next,.M-box1 .prev{
+    font-family: "Simsun";
+    font-size: 16px;
+    font-weight: bold;
 }
-.pages #Pagination .pagination .next i {
-  background-position: -156px -1px;
-  *background-position: -156px -4px;
+.now,.count{
+    padding:0 5px;
+    color:#f00;
 }
-.pages #Pagination .pagination .pagination-break {
-  padding: 11px 5px;
-  border: none;
-  border-left: 1px solid #e6e6e6;
-  background: none;
-  cursor: default;
+.eg img{
+    max-width: 800px;
+    min-height: 500px;
 }
-.pages .searchPage {
-  float: left;
-  padding: 8px 0;
-}
-.pages .searchPage .page-sum {
-  padding: 11px 13px;
-  color: #999999;
-  font-family: \u5b8b\u4f53,Arial;
-  font-size: 14px;
-}
-.pages .searchPage .page-go {
-  padding: 8px 0;
-  color: #999999;
-  font-family: \u5b8b\u4f53,Arial;
-  font-size: 14px;
-  padding: 10px 0\9;
-  *padding: 6px 0;
-}
-.pages .searchPage .page-go input {
-  width: 21px;
-  height: 20px;
-  margin: 0 5px;
-  padding-left: 5px;
-  border: 1px solid #e4e4e4;
-}
-.pages .searchPage .page-btn {
-  margin: 9px 0 5px 5px;
-  padding: 2px 5px;
-  background: #ffac59;
-  border-radius: 2px;
-  color: #ffffff;
-  font-family: Arial, 'Microsoft YaHei';
-  font-size: 14px;
-  text-decoration: none;
+input.jump-ipt{
+    float: left;
+    margin:0 5px;
+    width: 38px;
+    height: 38px;
+    line-height: 38px;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #ebebeb;
+    outline: none;
+    color: #bdbdbd;
+    font-size: 14px;
 }

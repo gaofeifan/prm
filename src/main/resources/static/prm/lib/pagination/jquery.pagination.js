@@ -1,249 +1,222 @@
 /**
- * This jQuery plugin displays pagination links inside     selected elements.
- * 
- * This plugin needs at least jQuery 1.4.2
+ * pagination分页插件
+ * @version 1.5.0
+ * @author mss
+ * @url https://github.com/Maxiaoxiang
  *
- * @author Gabriel Birke (birke *at* d-scribe *dot* de)
- * @version 2.2
- * @param {int} maxentries Number of entries to paginate
- * @param {Object} opts Several options (see README for documentation)
- * @return {Object} jQuery Object
+ * @调用方法
+ * $(selector).pagination(option, callback);
+ * -此处callback是初始化调用，option里的callback才是点击页码后调用
+ * 
+ * -- example --
+ * $(selector).pagination({
+ *     ...
+ *     callback: function(api){
+ *         console.log('点击页码调用该回调'); //把请求接口函数放在这儿，每次点击请求一次
+ *     }
+ * }, function(){
+ *     console.log('初始化'); //插件初始化时调用该回调，比如请求第一次接口来初始化分页配置
+ * });
  */
- (function($){
-	/**
-	 * @class Class for calculating pagination values
-	 */
-	$.PaginationCalculator = function(maxentries, opts) {
-		this.maxentries = maxentries;
-		this.opts = opts;
-	}
-	
-	$.extend($.PaginationCalculator.prototype, {
-		/**
-		 * Calculate the maximum number of pages
-		 * @method
-		 * @returns {Number}
-		 */
-		numPages:function() {
-			return Math.ceil(this.maxentries/this.opts.items_per_page);
-		},
-		/**
-		 * Calculate start and end point of pagination links depending on 
-		 * current_page and num_display_entries.
-		 * @returns {Array}
-		 */
-		getInterval:function(current_page)  {
-			var ne_half = Math.floor(this.opts.num_display_entries/2);
-			var np = this.numPages();
-			var upper_limit = np - this.opts.num_display_entries;
-			var start = current_page > ne_half ? Math.max( Math.min(current_page - ne_half, upper_limit), 0 ) : 0;
-			var end = current_page > ne_half?Math.min(current_page+ne_half + (this.opts.num_display_entries % 2), np):Math.min(this.opts.num_display_entries, np);
-			return {start:start, end:end};
-		}
-	});
-	
-	// Initialize jQuery object container for pagination renderers
-	$.PaginationRenderers = {}
-	
-	/**
-	 * @class Default renderer for rendering pagination links
-	 */
-	$.PaginationRenderers.defaultRenderer = function(maxentries, opts) {
-		this.maxentries = maxentries;
-		this.opts = opts;
-		this.pc = new $.PaginationCalculator(maxentries, opts);
-	}
-	$.extend($.PaginationRenderers.defaultRenderer.prototype, {
-		/**
-		 * Helper function for generating a single link (or a span tag if it's the current page)
-		 * @param {Number} page_id The page id for the new item
-		 * @param {Number} current_page 
-		 * @param {Object} appendopts Options for the new item: text and classes
-		 * @returns {jQuery} jQuery object containing the link
-		 */
-		createLink:function(page_id, current_page, appendopts){
-			var lnk, np = this.pc.numPages();
-			page_id = page_id<0?0:(page_id<np?page_id:np-1); // Normalize page id to sane value
-			appendopts = $.extend({text:page_id+1, classes:""}, appendopts||{});
-			if(page_id == current_page){
-				lnk = $("<a class='current'>" + appendopts.text + "</a>");
-			}
-			else
-			{
-				lnk = $("<a>" + appendopts.text + "</a>")
-					.attr('href', this.opts.link_to.replace(/__id__/,page_id));
-			}
-			if(appendopts.classes){ lnk.addClass(appendopts.classes); }
-			lnk.data('page_id', page_id);
-			return lnk;
-		},
-		// Generate a range of numeric links 
-		appendRange:function(container, current_page, start, end, opts) {
-			var i;
-			for(i=start; i<end; i++) {
-				this.createLink(i, current_page, opts).appendTo(container);
-			}
-		},
-		getLinks:function(current_page, eventHandler) {
-			var begin, end,
-				interval = this.pc.getInterval(current_page),
-				np = this.pc.numPages(),
-				fragment = $("<div class='pagination'></div>");
-			
-			// Generate "Previous"-Link
-			if(this.opts.prev_text && (current_page > 0 || this.opts.prev_show_always)){
-				fragment.append(this.createLink(current_page-1, current_page, {text:this.opts.prev_text, classes:"prev"}));
-			}
-			// Generate starting points
-			if (interval.start > 0 && this.opts.num_edge_entries > 0)
-			{
-				end = Math.min(this.opts.num_edge_entries, interval.start);
-				this.appendRange(fragment, current_page, 0, end, {classes:'sp'});
-				if(this.opts.num_edge_entries < interval.start && this.opts.ellipse_text)
-				{
-					$("<span class='pagination-break'>"+this.opts.ellipse_text+"</span>").appendTo(fragment);
-				}
-			}
-			// Generate interval links
-			this.appendRange(fragment, current_page, interval.start, interval.end);
-			// Generate ending points
-			if (interval.end < np && this.opts.num_edge_entries > 0)
-			{
-				if(np-this.opts.num_edge_entries > interval.end && this.opts.ellipse_text)
-				{
-					$("<span class='pagination-break'>"+this.opts.ellipse_text+"</span>").appendTo(fragment);
-				}
-				begin = Math.max(np-this.opts.num_edge_entries, interval.end);
-				this.appendRange(fragment, current_page, begin, np, {classes:'ep'});
-				
-			}
-			// Generate "Next"-Link
-			if(this.opts.next_text && (current_page < np-1 || this.opts.next_show_always)){
-				fragment.append(this.createLink(current_page+1, current_page, {text:this.opts.next_text, classes:"next"}));
-			}
-			$('a', fragment).click(eventHandler);
-			return fragment;
-		}
-	});
-	
-	// Extend jQuery
-	$.fn.pagination = function(maxentries, opts){
-		
-		// Initialize options with default values
-		opts = $.extend({
-			items_per_page:1,
-			num_display_entries:4,
-			current_page:0,
-			num_edge_entries:1,
-			link_to:"#",
-			prev_text:"<i></i>上一页",
-			next_text:"下一页 <i></i>",
-			ellipse_text:"...",
-			prev_show_always:true,
-			next_show_always:true,
-			renderer:"defaultRenderer",
-			show_if_single_page:false,
-			load_first_page:false,
-			callback:function(){return false;}
-		},opts||{});
-		
-		var containers = this,
-			renderer, links, current_page;
+;
+(function (factory) {
+    if (typeof define === "function" && (define.amd || define.cmd) && !jQuery) {
+        // AMD或CMD
+        define(["jquery"], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        // Node/CommonJS
+        module.exports = function (root, jQuery) {
+            if (jQuery === undefined) {
+                if (typeof window !== 'undefined') {
+                    jQuery = require('jquery');
+                } else {
+                    jQuery = require('jquery')(root);
+                }
+            }
+            factory(jQuery);
+            return jQuery;
+        };
+    } else {
+        //Browser globals
+        factory(jQuery);
+    }
+}(function ($) {
 
-		//goto
-    $(".page-btn").one("click",function(){
-    	var allPage = $(".allPage").text();
-    	//console.log(allPage);
-      var goPage = $(".page-go input").val() - 1; //跳转页数
-      if(goPage > -1 && goPage < allPage){
-				opts.current_page = goPage;
-      	$("#Pagination").pagination(allPage,opts);
-      }else {
-      	$("#Pagination").pagination(allPage);
-      }
-      //清空用户跳转页数
-      $(".page-go input").val("");
-    });
-		
-		/**
-		 * This is the event handling function for the pagination links. 
-		 * @param {int} page_id The new page number
-		 */
-		function paginationClickHandler(evt){
-			var links, 
-				new_current_page = $(evt.target).data('page_id'),
-				continuePropagation = selectPage(new_current_page);
-			if (!continuePropagation) {
-				evt.stopPropagation();
-			}
-			return continuePropagation;
-		}
-		
-		/**
-		 * This is a utility function for the internal event handlers. 
-		 * It sets the new current page on the pagination container objects, 
-		 * generates a new HTMl fragment for the pagination links and calls
-		 * the callback function.
-		 */
-		function selectPage(new_current_page) {
-			// update the link display of a all containers
-			containers.data('current_page', new_current_page);
-			links = renderer.getLinks(new_current_page, paginationClickHandler);
-			containers.empty();
-			links.appendTo(containers);
-			// call the callback and propagate the event if it does not return false
-			var continuePropagation = opts.callback(new_current_page, containers);
-			return continuePropagation;
-		}
-		
-		// -----------------------------------
-		// Initialize containers
-		// -----------------------------------
-                current_page = parseInt(opts.current_page);
-		containers.data('current_page', current_page);
-		// Create a sane value for maxentries and items_per_page
-		maxentries = (!maxentries || maxentries < 0)?1:maxentries;
-		opts.items_per_page = (!opts.items_per_page || opts.items_per_page < 0)?1:opts.items_per_page;
-		
-		if(!$.PaginationRenderers[opts.renderer])
-		{
-			throw new ReferenceError("Pagination renderer '" + opts.renderer + "' was not found in jQuery.PaginationRenderers object.");
-		}
-		renderer = new $.PaginationRenderers[opts.renderer](maxentries, opts);
-		
-		// Attach control events to the DOM elements
-		var pc = new $.PaginationCalculator(maxentries, opts);
-		var np = pc.numPages();
-		containers.bind('setPage', {numPages:np}, function(evt, page_id) { 
-				if(page_id >= 0 && page_id < evt.data.numPages) {
-					selectPage(page_id); return false;
-				}
-		});
-		containers.bind('prevPage', function(evt){
-				var current_page = $(this).data('current_page');
-				if (current_page > 0) {
-					selectPage(current_page - 1);
-				}
-				return false;
-		});
-		containers.bind('nextPage', {numPages:np}, function(evt){
-				var current_page = $(this).data('current_page');
-				if(current_page < evt.data.numPages - 1) {
-					selectPage(current_page + 1);
-				}
-				return false;
-		});
-		
-		// When all initialisation is done, draw the links
-		links = renderer.getLinks(current_page, paginationClickHandler);
-		containers.empty();
-		if(np > 1 || opts.show_if_single_page) {
-			links.appendTo(containers);
-		}
-		// call callback function
-		if(opts.load_first_page) {
-			opts.callback(current_page, containers);
-		}
-	} // End of $.fn.pagination block
-	
-})(jQuery);
+    //配置参数
+    var defaults = {
+        totalData: 0, //数据总条数
+        showData: 0, //每页显示的条数
+        pageCount: 9, //总页数,默认为9
+        current: 1, //当前第几页
+        prevCls: 'prev', //上一页class
+        nextCls: 'next', //下一页class
+        prevContent: '<', //上一页内容
+        nextContent: '>', //下一页内容
+        activeCls: 'active', //当前页选中状态
+        coping: false, //首页和尾页
+        isHide: false, //当前页数为0页或者1页时不显示分页
+        homePage: '', //首页节点内容
+        endPage: '', //尾页节点内容
+        keepShowPN: false, //是否一直显示上一页下一页
+        count: 3, //当前页前后分页个数
+        jump: false, //跳转到指定页数
+        jumpIptCls: 'jump-ipt', //文本框内容
+        jumpBtnCls: 'jump-btn', //跳转按钮
+        jumpBtn: '跳转', //跳转按钮文本
+        callback: function () {} //回调
+    };
+
+    var Pagination = function (element, options) {
+        //全局变量
+        var opts = options, //配置
+            current, //当前页
+            $document = $(document),
+            $obj = $(element); //容器
+
+        /**
+         * 设置总页数
+         * @param {int} page 页码
+         * @return opts.pageCount 总页数配置
+         */
+        this.setPageCount = function (page) {
+            return opts.pageCount = page;
+        };
+
+        /**
+         * 获取总页数
+         * 如果配置了总条数和每页显示条数，将会自动计算总页数并略过总页数配置，反之
+         * @return {int} 总页数
+         */
+        this.getPageCount = function () {
+            return opts.totalData && opts.showData ? Math.ceil(parseInt(opts.totalData) / opts.showData) : opts.pageCount;
+        };
+
+        /**
+         * 获取当前页
+         * @return {int} 当前页码
+         */
+        this.getCurrent = function () {
+            return current;
+        };
+
+        /**
+         * 填充数据
+         * @param {int} 页码
+         */
+        this.filling = function (index) {
+            var html = '';
+            current = parseInt(index) || parseInt(opts.current); //当前页码
+            var pageCount = this.getPageCount(); //获取的总页数
+            if (opts.keepShowPN || current > 1) { //上一页
+                html += '<a href="javascript:;" class="' + opts.prevCls + '">' + opts.prevContent + '</a>';
+            } else {
+                if (opts.keepShowPN == false) {
+                    $obj.find('.' + opts.prevCls) && $obj.find('.' + opts.prevCls).remove();
+                }
+            }
+            if (current >= opts.count + 2 && current != 1 && pageCount != opts.count) {
+                var home = opts.coping && opts.homePage ? opts.homePage : '1';
+                html += opts.coping ? '<a href="javascript:;" data-page="1">' + home + '</a><span>...</span>' : '';
+            }
+            var start = (current - opts.count) <= 1 ? 1 : (current - opts.count);
+            var end = (current + opts.count) >= pageCount ? pageCount : (current + opts.count);
+            for (; start <= end; start++) {
+                if (start <= pageCount && start >= 1) {
+                    if (start != current) {
+                        html += '<a href="javascript:;" data-page="' + start + '">' + start + '</a>';
+                    } else {
+                        html += '<span class="' + opts.activeCls + '">' + start + '</span>';
+                    }
+                }
+            }
+            if (current + opts.count < pageCount && current >= 1 && pageCount > opts.count) {
+                var end = opts.coping && opts.endPage ? opts.endPage : pageCount;
+                html += opts.coping ? '<span>...</span><a href="javascript:;" data-page="' + pageCount + '">' + end + '</a>' : '';
+            }
+            if (opts.keepShowPN || current < pageCount) { //下一页
+                html += '<a href="javascript:;" class="' + opts.nextCls + '">' + opts.nextContent + '</a>'
+            } else {
+                if (opts.keepShowPN == false) {
+                    $obj.find('.' + opts.nextCls) && $obj.find('.' + opts.nextCls).remove();
+                }
+            }
+            html += opts.jump ? '<input type="text" class="' + opts.jumpIptCls + '"><a href="javascript:;" class="' + opts.jumpBtnCls + '">' + opts.jumpBtn + '</a>' : '';
+            $obj.empty().html(html);
+        };
+
+        //绑定事件
+        this.eventBind = function () {
+            var that = this;
+            var pageCount = that.getPageCount(); //总页数
+            var index = 1;
+            $obj.off().on('click', 'a', function () {
+                if ($(this).hasClass(opts.nextCls)) {
+                    if ($obj.find('.' + opts.activeCls).text() >= pageCount) {
+                        $(this).addClass('disabled');
+                        return false;
+                    } else {
+                        index = parseInt($obj.find('.' + opts.activeCls).text()) + 1;
+                    }
+                } else if ($(this).hasClass(opts.prevCls)) {
+                    if ($obj.find('.' + opts.activeCls).text() <= 1) {
+                        $(this).addClass('disabled');
+                        return false;
+                    } else {
+                        index = parseInt($obj.find('.' + opts.activeCls).text()) - 1;
+                    }
+                } else if ($(this).hasClass(opts.jumpBtnCls)) {
+                    if ($obj.find('.' + opts.jumpIptCls).val() !== '') {
+                        index = parseInt($obj.find('.' + opts.jumpIptCls).val());
+                    } else {
+                        return;
+                    }
+                } else {
+                    index = parseInt($(this).data('page'));
+                }
+                that.filling(index);
+                typeof opts.callback === 'function' && opts.callback(that);
+            });
+            //输入跳转的页码
+            $obj.on('input propertychange', '.' + opts.jumpIptCls, function () {
+                var $this = $(this);
+                var val = $this.val();
+                var reg = /[^\d]/g;
+                if (reg.test(val)) $this.val(val.replace(reg, ''));
+                (parseInt(val) > pageCount) && $this.val(pageCount);
+                if (parseInt(val) === 0) $this.val(1); //最小值为1
+            });
+            //回车跳转指定页码
+            $document.keydown(function (e) {
+                if (e.keyCode == 13 && $obj.find('.' + opts.jumpIptCls).val()) {
+                    var index = parseInt($obj.find('.' + opts.jumpIptCls).val());
+                    that.filling(index);
+                    typeof opts.callback === 'function' && opts.callback(that);
+                }
+            });
+        };
+
+        //初始化
+        this.init = function () {
+            this.filling(opts.current);
+            this.eventBind();
+            if (opts.isHide && this.getPageCount() == '1' || this.getPageCount() == '0') $obj.hide();
+        };
+        this.init();
+    };
+
+    $.fn.pagination = function (parameter, callback) {
+        if (typeof parameter == 'function') { //重载
+            callback = parameter;
+            parameter = {};
+        } else {
+            parameter = parameter || {};
+            callback = callback || function () {};
+        }
+        var options = $.extend({}, defaults, parameter);
+        return this.each(function () {
+            var pagination = new Pagination(this, options);
+            callback(pagination);
+        });
+    };
+
+}));
