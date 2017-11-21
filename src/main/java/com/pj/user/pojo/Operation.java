@@ -1,5 +1,6 @@
 package com.pj.user.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by SenevBoy on 2017/11/9.
@@ -45,11 +47,15 @@ public class Operation  implements Serializable {
 
     @Column(name = "create_date")
     @ApiModelProperty(value = "操作时间    ", required = false)
-    private  String   createDate;
+    private  Date   createDate;
 
     @Column(name = "action")
     @ApiModelProperty(value = "操作日志    ", required = false)
     private  String   action;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
+    public Date getCreateDate(){
+        return createDate;
+    }
 
 }

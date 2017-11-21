@@ -159,8 +159,8 @@ public class PartnerDetailsController extends BaseController {
     }
 
     /**
-     *  查询转移文件
-     * @param ids
+     * @param ids     *  查询转移文件
+
      * @return
      */
     @ApiOperation(value = "查询转移文件" ,httpMethod = "GET", response = Object.class)
