@@ -57,7 +57,6 @@ $(function(){
         commitDate+="]}";
         var commitDate2 = commitDate.replace(",", "");
         var commitDate3 = commitDate2.replace(new RegExp("//","g"), '"');
-alert(commitDate3);
      $.ajax({
             type:'post',
             url:'http://localhost:8083/user/hierarchyUpdate',
