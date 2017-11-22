@@ -1,5 +1,6 @@
 package com.pj.user.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -43,7 +44,10 @@ public class Permissions  implements Serializable{
     @ApiModelProperty(value = "涉及权限    ", required = false)
     private  String   involvesPermissions;
 
-
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
+    public Date getCreateDate(){
+        return createDate;
+    }
 
 
 }
