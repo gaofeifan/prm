@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pj.partner.mapper.PartnerDetailsMapper">
+    <resultMap id="BaseResultMap" type="com.pj.partner.pojo.PartnerDetails" >
+        <result  column="id" property="id" jdbcType="INTEGER" />
+        <result  column="dir_name" property="dirName" jdbcType="VARCHAR" />
+        <result  column="heading_code" property="headingCode" jdbcType="VARCHAR" />
+        <result  column="chinese_name" property="chineseName" jdbcType="VARCHAR" />
+        <result  column="chinese_abbreviation" property="chineseAbbreviation" jdbcType="VARCHAR" />
+        <result  column="english_name" property="englishName" jdbcType="VARCHAR" />
+        <result  column="english_abbreviation" property="englishAbbreviation" jdbcType="VARCHAR" />
+        <result  column="p_id" property="pId" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="selectListByQuery" parameterType="com.pj.partner.pojo.PartnerDetails" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+            partner_details
+        <where>
+          is_delete = 0
+          <if test="isBlacklist != null">
+            AND is_blacklist = #{isBlacklist}
+          </if>
+          <if test="isDisable != null">
+            AND is_disable = #{isDisable}
+          </if>
+                AND
+                <foreach  collection="partnerCategorys" item="partnerCategory" open="(" close=")" separator="OR">
+                    partner_category LIKE CONCAT('%',#{partnerCategory},'%')
+                </foreach>
+
+          <if test="dirName != null">
+              and( heading_code LIKE  CONCAT('%',#{dirName},'%')
+              OR chinese_name LIKE CONCAT('%',#{dirName},'%')
+              OR chinese_abbreviation LIKE CONCAT('%',#{dirName},'%')
+              OR english_name LIKE CONCAT('%',#{dirName},'%')
+              OR english_abbreviation LIKE CONCAT('%',#{dirName},'%')
+              )
+          </if>
+        </where>
+        GROUP BY id
+    </select>
+</mapper>

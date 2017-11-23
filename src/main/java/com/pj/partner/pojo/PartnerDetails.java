@@ -382,9 +382,9 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
 
     private static final long serialVersionUID = 1L;
 
-/*    @Transient
+    @Transient
     @ApiModelProperty(value = "合作伙伴分类")
-    private String[]  partnerCategorys;*/
+    private String[]  partnerCategorys;
     @Transient
     @ApiModelProperty(value = "业务范畴")
     private String[] scopeBusinesss;

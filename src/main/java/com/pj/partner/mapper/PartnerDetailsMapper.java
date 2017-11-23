@@ -5,6 +5,8 @@ import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.service.PartnerDetailsService;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/11/8.
  */
@@ -28,4 +30,11 @@ public interface PartnerDetailsMapper extends BaseMapper<PartnerDetails>{
         }
         return sb.toString();
     }
+
+    /**
+     *  根据条件查询
+     * @param pd
+     * @return
+     */
+    List<PartnerDetails> selectListByQuery(PartnerDetails pd);
 }

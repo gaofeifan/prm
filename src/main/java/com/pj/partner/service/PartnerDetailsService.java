@@ -16,7 +16,7 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
 
     List<PartnerDetails> selectPartnerDetailsList();
 
-    List<PartnerDetails> selectListByQuery(String name, Integer offPartner, Integer blacklistPartner);
+    List<PartnerDetails> selectListByQuery(String name, Integer offPartner, Integer blacklistPartner,String partnerCategory);
 
     void updateByPrimaryKey(PartnerDetails partnerDetails , HttpServletRequest request);
 

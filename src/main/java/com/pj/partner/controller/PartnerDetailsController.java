@@ -42,8 +42,9 @@ public class PartnerDetailsController extends BaseController {
     @ResponseBody
     public Object selectListByQuery(@ApiParam("name") @RequestParam(name = "name",required = false) String name ,
                                      @ApiParam("offPartner") @RequestParam(name = "offPartner",required = false) Integer offPartner ,
+                                     @ApiParam("partnerCategory") @RequestParam(name = "partnerCategory",required = false) String partnerCategory ,
                                      @ApiParam("blacklistPartner") @RequestParam(name = "blacklistPartner",required = false) Integer blacklistPartner){
-        List<PartnerDetails> list = this.partnerDetailsService.selectListByQuery(name,offPartner,blacklistPartner);
+        List<PartnerDetails> list = this.partnerDetailsService.selectListByQuery(name,offPartner,blacklistPartner,partnerCategory);
         return this.success(list);
     }
 
@@ -159,8 +160,7 @@ public class PartnerDetailsController extends BaseController {
     }
 
     /**
-     * @param ids     *  查询转移文件
-
+     * @param ids     查询转移文件
      * @return
      */
     @ApiOperation(value = "查询转移文件" ,httpMethod = "GET", response = Object.class)
@@ -177,6 +177,7 @@ public class PartnerDetailsController extends BaseController {
      * @return
      */
     @ApiOperation(value = "修改转移目录" ,httpMethod = "GET", response = Object.class)
+
     @RequestMapping(value = "/shiftPartnerDetailsFileByIds")
     @ResponseBody
     public Object shiftPartnerDetailsFileByIds(@ApiParam("ids") @RequestParam(name = "ids") Integer[] ids,

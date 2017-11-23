@@ -2,6 +2,7 @@ package com.pj.partner.service.impl;
 
 import com.pj.conf.base.AbstractBaseServiceImpl;
 import com.pj.conf.base.BaseMapper;
+import com.pj.conf.utils.RegExpUtils;
 import com.pj.partner.mapper.PartnerDetailsMapper;
 import com.pj.partner.mapper.PartnerDetailsShifFileMapper;
 import com.pj.partner.pojo.PartnerAddress;
@@ -19,10 +20,7 @@ import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -51,8 +49,8 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     }
 
     @Override
-    public List<PartnerDetails> selectListByQuery(String name, Integer offPartner, Integer blacklistPartner) {
-        Example example = new Example(PartnerDetails.class);
+    public List<PartnerDetails> selectListByQuery(String name, Integer offPartner, Integer blacklistPartner ,String partnerCategory) {
+      /*  Example example = new Example(PartnerDetails.class);
         Example.Criteria criteria = example.createCriteria();
         if(offPartner != null){
             criteria.andCondition("is_disable =" , offPartner);
@@ -63,8 +61,17 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         if(StringUtils.isNotBlank(name)){
             criteria.andLike("name",name);
         }
-        criteria.andCondition("is_delete =",0);
-        List<PartnerDetails> pds = this.partnerDetailsMapper.selectByExample(example);
+        criteria.andCondition("is_delete =",0);*/
+        PartnerDetails pd = new PartnerDetails();
+        pd.setIsDisable(offPartner);
+        pd.setIsBlacklist(blacklistPartner);
+//        if(StringUtils.isNotBlank(partnerCategory)){
+//            String[] strings = partnerCategory.split(",");
+            pd.setPartnerCategory(partnerCategory);
+//        }
+        pd.setDirName(name);
+        List<PartnerDetails> pds = this.partnerDetailsMapper.selectListByQuery(pd);
+//        List<PartnerDetails> pds = this.partnerDetailsMapper.selectByExample(example);
         return pds;
     }
 
@@ -78,7 +85,6 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         PartnerLinkman linkman = new PartnerLinkman();
         linkman.setDetailsId(key);
         List<PartnerLinkman> linkmens = this.partnerLinkmanService.select(linkman);
-
         pd.setLinkmans(linkmens);
         return pd;
     }
@@ -210,5 +216,58 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             return false;
         }
         return true;
+    }
+
+
+    private List<PartnerDetails> windowsSort( List<PartnerDetails> set){
+        /**
+         * 	排序  数字 > 字母 > 汉字
+         */
+        TreeSet<PartnerDetails> tree = new TreeSet<>(new Comparator<PartnerDetails>() {
+            @Override
+            public int compare(PartnerDetails a1, PartnerDetails a2) {
+                String s1 = ((String) a1.getChineseAbbreviation()).toLowerCase();
+                String s2 = ((String) a2.getChineseAbbreviation()).toLowerCase();
+                return s1.compareTo(s2);
+            }
+        });
+
+        /**
+         * 	排序特殊字符
+         */
+        TreeSet<PartnerDetails> endTree = new TreeSet<>(new Comparator<PartnerDetails>() {
+            @Override
+            public int compare(PartnerDetails a1, PartnerDetails a2) {
+                int to = a1.getChineseAbbreviation().compareTo(a2.getChineseAbbreviation());
+                return to;
+            }
+        });
+        List<PartnerDetails> endList = new ArrayList<>();
+        List<PartnerDetails> rmList = new ArrayList<>();
+
+        /**
+         * 	遍历集合将包含特殊字符添加到特殊字符集合中 同事将该数据添加到需要删除的集合中
+         */
+        for (PartnerDetails PartnerDetails : set) {
+            String name = PartnerDetails.getChineseAbbreviation();
+            if (RegExpUtils.verify(name.charAt(0) + "")) {
+                endTree.add(PartnerDetails);
+                rmList.add(PartnerDetails);
+            }
+        }
+        /**
+         * 	删除包含特殊字符数据
+         */
+        set.removeAll(rmList);
+        tree.addAll(set);
+        Iterator<PartnerDetails> iterator2 = endTree.iterator();
+        while (iterator2.hasNext()) {
+            endList.add(iterator2.next());
+        }
+        Iterator<PartnerDetails> iterator = tree.iterator();
+        while (iterator.hasNext()) {
+            endList.add(iterator.next());
+        }
+        return endList;
     }
 }
