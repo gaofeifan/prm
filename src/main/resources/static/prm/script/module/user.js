@@ -4,5 +4,74 @@
 /*backCookie();*/
 menuActive('user');
 $(function(){
-
+    gettotalCount();
 });
+function gettotalCount() {
+    $.ajax({
+        type: 'post',
+        url: 'http://'+oaPathUrl+'/oa/user/list.do',
+        async:false,
+        dataType: 'json',
+        /*data:{
+            now:$('#now').val(),
+            print:$('#print').val(),
+            type:$('#type').val()
+        },*/
+        success: function (data) {
+            $('.body-box').empty();
+            console.log(data.data.pagination);
+           if(data.code == 200) {
+                $('.M-box4').pagination({
+                    pageCount: data.data.pagination.totalPage,
+                    jump: true,
+                    isHide:true,
+                    callback:function(api){
+                        InitData(api.getCurrent())
+                    }
+                });
+                $.each(data.data.pagination.list, function (index, value) {
+                   var tr = ' <div class="bodyList clearfix">\
+                        <div class="loginId">'+value.ssoId+'</div>\
+                        <div class="name">'+value.username+'</div>\
+                        <div class="number">'+value.filenumber+'</div>\
+                        <div class="company">'+value.username+'</div>\
+                        <div class="department">'+value.username+'</div>\
+                        <div class="post">'+value.username+'</div>\
+                        <div class="phone">'+value.username+'</div>\
+                        <div class="email">'+value.username+'</div>\
+                    </div>';
+                   $(tr).appendTo('.body-box');
+               });
+            }
+        },
+        error: function () {
+            alert('数组加载失败')
+        }
+    });
+}
+function InitData(pageIndex) {
+    $('.body-box').empty();
+    $.ajax({
+        type: "get",
+        url: 'http://'+oaPathUrl+'/oa/user/list.do',
+        data: {
+            pageNo:parseInt(pageIndex)
+        },
+        success: function(data) {
+            $.each(data.data.pagination.list, function (index, value) {
+                var tr = ' <div class="bodyList clearfix">\
+                        <div class="loginId">'+value.ssoId+'</div>\
+                        <div class="name">'+value.username+'</div>\
+                        <div class="number">'+value.filenumber+'</div>\
+                        <div class="company">'+value.username+'</div>\
+                        <div class="department">'+value.username+'</div>\
+                        <div class="post">'+value.username+'</div>\
+                        <div class="phone">'+value.username+'</div>\
+                        <div class="email">'+value.username+'</div>\
+                    </div>';
+                $(tr).appendTo('.body-box');
+            });
+        }
+    })
+}
+

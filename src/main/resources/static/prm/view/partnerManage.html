@@ -4,10 +4,23 @@
     </div>
     <div class="content clearfix">
         <div class="searchBar">
-            <input type="text"><label for="">查询</label>
-            <a class="clickLink" href="javascript:void(0);">显示/隐藏查询结果</a>
-            <a class="clickLink" href="javascript:void(0);">查看停用Partner</a>
-            <a class="clickLink" href="javascript:void(0);">查看黑名单Partner</a>
+            <div class="sortBox clearfix">
+                <h6 class="fl">选择分类：</h6>
+                <div class="fl"><input type="checkbox" name="sort"><label for="">外部客户</label></div>
+                <div class="fl"><input type="checkbox" name="sort"><label for="">互为代理</label></div>
+                <div class="fl"><input type="checkbox" name="sort"><label for="">海外代理</label></div>
+                <div class="fl"><input type="checkbox" name="sort"><label for="">干线承运人</label></div>
+                <div class="fl"><input type="checkbox" name="sort"><label for="">不可控供应商</label></div>
+                <div class="fl"><input type="checkbox" name="sort"><label for="">延伸服务供应商</label></div>
+                <div class="fl"><input type="checkbox" name="sort"><label for="">收发货人</label></div>
+                <div class="fl"><input type="checkbox" name="sort"><label for="">计算对象</label></div>
+            </div>
+            <div>
+                <input id="mainPoint" type="text"><label class="searchBtn" for="">查询</label>
+                <a class="clickLink" href="javascript:void(0);">显示/隐藏查询结果</a>
+                <a class="clickLink" href="javascript:void(0);">查看停用Partner</a>
+                <a class="clickLink" href="javascript:void(0);">查看黑名单Partner</a>
+            </div>
         </div>
         <div class="handleBar clearfix">
             <div class="handle-left fl">
@@ -20,6 +33,23 @@
                 <a href="javascript:void(0);">修改</a>
                 <a href="javascript:void(0);">转移</a>
                 <a href="javascript:void(0);">删除</a>
+            </div>
+        </div>
+        <div class="treeHome">
+            <div class="thead-outer clearfix">
+                <div class="thead-core">
+                    <div class="fl Th" style="line-height: 50px;margin-left: 20px;width: 140px;">合作伙伴目录名称</div>
+                    <div class="fr Th endTime"><span>停用</span></div>
+                    <div class="fr Th endTime"><span>黑名单</span></div>
+                    <div class="fr Th startTime"><span>外部客户</span></div>
+                    <div class="fr Th upMan"><span>互为代理</span></div>
+                    <div class="fr Th version"><span>海外代理</span></div>
+                    <div class="fr Th version"><span>干线承运</span></div>
+                    <div class="fr Th version"><span>不可控</span></div>
+                    <div class="fr Th version"><span>延伸服务</span></div>
+                    <div class="fr Th version"><span>收发货人</span></div>
+                    <div class="fr Th version"><span>结算对象</span></div>
+                </div>
             </div>
         </div>
     </div>

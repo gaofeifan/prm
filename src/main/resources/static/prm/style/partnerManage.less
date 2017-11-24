@@ -5,15 +5,36 @@
     .searchBar{
       padding-bottom: 20px;
       border-bottom: 1px solid #dddddd;
-      input{
+      padding-left: 20px;
+      .sortBox{
+        margin-bottom: 10px;
+      }
+      h6{
+        display: inline;
+        position: relative;
+        top:4px;
+        margin-right: 20px;
+      }
+      input[name='sort']{
+        width: 16px;
+        height: 16px;
+        margin-right: 3px;
+      }
+      input#mainPoint{
         height: 28px;
         width: 268px;
         margin-right:20px;
     }
       label{
         color: @BrightColor;
-        margin-right: 120px;
         height: 28px;
+        margin-right: 30px;
+        position: relative;
+        top:1px;
+      }
+      .searchBtn{
+        margin: 0 120px 0 0;
+        cursor: pointer;
       }
       font-size: 16px;
       .clickLink{
@@ -38,6 +59,30 @@
       }
       a{
         color:@BrightColor;
+      }
+    }
+  }
+  .treeHome{
+    .thead-outer{
+      height: 50px;
+      color:#333;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #dddddd;
+    }
+    .thead-core{
+      height: 50px;
+      border-bottom: 1px solid #dddddd;
+      .Th{
+        height: 50px;
+        width: 60px;
+        font-size: 16px;
+        margin:0 auto;
+        span{
+          display: block;
+          height: 40px;
+          width: 40px;
+          margin: 5px auto;
+        }
       }
     }
   }

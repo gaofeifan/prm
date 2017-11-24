@@ -198,17 +198,38 @@
 #partnerManage .content .searchBar {
   padding-bottom: 20px;
   border-bottom: 1px solid #dddddd;
+  padding-left: 20px;
   font-size: 16px;
 }
-#partnerManage .content .searchBar input {
+#partnerManage .content .searchBar .sortBox {
+  margin-bottom: 10px;
+}
+#partnerManage .content .searchBar h6 {
+  display: inline;
+  position: relative;
+  top: 4px;
+  margin-right: 20px;
+}
+#partnerManage .content .searchBar input[name='sort'] {
+  width: 16px;
+  height: 16px;
+  margin-right: 3px;
+}
+#partnerManage .content .searchBar input#mainPoint {
   height: 28px;
   width: 268px;
   margin-right: 20px;
 }
 #partnerManage .content .searchBar label {
   color: #ed6e56;
-  margin-right: 120px;
   height: 28px;
+  margin-right: 30px;
+  position: relative;
+  top: 1px;
+}
+#partnerManage .content .searchBar .searchBtn {
+  margin: 0 120px 0 0;
+  cursor: pointer;
 }
 #partnerManage .content .searchBar .clickLink {
   color: #ed6e56;
@@ -228,6 +249,28 @@
 }
 #partnerManage .content .handleBar a {
   color: #ed6e56;
+}
+#partnerManage .treeHome .thead-outer {
+  height: 50px;
+  color: #333;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #dddddd;
+}
+#partnerManage .treeHome .thead-core {
+  height: 50px;
+  border-bottom: 1px solid #dddddd;
+}
+#partnerManage .treeHome .thead-core .Th {
+  height: 50px;
+  width: 60px;
+  font-size: 16px;
+  margin: 0 auto;
+}
+#partnerManage .treeHome .thead-core .Th span {
+  display: block;
+  height: 40px;
+  width: 40px;
+  margin: 5px auto;
 }
 #homePage .content {
   /*padding: 20px 20px 50px;*/
@@ -334,7 +377,7 @@
 }
 #user .content .user {
   margin-top: 30px;
-  padding: 30px 3%;
+  padding: 30px 3% 80px;
   background-color: #fff;
 }
 #user .content .user .thead-outer {
@@ -632,6 +675,227 @@
 }
 #log .content .logList .log {
   width: 24%;
+}
+#partnerNew .content {
+  padding: 20px 4%;
+  color: #666;
+  background-color: #fff;
+}
+#partnerNew .content h4 {
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: 600;
+  font-size: 16px;
+}
+#partnerNew .content form {
+  font-size: 14px;
+}
+#partnerNew .content form > div {
+  margin-bottom: 15px;
+}
+#partnerNew .content .flDiv {
+  width: 70%;
+}
+#partnerNew .content .flDiv input {
+  width: 80%;
+}
+#partnerNew .content .flDiv input.code {
+  width: 11%;
+}
+#partnerNew .content .frDiv {
+  width: 30%;
+}
+#partnerNew .content .frDiv input {
+  width: 60%;
+}
+#partnerNew .content span.mark {
+  color: #ed6e56;
+  font-size: 20px;
+  position: relative;
+  top: 5px;
+  margin-right: 5px;
+}
+#partnerNew .content .line {
+  font-size: 1%;
+}
+#partnerNew .content label {
+  width: 60px;
+}
+#partnerNew .content input {
+  height: 30px;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+}
+#partnerNew .content input[type='radio'] {
+  margin-right: 6px;
+  width: 16px;
+  height: 16px;
+}
+#partnerNew .content .status {
+  padding-left: 18px;
+}
+#partnerNew .content .status .reason {
+  width: 62%;
+}
+#partnerNew .content .newBtn {
+  height: 34px;
+  width: 88px;
+  border: 1px solid #ed6e56;
+  font-size: 14px;
+  background-color: #fff;
+  color: #ed6e56;
+  border-radius: 8px;
+}
+#partnerNew .content .thead-outer {
+  height: 48px;
+  padding-bottom: 10px;
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+}
+#partnerNew .content .thead-outer .thead-core {
+  height: 48px;
+  border-bottom: 1px solid #dddddd;
+}
+#partnerNew .content .thead-outer .thead-core > div {
+  height: 48px;
+  line-height: 48px;
+  float: left;
+  color: #333;
+}
+#partnerNew .content .thead-outer .thead-core .no {
+  width: 8%;
+}
+#partnerNew .content .thead-outer .thead-core .addressType {
+  width: 12%;
+}
+#partnerNew .content .thead-outer .thead-core .short {
+  width: 14%;
+}
+#partnerNew .content .thead-outer .thead-core .address {
+  width: 35%;
+}
+#partnerNew .content .thead-outer .thead-core .postcode {
+  width: 15%;
+}
+#partnerNew .content .thead-outer .thead-core .operation {
+  width: 16%;
+}
+#partnerNew .content .thead-outer .thead-core .name {
+  width: 8%;
+}
+#partnerNew .content .thead-outer .thead-core .obligation {
+  width: 10%;
+}
+#partnerNew .content .thead-outer .thead-core .demp {
+  width: 10%;
+}
+#partnerNew .content .thead-outer .thead-core .duty {
+  width: 10%;
+}
+#partnerNew .content .thead-outer .thead-core .tel {
+  width: 10%;
+}
+#partnerNew .content .thead-outer .thead-core .phone {
+  width: 10%;
+}
+#partnerNew .content .thead-outer .thead-core .email {
+  width: 10%;
+}
+#partnerNew .content .thead-outer .thead-core .address2 {
+  width: 10%;
+}
+#partnerNew .content .thead-outer .thead-core .operation {
+  width: 14%;
+}
+#partnerNew .content .addressList .list {
+  padding: 10px 0;
+  border-bottom: 1px solid #dddddd;
+}
+#partnerNew .content .addressList .list > div {
+  float: left;
+}
+#partnerNew .content .addressList .list .no {
+  width: 8%;
+}
+#partnerNew .content .addressList .list .addressType {
+  width: 12%;
+}
+#partnerNew .content .addressList .list .short {
+  width: 14%;
+}
+#partnerNew .content .addressList .list .address {
+  width: 35%;
+}
+#partnerNew .content .addressList .list .postcode {
+  width: 15%;
+}
+#partnerNew .content .addressList .list .operation {
+  width: 16%;
+}
+#partnerNew .content .addressList .list .editAdd {
+  color: #64b92b;
+  margin-right: 8%;
+}
+#partnerNew .content .addressList .list .name {
+  width: 8%;
+}
+#partnerNew .content .addressList .list .obligation {
+  width: 10%;
+}
+#partnerNew .content .addressList .list .demp {
+  width: 10%;
+}
+#partnerNew .content .addressList .list .duty {
+  width: 10%;
+}
+#partnerNew .content .addressList .list .tel {
+  width: 10%;
+}
+#partnerNew .content .addressList .list .phone {
+  width: 10%;
+}
+#partnerNew .content .addressList .list .email {
+  width: 10%;
+}
+#partnerNew .content .addressList .list .address2 {
+  width: 10%;
+}
+#partnerNew .content .addressList .list .operation {
+  width: 14%;
+}
+#partnerNew .content .businessScope input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  position: relative;
+  top: -1px;
+}
+#partnerNew .content .businessScope label {
+  width: auto;
+  margin-right: 4%;
+}
+#partnerNew .content .businessScope .businessCheckbox {
+  padding: 10px 0;
+  padding-left: 3%;
+  border-bottom: 1px solid #dddddd;
+  border-top: 1px solid #dddddd;
+}
+#partnerNew .content .classificationOfPartners input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  position: relative;
+  top: -1px;
+}
+#partnerNew .content .classificationOfPartners label {
+  width: auto;
+  margin-right: 4%;
+}
+#partnerNew .content .classificationOfPartners .classificationOfPartnersCheckbox {
+  padding: 10px 0;
+  padding-left: 3%;
+  border-bottom: 1px solid #dddddd;
+  border-top: 1px solid #dddddd;
 }
 html,
 body {
@@ -963,4 +1227,7 @@ p {
 input.date_in {
   background-image: url('../image/sprite.png');
   background-position: 100px -544px;
+}
+.redColor {
+  color: #ed6e56;
 }
