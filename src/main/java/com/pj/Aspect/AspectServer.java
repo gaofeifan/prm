@@ -582,10 +582,11 @@ public class AspectServer {
                     Method getMethod2 = pd2.getReadMethod();//获得get方法  
                     Object o2 = getMethod2.invoke(newData.get(k));//执行get方法返回一个Object
 
+
                     if (!(o == null ? "" : o).toString().equals(o2 == null ? "" : o2.toString())) {
-                        actionData += "   第"+(k+1)+"层 ";
-                        actionData += "< " + o + " >（" + o2 + " ） ; ";
-                        flage = true;
+                            actionData += "   第"+(k+1)+"层 ";
+                            actionData += "< " + o + " >（" + o2 + " ） ; ";
+                            flage = true;
                     }
 
                 }
