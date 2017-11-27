@@ -48,15 +48,19 @@ $(function(){
     $("#confirmClick").click(function(){
         /*定义数组*/
         var commitDate = "{ "+"//hierarchyList//"+":[";
-
+        var i= 0;
         /* 循环 option中的所有 selected 标签 */
         $("   option:selected ").each(function(vi,obj){
             /*判断标签类分别获取数据*/
             commitDate+=",{//id//:"+$(this).parent().prev().prev().val()+", //layerName//://"+$(this).parent().prev().val()+"//, //layerNumber//:"+$(this).val()+"}";
+            i+=$(this).val();
         });
+
         commitDate+="]}";
         var commitDate2 = commitDate.replace(",", "");
         var commitDate3 = commitDate2.replace(new RegExp("//","g"), '"');
+        if(i<=20){
+
      $.ajax({
             type:'post',
             url:'http://localhost:8083/user/hierarchyUpdate',
@@ -71,6 +75,9 @@ $(function(){
 
             }
         }) ;
+        } else {
+            alert("层数总和不能超过20！");
+        }
     })
 
     /*取消按钮*/
