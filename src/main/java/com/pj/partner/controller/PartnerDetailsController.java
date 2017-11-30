@@ -1,5 +1,6 @@
 package com.pj.partner.controller;
 
+import com.pj.cache.PartnerDetailsCache;
 import com.pj.conf.base.BaseController;
 import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.pojo.PartnerDetailsShifFile;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -111,11 +114,12 @@ public class PartnerDetailsController extends BaseController {
     @ResponseBody
     public Object getCodeLength(){
         List<Hierarchy> list = this.hierarchyMapper.selectAll();
-        int num = 0;
+        Object[] array = list.stream().map(hi -> hi.getLayerNumber()).toArray();
+      /*  int num = 0;
         for (Hierarchy h: list) {
             num += h.getLayerNumber();
-        }
-        return this.success(num);
+        }*/
+        return this.success(array);
     }
 
     /**
@@ -167,7 +171,26 @@ public class PartnerDetailsController extends BaseController {
     @RequestMapping(value = "/selectShiftFile")
     @ResponseBody
     public Object selectShiftFile(@ApiParam("ids") @RequestParam(name = "ids") Integer[] ids){
-       List<PartnerDetailsShifFile> pdsf = this.partnerDetailsService.selectShiftFile(ids);
+        List<PartnerDetailsShifFile> pdsf = this.partnerDetailsService.selectShiftFile(ids);
+        PartnerDetailsCache.put("details",pdsf);
+        return this.success(pdsf);
+    }
+
+   @ApiOperation(value = "删除转移文件" ,httpMethod = "GET", response = Object.class)
+    @RequestMapping(value = "/deleteShiftFile")
+    @ResponseBody
+    public Object deleteShiftFile(@ApiParam("ids") @RequestParam(name = "ids") Integer[] ids){
+       List<PartnerDetailsShifFile> deletePd = new ArrayList<>();
+       Object o = PartnerDetailsCache.getValueByKey("details");
+       List<PartnerDetailsShifFile> pdsf = (List<PartnerDetailsShifFile>) o;
+       for (PartnerDetailsShifFile pd:pdsf) {
+           List<Integer> list = Arrays.asList(ids);
+           if(list.contains(pd.getId())){
+               deletePd.add(pd);
+           }
+       }
+       pdsf.removeAll(deletePd);
+       PartnerDetailsCache.put("details",pdsf);
        return this.success(pdsf);
     }
 
@@ -177,12 +200,20 @@ public class PartnerDetailsController extends BaseController {
      * @return
      */
     @ApiOperation(value = "修改转移目录" ,httpMethod = "GET", response = Object.class)
-
     @RequestMapping(value = "/shiftPartnerDetailsFileByIds")
     @ResponseBody
-    public Object shiftPartnerDetailsFileByIds(@ApiParam("ids") @RequestParam(name = "ids") Integer[] ids,
+    public Object shiftPartnerDetailsFileByIds(
                                                 @ApiParam("id") @RequestParam(name = "id") Integer id){
-        this.partnerDetailsService.shiftPartnerDetailsFileByIds(ids,id);
+        this.partnerDetailsService.shiftPartnerDetailsFileByIds(id);
         return this.success();
     }
+
+    @ApiOperation(value = "获取父集代码集合" ,httpMethod = "GET", response = Object.class)
+    @RequestMapping(value = "/getParentCodeList")
+    @ResponseBody
+    public Object getParentCodeList(@ApiParam("id") @RequestParam(name = "id") Integer id){
+        Object[] codes = this.partnerDetailsService.getParentCodeList(id);
+        return this.success(codes);
+    }
+
 }

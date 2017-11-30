@@ -37,4 +37,11 @@ public interface PartnerDetailsMapper extends BaseMapper<PartnerDetails>{
      * @return
      */
     List<PartnerDetails> selectListByQuery(PartnerDetails pd);
+
+    /**
+     *  查询所有父集
+     * @param id
+     * @return
+     */
+    List<PartnerDetails> getParentList(Integer id);
 }

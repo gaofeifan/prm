@@ -48,7 +48,7 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
      * @param ids
      * @param id
      */
-    void shiftPartnerDetailsFileByIds(Integer[] ids, Integer id);
+    void shiftPartnerDetailsFileByIds( Integer id);
 
     /**
      *  判断是否可以删除
@@ -56,4 +56,11 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
      * @return
      */
     boolean isDeletePartnerDetails(Integer id);
+
+    /**
+     *  查询父集代码集
+     * @param id
+     * @return
+     */
+    Object[] getParentCodeList(Integer id);
 }

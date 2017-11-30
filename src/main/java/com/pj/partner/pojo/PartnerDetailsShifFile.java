@@ -14,4 +14,6 @@ public  @Data
     private Integer pId;
 
     private Integer isDelete;
+
+    private String chineseAbbreviation;
 }
