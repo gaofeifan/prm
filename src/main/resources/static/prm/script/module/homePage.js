@@ -24,7 +24,7 @@ $(function(){
     function  operationLog  () {
         $.ajax({
             type: 'get',
-            url: 'http://localhost:8083/log/home',
+            url: 'http://'+gPathUrl+'/log/home',
             success: function (data) {
                 $.each(data.data.permissionsOneWeekLsit, function (index, value) {
                     var str =

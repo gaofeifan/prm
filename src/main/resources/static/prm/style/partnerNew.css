@@ -1,0 +1,17 @@
+#partnerNew .content {
+  padding: 20px 3%;
+  color: #666;
+  background-color: #fff;
+}
+#partnerNew .content h4 {
+  color: #333;
+  margin-bottom: 10px;
+}
+#partnerNew .content .code {
+  width: 6%;
+}
+#partnerNew .content input {
+  height: 30px;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+}

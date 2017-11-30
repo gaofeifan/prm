@@ -23,14 +23,14 @@ $(function(){
                     /*追加第几层*/
                     $("#hi_base_layer").append('<div class="item"><span>'+baseData[i].layerName+'</span></div>');
 
-                    /*追加 层对应的数量*/
+                    /*追加 序列号*/
                     $("#hi_base_layer_body").append('<div class="item"   id="base_body_'+i+'"> </div>');
 
                     /*追加隐藏附属数据  序号 层级  */
                     $("#base_body_"+i+"").append('<input type="text" hidden = "true" name = "id" value='+baseData[i].id+'> ');
                     $("#base_body_"+i+"").append('<input type="text"  hidden = "true" name = "layerName" value='+baseData[i].layerName+'> ');
 
-                    /*追加 下啦数字*/
+                    /*追加 下拉数字*/
                     $("#base_body_"+i+"").append(' <select name=""> <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option><option value="5">5</option><option value="6">6</option></select> ');
 
                     /*遍历默认选中数字*/
@@ -48,15 +48,19 @@ $(function(){
     $("#confirmClick").click(function(){
         /*定义数组*/
         var commitDate = "{ "+"//hierarchyList//"+":[";
-
-        /* 循环 div中的所有 input 标签 */
+        var i= 0;
+        /* 循环 option中的所有 selected 标签 */
         $("   option:selected ").each(function(vi,obj){
             /*判断标签类分别获取数据*/
             commitDate+=",{//id//:"+$(this).parent().prev().prev().val()+", //layerName//://"+$(this).parent().prev().val()+"//, //layerNumber//:"+$(this).val()+"}";
+            i+=$(this).val();
         });
+
         commitDate+="]}";
         var commitDate2 = commitDate.replace(",", "");
         var commitDate3 = commitDate2.replace(new RegExp("//","g"), '"');
+        if(i<=20){
+
      $.ajax({
             type:'post',
             url:'http://localhost:8083/user/hierarchyUpdate',
@@ -71,6 +75,9 @@ $(function(){
 
             }
         }) ;
+        } else {
+            alert("层数总和不能超过20！");
+        }
     })
 
     /*取消按钮*/
@@ -92,4 +99,3 @@ function   checkedType(obj){
     $(this).attr("checked",true);
 
 }
-

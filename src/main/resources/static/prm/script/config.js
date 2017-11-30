@@ -32,6 +32,18 @@ vipspa.start({
             templateUrl: 'view/partnerManage.html',
             controller: 'script/module/partnerManage.js'
         },
+        'partnerNew': { //合作伙伴管理
+            templateUrl: 'view/partnerNew.html',
+            controller: 'script/module/partnerNew.js'
+        },
+        'partnerEdit': { //合作伙伴管理
+            templateUrl: 'view/partnerEdit.html',
+            controller: 'script/module/partnerEdit.js'
+        },
+        'partnerCheck': { //合作伙伴管理
+            templateUrl: 'view/partnerCheck.html',
+            controller: 'script/module/partnerCheck.js'
+        },
         'homePage': { //首页
             templateUrl: 'view/homePage.html',
             controller: 'script/module/homePage.js'

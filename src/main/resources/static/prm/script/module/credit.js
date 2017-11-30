@@ -43,7 +43,12 @@ $(function(){
                 /*z追加是否有效单选框*/
                 $("#base_" + i + "").append('<div class="valid" id="base_boolean_' + i + '"></div>');
                 $("#base_boolean_" + i + "").append('<input type="checkbox" name="type_boolean' + i + '" value="1"  style="width:18px;height:18px;"><label for="">有效</label>');
-                             $("input[name=type_boolean"+i+"][value="+levels[i].effectiveness+"]").attr("checked",true) ;
+                $("input[name=type_boolean"+i+"][value="+levels[i].effectiveness+"]").attr("checked",true) ;
+
+                /*z追加备注框*/
+              $("#base_" + i + "").append('<div class="valid" id="base_mark_' + i + '"></div>');
+               $("#base_mark_" + i + "").append('<textarea   style="height: 20px;" role="3" cols="50">'+levels[i].mark+'</textarea>');
+
             }
         },
         error:function(){
@@ -58,8 +63,7 @@ $(function(){
         var commitDate = "{ "+"//userLevelList//"+":[";
 
 /* 循环 div中的所有 input 标签 */
-        $("#credit_body_datas input[type='text'],input[type='radio'], input[type='checkbox']").each(function(vi,obj){
-
+        $("#credit_body_datas input[type='text'],input[type='radio'], input[type='checkbox'] ,textarea").each(function(vi,obj){
 
                 /*判断标签类分别获取数据*/
               if( $(this)[0].getAttribute("type")=='text'){
@@ -80,16 +84,18 @@ $(function(){
               }else   if( $(this)[0].getAttribute("type")=='checkbox'){
                   /*判断 复选框  */
                   if($(this).is(":checked")){
-                      commitDate+=","+""+"//effectiveness//"+":"+$(this).val()+"}";
+                      commitDate+=","+""+"//effectiveness//"+":"+$(this).val();
                   }else{
-                      commitDate+=","+""+"//effectiveness//"+""+":0"+"}";
+                      commitDate+=","+""+"//effectiveness//"+""+":0";
                   }
+              }else if($(this).is("textarea")){
+                  commitDate+=","+"//mark//://"+$(this).val()+"//}";
               }
         });
         commitDate+="]}";
         var commitDate2 = commitDate.replace(",", "");
         var commitDate3 = commitDate2.replace(new RegExp("//","g"), '"');
- 
+
         $.ajax({
             type:'post',
             url:'http://localhost:8083/user/levelUpdate',
