@@ -192,6 +192,7 @@
   width: 42%;
 }
 #partnerManage .content {
+  position: relative;
   padding: 20px 20px 50px;
   background-color: #fff;
 }
@@ -271,6 +272,123 @@
   height: 40px;
   width: 40px;
   margin: 5px auto;
+}
+#partnerManage #tree_box {
+  position: relative;
+  height: 550px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+#partnerManage #tree_box .info {
+  float: right;
+  width: 60px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+}
+#partnerManage #tree_box .checkedIcon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url('../image/sprite.png');
+  background-position: -70px -43px;
+}
+#partnerManage #screen {
+  display: none;
+  width: 400px;
+  height: 500px;
+  position: absolute;
+  z-index: 777;
+  background-color: #f0f0f0;
+  top: 0;
+  right: 50px;
+  overflow-y: auto;
+}
+#partnerManage #screen h3 {
+  height: 50px;
+  line-height: 50px;
+  color: #fff;
+  text-indent: 22px;
+  background-color: #7598b9;
+}
+#partnerManage #screen #selected {
+  padding: 10px 20px;
+}
+#partnerManage #screen #selected span {
+  display: block;
+  padding: 10px 0;
+  line-height: 20px;
+  color: #666;
+  cursor: pointer;
+  text-indent: 20px;
+  position: relative;
+}
+#partnerManage #screen #selected span::before {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 5px;
+  left: 0;
+  top: 15px;
+}
+#partnerManage #transfer {
+  display: none;
+  width: 600px;
+  background-color: #f0f0f0;
+  position: absolute;
+  z-index: 99;
+  top: 300px;
+  left: 50%;
+  margin-left: -300px;
+  border: 1px solid #f0f0f0;
+}
+#partnerManage #transfer h3 {
+  height: 40px;
+  line-height: 40px;
+  color: #fff;
+  text-indent: 22px;
+  background-color: #ed6e56;
+  font-size: 16px;
+}
+#partnerManage #transfer .content {
+  padding: 10px 30px;
+}
+#partnerManage #transfer .content .transfer-box {
+  max-height: 200px;
+  background-color: #fff;
+  overflow: auto;
+  margin: 0 0 20px 0;
+}
+#partnerManage #transfer .content .transfer-box p {
+  text-indent: 10px;
+  cursor: default;
+}
+#partnerManage #transfer .content .transfer-box p.active {
+  background-color: #dddddd;
+}
+#partnerManage #transfer button {
+  height: 34px;
+  width: 100px;
+  display: block;
+  font-size: 16px;
+  margin-bottom: 20px;
+  background-color: #ed6e56;
+}
+#partnerManage #transfer .blue {
+  background-color: #7598b9;
+}
+#partnerManage #transfer #goal {
+  width: 320px;
+  height: 34px;
+}
+#partnerManage #transfer .bar button {
+  display: inline-block;
+  margin: 50px 60px 40px 0;
+}
+#partnerManage #transfer .bar #tr-confirm {
+  margin-left: 40px;
 }
 #homePage .content {
   /*padding: 20px 20px 50px;*/
@@ -677,9 +795,8 @@
   width: 24%;
 }
 #partnerNew .content {
-  padding: 20px 4%;
   color: #666;
-  background-color: #fff;
+  padding-bottom: 200px;
 }
 #partnerNew .content h4 {
   color: #333;
@@ -688,10 +805,38 @@
   font-size: 16px;
 }
 #partnerNew .content form {
+  padding: 20px 3%;
+  background-color: #fff;
   font-size: 14px;
+  position: relative;
 }
 #partnerNew .content form > div {
   margin-bottom: 15px;
+}
+#partnerNew .content form .buttonBox {
+  width: 500px;
+  height: 40px;
+  margin: 0 auto;
+  position: absolute;
+  left: 50%;
+  margin-left: -250px;
+  bottom: -70px;
+}
+#partnerNew .content form .buttonBox button {
+  width: 110px;
+  height: 40px;
+  background-color: #ed6e56;
+  font-size: 18px;
+}
+#partnerNew .content form .warning {
+  color: red;
+  position: absolute;
+  right: 0;
+}
+#partnerNew .content form .hiddenInput {
+  width: 0;
+  height: 0;
+  opacity: 0;
 }
 #partnerNew .content .flDiv {
   width: 70%;
@@ -714,6 +859,9 @@
   position: relative;
   top: 5px;
   margin-right: 5px;
+}
+#partnerNew .content span.mark.disableMark {
+  color: #fff;
 }
 #partnerNew .content .line {
   font-size: 1%;
@@ -763,7 +911,7 @@
   color: #333;
 }
 #partnerNew .content .thead-outer .thead-core .no {
-  width: 8%;
+  width: 5%;
 }
 #partnerNew .content .thead-outer .thead-core .addressType {
   width: 12%;
@@ -778,19 +926,19 @@
   width: 15%;
 }
 #partnerNew .content .thead-outer .thead-core .operation {
-  width: 16%;
+  width: 19%;
 }
 #partnerNew .content .thead-outer .thead-core .name {
-  width: 8%;
+  width: 6%;
 }
 #partnerNew .content .thead-outer .thead-core .obligation {
-  width: 10%;
+  width: 6%;
 }
 #partnerNew .content .thead-outer .thead-core .demp {
-  width: 10%;
+  width: 8%;
 }
 #partnerNew .content .thead-outer .thead-core .duty {
-  width: 10%;
+  width: 6%;
 }
 #partnerNew .content .thead-outer .thead-core .tel {
   width: 10%;
@@ -799,69 +947,202 @@
   width: 10%;
 }
 #partnerNew .content .thead-outer .thead-core .email {
-  width: 10%;
+  width: 12%;
 }
 #partnerNew .content .thead-outer .thead-core .address2 {
-  width: 10%;
+  width: 22%;
 }
 #partnerNew .content .thead-outer .thead-core .operation {
-  width: 14%;
+  width: 10%;
 }
-#partnerNew .content .addressList .list {
+#partnerNew .content .listBoxStyle .list {
   padding: 10px 0;
   border-bottom: 1px solid #dddddd;
 }
-#partnerNew .content .addressList .list > div {
+#partnerNew .content .listBoxStyle .list > div {
   float: left;
 }
-#partnerNew .content .addressList .list .no {
-  width: 8%;
+#partnerNew .content .listBoxStyle .list .no {
+  width: 5%;
 }
-#partnerNew .content .addressList .list .addressType {
+#partnerNew .content .listBoxStyle .list .addressType {
   width: 12%;
 }
-#partnerNew .content .addressList .list .short {
+#partnerNew .content .listBoxStyle .list .short {
   width: 14%;
 }
-#partnerNew .content .addressList .list .address {
+#partnerNew .content .listBoxStyle .list .address {
   width: 35%;
 }
-#partnerNew .content .addressList .list .postcode {
+#partnerNew .content .listBoxStyle .list .postcode {
   width: 15%;
 }
-#partnerNew .content .addressList .list .operation {
-  width: 16%;
+#partnerNew .content .listBoxStyle .list .operation {
+  width: 19%;
 }
-#partnerNew .content .addressList .list .editAdd {
+#partnerNew .content .listBoxStyle .list .editAdd {
   color: #64b92b;
   margin-right: 8%;
 }
-#partnerNew .content .addressList .list .name {
+#partnerNew .content .listBoxStyle .list .name {
+  width: 6%;
+}
+#partnerNew .content .listBoxStyle .list .obligation {
+  width: 6%;
+}
+#partnerNew .content .listBoxStyle .list .demp {
   width: 8%;
 }
-#partnerNew .content .addressList .list .obligation {
+#partnerNew .content .listBoxStyle .list .duty {
+  width: 6%;
+}
+#partnerNew .content .listBoxStyle .list .tel {
   width: 10%;
 }
-#partnerNew .content .addressList .list .demp {
+#partnerNew .content .listBoxStyle .list .phone {
   width: 10%;
 }
-#partnerNew .content .addressList .list .duty {
+#partnerNew .content .listBoxStyle .list .email {
+  width: 12%;
+}
+#partnerNew .content .listBoxStyle .list .address2 {
+  width: 22%;
+}
+#partnerNew .content .listBoxStyle .list .operation {
   width: 10%;
 }
-#partnerNew .content .addressList .list .tel {
-  width: 10%;
+#partnerNew .content .listBoxStyle .addingAdd,
+#partnerNew .content .listBoxStyle .editingAdd,
+#partnerNew .content .listBoxStyle .addingCon,
+#partnerNew .content .listBoxStyle .editingCon {
+  padding: 10px 0;
+  border-bottom: 1px solid #dddddd;
 }
-#partnerNew .content .addressList .list .phone {
-  width: 10%;
+#partnerNew .content .listBoxStyle .addingAdd > div,
+#partnerNew .content .listBoxStyle .editingAdd > div,
+#partnerNew .content .listBoxStyle .addingCon > div,
+#partnerNew .content .listBoxStyle .editingCon > div {
+  float: left;
 }
-#partnerNew .content .addressList .list .email {
-  width: 10%;
+#partnerNew .content .listBoxStyle .addingAdd .no,
+#partnerNew .content .listBoxStyle .editingAdd .no,
+#partnerNew .content .listBoxStyle .addingCon .no,
+#partnerNew .content .listBoxStyle .editingCon .no {
+  width: 5%;
 }
-#partnerNew .content .addressList .list .address2 {
-  width: 10%;
+#partnerNew .content .listBoxStyle .addingAdd .addressType,
+#partnerNew .content .listBoxStyle .editingAdd .addressType,
+#partnerNew .content .listBoxStyle .addingCon .addressType,
+#partnerNew .content .listBoxStyle .editingCon .addressType {
+  width: 12%;
 }
-#partnerNew .content .addressList .list .operation {
+#partnerNew .content .listBoxStyle .addingAdd .short,
+#partnerNew .content .listBoxStyle .editingAdd .short,
+#partnerNew .content .listBoxStyle .addingCon .short,
+#partnerNew .content .listBoxStyle .editingCon .short {
   width: 14%;
+}
+#partnerNew .content .listBoxStyle .addingAdd .address,
+#partnerNew .content .listBoxStyle .editingAdd .address,
+#partnerNew .content .listBoxStyle .addingCon .address,
+#partnerNew .content .listBoxStyle .editingCon .address {
+  width: 35%;
+}
+#partnerNew .content .listBoxStyle .addingAdd .postcode,
+#partnerNew .content .listBoxStyle .editingAdd .postcode,
+#partnerNew .content .listBoxStyle .addingCon .postcode,
+#partnerNew .content .listBoxStyle .editingCon .postcode {
+  width: 15%;
+}
+#partnerNew .content .listBoxStyle .addingAdd .operation,
+#partnerNew .content .listBoxStyle .editingAdd .operation,
+#partnerNew .content .listBoxStyle .addingCon .operation,
+#partnerNew .content .listBoxStyle .editingCon .operation {
+  width: 19%;
+}
+#partnerNew .content .listBoxStyle .addingAdd .editAdd,
+#partnerNew .content .listBoxStyle .editingAdd .editAdd,
+#partnerNew .content .listBoxStyle .addingCon .editAdd,
+#partnerNew .content .listBoxStyle .editingCon .editAdd {
+  color: #64b92b;
+  margin-right: 8%;
+}
+#partnerNew .content .listBoxStyle .addingAdd .confirmAdd,
+#partnerNew .content .listBoxStyle .editingAdd .confirmAdd,
+#partnerNew .content .listBoxStyle .addingCon .confirmAdd,
+#partnerNew .content .listBoxStyle .editingCon .confirmAdd {
+  color: #64b92b;
+  margin-right: 8%;
+}
+#partnerNew .content .listBoxStyle .addingAdd .confirmEdit,
+#partnerNew .content .listBoxStyle .editingAdd .confirmEdit,
+#partnerNew .content .listBoxStyle .addingCon .confirmEdit,
+#partnerNew .content .listBoxStyle .editingCon .confirmEdit {
+  color: #64b92b;
+  margin-right: 8%;
+}
+#partnerNew .content .listBoxStyle .addingAdd .name,
+#partnerNew .content .listBoxStyle .editingAdd .name,
+#partnerNew .content .listBoxStyle .addingCon .name,
+#partnerNew .content .listBoxStyle .editingCon .name {
+  width: 6%;
+}
+#partnerNew .content .listBoxStyle .addingAdd .obligation,
+#partnerNew .content .listBoxStyle .editingAdd .obligation,
+#partnerNew .content .listBoxStyle .addingCon .obligation,
+#partnerNew .content .listBoxStyle .editingCon .obligation {
+  width: 6%;
+}
+#partnerNew .content .listBoxStyle .addingAdd .demp,
+#partnerNew .content .listBoxStyle .editingAdd .demp,
+#partnerNew .content .listBoxStyle .addingCon .demp,
+#partnerNew .content .listBoxStyle .editingCon .demp {
+  width: 8%;
+}
+#partnerNew .content .listBoxStyle .addingAdd .duty,
+#partnerNew .content .listBoxStyle .editingAdd .duty,
+#partnerNew .content .listBoxStyle .addingCon .duty,
+#partnerNew .content .listBoxStyle .editingCon .duty {
+  width: 6%;
+}
+#partnerNew .content .listBoxStyle .addingAdd .tel,
+#partnerNew .content .listBoxStyle .editingAdd .tel,
+#partnerNew .content .listBoxStyle .addingCon .tel,
+#partnerNew .content .listBoxStyle .editingCon .tel {
+  width: 10%;
+}
+#partnerNew .content .listBoxStyle .addingAdd .phone,
+#partnerNew .content .listBoxStyle .editingAdd .phone,
+#partnerNew .content .listBoxStyle .addingCon .phone,
+#partnerNew .content .listBoxStyle .editingCon .phone {
+  width: 10%;
+}
+#partnerNew .content .listBoxStyle .addingAdd .email,
+#partnerNew .content .listBoxStyle .editingAdd .email,
+#partnerNew .content .listBoxStyle .addingCon .email,
+#partnerNew .content .listBoxStyle .editingCon .email {
+  width: 12%;
+}
+#partnerNew .content .listBoxStyle .addingAdd .address2,
+#partnerNew .content .listBoxStyle .editingAdd .address2,
+#partnerNew .content .listBoxStyle .addingCon .address2,
+#partnerNew .content .listBoxStyle .editingCon .address2 {
+  width: 20%;
+}
+#partnerNew .content .listBoxStyle .addingAdd .operation,
+#partnerNew .content .listBoxStyle .editingAdd .operation,
+#partnerNew .content .listBoxStyle .addingCon .operation,
+#partnerNew .content .listBoxStyle .editingCon .operation {
+  width: 10%;
+}
+#partnerNew .content .listBoxStyle .delAdd:hover {
+  color: #ed6e56;
+}
+#partnerNew .content .listBoxStyle .cancelAdd:hover {
+  color: #ed6e56;
+}
+#partnerNew .content .listBoxStyle .cancelEdit:hover {
+  color: #ed6e56;
 }
 #partnerNew .content .businessScope input[type="checkbox"] {
   width: 16px;
@@ -896,6 +1177,148 @@
   padding-left: 3%;
   border-bottom: 1px solid #dddddd;
   border-top: 1px solid #dddddd;
+}
+#partnerNew .content .wbkhStyle {
+  padding-left: 20px;
+}
+#partnerNew .content .wbkhStyle h5 {
+  font-size: 16px;
+  color: #333;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#partnerNew .content .wbkhStyle h6 {
+  display: inline;
+}
+#partnerNew .content .wbkhStyle .fl1 {
+  width: 25%;
+  height: 234px;
+  margin-right: 1%;
+}
+#partnerNew .content .wbkhStyle .fl1 .topLayer {
+  height: 90px;
+  border: 1px solid #dddddd;
+  margin-bottom: 18px;
+  padding: 8px 15px;
+}
+#partnerNew .content .wbkhStyle .fl1 .topLayer label {
+  width: auto;
+  margin-right: 8%;
+}
+#partnerNew .content .wbkhStyle .fl1 .topLayer input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  margin-right: 2px;
+}
+#partnerNew .content .wbkhStyle .fl1 .bottomLayer {
+  height: 92px;
+  border: 1px solid #dddddd;
+  padding: 8px 15px;
+}
+#partnerNew .content .wbkhStyle .fl1 .bottomLayer label {
+  width: 120px;
+}
+#partnerNew .content .wbkhStyle .fl1 .bottomLayer input[type='checkbox'] {
+  margin-right: 5px;
+}
+#partnerNew .content .wbkhStyle .fl1 .bottomLayer input[type='text'] {
+  height: 28px;
+  width: 40%;
+}
+#partnerNew .content .wbkhStyle .fl2 {
+  padding: 20px 0 0 2%;
+  width: 25%;
+  height: 212px;
+  border: 1px solid #dddddd;
+  margin-right: 1%;
+}
+#partnerNew .content .wbkhStyle .fl2 label {
+  width: 100px;
+}
+#partnerNew .content .wbkhStyle .fl2 div {
+  height: 50px;
+}
+#partnerNew .content .wbkhStyle .fl2 select {
+  width: 44%;
+}
+#partnerNew .content .wbkhStyle .fl2 input {
+  width: 40%;
+  height: 28px;
+}
+#partnerNew .content .wbkhStyle .fl3 {
+  padding: 10px 1%;
+  width: 42%;
+  height: 212px;
+  border: 1px solid #dddddd;
+}
+#partnerNew .content .wbkhStyle .fl3 label {
+  width: auto;
+}
+#partnerNew .content .wbkhStyle .fl3 input[type='text'] {
+  height: 28px;
+}
+#partnerNew .content .wbkhStyle .fl3 .bank {
+  width: 35%;
+  margin-right: 2%;
+}
+#partnerNew .content .wbkhStyle .fl3 .Taxpayers {
+  width: 22%;
+}
+#partnerNew .content .wbkhStyle .fl3 .bankNo {
+  width: 40%;
+  margin-right: 2%;
+}
+#partnerNew .content .wbkhStyle .fl3 .tel {
+  width: 25%;
+}
+#partnerNew .content .wbkhStyle .fl3 .comAddress {
+  width: 70%;
+}
+#partnerNew .content .wbkhStyle .fl3 .fl3Div {
+  height: 50px;
+}
+#partnerNew input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+}
+#partnerNew input[type='text'] {
+  height: 28px;
+}
+#partnerNew .consignee label {
+  width: auto;
+}
+#partnerNew .consignee .consigneeInfo {
+  padding: 20px 2%;
+  border: 1px solid #dddddd;
+}
+#partnerNew .userNameLi {
+  display: none;
+  width: 500px;
+  height: 160px;
+  overflow-y: auto;
+  background-color: #f8f7fa;
+  position: absolute;
+  z-index: 1002;
+  right: 0;
+}
+#partnerNew .userNameLi li {
+  height: 34px;
+  line-height: 34px;
+  text-indent: 16px;
+  border-bottom: 1px solid #fafafd;
+  cursor: default;
+}
+#partnerNew .userNameLi li span {
+  margin-right: 20px;
+}
+@media screen and (max-width: 1600px) {
+  #partnerNew .content form {
+    font-size: 12px;
+  }
+  #partnerNew .content input {
+    font-size: 12px;
+    padding-left: 6px;
+  }
 }
 html,
 body {
@@ -1168,7 +1591,7 @@ button {
   height: 44px;
   background-color: #fe7272;
   color: #fff;
-  font-size: 20px;
+  font-size: 18px;
   border-radius: 10px;
   cursor: pointer;
 }

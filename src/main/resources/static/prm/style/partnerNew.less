@@ -1,8 +1,7 @@
 #partnerNew{
   .content{
-    padding: 20px 4%;
     color: #666;
-    background-color: #fff;
+    padding-bottom: 200px;
     h4{
       color: #333;
       margin-bottom: 15px;
@@ -10,9 +9,37 @@
       font-size: 16px;
     }
     form{
+      padding: 20px 3%;
+      background-color: #fff;
       font-size: 14px;
+      position: relative;
       >div{
         margin-bottom: 15px;
+      }
+      .buttonBox{
+        width: 500px;
+        height: 40px;
+        margin: 0 auto;
+        position: absolute;
+        left: 50%;
+        margin-left: -250px;
+        bottom:-70px;
+        button{
+          width: 110px;
+          height: 40px;
+          background-color: @BrightColor;
+          font-size: 18px;
+        }
+      }
+      .warning{
+        color: red;
+        position: absolute;
+        right: 0;
+      }
+      .hiddenInput{
+        width: 0;
+        height:0;
+        opacity:0;
       }
     }
     .flDiv{
@@ -36,6 +63,9 @@
       position: relative;
       top:5px;
       margin-right: 5px;
+      &.disableMark{
+        color: #fff;
+      }
     }
     .line{
       font-size:1%;
@@ -83,7 +113,7 @@
           color: #333;
         }
         .no{
-           width: 8%;
+           width: 5%;
          }
         .addressType{
           width: 12%;
@@ -98,19 +128,19 @@
           width: 15%;
         }
         .operation{
-          width: 16%;
+          width: 19%;
         }
         .name{
-          width: 8%;
+          width: 6%;
         }
         .obligation{
-          width: 10%;
+          width: 6%;
         }
         .demp{
-          width: 10%;
+          width: 8%;
         }
         .duty{
-          width: 10%;
+          width: 6%;
         }
         .tel{
           width: 10%;
@@ -119,17 +149,17 @@
           width: 10%;
         }
         .email{
-          width: 10%;
+          width: 12%;
         }
         .address2{
-          width: 10%;
+          width: 22%;
         }
         .operation{
-          width: 14%;
+          width: 10%;
         }
       }
     }
-    .addressList{
+    .listBoxStyle{
       .list{
         padding:10px 0;
         border-bottom: 1px solid #dddddd;
@@ -137,7 +167,7 @@
           float: left;
         }
         .no{
-          width: 8%;
+          width: 5%;
         }
         .addressType{
           width: 12%;
@@ -152,23 +182,23 @@
           width: 15%;
         }
         .operation{
-          width: 16%;
+          width: 19%;
         }
         .editAdd{
           color: #64b92b;
           margin-right: 8%;
         }
         .name{
-          width: 8%;
+          width: 6%;
         }
         .obligation{
-          width: 10%;
+          width: 6%;
         }
         .demp{
-          width: 10%;
+          width: 8%;
         }
         .duty{
-          width: 10%;
+          width: 6%;
         }
         .tel{
           width: 10%;
@@ -177,14 +207,90 @@
           width: 10%;
         }
         .email{
-          width: 10%;
+          width: 12%;
         }
         .address2{
-          width: 10%;
+          width: 22%;
         }
         .operation{
+          width: 10%;
+        }
+      }
+      .addingAdd,.editingAdd,.addingCon,.editingCon{
+        padding:10px 0;
+        border-bottom: 1px solid #dddddd;
+        >div{
+          float: left;
+        }
+        .no{
+          width: 5%;
+        }
+        .addressType{
+          width: 12%;
+        }
+        .short{
           width: 14%;
         }
+        .address{
+          width: 35%;
+        }
+        .postcode{
+          width: 15%;
+        }
+        .operation{
+          width: 19%;
+        }
+        .editAdd{
+          color: #64b92b;
+          margin-right: 8%;
+        }
+        .confirmAdd{
+          color: #64b92b;
+          margin-right: 8%;
+        }
+        .confirmEdit{
+          color: #64b92b;
+          margin-right: 8%;
+        }
+        .name{
+          width: 6%;
+        }
+        .obligation{
+          width: 6%;
+        }
+        .demp{
+          width: 8%;
+        }
+        .duty{
+          width: 6%;
+        }
+        .tel{
+          width: 10%;
+        }
+        .phone{
+          width: 10%;
+        }
+        .email{
+          width: 12%;
+        }
+        .address2{
+          width: 20%;
+        }
+        .operation{
+          width: 10%;
+        }
+      }
+      .delAdd{
+
+      }
+      .delAdd:hover{
+        color: #ed6e56;
+      }
+      .cancelAdd:hover{
+        color: #ed6e56;
+      }
+      .cancelEdit:hover{
+        color: #ed6e56;
       }
     }
     .businessScope{
@@ -223,6 +329,154 @@
         padding-left: 3%;
         border-bottom: 1px solid #dddddd;
         border-top: 1px solid #dddddd;
+      }
+    }
+    .wbkhStyle{
+      padding-left: 20px;
+      h5{
+        font-size: 16px;
+        color: #333;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+      h6{
+        display: inline;
+      }
+      .fl1{
+        width: 25%;
+        height:234px;
+        margin-right: 1%;
+        .topLayer{
+          height:90px;
+          border: 1px solid #dddddd;
+          margin-bottom: 18px;
+          padding:8px 15px;
+          label{
+            width: auto;
+            margin-right: 8%;
+          }
+          input[type='checkbox']{
+            width: 16px;
+            height: 16px;
+            margin-right: 2px;
+          }
+        }
+        .bottomLayer{
+          height:92px;
+          border: 1px solid #dddddd;
+          padding:8px 15px;
+          label{
+            width: 120px;
+          }
+          input[type='checkbox']{
+              margin-right: 5px;
+            }
+          input[type='text']{
+            height: 28px;
+            width: 40%;
+          }
+        }
+      }
+      .fl2{
+        padding: 20px 0 0 2%;
+        width: 25%;
+        height:212px;
+        border: 1px solid #dddddd;
+        margin-right: 1%;
+        label{
+          width: 100px;
+        }
+        div{
+          height:50px;
+        }
+        select{
+          width: 44%;
+        }
+        input{
+          width: 40%;
+          height: 28px;
+        }
+      }
+      .fl3{
+        padding:10px 1%;
+        width: 42%;
+        height: 212px;
+        border: 1px solid #dddddd;
+        label{
+          width: auto;
+        }
+        input[type='text']{
+          height: 28px;
+        }
+        .bank{
+          width: 35%;
+          margin-right: 2%;
+        }
+        .Taxpayers{
+          width: 22%;
+        }
+        .bankNo{
+          width: 40%;
+          margin-right: 2%;
+        }
+        .tel{
+          width: 25%;
+        }
+        .comAddress{
+          width: 70%;
+        }
+        .fl3Div{
+          height:50px;
+        }
+      }
+    }
+  }
+  input[type='checkbox']{
+    width: 16px;
+    height: 16px;
+  }
+  input[type='text']{
+    height: 28px;
+  }
+  .consignee{
+    label{
+      width: auto;
+    }
+    .consigneeInfo{
+      padding: 20px 2%;
+      border: 1px solid #dddddd;
+    }
+  }
+  .userNameLi{
+    display: none;
+    width: 500px;
+    height: 160px;
+    overflow-y: auto;
+    background-color: #f8f7fa;
+    position: absolute;
+    z-index: 1002;
+    right:0;
+    li{
+      height: 34px;
+      line-height: 34px;
+      text-indent: 16px;
+      border-bottom: 1px solid #fafafd;
+      cursor: default;
+      span{
+        margin-right: 20px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 1600px) {
+  #partnerNew{
+    .content{
+      form{
+        font-size: 12px;
+      }
+      input{
+        font-size: 12px;
+        padding-left: 6px;
       }
     }
   }
