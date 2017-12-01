@@ -157,14 +157,18 @@ var power = {
             },
             success:function(data){
                 var btnStr = '';
-                $.each(data.data,function(index,value){
-                    if(parseInt(value.checks) == 1){
-                        btnStr = btnStr + '<p><input class="nemuIn" data-id="'+value.id+'" type="checkbox" checked><label for="">'+value.name+'</label></p>';
-                    }else if(parseInt(value.checks) == 0){
-                        btnStr = btnStr + '<p><input class="nemuIn" data-id="'+value.id+'" type="checkbox"><label for="">'+value.name+'</label></p>';
-                    }
-                });
-               $('.btnList').empty().append(btnStr);
+                if(!!data.data){
+                    $.each(data.data,function(index,value){
+                        if(parseInt(value.checks) == 1){
+                            btnStr = btnStr + '<p><input class="nemuIn" data-id="'+value.id+'" type="checkbox" checked><label for="">'+value.name+'</label></p>';
+                        }else if(parseInt(value.checks) == 0){
+                            btnStr = btnStr + '<p><input class="nemuIn" data-id="'+value.id+'" type="checkbox"><label for="">'+value.name+'</label></p>';
+                        }
+                    });
+                    $('.btnList').empty().append(btnStr);
+                }else{
+                    $('.btnList').empty();
+                }
             },
             error:function(data){
 

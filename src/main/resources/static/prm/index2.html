@@ -56,39 +56,6 @@
 </div>
 </body>
 <script>
-    /*$('.user_name').text($.cookie('front_username'));
-     //根据登录权限 加载全台链接和左侧菜单
-     var userEmail = $.cookie('front_useremail');
-     if(userEmail == 'pjwl@pj-l.com'){
-     $('<li id="user"><a class="process2 '+isActive('process2')+'" href="#process2"><p>流程文件</p></a></li>').appendTo('#home2');
-     }else{
-     $.ajax({
-     url: 'http://'+dPathUrl+'/auth/selectUserAuthPost.do',
-     type: 'get',
-     xhrFields:{
-     withCredentials: true
-     },
-     crossDomain: true,//支持跨域发送cookie
-     jsonp: 'callback',
-     dataType:'jsonp',
-     data:{
-     email:$.cookie('front_useremail')
-     },
-     success: function (data) {
-     if(!data.data){//普通用户
-     $('<li id="user"><a class="process '+isActive('process')+'" href="#process"><p>流程文件</p></a></li>').appendTo('#home2');
-     }else{//管理员用户
-     $('<li id="admin"><a class="maintenance '+isActive('maintenance')+'" href="#maintenance"><p>流程文件</p></a></li>').appendTo('#home2');
-     }
-     },
-     error: function (msg) {
-     }
-     });
-     }
-     function isActive(hash){
-     if(hash == window.location.hash.substr(1)){
-     return 'active';
-     }
-     }*/
+    $('.user_name').text($.cookie('back_username'));
 </script>
 </html>

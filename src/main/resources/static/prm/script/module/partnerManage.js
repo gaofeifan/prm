@@ -216,9 +216,11 @@ function download(id){
 }
 
 function isCheck(num,array){
-    if(array.indexOf(num)>=0){
-        return 'checkedIcon';
-    }else{
-        return '';
+    if(!!array) {
+        if (array.indexOf(num) >= 0) {
+            return 'checkedIcon';
+        } else {
+            return '';
+        }
     }
 }

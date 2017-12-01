@@ -7,11 +7,12 @@ $(function(){
     var urlParameter = vipspa.parse();
     var partnerId = urlParameter.param.id;
     $('#pId').val(partnerId);
+    console.log(partnerId);
     /*控制代码填写区域*/
-    if(!!partnerId){
+    if(partnerId == 'null'){
         codes.prop('disabled','disabled');
         $('.code1').prop('disabled',false);
-    }else{
+    }else if(!!partnerId){
         $.ajax({
             url: 'http://' + gPathUrl + '/partner/details/getParentCodeList',
             type: 'get',
@@ -427,7 +428,7 @@ $(function(){
                 }
             }
         });
-        $('#scopeBusiness').val(businessCheckbox.join());
+        $('#scopeBusiness').val(businessCheckbox.join(','));
         //合作伙伴循环
         var PartnersCheckbox = [];
         $('.partnersCheckbox').find("input:checkbox").each(function(i,n) {
@@ -437,7 +438,7 @@ $(function(){
                 }
             }
         });
-        $('#partnerCategory').val(PartnersCheckbox.join());
+        $('#partnerCategory').val(PartnersCheckbox.join(','));
         //客户分类
         var customerClass = [];
         $('#customerClass').find("input:checkbox").each(function(i,n) {
@@ -447,7 +448,7 @@ $(function(){
                 }
             }
         });
-        $('#wbkhCustomerClass').val(customerClass.join());
+        $('#wbkhCustomerClass').val(customerClass.join(','));
         //服务类别
         var gxcyrClassOfServiceArr = [];
         $('.classOfServiceBox').find("input:checkbox").each(function(i,n) {
@@ -457,7 +458,7 @@ $(function(){
                 }
             }
         });
-        $('#gxcyrClassOfService').val(customerClass.join());
+        $('#gxcyrClassOfService').val(gxcyrClassOfServiceArr.join(','));
 
         $(this).ajaxSubmit(options);
         return false;//阻止表单提交
@@ -530,7 +531,10 @@ var  options ={
     type:'post',
     dataType:'json',
     success:function(data) {
-        console.log(data);
+        if(data.code == '200'){
+            alert('保存成功！');
+            location.hash = vipspa.stringify('partnerManage2')
+        }
     },error:function() {
 
     },complete:function() {
