@@ -1,5 +1,6 @@
 package com.pj.partner.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -29,6 +30,7 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     @Column
     @ApiModelProperty(value = "代码")
     private String code;
+
 
     /**
      * 助记码
@@ -134,6 +136,7 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     @Column
     @ApiModelProperty(value = "外部客户 客户分类")
     private String wbkhCustomerClass;
+
 
     /**
      * 外部客户 信用等级
@@ -375,9 +378,11 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     private Integer pId;
 
     @Transient
+    @ApiModelProperty(value = "联系地址 格式  [{'id':'1','addressType':'地址类型','abbreviation':'简称','address':'地址','zipCode':'邮编'},{'id':'2','addressType':'地址类型','abbreviation':'简称','address':'地址','zipCode':'邮编'}]")
     private List<PartnerAddress> address;
 
     @Transient
+    @ApiModelProperty(value = "联系人 格式[{'id':'0','name':'名称','obligation':'职责','duty':'职务','demp':'部门','fixPhone':'固话','phone':'电话','email':'邮箱','address':'地址'},{'id':'0','name':'名称','obligation':'职责','duty':'职务','demp':'部门','fixPhone':'固话','phone':'电话','email':'邮箱','address':'地址'}]")
     private List<PartnerLinkman> linkmans;
 
     private static final long serialVersionUID = 1L;
@@ -401,8 +406,6 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
         }else{
             return null;
         }
-
-
     }
 
      public String[] getPartnerCategorys(){
@@ -428,5 +431,9 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
         }else{
             return null;
         }
+    }
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+    public Date getCreateDate() {
+        return createDate;
     }
 }

@@ -5,12 +5,17 @@
         <result  column="id" property="id" jdbcType="INTEGER" />
         <result  column="dir_name" property="dirName" jdbcType="VARCHAR" />
         <result  column="heading_code" property="headingCode" jdbcType="VARCHAR" />
+        <result  column="code" property="code" jdbcType="VARCHAR" />
         <result  column="chinese_name" property="chineseName" jdbcType="VARCHAR" />
         <result  column="chinese_abbreviation" property="chineseAbbreviation" jdbcType="VARCHAR" />
         <result  column="english_name" property="englishName" jdbcType="VARCHAR" />
         <result  column="english_abbreviation" property="englishAbbreviation" jdbcType="VARCHAR" />
         <result  column="p_id" property="pId" jdbcType="INTEGER" />
     </resultMap>
+
+    <select id="getParentList" resultMap="BaseResultMap">
+        select id,code,dir_name,p_id FROM partner_details 	where FIND_IN_SET(id,getParentList(#{id}))
+    </select>
 
     <select id="selectListByQuery" parameterType="com.pj.partner.pojo.PartnerDetails" resultMap="BaseResultMap">
         SELECT

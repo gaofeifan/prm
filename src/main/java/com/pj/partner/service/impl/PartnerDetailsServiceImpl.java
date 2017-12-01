@@ -1,5 +1,6 @@
 package com.pj.partner.service.impl;
 
+import com.pj.cache.PartnerDetailsCache;
 import com.pj.conf.base.AbstractBaseServiceImpl;
 import com.pj.conf.base.BaseMapper;
 import com.pj.conf.utils.RegExpUtils;
@@ -12,7 +13,6 @@ import com.pj.partner.pojo.PartnerLinkman;
 import com.pj.partner.service.PartnerAddressService;
 import com.pj.partner.service.PartnerDetailsService;
 import com.pj.partner.service.PartnerLinkmanService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -129,12 +129,12 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         request.getSession().setAttribute("new_partnerAddress",address);
         request.getSession().setAttribute("new_partnerLinkman",linkmans);
         request.getSession().setAttribute("new_partnerDetails",partnerDetails);
-       /* if(linkmans != null){*/
+        if(linkmans != null){
             for(PartnerLinkman pl : linkmans){
                 pl.setDetailsId(partnerDetails.getId());
             }
             this.partnerLinkmanService.insertList(linkmans);
-       /* }*/
+        }
         if(address != null){
             for (PartnerAddress pa: address ) {
                 pa.setDetailsId(partnerDetails.getId());
@@ -183,9 +183,10 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     }
 
     @Override
-    public void shiftPartnerDetailsFileByIds(Integer[] ids, Integer id) {
+    public void shiftPartnerDetailsFileByIds( Integer id) {
         //  查询转移的文件
-        List<PartnerDetailsShifFile> shifFileList = this.selectShiftFile(ids);
+        Object o = PartnerDetailsCache.getValueByKey("details");
+        List<PartnerDetailsShifFile> shifFileList = (List<PartnerDetailsShifFile>) o;
         List<PartnerDetailsShifFile> deleteFileList = new ArrayList<>();
         //  获取转移文件所有的子集
         for (PartnerDetailsShifFile fds:shifFileList) {
@@ -269,5 +270,16 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             endList.add(iterator.next());
         }
         return endList;
+    }
+
+    @Override
+    public Object[] getParentCodeList(Integer id) {
+        List<PartnerDetails> parentList = this.getParentList(id);
+        Object[] array = parentList.stream().map(pl -> pl.getCode()).toArray();
+        return array;
+    }
+
+    public List<PartnerDetails> getParentList(Integer id) {
+        return this.partnerDetailsMapper.getParentList(id);
     }
 }
