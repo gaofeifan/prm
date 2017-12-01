@@ -2,14 +2,19 @@ package com.pj.partner.controller;
 
 import com.pj.cache.PartnerDetailsCache;
 import com.pj.conf.base.BaseController;
+import com.pj.partner.pojo.PartnerAddress;
 import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.pojo.PartnerDetailsShifFile;
+import com.pj.partner.pojo.PartnerLinkman;
 import com.pj.partner.service.PartnerDetailsService;
 import com.pj.user.mapper.HierarchyMapper;
 import com.pj.user.pojo.Hierarchy;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.JSONString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -99,7 +104,20 @@ public class PartnerDetailsController extends BaseController {
     @ApiOperation(value = "新增合作伙伴详情" ,httpMethod = "POST", response = Object.class)
     @RequestMapping(value = "/insertPartnerDetails")
     @ResponseBody
-    public Object insertPartnerDetails(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails){
+    public Object insertPartnerDetails(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails,
+                                       @ApiParam("联系方式") @RequestParam(name = "linkmans" ,required = false) String linkmans ,
+                                       @ApiParam("联系地址") @RequestParam(name = "address" ,required = false) String address){
+
+        if(linkmans != null){
+            JSONArray array = JSONArray.fromString(linkmans);
+            List<PartnerLinkman> list = JSONArray.toList(array, PartnerLinkman.class);
+            partnerDetails.setLinkmansList(list);
+        }
+        if(address != null){
+            JSONArray array = JSONArray.fromString(address);
+            List<PartnerAddress> list = JSONArray.toList(array, PartnerAddress.class);
+            partnerDetails.setAddressList(list);
+        }
         this.partnerDetailsService.insertSelective(partnerDetails,getRequest());
         return this.success();
     }

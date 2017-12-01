@@ -416,8 +416,8 @@ $(function(){
 
     /*表单提交*/
     $('#newForm').submit(function(){
-        /*$('#linkmans').val(JSON.stringify(contactsList));
-        $('#address').val(JSON.stringify(addressList));*/
+        $('#linkmans').val(JSON.stringify(contactsList));
+        $('#address').val(JSON.stringify(addressList));
         //业务范畴循环
         var businessCheckbox = [];
         $('.businessCheckbox').find("input:checkbox").each(function(i,n) {

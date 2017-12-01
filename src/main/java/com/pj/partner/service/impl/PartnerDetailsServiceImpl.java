@@ -81,19 +81,19 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         PartnerAddress address = new PartnerAddress();
         address.setDetailsId(key);
         List<PartnerAddress> addresss = this.partnerAddressService.select(address);
-        pd.setAddress(addresss);
+        pd.setAddressList(addresss);
         PartnerLinkman linkman = new PartnerLinkman();
         linkman.setDetailsId(key);
         List<PartnerLinkman> linkmens = this.partnerLinkmanService.select(linkman);
-        pd.setLinkmans(linkmens);
+        pd.setLinkmansList(linkmens);
         return pd;
     }
 
 
     @Override
     public void updateByPrimaryKey(PartnerDetails record, HttpServletRequest request){
-        List<PartnerAddress> address = record.getAddress();
-        List<PartnerLinkman> linkmans = record.getLinkmans();
+        List<PartnerAddress> address = record.getAddressList();
+        List<PartnerLinkman> linkmans = record.getLinkmansList();
         /**
          *  将原数据与新数据添加到作用与中
          */
@@ -124,8 +124,8 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     public void insertSelective(PartnerDetails partnerDetails, HttpServletRequest request) {
         partnerDetails.setCreateDate(new Date());
         super.insertSelective(partnerDetails);
-        List<PartnerLinkman> linkmans = partnerDetails.getLinkmans();
-        List<PartnerAddress> address = partnerDetails.getAddress();
+        List<PartnerLinkman> linkmans = partnerDetails.getLinkmansList();
+        List<PartnerAddress> address = partnerDetails.getAddressList();
         request.getSession().setAttribute("new_partnerAddress",address);
         request.getSession().setAttribute("new_partnerLinkman",linkmans);
         request.getSession().setAttribute("new_partnerDetails",partnerDetails);
@@ -154,6 +154,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         Example example = new Example(PartnerDetails.class);
         example.createCriteria().andCondition(fieldName+"=",fieldValue);
         List<PartnerDetails> pds =super.selectByExample(example);
+
         if(pds.size() != 0){
             return false;
         }

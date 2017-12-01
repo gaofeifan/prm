@@ -1,6 +1,7 @@
 package com.pj.partner.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -379,11 +380,11 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
 
     @Transient
     @ApiModelProperty(value = "联系地址 格式  [{'id':'1','addressType':'地址类型','abbreviation':'简称','address':'地址','zipCode':'邮编'},{'id':'2','addressType':'地址类型','abbreviation':'简称','address':'地址','zipCode':'邮编'}]" ,required = false)
-    private List<PartnerAddress> address;
+    private List<PartnerAddress> addressList;
 
     @Transient
     @ApiModelProperty(value = "联系人 格式[{'id':'0','name':'名称','obligation':'职责','duty':'职务','demp':'部门','fixPhone':'固话','phone':'电话','email':'邮箱','address':'地址'},{'id':'0','name':'名称','obligation':'职责','duty':'职务','demp':'部门','fixPhone':'固话','phone':'电话','email':'邮箱','address':'地址'}]" ,required = false)
-    private List<PartnerLinkman> linkmans;
+    private List<PartnerLinkman> linkmansList;
 
     private static final long serialVersionUID = 1L;
 
