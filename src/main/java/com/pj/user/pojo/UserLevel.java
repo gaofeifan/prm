@@ -39,5 +39,4 @@ public class UserLevel implements Serializable{
     @ApiModelProperty(value = " 备注  ", required = false)
     private String mark;
 
-
 }

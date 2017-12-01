@@ -196,14 +196,13 @@ public class PartnerDetailsController extends BaseController {
 
     /**
      * 修改转移目录
-     * @param ids
+     * @param id
      * @return
      */
     @ApiOperation(value = "修改转移目录" ,httpMethod = "GET", response = Object.class)
     @RequestMapping(value = "/shiftPartnerDetailsFileByIds")
     @ResponseBody
-    public Object shiftPartnerDetailsFileByIds(
-                                                @ApiParam("id") @RequestParam(name = "id") Integer id){
+    public Object shiftPartnerDetailsFileByIds(@ApiParam("id") @RequestParam(name = "id") Integer id){
         this.partnerDetailsService.shiftPartnerDetailsFileByIds(id);
         return this.success();
     }
