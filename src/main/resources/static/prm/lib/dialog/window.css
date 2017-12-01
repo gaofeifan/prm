@@ -20,6 +20,7 @@ html,body{
     left:0;
     top:0;
     bottom:0;
+    z-index: 999;
 }
 .window_boundingBox input{
     width:240px;
@@ -56,7 +57,7 @@ html,body{
 
 }
 .window_skin_a .window_header{
-    background:#7598b9;
+    background:#ed6e56;
     height: 40px;
     line-height: 40px;
 }
@@ -68,7 +69,7 @@ html,body{
     float: left;
     width: 105px;
     height: 32px;
-    background-color:#fe7272;
+    background-color:#ed6e56;
     border: none;
     padding-left: 0;
     color: #fff;

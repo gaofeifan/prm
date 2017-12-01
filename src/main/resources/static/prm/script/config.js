@@ -32,11 +32,15 @@ vipspa.start({
             templateUrl: 'view/partnerManage.html',
             controller: 'script/module/partnerManage.js'
         },
-        'partnerNew': { //合作伙伴管理
+        'partnerManage2': { //合作伙伴管理 有操作权限
+            templateUrl: 'view/partnerManage2.html',
+            controller: 'script/module/partnerManage2.js'
+        },
+        'partnerNew': { //合作伙伴 新增
             templateUrl: 'view/partnerNew.html',
             controller: 'script/module/partnerNew.js'
         },
-        'partnerEdit': { //合作伙伴管理
+        'partnerEdit': { //合作伙伴-修改
             templateUrl: 'view/partnerEdit.html',
             controller: 'script/module/partnerEdit.js'
         },

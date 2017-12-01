@@ -1,5 +1,6 @@
 #partnerManage{
   .content{
+    position: relative;
     padding: 20px 20px 50px;
     background-color: #fff;
     .searchBar{
@@ -83,6 +84,125 @@
           width: 40px;
           margin: 5px auto;
         }
+      }
+    }
+  }
+  #tree_box{
+    position: relative;
+    height: 550px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    .info{
+      float: right;
+      width: 60px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+    }
+    .checkedIcon{
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background-image: url('../image/sprite.png');
+      background-position: -70px -43px;
+    }
+  }
+  #screen{
+    display: none;
+    width: 400px;
+    height: 500px;
+    position: absolute;
+    z-index: 777;
+    background-color: #f0f0f0;
+    top:0;
+    right: 50px;
+    overflow-y: auto;
+    h3{
+      height: 50px;
+      line-height: 50px;
+      color: #fff;
+      text-indent: 22px;
+      background-color:#7598b9;
+    }
+    #selected{
+      padding: 10px 20px;
+      span{
+        display: block;
+        padding: 10px 0;
+        line-height: 20px;
+        color: #666;
+        cursor: pointer;
+        text-indent: 20px;
+        position: relative;
+        &::before{
+          content: '';
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          background-color: red;
+          border-radius: 5px;
+          left:0;
+          top:15px;
+        }
+      }
+    }
+  }
+  #transfer{
+    h3 {
+      height: 40px;
+      line-height: 40px;
+      color: #fff;
+      text-indent: 22px;
+      background-color:@BrightColor;
+      font-size: 16px;
+    }
+    display: none;
+    width: 600px;
+    background-color: #f0f0f0;
+    position: absolute;
+    z-index: 99;
+    top:300px;
+    left:50%;
+    margin-left: -300px;
+    border: 1px solid #f0f0f0;
+    .content{
+      padding: 10px 30px;
+      .transfer-box{
+        max-height: 200px;
+        background-color: #fff;
+        overflow: auto;
+        p{
+          text-indent: 10px;
+          cursor:default;
+        }
+        p.active{
+          background-color:@borderColor;
+        }
+        margin: 0 0 20px 0;
+      }
+    }
+    button{
+      height: 34px;
+      width: 100px;
+      display: block;
+      font-size: 16px;
+      margin-bottom: 20px;
+      background-color: @BrightColor;
+    }
+    .blue{
+      background-color: #7598b9;
+    }
+    #goal{
+      width: 320px;
+      height: 34px;
+    }
+    .bar{
+      button{
+        display: inline-block;
+        margin: 50px 60px 40px 0;
+      }
+      #tr-confirm{
+        margin-left: 40px;
       }
     }
   }
