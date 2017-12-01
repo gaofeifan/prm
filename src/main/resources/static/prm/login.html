@@ -9,13 +9,13 @@
     <script src="lib/jquery.form.js"></script>
     <script src="lib/jquery.cookie.js"></script>
     <script>
-        /*var oaPathUrl = '10.0.0.18:8083';
+        var oaPathUrl = '10.0.0.18:8083';
         var ssoPathUrl = '10.0.0.18:8085';
-        var dPathUrl = '192.168.4.213:8083';*/
+        var gPathUrl = '192.168.4.213:8083';
 
-        var oaPathUrl = '139.129.236.180:8080';
+       /* var oaPathUrl = '139.129.236.180:8080';
         var ssoPathUrl = '139.129.236.180:8081';
-        var dPathUrl = '139.129.236.180:86';
+        var dPathUrl = '139.129.236.180:86';*/
     </script>
     <style>
         .logo{
@@ -28,7 +28,7 @@
         <div id="header">
             <div id="logo" class="fl">
                 <a class="logo" href="javascript:void(0);"><img src="image/logo.png" alt=""></a>
-                <h1>文档综合管理平台</h1>
+                <h1>PRM-商务合作伙伴关系管理系统</h1>
             </div>
             <div id="date" class="fr">今天是：<span id="day"></span>&nbsp;&nbsp; <sapn id="week"></sapn></div>
         </div>
@@ -100,13 +100,13 @@
                             $.cookie('back_id',data.id);
                             $.cookie('back_username',data.username);
                             $.cookie('back_useremail',data.email);
-                            window.location.href="./index.html#homePage";
+                            window.location.href="./index2.html#homePage";
                         }else{
                             //前台
                             $.cookie('front_id',data.id);
                             $.cookie('front_username',data.username);
                             $.cookie('front_useremail',data.email);
-                            window.location.href="./index2.html";
+                            window.location.href="./index.html";
                         }
                     }else if(parseInt(data.status) == 404){
                         alert(data.error);

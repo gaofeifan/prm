@@ -5,6 +5,10 @@
 menuActive('user');
 $(function(){
     gettotalCount();
+
+    $('#search').click(function(){
+        gettotalCount();
+    });
 });
 function gettotalCount() {
     $.ajax({
@@ -12,14 +16,13 @@ function gettotalCount() {
         url: 'http://'+oaPathUrl+'/oa/user/list.do',
         async:false,
         dataType: 'json',
-        /*data:{
-            now:$('#now').val(),
-            print:$('#print').val(),
-            type:$('#type').val()
-        },*/
+        data:{
+            username:$('#username').val(),
+            filenumber:$('#filenumber').val(),
+            email:$('#email').val()
+        },
         success: function (data) {
             $('.body-box').empty();
-            console.log(data.data.pagination);
            if(data.code == 200) {
                 $('.M-box4').pagination({
                     pageCount: data.data.pagination.totalPage,
@@ -55,7 +58,10 @@ function InitData(pageIndex) {
         type: "get",
         url: 'http://'+oaPathUrl+'/oa/user/list.do',
         data: {
-            pageNo:parseInt(pageIndex)
+            pageNo:parseInt(pageIndex),
+            username:$('#username').val(),
+            filenumber:$('#filenumber').val(),
+            email:$('#email').val()
         },
         success: function(data) {
             $.each(data.data.pagination.list, function (index, value) {

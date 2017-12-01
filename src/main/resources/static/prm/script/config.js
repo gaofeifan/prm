@@ -1,10 +1,13 @@
 /**
  * Created by Administrator on 2017/9/12.
  */
-
-var oaPathUrl = '139.129.236.180:8080';
-var ssoPathUrl = '139.129.236.180:8081';
+var oaPathUrl = '10.0.0.18:8083';
+var ssoPathUrl = '10.0.0.18:8085';
 var gPathUrl = '192.168.4.213:8083';
+
+/*var oaPathUrl = '139.129.236.180:8080';
+var ssoPathUrl = '139.129.236.180:8081';
+var gPathUrl = '192.168.4.213:8083';*/
 vipspa.start({
     view: '#ui-view',
     router: {

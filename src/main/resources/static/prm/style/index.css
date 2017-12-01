@@ -416,15 +416,24 @@
 }
 #homePage .content .account-setting > div a {
   color: #ed6e56;
-  margin-left: 6%;
+  margin-left: 2%;
 }
 #homePage .content .account-setting .nameEdit {
+  display: none;
+}
+#homePage .content .account-setting #nameConfirm {
   display: none;
 }
 #homePage .content .account-setting .passwordEdit {
   display: none;
 }
+#homePage .content .account-setting #passwordConfirm {
+  display: none;
+}
 #homePage .content .account-setting .emailEdit {
+  display: none;
+}
+#homePage .content .account-setting #emailConfirm {
   display: none;
 }
 #homePage .content .operation-log {
@@ -1587,9 +1596,18 @@ select {
   padding-left: 10px;
 }
 button {
-  width: 130px;
-  height: 44px;
-  background-color: #fe7272;
+  width: 110px;
+  height: 40px;
+  background-color: #ed6e56;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+input[type=button] {
+  width: 110px;
+  height: 40px;
+  background-color: #ed6e56;
   color: #fff;
   font-size: 18px;
   border-radius: 10px;

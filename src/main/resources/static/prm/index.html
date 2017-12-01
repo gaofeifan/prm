@@ -61,5 +61,51 @@
 </body>
 </html>
 <script>
-    $('.user_name').text($.cookie('back_username'));
+    var loginUsername = $.cookie('front_username');
+    var userEmail = $.cookie('front_useremail');
+    $(function(){
+        if(!loginUsername){
+            $('.user_name').text(loginUsername);
+        }
+        /*记录登录的信息*/
+        $.ajax({
+            url: 'http://' + gPathUrl + '/auth/menu/getLoginUserDetails',
+            type: 'post',
+            async:false,
+            data: {
+                email:userEmail
+            },
+            success: function (data) {
+                console.log(data)
+                //根据登录权限 加载全台链接和左侧菜单
+            },
+            complete: function (resp) {
+
+            }
+        });
+        $.ajax({
+            url: 'http://'+gPathUrl+'/auth/menu/findMenuOrButtonByPostId',
+            type: 'post',
+            dataType:'json',
+            contentType: "application/json",
+            data:{
+                isMenu:true
+            },
+            success: function (data) {
+                console.log(22222222222)
+                console.log(data+"111111111");
+            },
+            error: function (msg) {
+                console.log(33333333333)
+            }
+        });
+
+
+    });
+
+     function isActive(hash){
+        if(hash == window.location.hash.substr(1)){
+            return 'active';
+        }
+     }
 </script>
