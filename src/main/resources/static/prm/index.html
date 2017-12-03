@@ -63,31 +63,20 @@
 <script>
     var loginUsername = $.cookie('front_username');
     var userEmail = $.cookie('front_useremail');
+    var userCookie =  $.cookie('front_cookie');
     $(function(){
         if(!loginUsername){
             $('.user_name').text(loginUsername);
         }
-        /*记录登录的信息*/
-        $.ajax({
-            url: 'http://' + gPathUrl + '/auth/menu/getLoginUserDetails',
-            type: 'post',
-            async:false,
-            data: {
-                email:userEmail
-            },
-            success: function (data) {
-                console.log(data)
-                //根据登录权限 加载全台链接和左侧菜单
-            },
-            complete: function (resp) {
-
-            }
-        });
-        $.ajax({
+        /*$.ajax({
             url: 'http://'+gPathUrl+'/auth/menu/findMenuOrButtonByPostId',
-            type: 'post',
-            dataType:'json',
-            contentType: "application/json",
+            type: 'get',
+          /!*  dataType:'json',*!/
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            },
+//            headers: {'Set-Cookie':{'JSESSIONID':{'value':userCookie ,'path':'/','httpOnly':true}} },
             data:{
                 isMenu:true
             },
@@ -99,7 +88,7 @@
                 console.log(33333333333)
             }
         });
-
+*/
 
     });
 

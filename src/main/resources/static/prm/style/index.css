@@ -390,6 +390,15 @@
 #partnerManage #transfer .bar #tr-confirm {
   margin-left: 40px;
 }
+#partnerManage #infoWall {
+  background-color: #f8f7fa;
+  position: absolute;
+  height: 2000px;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
 #homePage .content {
   /*padding: 20px 20px 50px;*/
   color: #666;
@@ -878,6 +887,10 @@
 #partnerNew .content label {
   width: 60px;
 }
+#partnerNew .content label.income {
+  width: 100px;
+  margin-right: 0;
+}
 #partnerNew .content input {
   height: 30px;
   border: 1px solid #dddddd;
@@ -1162,7 +1175,7 @@
 }
 #partnerNew .content .businessScope label {
   width: auto;
-  margin-right: 4%;
+  margin-right: 3.6%;
 }
 #partnerNew .content .businessScope .businessCheckbox {
   padding: 10px 0;
@@ -1214,6 +1227,10 @@
   width: auto;
   margin-right: 8%;
 }
+#partnerNew .content .wbkhStyle .fl1 .topLayer label.income {
+  width: 100px;
+  margin-right: 0;
+}
 #partnerNew .content .wbkhStyle .fl1 .topLayer input[type='checkbox'] {
   width: 16px;
   height: 16px;
@@ -1226,6 +1243,7 @@
 }
 #partnerNew .content .wbkhStyle .fl1 .bottomLayer label {
   width: 120px;
+  margin-right: 0;
 }
 #partnerNew .content .wbkhStyle .fl1 .bottomLayer input[type='checkbox'] {
   margin-right: 5px;
@@ -1236,7 +1254,7 @@
 }
 #partnerNew .content .wbkhStyle .fl2 {
   padding: 20px 0 0 2%;
-  width: 25%;
+  width: 22%;
   height: 212px;
   border: 1px solid #dddddd;
   margin-right: 1%;
@@ -1256,7 +1274,7 @@
 }
 #partnerNew .content .wbkhStyle .fl3 {
   padding: 10px 1%;
-  width: 42%;
+  width: 45%;
   height: 212px;
   border: 1px solid #dddddd;
 }
@@ -1284,7 +1302,7 @@
   width: 70%;
 }
 #partnerNew .content .wbkhStyle .fl3 .fl3Div {
-  height: 50px;
+  margin-bottom: 10px;
 }
 #partnerNew input[type='checkbox'] {
   width: 16px;
@@ -1299,6 +1317,12 @@
 #partnerNew .consignee .consigneeInfo {
   padding: 20px 2%;
   border: 1px solid #dddddd;
+}
+#partnerNew .consignee .consigneeInfo .consigneeInfoBox div {
+  width: 20%;
+}
+#partnerNew .consignee .consigneeInfo .consigneeInfoBox div input {
+  width: 60%;
 }
 #partnerNew .userNameLi {
   display: none;
@@ -1320,13 +1344,89 @@
 #partnerNew .userNameLi li span {
   margin-right: 20px;
 }
+#partnerNew .wbkhInvoiceType {
+  margin-left: 10px;
+  padding-left: 0;
+  width: 20%;
+}
+#partnerNew .invoiceTypeTitle {
+  width: 100px;
+  height: 28px;
+  text-align: center;
+  line-height: 28px;
+  border: 1px solid #d5d5d5;
+  border-bottom: none;
+  position: relative;
+  top: 1px;
+}
+#partnerNew .bankInfo {
+  background-color: #fcfbfd;
+  border: 1px solid #d5d5d5;
+  padding: 10px 0 0 10px;
+}
+#partnerNew .bankInfo .mark {
+  display: none;
+}
+#partnerNew .bankInfo .sbmMark {
+  display: inline-block;
+}
 @media screen and (max-width: 1600px) {
   #partnerNew .content form {
     font-size: 12px;
   }
+  #partnerNew .content form .wbkhStyle .fl1 {
+    width: 25%;
+    height: 234px;
+    margin-right: 1%;
+  }
+  #partnerNew .content form .wbkhStyle .fl1 .topLayer {
+    height: 90px;
+    border: 1px solid #dddddd;
+    margin-bottom: 18px;
+    padding: 8px 15px;
+  }
+  #partnerNew .content form .wbkhStyle .fl1 .topLayer label {
+    width: auto;
+    margin-right: 8%;
+  }
+  #partnerNew .content form .wbkhStyle .fl1 .topLayer label.income {
+    width: 80px;
+    margin-right: 0;
+  }
+  #partnerNew .content form .wbkhStyle .fl1 .topLayer input[type='checkbox'] {
+    width: 16px;
+    height: 16px;
+    margin-right: 2px;
+  }
+  #partnerNew .content form .wbkhStyle .fl1 .bottomLayer {
+    height: 92px;
+    border: 1px solid #dddddd;
+    padding: 8px 15px;
+  }
+  #partnerNew .content form .wbkhStyle .fl1 .bottomLayer label {
+    width: 100px;
+    margin-right: 0;
+  }
+  #partnerNew .content form .wbkhStyle .fl1 .bottomLayer input[type='checkbox'] {
+    margin-right: 5px;
+  }
+  #partnerNew .content form .wbkhStyle .fl1 .bottomLayer input[type='text'] {
+    height: 28px;
+    width: 40%;
+  }
+  #partnerNew .content form .wbkhStyle .fl2 label {
+    width: 84px;
+  }
   #partnerNew .content input {
     font-size: 12px;
     padding-left: 6px;
+  }
+  #partnerNew .content label.income {
+    width: 80px;
+    margin-right: 0;
+  }
+  #partnerNew select {
+    padding-left: 5px;
   }
 }
 html,
