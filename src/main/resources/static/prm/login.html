@@ -103,10 +103,36 @@
                             window.location.href="./index2.html#homePage";
                         }else{
                             //前台
+                            /*记录登录的信息*/
+                            $.ajax({
+                                url: 'http://' + gPathUrl + '/auth/menu/getLoginUserDetails',
+                                type: 'post',
+                                async:false,
+                                data: {
+                                    email:data.email
+                                },
+                                success: function (resp) {
+                                },
+                                complete: function (resp) {
+
+                                }
+                            });
+                            $.ajax({
+                                url: 'http://'+gPathUrl+'/auth/menu/findMenuOrButtonByPostId',
+                                type: 'get',
+                                async:false,
+                                data:{
+                                    isMenu:true,
+                                    email:data.email
+                                },
+                                success: function (resp) {
+                                   var hash = resp.data[0].href;
+                                    window.location.href="./index.html#"+hash;
+                                }
+                            });
                             $.cookie('front_id',data.id);
                             $.cookie('front_username',data.username);
                             $.cookie('front_useremail',data.email);
-                            window.location.href="./index.html";
                         }
                     }else if(parseInt(data.status) == 404){
                         alert(data.error);

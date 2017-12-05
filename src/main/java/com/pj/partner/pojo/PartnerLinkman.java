@@ -11,69 +11,69 @@ import java.io.Serializable;
 
 public @Data @Table(name="partner_linkman")
 class PartnerLinkman implements Serializable {
-    @ApiModelProperty(value = "联系人 id")
+    @ApiModelProperty(value = "联系人 id" ,required = false)
     @GeneratedValue(generator = "JDBC")
     @Id
     private Integer id;
 
     @Column
-    @ApiModelProperty(value = "联系人  名称 ")
+    @ApiModelProperty(value = "联系人  名称 " ,required = false)
     private String name;
 
     /**
      * 职责
      */
     @Column
-    @ApiModelProperty(value = "联系人   职责")
+    @ApiModelProperty(value = "联系人   职责" ,required = false)
     private String obligation;
 
     /**
      * 职务
      */
     @Column
-    @ApiModelProperty(value = "联系人   职务")
+    @ApiModelProperty(value = "联系人   职务" ,required = false)
     private String duty;
 
     /**
      * 部门
      */
     @Column
-    @ApiModelProperty(value = "联系人   部门")
+    @ApiModelProperty(value = "联系人   部门" ,required = false)
     private String demp;
 
     /**
      * 固话
      */
     @Column
-    @ApiModelProperty(value = "联系人   固话")
+    @ApiModelProperty(value = "联系人   固话" ,required = false)
     private String fixPhone;
 
     /**
      * 电话
      */
     @Column
-    @ApiModelProperty(value = "联系人   电话")
+    @ApiModelProperty(value = "联系人   电话" ,required = false)
     private String phone;
 
     /**
      * 邮箱
      */
     @Column
-    @ApiModelProperty(value = "联系人   邮箱")
+    @ApiModelProperty(value = "联系人   邮箱" ,required = false)
     private String email;
 
     /**
      * 地址
      */
     @Column
-    @ApiModelProperty(value = "联系人   地址")
+    @ApiModelProperty(value = "联系人   地址" ,required = false)
     private String address;
 
     /**
      * 详情管理id
      */
     @Column
-    @ApiModelProperty(value = "联系人   详情管理id")
+    @ApiModelProperty(value = "联系人   详情管理id" ,required = false)
     private Integer detailsId;
 
     private static final long serialVersionUID = 1L;

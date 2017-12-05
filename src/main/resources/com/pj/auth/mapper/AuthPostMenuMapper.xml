@@ -25,12 +25,14 @@
                 #{id}
             </foreach>
         </if>
+        order BY  am.id
     </select>
     <select id="findMenuOrButtonByPostId" resultMap="BaseResultMap">
         SELECT * FROM auth_menu am inner JOIN auth_post_menu apm ON apm.menu_id = am.id AND apm.post_id = #{postId}  AND am.is_menu =#{isMenu}
         <if test="menuId != null">
              AND am.p_id = #{menuId}
         </if>
+        ORDER  BY  am.id
        <!-- <choose>
             <when test="isMenu == ture">
                 AND am.is_menu =1

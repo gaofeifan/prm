@@ -31,4 +31,12 @@ public class AuthMenuServiceImpl  extends AbstractBaseServiceImpl<AuthMenu,Integ
     public List<AuthMenu> findAuthMenuListBypostId(int postId) {
         return authMenuMapper.findAuthMenuListBypostId(postId);
     }
+
+    public List<AuthMenu> selectDefaultMenu(){
+        AuthMenu record = new AuthMenu();
+        record.setIsDefault(1);
+        List<AuthMenu> list = this.authMenuMapper.select(record);
+        return list;
+
+    }
 }

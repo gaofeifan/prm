@@ -2,14 +2,19 @@ package com.pj.partner.controller;
 
 import com.pj.cache.PartnerDetailsCache;
 import com.pj.conf.base.BaseController;
+import com.pj.partner.pojo.PartnerAddress;
 import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.pojo.PartnerDetailsShifFile;
+import com.pj.partner.pojo.PartnerLinkman;
 import com.pj.partner.service.PartnerDetailsService;
 import com.pj.user.mapper.HierarchyMapper;
 import com.pj.user.pojo.Hierarchy;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.JSONString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -44,9 +49,9 @@ public class PartnerDetailsController extends BaseController {
     @RequestMapping(value = "/selectListByQuery")
     @ResponseBody
     public Object selectListByQuery(@ApiParam("name") @RequestParam(name = "name",required = false) String name ,
-                                     @ApiParam("offPartner") @RequestParam(name = "offPartner",required = false) Integer offPartner ,
-                                     @ApiParam("partnerCategory") @RequestParam(name = "partnerCategory",required = false) String partnerCategory ,
-                                     @ApiParam("blacklistPartner") @RequestParam(name = "blacklistPartner",required = false) Integer blacklistPartner){
+                                     @ApiParam("查看停用Partner") @RequestParam(name = "offPartner",required = false) Integer offPartner ,
+                                    @ApiParam("分类") @RequestParam(name = "partnerCategory",required = false) String partnerCategory ,
+                                    @ApiParam("查看黑名单Partner") @RequestParam(name = "blacklistPartner",required = false) Integer blacklistPartner){
         List<PartnerDetails> list = this.partnerDetailsService.selectListByQuery(name,offPartner,blacklistPartner,partnerCategory);
         return this.success(list);
     }
@@ -85,7 +90,19 @@ public class PartnerDetailsController extends BaseController {
     @ApiOperation(value = "更新合作伙伴详情" ,httpMethod = "POST", response = Object.class)
     @RequestMapping(value = "/updatePartnerDetailsById")
     @ResponseBody
-    public Object updatePartnerDetailsById(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails){
+    public Object updatePartnerDetailsById(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails,
+                                           @ApiParam("联系方式") @RequestParam(name = "linkmans" ,required = false) String linkmans ,
+                                           @ApiParam("联系地址") @RequestParam(name = "address" ,required = false) String address){
+        if(linkmans != null){
+            JSONArray array = JSONArray.fromString(linkmans);
+            List<PartnerLinkman> list = JSONArray.toList(array, PartnerLinkman.class);
+            partnerDetails.setLinkmansList(list);
+        }
+        if(address != null){
+            JSONArray array = JSONArray.fromString(address);
+            List<PartnerAddress> list = JSONArray.toList(array, PartnerAddress.class);
+            partnerDetails.setAddressList(list);
+        }
         this.partnerDetailsService.updateByPrimaryKey(partnerDetails , getRequest());
         return this.success();
     }
@@ -99,7 +116,20 @@ public class PartnerDetailsController extends BaseController {
     @ApiOperation(value = "新增合作伙伴详情" ,httpMethod = "POST", response = Object.class)
     @RequestMapping(value = "/insertPartnerDetails")
     @ResponseBody
-    public Object insertPartnerDetails(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails){
+    public Object insertPartnerDetails(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails,
+                                       @ApiParam("联系方式") @RequestParam(name = "linkmans" ,required = false) String linkmans ,
+                                       @ApiParam("联系地址") @RequestParam(name = "address" ,required = false) String address){
+
+        if(linkmans != null){
+            JSONArray array = JSONArray.fromString(linkmans);
+            List<PartnerLinkman> list = JSONArray.toList(array, PartnerLinkman.class);
+            partnerDetails.setLinkmansList(list);
+        }
+        if(address != null){
+            JSONArray array = JSONArray.fromString(address);
+            List<PartnerAddress> list = JSONArray.toList(array, PartnerAddress.class);
+            partnerDetails.setAddressList(list);
+        }
         this.partnerDetailsService.insertSelective(partnerDetails,getRequest());
         return this.success();
     }
@@ -196,14 +226,13 @@ public class PartnerDetailsController extends BaseController {
 
     /**
      * 修改转移目录
-     * @param ids
+     * @param id
      * @return
      */
     @ApiOperation(value = "修改转移目录" ,httpMethod = "GET", response = Object.class)
     @RequestMapping(value = "/shiftPartnerDetailsFileByIds")
     @ResponseBody
-    public Object shiftPartnerDetailsFileByIds(
-                                                @ApiParam("id") @RequestParam(name = "id") Integer id){
+    public Object shiftPartnerDetailsFileByIds(@ApiParam("id") @RequestParam(name = "id") Integer id){
         this.partnerDetailsService.shiftPartnerDetailsFileByIds(id);
         return this.success();
     }
@@ -216,4 +245,11 @@ public class PartnerDetailsController extends BaseController {
         return this.success(codes);
     }
 
+    @ApiOperation(value = "查询是否可以修改code" ,httpMethod = "GET", response = Object.class)
+    @RequestMapping(value = "/isEditCode")
+    @ResponseBody
+    public Object isEditCode(@ApiParam("id") @RequestParam(name = "id") Integer id){
+        boolean flag = this.partnerDetailsService.isEditCode(id);
+        return this.success(flag);
+    }
 }

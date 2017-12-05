@@ -5,27 +5,163 @@ $(function(){
     var codes = $('.code');
     var nn = 0;//控制编辑的是哪个code
     var urlParameter = vipspa.parse();
-    var partnerId = urlParameter.param.id;
-    $('#pId').val(partnerId);
+    var id = urlParameter.param.id;
+    $('#partnerId').val(id);
+    /*回显各个字段的值*/
+    $.ajax({
+        url: 'http://'+gPathUrl+'/partner/details/selectPartnerDetailsById',
+        type: 'get',
+        async:false,
+        data:{
+            id:id
+        },
+        success: function (data) {
+            console.log(data.data);
+            $('#pId').val(data.data.pid);
+            $('#mnemonicCode').val(data.data.code);//助记码
+            $('#chineseName').val(data.data.chineseName);//中文全称
+            $('#chineseAbbreviation').val(data.data.chineseAbbreviation);//中文简称
+            $('#englishName').val(data.data.englishName);//英文全称
+            $('#englishAbbreviation').val(data.data.englishAbbreviation);//英文简称
+            $('#financingCode').val(data.data.financingCode);//财务代码
+            $('#dutyInput').val(data.data.receiverName);//提醒接受者
+            $('#receiverId').val(data.data.receiverId);//提醒接受者ID
+            $('#receiverName').val(data.data.receiverName);//提醒接受者
+            //黑名单
+            $('#blackList').val(data.data.isBlacklist);
+            if(data.data.isBlacklist == 1){
+                $('#isBlacklist').attr('checked',true);
+            }else{
+                $('#isBlacklist').attr('checked',false)
+            }
+            //停用
+            $('#disable').val(data.data.isBlacklist);
+            if(data.data.isDisable == 1){
+                $('#isDisable').attr('checked',true);
+            }else{
+                $('#isDisable').attr('checked',false)
+            }
+            $('#disableRemark').val(data.data.disableRemark);//停用备注
+            addressList = data.data.addressList;//联系地址
+            contactsList = data.data.linkmansList;//联系人
+            $('#scopeBusiness').val(data.data.scopeBusiness);//业务范畴
+            $.each(data.data.scopeBusinesss,function(index,value){
+                $('.businessCheckbox').find("input:checkbox").each(function(i,n) {
+                   if(value == $(n).val()){
+                       $(n).attr('checked',true);
+                   }
+                });
+            });
+            $('#partnerCategory').val(data.data.partnerCategory);//合作伙伴分类
+            $.each(data.data.partnerCategorys,function(index,value){
+                $('.partnersCheckbox').find("input:checkbox").each(function(i,n) {
+                    if(value == $(n).val()){
+                        $(n).attr('checked',true);
+                    }
+                });
+            });
+            $('#wbkhCustomerClass').val(data.data.wbkhCustomerClass);//客户分类
+            $.each(data.data.wbkhCustomerClasss,function(index,value){
+                $('#customerClass').find("input:checkbox").each(function(i,n) {
+                    if(value == $(n).val()){
+                        $(n).attr('checked',true);
+                    }
+                });
+            });
+            //代垫
+            $('#wbkhIsPayForAnother').val(data.data.wbkhIsPayForAnother);
+            if(data.data.wbkhIsPayForAnother == 1){
+                $('.wbkhIsPayForAnother').attr('checked',true);
+                $('.daiDian').attr('disabled',false);
+            }else{
+                $('.wbkhIsPayForAnother').attr('checked',false);
+            }
+            $('.wbkhPaymentTerm').val(data.data.wbkhPaymentTerm);//代垫期限（天）
+            $('.wbkhPaidAmount').val(data.data.wbkhPaidAmount);//代垫额度（万元）
+            $('.wbkhCreditRating').val(data.data.wbkhCreditRating);//信用等级
+            $('.wbkhTypeCreditPeriod').val(data.data.wbkhTypeCreditPeriod);//信用期限类型
+            $('.wbkhCreditPeriod').val(data.data.wbkhCreditPeriod);//信用期限（天）
+            $('.wbkhLineCredit').val(data.data.wbkhLineCredit);//信用额度(万元)
+            $('.wbkhInvoiceType').val(data.data.wbkhInvoiceType);//开票类型
+            $('.invoiceTypeTitle').text(data.data.wbkhInvoiceType);//开票类型Title
+            $('.wbkhDepositBank ').val(data.data.wbkhDepositBank);//开户银行
+            $('.headingCode ').val(data.data.headingCode);//纳税人识别码
+            $('.wbkhBankAccount ').val(data.data.wbkhBankAccount);//银行账号
+            $('.wbkhCompanyTel ').val(data.data.wbkhCompanyTel);//公司电话
+            $('.wbkhCompanyAddress ').val(data.data.wbkhCompanyAddress);//公司地址
+            $('.hwdlTaxReceipt ').val(data.data.hwdlTaxReceipt);//进项税票
+            $('.hwdlTaxRate ').val(data.data.hwdlTaxRate);//进项税率%
+            $('#gxcyrClassOfService').val(data.data.gxcyrClassOfService);//服务类别
+            $.each(data.data.gxcyrClassOfServices,function(index,value){
+                $('.gxcyrClassOfServiceBox').find("input:checkbox").each(function(i,n) {
+                    if(value == $(n).val()){
+                        $(n).attr('checked',true);
+                    }
+                });
+            });
+            //收货人
+            $('input[name="sfhrIsConsignee"]').val(data.data.sfhrIsConsignee);
+            if(data.data.sfhrIsConsignee == 1){
+                $('#sfhrIsConsignee').attr('checked',true);
+                $('.consigneeInput').find('input').attr('disabled',false);
+            }else{
+                $('#sfhrIsConsignee').attr('checked',false);
+            }
+            $('#sfhrConsigneeNation').val(data.data.sfhrConsigneeNation)//收货人国家
+            $('input[name="sfhrConsigneeContinent"]').val(data.data.sfhrConsigneeContinent)//收货人州
+            $('input[name="sfhrConsigneeCity"]').val(data.data.sfhrConsigneeCity)//收货人城市
+            $('input[name="sfhrConsigneeZipCode"]').val(data.data.sfhrConsigneeZipCode)//收货人邮编
+            $('input[name="sfhrConsigneePhone"]').val(data.data.sfhrConsigneePhone)//收货人电话
+            $('input[name="sfhrConsigneeAddress"]').val(data.data.sfhrConsigneeAddress)//收货人地址
+
+            //与收货人地址相同
+            $('input[name="sfhrIsConsigneesAddress"]').val(data.data.sfhrIsConsigneesAddress);
+            if(data.data.sfhrIsConsignee == 1){
+                $('#sfhrIsConsigneesAddress').attr('checked',true);
+            }else{
+                $('#sfhrIsConsigneesAddress').attr('checked',false);
+            }
+            //发货人
+            $('input[name="sfhrIsShipper"]').val(data.data.sfhrIsConsignee);
+            if(data.data.sfhrIsShipper == 1){
+                $('#sfhrIsShipper').attr('checked',true);
+                $('.shipperInput').find('input').attr('disabled',false);
+            }else{
+                $('#sfhrIsShipper').attr('checked',false);
+            }
+            $('input[name="sfhrShipperNation"]').val(data.data.sfhrShipperNation);//发货人国家
+            $('input[name="sfhrShipperContinent"]').val(data.data.sfhrShipperContinent);//发货人州
+            $('input[name="sfhrShipperCity"]').val(data.data.sfhrShipperCity);//发货人城市
+            $('input[name="sfhrShipperZipCode"]').val(data.data.sfhrShipperZipCode);//发货人邮编
+            $('input[name="sfhrShipperPhone"]').val(data.data.sfhrShipperPhone);//发货人电话
+            $('input[name="sfhrShipperAddress"]').val(data.data.sfhrShipperAddress);//发货人地址
+            $('input[name="createDate"]').val(data.data.createDate);//createDate
+            $('input[name="isDelete"]').val(data.data.isDelete);//isDelete
+        }
+    });
+
+
+
     /*控制代码填写区域*/
-    if(!!partnerId){
-        codes.prop('disabled','disabled');
-        $('.code1').prop('disabled',false);
-    }else{
+    if(!!id){
         $.ajax({
             url: 'http://' + gPathUrl + '/partner/details/getParentCodeList',
             type: 'get',
             data: {
-                id:partnerId
+                id:id
             },
             success: function (data) {
+                console.log(data)
                 if(data.code == '200'){
                     $.each(data.data,function (index,value) {
-                        codes.eq(index).val(value).attr('disabled','disabled');
+                        codes.eq(index).val(value);
+                        if(index>0){
+                            codes.eq(index-1).attr('disabled',true);
+                        }
                         nn = ++index;
                     });
                     codes.each(function (i,val) {
-                        if(nn <i){
+                        if(nn <=i){
                             $('.code').eq(i).attr('disabled','disabled');
                         }
                     })
@@ -33,6 +169,21 @@ $(function(){
             }
         })
     }
+    /*code是否允许修改*/
+    $.ajax({
+        url: 'http://' + gPathUrl + '/partner/details/isEditCode',
+        type: 'get',
+        data: {
+            id:id
+        },
+        success: function (data) {
+            if(data.code == 200){
+                if(!data.data){
+                    $('.code').attr('disabled',true);
+                }
+            }
+        }
+    });
     //光标移开，校验代码字段的填写
     codes.blur(function(){
         var that = this;
@@ -126,15 +277,24 @@ $(function(){
         var isDisable = $(this).prop('checked');
         if(isDisable){
             $('input[name="isDisable"]').val('1');
-            $('input[name="disableRemark"]').attr('required',true);
+            $('input[name="disableRemark"]').prop('required',true);
             $('.disableMark').css('color','#ed6e56');
         }else{
             $('input[name="isDisable"]').val('0');
+            $('input[name="disableRemark"]').prop('required',false);
+            $('.disableMark').css('color','#fff');
         }
     });
     /*信用等级同时改变*/
     $('.wbkhCreditRating').change(function(){
         $('.wbkhCreditRating').val($(this).val());
+        if($(this).val()=='A-协议保函'){
+            $('.wbkhCreditPeriod').attr('disabled',false);
+            $('.wbkhLineCredit').attr('disabled',false);
+        }else{
+            $('.wbkhCreditPeriod').attr('disabled',true);
+            $('.wbkhLineCredit').attr('disabled',true);
+        }
     });
     /*信用期限类型*/
     $('.wbkhTypeCreditPeriod').change(function(){
@@ -148,10 +308,23 @@ $(function(){
     $('.wbkhLineCredit').keyup(function(){
         $('.wbkhLineCredit').val($(this).val());
     });
-    /*开票类型额度*/
-    $('input[name="wbkhInvoiceType"]').change(function(){
-        console.log($(this).val());
-        $('input[name="wbkhInvoiceType"]').val($(this).val());
+    /*开票类型*/
+    $('.wbkhInvoiceType').change(function(){
+        var selectInvoiceType = $(this).val();
+        $('.wbkhInvoiceType').val(selectInvoiceType);
+        $('.invoiceTypeTitle').text(selectInvoiceType);
+        if(selectInvoiceType =="增值税普票"){
+            $('.bankInfo .mark').hide();
+            $('.sbmMark').show();
+            $('.bankInfo input').attr('required',false);
+            $('.Taxpayers').attr('required',true);
+        }else if(selectInvoiceType =="增值税专票"){
+            $('.bankInfo .mark').show();
+            $('.bankInfo input').attr('required',true);
+        }else if(selectInvoiceType =="DebitNote"){
+            $('.bankInfo .mark').hide();
+            $('.bankInfo input').attr('required',false);
+        }
     });
     /*代垫逻辑*/
     $('.wbkhIsPayForAnother').change(function(){
@@ -212,8 +385,10 @@ $(function(){
         var isConsignee = $(this).prop('checked');
         if(isConsignee){
             $('input[name="sfhrIsConsignee"]').val('1');
+            $('.consigneeInput input').attr('disabled',false);
         }else{
             $('input[name="sfhrIsConsignee"]').val('0');
+            $('.consigneeInput input').attr('disabled',true);
         }
     });
     /*发货人*/
@@ -221,8 +396,13 @@ $(function(){
         var isShipper = $(this).prop('checked');
         if(isShipper){
             $('input[name="sfhrIsShipper"]').val('1');
+            //与发货人地址相同的逻辑
+            $('input[name="sfhrIsConsigneesAddress"]').val('0');
+            $('#sfhrIsConsigneesAddress').prop('checked',false);
+            $('.shipperInput input').attr('disabled',false);
         }else{
             $('input[name="sfhrIsShipper"]').val('0');
+            $('.shipperInput input').attr('disabled',true);
         }
     });
     /*与收货人地址相同*/
@@ -230,9 +410,31 @@ $(function(){
         var isShipper = $(this).prop('checked');
         if(isShipper){
             $('input[name="sfhrIsConsigneesAddress"]').val('1');
+            $('.consigneeInput input').each(function(i,val){
+                $('.shipperInput input').eq(i).val($(val).val());
+            });
+            //发货人逻辑
+            $('input[name="sfhrIsShipper"]').val('0');
+            $('#sfhrIsShipper').prop('checked',false);
         }else{
             $('input[name="sfhrIsConsigneesAddress"]').val('0');
         }
+    });
+    /*合作伙伴分类*/
+    $('.partnersCheckbox input').change(function(){
+        var partnersCheck = $('.partnersCheckbox input');
+        var flag1 = true;
+        $.each(partnersCheck,function(index,value){
+            if($(value).prop('checked')){
+                flag1 = false;
+            }
+        });
+        if(flag1){
+            $('#partnerCategory').prop('required','required');
+        }else{
+            $('#partnerCategory').prop('required',false);
+        }
+
     });
 
     /*加载地址列表*/
@@ -414,10 +616,23 @@ $(function(){
         contactsObj.getContactsList();
     });
 
+    /*取消*/
+    $('#callOff').click(function(){
+        location.hash = vipspa.stringify('partnerManage');
+    });
     /*表单提交*/
     $('#newForm').submit(function(){
-        /*$('#linkmans').val(JSON.stringify(contactsList));
-        $('#address').val(JSON.stringify(addressList));*/
+        $('#linkmans').val(JSON.stringify(contactsList));
+        $('#address').val(JSON.stringify(addressList));
+        //判断地址和联系人必须维护一个
+        if(addressList.length <=0){
+            alert('必须维护一个联系地址！');
+            return false;
+        }
+        if(contactsList.length <=0){
+            alert('必须维护一个联系地址！');
+            return false;
+        }
         //业务范畴循环
         var businessCheckbox = [];
         $('.businessCheckbox').find("input:checkbox").each(function(i,n) {
@@ -427,7 +642,7 @@ $(function(){
                 }
             }
         });
-        $('#scopeBusiness').val(businessCheckbox.join());
+        $('#scopeBusiness').val(businessCheckbox.join(','));
         //合作伙伴循环
         var PartnersCheckbox = [];
         $('.partnersCheckbox').find("input:checkbox").each(function(i,n) {
@@ -437,7 +652,12 @@ $(function(){
                 }
             }
         });
-        $('#partnerCategory').val(PartnersCheckbox.join());
+        /* if(PartnersCheckbox.length <=0){
+         $('#partnerCategory').attr('required',true);
+         alert('至少选择一个合作伙伴分类！');
+         return false;
+         }*/
+        $('#partnerCategory').val(PartnersCheckbox.join(','));
         //客户分类
         var customerClass = [];
         $('#customerClass').find("input:checkbox").each(function(i,n) {
@@ -447,7 +667,7 @@ $(function(){
                 }
             }
         });
-        $('#wbkhCustomerClass').val(customerClass.join());
+        $('#wbkhCustomerClass').val(customerClass.join(','));
         //服务类别
         var gxcyrClassOfServiceArr = [];
         $('.classOfServiceBox').find("input:checkbox").each(function(i,n) {
@@ -457,20 +677,19 @@ $(function(){
                 }
             }
         });
-        $('#gxcyrClassOfService').val(customerClass.join());
-
+        $('#gxcyrClassOfService').val(gxcyrClassOfServiceArr.join(','));
         $(this).ajaxSubmit(options);
         return false;//阻止表单提交
     })
 });
 var addressList = [
-    {
-        id:1,
-        addressType:'注册地址',
-        abbreviation:'来广营',
-        address:'北京市朝阳区来广营地铁站望京城诚盈中心A座',
-        zipCode:'10000'
-    }
+    /*{
+     id:1,
+     addressType:'注册地址',
+     abbreviation:'来广营',
+     address:'北京市朝阳区来广营地铁站望京城诚盈中心A座',
+     zipCode:'10000'
+     }*/
 ];
 var addressObj = {
     getAddressList:function(){
@@ -491,7 +710,7 @@ var addressObj = {
 
 /*联系人*/
 var contactsList = [
-    {
+    /*{
         id:1,
         name:'张三',
         obligation:'市场推广',
@@ -501,7 +720,7 @@ var contactsList = [
         phone:'18810513105',
         email:'zhangshasmo@pj0l.com',
         address:'北京市朝阳区来广营西路望京诚盈中心A座9层'
-    }
+    }*/
 ];
 var contactsObj = {
     getContactsList:function(){
@@ -526,11 +745,14 @@ var contactsObj = {
 
 /*表单提交参数*/
 var  options ={
-    url : 'http://'+gPathUrl+'/partner/details/insertPartnerDetails',
+    url : 'http://'+gPathUrl+'/partner/details/updatePartnerDetailsById',
     type:'post',
     dataType:'json',
     success:function(data) {
-        console.log(data);
+        if(data.code == '200'){
+            alert('保存成功！');
+            location.hash = vipspa.stringify('partnerManage')
+        }
     },error:function() {
 
     },complete:function() {

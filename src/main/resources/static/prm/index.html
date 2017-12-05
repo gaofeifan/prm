@@ -22,42 +22,32 @@
     <script src="script/index.js"></script>
 </head>
 <body>
-    <div id="wrapper">
-        <div id="header">
-           <div class="fl">
-               <a class="logo" href="javascript:void(0);"><img src="image/logo3.png" alt=""></a>
-               <h1 class="fl">PRM-商务合作伙伴关系管理系统</h1>
-           </div>
-            <div class="fr">
-                <div class="fl user_info">
-                    <!--<img src="image/logo.png" alt="">-->
-                    <em class="user_name"></em>
-                </div>
-                <div class="fr exit">
-                    <a id="afterLogout" href="javascript:void(0);"><i></i>退出登录</a>
-                </div>
-            </div>
+<div id="wrapper">
+    <div id="header">
+        <div class="fl">
+            <a class="logo" href="javascript:void(0);"><img src="image/logo3.png" alt=""></a>
+            <h1 class="fl">PRM-商务合作伙伴关系管理系统</h1>
         </div>
-        <div id="main">
-            <div id="left">
-                <ul>
-                    <li><a class="business" href="#business"><p>业务范畴查询</p></a></li>
-                    <li><a class="serve" href="#serve"><p>服务类别查询</p></a></li>
-                    <li><a class="credit" href="#credit"><p>信用等级管理</p></a></li>
-                    <li><a class="hierarchy" href="#hierarchy"><p>层级位数管理</p></a></li>
-                    <li><a class="partnerClassify" href="#partnerClassify"><p>合作伙伴分类</p></a></li>
-                    <li><a class="partnerManage" href="#partnerManage"><p>合作伙伴管理</p></a></li>
-                    <li><a class="partnerManage" href="#partnerManage2"><p>合作伙伴管理2</p></a></li>
-                    <li><a class="partnerNew" href="#partnerNew"><p>合作伙伴新增</p></a></li>
-                    <li><a class="partnerEdit" href="#partnerEdit"><p>合作伙伴修改</p></a></li>
-                    <li><a class="partnerCheck" href="#partnerCheck"><p>合作伙伴查看</p></a></li>
-                </ul>
+        <div class="fr">
+            <div class="fl user_info">
+                <!--<img src="image/logo.png" alt="">-->
+                <em class="user_name"></em>
             </div>
-            <div class="right" id="ui-view">
-
+            <div class="fr exit">
+                <a id="afterLogout" href="javascript:void(0);"><i></i>退出登录</a>
             </div>
         </div>
     </div>
+    <div id="main">
+        <div id="left">
+            <ul>
+            </ul>
+        </div>
+        <div class="right" id="ui-view">
+
+        </div>
+    </div>
+</div>
 </body>
 </html>
 <script>
@@ -67,45 +57,29 @@
         if(!loginUsername){
             $('.user_name').text(loginUsername);
         }
-        /*记录登录的信息*/
         $.ajax({
-            url: 'http://' + gPathUrl + '/auth/menu/getLoginUserDetails',
-            type: 'post',
+            url: 'http://'+gPathUrl+'/auth/menu/findMenuOrButtonByPostId',
+            type: 'get',
             async:false,
-            data: {
+            data:{
+                isMenu:true,
                 email:userEmail
             },
             success: function (data) {
-                console.log(data)
-                //根据登录权限 加载全台链接和左侧菜单
-            },
-            complete: function (resp) {
-
-            }
-        });
-        $.ajax({
-            url: 'http://'+gPathUrl+'/auth/menu/findMenuOrButtonByPostId',
-            type: 'post',
-            dataType:'json',
-            contentType: "application/json",
-            data:{
-                isMenu:true
-            },
-            success: function (data) {
-                console.log(22222222222)
-                console.log(data+"111111111");
+                $.each(data.data,function(i,val){
+                    var strMenuLi ='<li><a class="'+val.href+'" href="#'+val.href+'"><p>'+val.name+'</p></a></li>';
+                    $('#left ul').append(strMenuLi);
+                });
             },
             error: function (msg) {
-                console.log(33333333333)
+
             }
         });
-
-
     });
 
-     function isActive(hash){
+    function isActive(hash){
         if(hash == window.location.hash.substr(1)){
             return 'active';
         }
-     }
+    }
 </script>

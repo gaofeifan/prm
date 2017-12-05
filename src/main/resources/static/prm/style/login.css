@@ -1,0 +1,154 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+#main {
+  width: 100%;
+  height: 100%;
+}
+#main #header {
+  height: 60px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: #fff;
+  left: 0;
+  right: 0;
+}
+#main #header #logo {
+  height: 60px;
+  line-height: 60px;
+  width: 600px;
+  margin-left: 8%;
+}
+#main #header #logo a {
+  display: inline-block;
+  width: 135px;
+  height: 45px;
+  line-height: 45px;
+  position: relative;
+  top: -5px;
+}
+#main #header #logo h1 {
+  display: inline-block;
+  font-size: 22px;
+  color: #5d5e5e;
+  margin-left: 6%;
+}
+#main #header #date {
+  height: 60px;
+  line-height: 60px;
+  width: 280px;
+  margin-right: 10%;
+  font-size: 16px;
+  color: #666666;
+}
+#main #content {
+  width: 100%;
+  height: 100%;
+  background-image: url('../image/login_bg.jpg');
+  background-repeat: no-repeat;
+  background-position: center 0;
+}
+#main #content .content-layout {
+  width: 1200px;
+  overflow: hidden;
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  margin-left: -600px;
+  height: 80%;
+  z-index: 999;
+}
+#main #content .content-layout .login-box-warp {
+  position: absolute;
+  top: 50%;
+  margin-top: -190px;
+  right: 60px;
+  width: 350px;
+  border: 1px solid #cecdd8;
+  background-color: #fff;
+  border-radius: 4px;
+}
+#main #content .content-layout .login-box-warp #J_LoginBox {
+  width: 260px;
+  padding: 30px 45px 20px;
+  color: #6c6c6c;
+  position: relative;
+  margin: 0 auto;
+}
+#main #content .content-layout .login-box-warp #J_LoginBox .static-form .login-title {
+  width: 258px;
+  height: 24px;
+  line-height: 24px;
+}
+#main #content .content-layout .login-box-warp #J_LoginBox .static-form input {
+  width: 218px;
+  height: 38px;
+  line-height: 38px;
+  border: 1px solid #cecdd8;
+  border-radius: 4px;
+  padding-left: 40px ;
+  font-size: 14px;
+  color: #666;
+}
+#main #content .content-layout .login-box-warp #J_LoginBox .static-form input.verification {
+  width: 118px;
+  padding-left: 12px ;
+  margin-bottom: 0;
+}
+#main #content .content-layout .login-box-warp #J_LoginBox .static-form input#account {
+  background-image: url('../image/sprite.png');
+  background-repeat: no-repeat;
+  background-position: -969px 9px;
+}
+#main #content .content-layout .login-box-warp #J_LoginBox .static-form input#password {
+  background-image: url('../image/sprite.png');
+  background-repeat: no-repeat;
+  background-position: -971px -75px;
+}
+#main #content .content-layout .login-box-warp #J_LoginBox .static-form .forget_password {
+  text-align: right;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 35px;
+}
+#main #content .content-layout .login-box-warp #J_LoginBox .static-form .forget_password a {
+  color: #44b2d7;
+}
+#main #content .content-layout .login-box-warp #J_LoginBox .static-form #login {
+  width: 258px;
+  height: 38px;
+  border-radius: 2px;
+  background-color: #faa600;
+  font-size: 18px;
+  color: #fff;
+  margin-top: 5px;
+  margin-bottom: 40px;
+  cursor: pointer;
+  letter-spacing: 5px;
+}
+#main #content .content-layout .login-box-warp #J_LoginBox .static-form .weixin_l i {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-image: url('../image/weixin_icon.png');
+  margin-left: 5px;
+  margin-right: 5px;
+  position: relative;
+  top: 4px;
+}
+#main #content .content-layout .login-box-warp #J_LoginBox .static-form .weixin_l a {
+  font-size: 14px;
+  color: #666;
+}
+#main #content .content-layout .login-box-warp #J_LoginBox .static-form .warning {
+  height: 25px ;
+  line-height: 22px;
+  font-size: 14px;
+  color: red;
+  text-align: right;
+}

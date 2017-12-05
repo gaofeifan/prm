@@ -25,10 +25,12 @@ public class DomainFilter  extends WebStatFilter{
 		
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpServletRequest rep = (HttpServletRequest) request;
+		res.setHeader("P3P","CP=CAO PSA OUR");
 		res.setHeader("Access-Control-Allow-Origin", "*");
 		res.addHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+		res.addHeader( "Access-Control-Allow-Credentials","TRUE" );
 		res.addHeader("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With");
-		
+//		res.reset();
 //		res.setContentType("textml;charset=UTF-8");
 //		res.setHeader("Access-Control-Allow-Origin", res.getHeader("Origin"));
 //		res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");

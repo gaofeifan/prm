@@ -37,39 +37,49 @@ $(function(){
     //光标移开，校验代码字段的填写
     codes.blur(function(){
         var that = this;
-        $.ajax({
-            url: 'http://' + gPathUrl + '/partner/details/getCodeLength',
-            type: 'get',
-            success: function (data) {
-                if(data.code == 200){
-                    if(parseInt($(that).val().length) != parseInt(data.data[nn])){
-                        alert('必须'+data.data[nn]+'位');
-                        $(that).val('');
-                        return false;
+        if($(this).val().length > 0){
+            $.ajax({
+                url: 'http://' + gPathUrl + '/partner/details/getCodeLength',
+                type: 'get',
+                success: function (data) {
+                    if(data.code == 200){
+                        if(parseInt($(that).val().length) != parseInt(data.data[nn])){
+                            alert('必须'+data.data[nn]+'位');
+                            $(that).val('');
+                            return false;
+                        }
                     }
                 }
-            }
-        })
+            })
+        }
     });
     /*校验中文名称*/
     $('#chineseName').blur(function(){
         var that = this;
-        checkRepeat(that,'中文全称')
+        if($(this).val().length >0){
+            checkRepeat(that,'中文全称')
+        }
     });
     /*校验中文简称*/
     $('#chineseAbbreviation').blur(function(){
         var that = this;
-        checkRepeat(that,'中文简称')
+        if($(this).val().length >0){
+            checkRepeat(that,'中文简称')
+        }
     });
     /*校验英文名称*/
     $('#englishName').blur(function(){
         var that = this;
-        checkRepeat(that,'英文全称')
+        if($(this).val().length >0){
+            checkRepeat(that,'英文全称')
+        }
     });
     /*校验英文简称*/
     $('#englishAbbreviation').blur(function(){
         var that = this;
-        checkRepeat(that,'英文简称')
+        if($(this).val().length >0){
+            checkRepeat(that,'英文简称')
+        }
     });
 
     /*提醒接受者逻辑*/
@@ -127,15 +137,24 @@ $(function(){
         var isDisable = $(this).prop('checked');
         if(isDisable){
             $('input[name="isDisable"]').val('1');
-            $('input[name="disableRemark"]').attr('required',true);
+            $('input[name="disableRemark"]').prop('required',true);
             $('.disableMark').css('color','#ed6e56');
         }else{
             $('input[name="isDisable"]').val('0');
+            $('input[name="disableRemark"]').prop('required',false);
+            $('.disableMark').css('color','#fff');
         }
     });
     /*信用等级同时改变*/
     $('.wbkhCreditRating').change(function(){
         $('.wbkhCreditRating').val($(this).val());
+        if($(this).val()=='A-协议保函'){
+            $('.wbkhCreditPeriod').attr('disabled',false);
+            $('.wbkhLineCredit').attr('disabled',false);
+        }else{
+            $('.wbkhCreditPeriod').attr('disabled',true);
+            $('.wbkhLineCredit').attr('disabled',true);
+        }
     });
     /*信用期限类型*/
     $('.wbkhTypeCreditPeriod').change(function(){
@@ -149,10 +168,23 @@ $(function(){
     $('.wbkhLineCredit').keyup(function(){
         $('.wbkhLineCredit').val($(this).val());
     });
-    /*开票类型额度*/
-    $('input[name="wbkhInvoiceType"]').change(function(){
-        console.log($(this).val());
-        $('input[name="wbkhInvoiceType"]').val($(this).val());
+    /*开票类型*/
+    $('.wbkhInvoiceType').change(function(){
+        var selectInvoiceType = $(this).val();
+        $('.wbkhInvoiceType').val(selectInvoiceType);
+        $('.invoiceTypeTitle').text(selectInvoiceType);
+        if(selectInvoiceType =="增值税普票"){
+            $('.bankInfo .mark').hide();
+            $('.sbmMark').show();
+            $('.bankInfo input').attr('required',false);
+            $('.Taxpayers').attr('required',true);
+        }else if(selectInvoiceType =="增值税专票"){
+            $('.bankInfo .mark').show();
+            $('.bankInfo input').attr('required',true);
+        }else if(selectInvoiceType =="DebitNote"){
+            $('.bankInfo .mark').hide();
+            $('.bankInfo input').attr('required',false);
+        }
     });
     /*代垫逻辑*/
     $('.wbkhIsPayForAnother').change(function(){
@@ -213,8 +245,10 @@ $(function(){
         var isConsignee = $(this).prop('checked');
         if(isConsignee){
             $('input[name="sfhrIsConsignee"]').val('1');
+            $('.consigneeInput input').attr('disabled',false);
         }else{
             $('input[name="sfhrIsConsignee"]').val('0');
+            $('.consigneeInput input').attr('disabled',true);
         }
     });
     /*发货人*/
@@ -222,8 +256,13 @@ $(function(){
         var isShipper = $(this).prop('checked');
         if(isShipper){
             $('input[name="sfhrIsShipper"]').val('1');
+            //与发货人地址相同的逻辑
+            $('input[name="sfhrIsConsigneesAddress"]').val('0');
+            $('#sfhrIsConsigneesAddress').prop('checked',false);
+            $('.shipperInput input').attr('disabled',false);
         }else{
             $('input[name="sfhrIsShipper"]').val('0');
+            $('.shipperInput input').attr('disabled',true);
         }
     });
     /*与收货人地址相同*/
@@ -231,9 +270,31 @@ $(function(){
         var isShipper = $(this).prop('checked');
         if(isShipper){
             $('input[name="sfhrIsConsigneesAddress"]').val('1');
+            $('.consigneeInput input').each(function(i,val){
+                $('.shipperInput input').eq(i).val($(val).val());
+            });
+            //发货人逻辑
+            $('input[name="sfhrIsShipper"]').val('0');
+            $('#sfhrIsShipper').prop('checked',false);
         }else{
             $('input[name="sfhrIsConsigneesAddress"]').val('0');
         }
+    });
+    /*合作伙伴分类*/
+    $('.partnersCheckbox input').change(function(){
+        var partnersCheck = $('.partnersCheckbox input');
+        var flag1 = true;
+        $.each(partnersCheck,function(index,value){
+            if($(value).prop('checked')){
+                flag1 = false;
+            }
+        });
+        if(flag1){
+            $('#partnerCategory').prop('required','required');
+        }else{
+            $('#partnerCategory').prop('required',false);
+        }
+
     });
 
     /*加载地址列表*/
@@ -414,11 +475,39 @@ $(function(){
         contactsList.push(EditConObj);
         contactsObj.getContactsList();
     });
-
+    /*联系人展开*/
+    $('.spreadAdd').click(function(){
+        $('.addressList').slideDown();
+    });
+    /*联系人收起*/
+    $('.packUpAdd').click(function(){
+        $('.addressList').slideUp();
+    });
+    /*联系人展开*/
+    $('.spreadCon').click(function(){
+        $('.contactList').slideDown();
+    });
+    /*联系人收起*/
+    $('.packUpCon').click(function(){
+        $('.contactList').slideUp();
+    });
+    /*取消*/
+    $('#callOff').click(function(){
+        location.hash = vipspa.stringify('partnerManage');
+    });
     /*表单提交*/
     $('#newForm').submit(function(){
         $('#linkmans').val(JSON.stringify(contactsList));
         $('#address').val(JSON.stringify(addressList));
+        //判断地址和联系人必须维护一个
+        if(addressList.length <=0){
+            alert('必须维护一个联系地址！');
+            return false;
+        }
+        if(contactsList.length <=0){
+            alert('必须维护一个联系地址！');
+            return false;
+        }
         //业务范畴循环
         var businessCheckbox = [];
         $('.businessCheckbox').find("input:checkbox").each(function(i,n) {
@@ -438,6 +527,11 @@ $(function(){
                 }
             }
         });
+       /* if(PartnersCheckbox.length <=0){
+            $('#partnerCategory').attr('required',true);
+            alert('至少选择一个合作伙伴分类！');
+            return false;
+        }*/
         $('#partnerCategory').val(PartnersCheckbox.join(','));
         //客户分类
         var customerClass = [];
@@ -459,7 +553,6 @@ $(function(){
             }
         });
         $('#gxcyrClassOfService').val(gxcyrClassOfServiceArr.join(','));
-
         $(this).ajaxSubmit(options);
         return false;//阻止表单提交
     })
@@ -471,6 +564,13 @@ var addressList = [
         abbreviation:'来广营',
         address:'北京市朝阳区来广营地铁站望京城诚盈中心A座',
         zipCode:'10000'
+    },
+    {
+        id:2,
+        addressType:'登录地址',
+        abbreviation:'三里屯',
+        address:'北京市朝阳区来广营地铁站望京城诚盈中心A座',
+        zipCode:'222222'
     }
 ];
 var addressObj = {
@@ -483,7 +583,7 @@ var addressObj = {
                 <div class="short"><span>'+value.abbreviation+'</span></div>\
                 <div class="address"><span>'+value.address+'</span></div>\
                 <div class="postcode"><span>'+value.zipCode+'</span></div>\
-                <div class="operation"><a class="editAdd" href="javascript:void(0);">修改地址</a> <a class="delAdd redColor" href="javascript:void(0);">删除地址</a></div>\
+                <div class="operation"><a class="editAdd" href="javascript:void(0);">修改</a> <a class="delAdd redColor" href="javascript:void(0);">删除</a></div>\
                 </div>';
             $('.addressList').append(str);
         });
@@ -533,7 +633,7 @@ var  options ={
     success:function(data) {
         if(data.code == '200'){
             alert('保存成功！');
-            location.hash = vipspa.stringify('partnerManage2')
+            location.hash = vipspa.stringify('partnerManage');
         }
     },error:function() {
 

@@ -1,5 +1,7 @@
 package com.pj.partner.service.impl;
 
+import com.pj.auth.pojo.User;
+import com.pj.auth.service.AuthUserService;
 import com.pj.cache.PartnerDetailsCache;
 import com.pj.conf.base.AbstractBaseServiceImpl;
 import com.pj.conf.base.BaseMapper;
@@ -36,6 +38,8 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     private PartnerLinkmanService partnerLinkmanService;
     @Autowired
     private PartnerDetailsShifFileMapper partnerDetailsShifFileMapper;
+    @Autowired
+    private AuthUserService authUserService;
     @Override
     public BaseMapper<PartnerDetails> getMapper() {
         return partnerDetailsMapper;
@@ -81,19 +85,19 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         PartnerAddress address = new PartnerAddress();
         address.setDetailsId(key);
         List<PartnerAddress> addresss = this.partnerAddressService.select(address);
-        pd.setAddress(addresss);
+        pd.setAddressList(addresss);
         PartnerLinkman linkman = new PartnerLinkman();
         linkman.setDetailsId(key);
         List<PartnerLinkman> linkmens = this.partnerLinkmanService.select(linkman);
-        pd.setLinkmans(linkmens);
+        pd.setLinkmansList(linkmens);
         return pd;
     }
 
 
     @Override
     public void updateByPrimaryKey(PartnerDetails record, HttpServletRequest request){
-        List<PartnerAddress> address = record.getAddress();
-        List<PartnerLinkman> linkmans = record.getLinkmans();
+        List<PartnerAddress> address = record.getAddressList();
+        List<PartnerLinkman> linkmans = record.getLinkmansList();
         /**
          *  将原数据与新数据添加到作用与中
          */
@@ -124,8 +128,8 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     public void insertSelective(PartnerDetails partnerDetails, HttpServletRequest request) {
         partnerDetails.setCreateDate(new Date());
         super.insertSelective(partnerDetails);
-        List<PartnerLinkman> linkmans = partnerDetails.getLinkmans();
-        List<PartnerAddress> address = partnerDetails.getAddress();
+        List<PartnerLinkman> linkmans = partnerDetails.getLinkmansList();
+        List<PartnerAddress> address = partnerDetails.getAddressList();
         request.getSession().setAttribute("new_partnerAddress",address);
         request.getSession().setAttribute("new_partnerLinkman",linkmans);
         request.getSession().setAttribute("new_partnerDetails",partnerDetails);
@@ -150,10 +154,11 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         } catch (NoSuchFieldException e) {
             throw new RuntimeException("the field is not exist");
         }
-        fieldName = partnerDetailsMapper.toUnderlineJSONString(fieldName);
+        fieldName = this.toUnderlineJSONString(fieldName);
         Example example = new Example(PartnerDetails.class);
-        example.createCriteria().andCondition(fieldName,fieldValue);
+        example.createCriteria().andCondition(fieldName+"=",fieldValue);
         List<PartnerDetails> pds =super.selectByExample(example);
+
         if(pds.size() != 0){
             return false;
         }
@@ -281,5 +286,33 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
 
     public List<PartnerDetails> getParentList(Integer id) {
         return this.partnerDetailsMapper.getParentList(id);
+    }
+
+    private String toUnderlineJSONString(String param){
+        if (param==null||"".equals(param.trim())){
+            return "";
+        }
+        int len=param.length();
+        StringBuilder sb=new StringBuilder(len);
+        for (int i = 0; i < len; i++) {
+            char c=param.charAt(i);
+            if (Character.isUpperCase(c)){
+                sb.append(PartnerDetailsService.UNDERLINE);
+                sb.append(Character.toLowerCase(c));
+            }else{
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+
+
+    @Override
+    public boolean isEditCode(Integer id) {
+        List<PartnerDetailsShifFile> list = this.partnerDetailsShifFileMapper.getChildList(id);
+        if(list.size() > 1){
+            return false;
+        }
+        return true;
     }
 }
