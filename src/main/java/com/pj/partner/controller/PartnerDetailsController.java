@@ -233,4 +233,11 @@ public class PartnerDetailsController extends BaseController {
         return this.success(codes);
     }
 
+    @ApiOperation(value = "查询是否可以修改code" ,httpMethod = "GET", response = Object.class)
+    @RequestMapping(value = "/isEditCode")
+    @ResponseBody
+    public Object isEditCode(@ApiParam("id") @RequestParam(name = "id") Integer id){
+        boolean flag = this.partnerDetailsService.isEditCode(id);
+        return this.success(flag);
+    }
 }

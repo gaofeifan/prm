@@ -1,5 +1,7 @@
 package com.pj.partner.service.impl;
 
+import com.pj.auth.pojo.User;
+import com.pj.auth.service.AuthUserService;
 import com.pj.cache.PartnerDetailsCache;
 import com.pj.conf.base.AbstractBaseServiceImpl;
 import com.pj.conf.base.BaseMapper;
@@ -36,6 +38,8 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     private PartnerLinkmanService partnerLinkmanService;
     @Autowired
     private PartnerDetailsShifFileMapper partnerDetailsShifFileMapper;
+    @Autowired
+    private AuthUserService authUserService;
     @Override
     public BaseMapper<PartnerDetails> getMapper() {
         return partnerDetailsMapper;
@@ -300,5 +304,15 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             }
         }
         return sb.toString();
+    }
+
+
+    @Override
+    public boolean isEditCode(Integer id) {
+        List<PartnerDetailsShifFile> list = this.partnerDetailsShifFileMapper.getChildList(id);
+        if(list.size() > 1){
+            return false;
+        }
+        return true;
     }
 }

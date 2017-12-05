@@ -35,4 +35,8 @@ class AuthMenu {
     @Column
     private Integer pId;
 
+    @ApiModelProperty(value = "是否是默认权限")
+    @Column
+    private Integer isDefault;
+
 }

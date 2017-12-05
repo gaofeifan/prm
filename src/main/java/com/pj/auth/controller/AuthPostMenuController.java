@@ -47,14 +47,16 @@ public class AuthPostMenuController extends BaseController{
         List<AuthPostMenuVo> authPostMenus = this.authPostMenuService.findButtonByPostIdAndMenuIds(postId,menuIds);
         return this.success(authPostMenus);
     }
-    @ApiOperation(value = "根据岗位获取菜单或按钮" ,httpMethod = "POST", response = Object.class)
+    @ApiOperation(value = "根据岗位获取菜单或按钮" ,httpMethod = "GET", response = Object.class)
     @RequestMapping(value = "/findMenuOrButtonByPostId")
     @ResponseBody
     public Object findMenuOrButtonByPostId(
+                                           @ApiParam(value = "email",required = true) @RequestParam(name="email",required = true) String email,
                                            @ApiParam(value = "菜单id",required = false) @RequestParam(name="menuId",required = false) Integer menuId,
                                            @ApiParam(value = "是否是菜单 1是（默认） 0 否",required = false) @RequestParam(name="isMenu",required = false) boolean isMenu
                                            ){
-        User user = this.getSessionUser();
+//        User user = this.getSessionUser();
+        User user = this.userService.selectUserByEmail(email);
         List<AuthPostMenuVo> authPostMenus = this.authPostMenuService.findMenuOrButtonByPostId(user.getPostid(),menuId,isMenu);
         return this.success(authPostMenus);
     }
@@ -79,6 +81,7 @@ public class AuthPostMenuController extends BaseController{
             session.setMaxInactiveInterval(60*60*24);
         }
         return this.success(getRequest().getSession().getId());
+
     }
 }
 //3FA618F018CA6F61C23D96E995456640

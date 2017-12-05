@@ -71,7 +71,10 @@
         $.ajax({
             url: 'http://' + gPathUrl + '/auth/menu/getLoginUserDetails',
             type: 'post',
-            async:false,
+
+            xhrFields:{
+                withCredentials:true
+            },
             data: {
                 email:userEmail
             },
@@ -87,7 +90,11 @@
             url: 'http://'+gPathUrl+'/auth/menu/findMenuOrButtonByPostId',
             type: 'post',
             dataType:'json',
-            contentType: "application/json",
+
+
+            xhrFields:{
+                withCredentials:true
+            },
             data:{
                 isMenu:true
             },
