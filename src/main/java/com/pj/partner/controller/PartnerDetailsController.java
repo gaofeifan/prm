@@ -47,9 +47,9 @@ public class PartnerDetailsController extends BaseController {
     @RequestMapping(value = "/selectListByQuery")
     @ResponseBody
     public Object selectListByQuery(@ApiParam("name") @RequestParam(name = "name",required = false) String name ,
-                                     @ApiParam("查看停用Partner") @RequestParam(name = "offPartner",required = false) Integer offPartner ,
-                                     @ApiParam("分类") @RequestParam(name = "partnerCategory",required = false) String partnerCategory ,
-                                     @ApiParam("查看黑名单Partner") @RequestParam(name = "blacklistPartner",required = false) Integer blacklistPartner){
+                                     @ApiParam("offPartner") @RequestParam(name = "offPartner",required = false) Integer offPartner ,
+                                     @ApiParam("partnerCategory") @RequestParam(name = "partnerCategory",required = false) String partnerCategory ,
+                                     @ApiParam("blacklistPartner") @RequestParam(name = "blacklistPartner",required = false) Integer blacklistPartner){
         List<PartnerDetails> list = this.partnerDetailsService.selectListByQuery(name,offPartner,blacklistPartner,partnerCategory);
         return this.success(list);
     }
@@ -88,19 +88,7 @@ public class PartnerDetailsController extends BaseController {
     @ApiOperation(value = "更新合作伙伴详情" ,httpMethod = "POST", response = Object.class)
     @RequestMapping(value = "/updatePartnerDetailsById")
     @ResponseBody
-    public Object updatePartnerDetailsById(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails,
-       @ApiParam("联系方式") @RequestParam(name = "linkmans" ,required = false) String linkmans ,
-                                           @ApiParam("联系地址") @RequestParam(name = "address" ,required = false) String address){
-        if(linkmans != null){
-            JSONArray array = JSONArray.fromString(linkmans);
-            List<PartnerLinkman> list = JSONArray.toList(array, PartnerLinkman.class);
-            partnerDetails.setLinkmansList(list);
-        }
-        if(address != null){
-            JSONArray array = JSONArray.fromString(address);
-            List<PartnerAddress> list = JSONArray.toList(array, PartnerAddress.class);
-            partnerDetails.setAddressList(list);
-        }
+    public Object updatePartnerDetailsById(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails){
         this.partnerDetailsService.updateByPrimaryKey(partnerDetails , getRequest());
         return this.success();
     }
