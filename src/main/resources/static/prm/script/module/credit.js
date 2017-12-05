@@ -26,7 +26,7 @@ $(function(){
     /*获取用户信用等级列表 */
     $.ajax({
         type:'get',
-        url:'http://localhost:8083/user/level',
+        url:'http://'+gPathUrl+'user/level',
         crossDomain: false,//支持跨域发送cookie
         dataType:'json',
         success:function(data){
@@ -113,7 +113,7 @@ $(function(){
 
         $.ajax({
             type:'post',
-            url:'http://localhost:8083/user/levelUpdate',
+            url:'http://'+gPathUrl+'/user/levelUpdate',
             crossDomain: false,//支持跨域发送cookie
             contentType: "application/json; charset=utf-8",
             data: commitDate3,
