@@ -2,6 +2,7 @@ package com.pj.Aspect;
 
 
 import com.pj.auth.pojo.AuthMenu;
+import com.pj.auth.pojo.User;
 import com.pj.auth.service.AuthMenuService;
 import com.pj.auth.service.AuthUserService;
 import com.pj.cache.PartnerDetailsCache;
@@ -687,14 +688,14 @@ public class AspectServer {
     private void addLogMethod(boolean flage, HttpServletRequest request,String actionData) {
         if(flage){
             // 获取  登录人信息
-         /*   User user_object = (User) request.getSession().getAttribute("user");*/
+            User user_object = (User) request.getSession().getAttribute("user");
             Operation operation =  new Operation();
             operation.setAction(actionData);
-         /*   operation.setUserId(user_object.getEmail());
+             operation.setUserId(user_object.getEmail());
             operation.setUserName(user_object.getUsername());
             operation.setDepartment(user_object.getDempname());
             operation.setCompany(user_object.getCompanyname());
-            operation.setJobs(user_object.getDempname());*/
+            operation.setJobs(user_object.getDempname());
             // 追加日志记录
             aspectServer.logService.addOperationlLog(operation);
         }

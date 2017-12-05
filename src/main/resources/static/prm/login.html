@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8">
     <title>登录</title>
-    <link rel="stylesheet" href="style/base.css"/>
-    <link rel="stylesheet" href="style/login.css"/>
+    <link rel="stylesheet" href="style/base.css">
+    <link rel="stylesheet" href="style/login.css">
     <script src="lib/jquery.js"></script>
     <script src="lib/jquery.form.js"></script>
     <script src="lib/jquery.cookie.js"></script>
     <script>
         var oaPathUrl = '10.0.0.18:8083';
         var ssoPathUrl = '10.0.0.18:8085';
-        var gPathUrl = '10.0.0.105:8083';
-//        var gPathUrl = '192.168.4.213:8083';
+        var gPathUrl = '192.168.4.213:8083';
+        var localPath = 'localhost:8083';
 
        /* var oaPathUrl = '139.129.236.180:8080';
         var ssoPathUrl = '139.129.236.180:8081';
@@ -28,7 +28,7 @@
     <div id="main">
         <div id="header">
             <div id="logo" class="fl">
-                <a class="logo" href="javascript:void(0);"><img src="image/logo.png" alt=""/></a>
+                <a class="logo" href="javascript:void(0);"><img src="image/logo.png" alt=""></a>
                 <h1>PRM-商务合作伙伴关系管理系统</h1>
             </div>
             <div id="date" class="fr">今天是：<span id="day"></span>&nbsp;&nbsp; <sapn id="week"></sapn></div>
@@ -41,11 +41,11 @@
                             <div class="static-form">
                                 <form id="loginForm">
                                     <p class="warning" id=""></p>
-                                    <input id="account" name="username" type="text" value="" placeholder="请输入用户名"/>
+                                    <input id="account" name="username" type="text" value="" placeholder="请输入用户名">
                                     <p class="warning name_warning"></p>
-                                    <input id="password" name="password" type="password" value="" placeholder="请输入密码"/>
+                                    <input id="password" name="password" type="password" value="" placeholder="请输入密码">
                                     <p class="warning password_warning"></p>
-                                    <input name="flag" value="0" type="text" style="display: none"/>
+                                    <input name="flag" value="0" type="text" style="display: none">
                                     <!--<img src="" alt="">-->
                                     <!--<p class="forget_password"><a href=""></a></p>-->
                                     <button id="login" type="button">登录</button>

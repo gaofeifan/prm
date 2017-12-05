@@ -25,7 +25,7 @@ $(function(){
         /*获取层数信息*/
         $.ajax({
             type:'get',
-            url:'http://localhost:8083/user/hierarchy',
+            url:'http://'+gPathUrl+'/user/hierarchy',
             crossDomain: false,//支持跨域发送cookie
             dataType:'json',
             success:function(data){
@@ -77,7 +77,7 @@ $(function(){
 
      $.ajax({
             type:'post',
-            url:'http://localhost:8083/user/hierarchyUpdate',
+            url:'http://'+gPathUrl+'/user/hierarchyUpdate',
             crossDomain: false,//支持跨域发送cookie
             contentType: "application/json; charset=utf-8",
             data: commitDate3,
