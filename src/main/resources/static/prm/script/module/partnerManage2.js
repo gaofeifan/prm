@@ -46,7 +46,6 @@ $(function(){
                  isAdmin:''*/
             },
             success: function (data) {
-                console.log(data)
                 if(data.code == 200) {
                     var zNodes = data.data;
                     $.fn.zTree.init($("#tree"), setting, zNodes);
@@ -320,6 +319,11 @@ $(function(){
             location.hash = vipspa.stringify('partnerEdit',{id:nodes[0].id});
         }
     });
+
+    /*点击关闭*/
+    $('#close').click(function(){
+        $('#infoWall').hide();
+    })
 });
 function clickTree (){
     var zTree = $.fn.zTree.getZTreeObj("tree"),
