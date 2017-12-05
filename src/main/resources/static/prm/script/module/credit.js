@@ -1,28 +1,13 @@
 /**
  * Created by Administrator on 2017/11/16.
  */
+/**
+ * Created by Administrator on 2017/9/12.
+ */
 /*backCookie();*/
 /*用户信用等级页面*/
 menuActive('credit');
 $(function(){
-    /*控制编辑按钮*/
-    $.ajax({
-        url: 'http://'+gPathUrl+'/auth/menu/findMenuOrButtonByPostId',
-        type: 'get',
-        async:false,
-        data:{
-            isMenu:false,
-            menuId:3,
-            email:$.cookie('front_useremail')
-        },
-        success: function (resp) {
-            $.each(resp.data,function(index,value){
-                if(value.name=="信用等级管理 - 修改"){
-                    $('#editBtn').show();
-                }
-            });
-        }
-    });
     /*获取用户信用等级列表 */
     $.ajax({
         type:'get',

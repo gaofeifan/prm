@@ -32,13 +32,13 @@ vipspa.start({
             controller: 'script/module/partnerClassify.js'
         },
         'partnerManage': { //合作伙伴管理
+            templateUrl: 'view/partnerManage.html',
+            controller: 'script/module/partnerManage.js'
+        },
+        'partnerManage2': { //合作伙伴管理 有操作权限
             templateUrl: 'view/partnerManage2.html',
             controller: 'script/module/partnerManage2.js'
         },
-       /* 'partnerManage2': { //合作伙伴管理 有操作权限
-            templateUrl: 'view/partnerManage2.html',
-            controller: 'script/module/partnerManage2.js'
-        },*/
         'partnerNew': { //合作伙伴 新增
             templateUrl: 'view/partnerNew.html',
             controller: 'script/module/partnerNew.js'
@@ -46,6 +46,10 @@ vipspa.start({
         'partnerEdit': { //合作伙伴-修改
             templateUrl: 'view/partnerEdit.html',
             controller: 'script/module/partnerEdit.js'
+        },
+        'partnerCheck': { //合作伙伴管理
+            templateUrl: 'view/partnerCheck.html',
+            controller: 'script/module/partnerCheck.js'
         },
         'homePage': { //首页
             templateUrl: 'view/homePage.html',

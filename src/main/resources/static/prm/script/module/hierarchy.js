@@ -1,27 +1,13 @@
 /**
  * Created by Administrator on 2017/11/16.
  */
+/**
+ * Created by Administrator on 2017/9/12.
+ */
 /*backCookie();*/
 menuActive('hierarchy');
 $(function(){
-    /*控制编辑按钮*/
-    $.ajax({
-        url: 'http://'+gPathUrl+'/auth/menu/findMenuOrButtonByPostId',
-        type: 'get',
-        async:false,
-        data:{
-            isMenu:false,
-            menuId:4,
-            email:$.cookie('front_useremail')
-        },
-        success: function (resp) {
-            $.each(resp.data,function(index,value){
-                if(value.name=="层级位数管理 - 修改"){
-                    $('#editBtn').show();
-                }
-            });
-        }
-    });
+
         /*获取层数信息*/
         $.ajax({
             type:'get',

@@ -152,7 +152,6 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     @Column
     @ApiModelProperty(value = "外部客户 开票类型" ,required = false)
     private String wbkhInvoiceType;
-
     /**
      * 外部客户 信用期限类型
      */

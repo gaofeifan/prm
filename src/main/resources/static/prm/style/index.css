@@ -105,9 +105,6 @@
 #credit .content .body-box .bodyList .valid {
   width: 10%;
 }
-#credit .content #editBtn {
-  display: none;
-}
 #hierarchy .content {
   padding: 20px 20px 50px;
   background-color: #fff;
@@ -146,9 +143,6 @@
   width: 140px;
   height: 30px;
   border-radius: 0;
-}
-#hierarchy #editBtn {
-  display: none;
 }
 #partnerClassify .content {
   padding: 20px 20px 50px;
@@ -196,13 +190,6 @@
 }
 #partnerClassify .content .body-box .bodyList .description {
   width: 42%;
-}
-#partnerManage .new,
-#partnerManage .alter,
-#partnerManage #transferBtn,
-#partnerManage #delete,
-#partnerManage #query {
-  display: none;
 }
 #partnerManage .content {
   position: relative;
@@ -411,7 +398,6 @@
   left: 0;
   right: 0;
   z-index: 999;
-  display: none;
 }
 #homePage .content {
   /*padding: 20px 20px 50px;*/
@@ -1383,18 +1369,6 @@
 }
 #partnerNew .bankInfo .sbmMark {
   display: inline-block;
-}
-#partnerNew .spreadAdd {
-  cursor: pointer;
-}
-#partnerNew .packUpAdd {
-  cursor: pointer;
-}
-#partnerNew .spreadCon {
-  cursor: pointer;
-}
-#partnerNew .packUpCon {
-  cursor: pointer;
 }
 @media screen and (max-width: 1600px) {
   #partnerNew .content form {

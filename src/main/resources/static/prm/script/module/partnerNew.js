@@ -37,49 +37,39 @@ $(function(){
     //光标移开，校验代码字段的填写
     codes.blur(function(){
         var that = this;
-        if($(this).val().length > 0){
-            $.ajax({
-                url: 'http://' + gPathUrl + '/partner/details/getCodeLength',
-                type: 'get',
-                success: function (data) {
-                    if(data.code == 200){
-                        if(parseInt($(that).val().length) != parseInt(data.data[nn])){
-                            alert('必须'+data.data[nn]+'位');
-                            $(that).val('');
-                            return false;
-                        }
+        $.ajax({
+            url: 'http://' + gPathUrl + '/partner/details/getCodeLength',
+            type: 'get',
+            success: function (data) {
+                if(data.code == 200){
+                    if(parseInt($(that).val().length) != parseInt(data.data[nn])){
+                        alert('必须'+data.data[nn]+'位');
+                        $(that).val('');
+                        return false;
                     }
                 }
-            })
-        }
+            }
+        })
     });
     /*校验中文名称*/
     $('#chineseName').blur(function(){
         var that = this;
-        if($(this).val().length >0){
-            checkRepeat(that,'中文全称')
-        }
+        checkRepeat(that,'中文全称')
     });
     /*校验中文简称*/
     $('#chineseAbbreviation').blur(function(){
         var that = this;
-        if($(this).val().length >0){
-            checkRepeat(that,'中文简称')
-        }
+        checkRepeat(that,'中文简称')
     });
     /*校验英文名称*/
     $('#englishName').blur(function(){
         var that = this;
-        if($(this).val().length >0){
-            checkRepeat(that,'英文全称')
-        }
+        checkRepeat(that,'英文全称')
     });
     /*校验英文简称*/
     $('#englishAbbreviation').blur(function(){
         var that = this;
-        if($(this).val().length >0){
-            checkRepeat(that,'英文简称')
-        }
+        checkRepeat(that,'英文简称')
     });
 
     /*提醒接受者逻辑*/
@@ -475,26 +465,7 @@ $(function(){
         contactsList.push(EditConObj);
         contactsObj.getContactsList();
     });
-    /*联系人展开*/
-    $('.spreadAdd').click(function(){
-        $('.addressList').slideDown();
-    });
-    /*联系人收起*/
-    $('.packUpAdd').click(function(){
-        $('.addressList').slideUp();
-    });
-    /*联系人展开*/
-    $('.spreadCon').click(function(){
-        $('.contactList').slideDown();
-    });
-    /*联系人收起*/
-    $('.packUpCon').click(function(){
-        $('.contactList').slideUp();
-    });
-    /*取消*/
-    $('#callOff').click(function(){
-        location.hash = vipspa.stringify('partnerManage');
-    });
+
     /*表单提交*/
     $('#newForm').submit(function(){
         $('#linkmans').val(JSON.stringify(contactsList));
@@ -558,20 +529,13 @@ $(function(){
     })
 });
 var addressList = [
-    {
+    /*{
         id:1,
         addressType:'注册地址',
         abbreviation:'来广营',
         address:'北京市朝阳区来广营地铁站望京城诚盈中心A座',
         zipCode:'10000'
-    },
-    {
-        id:2,
-        addressType:'登录地址',
-        abbreviation:'三里屯',
-        address:'北京市朝阳区来广营地铁站望京城诚盈中心A座',
-        zipCode:'222222'
-    }
+    }*/
 ];
 var addressObj = {
     getAddressList:function(){
@@ -583,7 +547,7 @@ var addressObj = {
                 <div class="short"><span>'+value.abbreviation+'</span></div>\
                 <div class="address"><span>'+value.address+'</span></div>\
                 <div class="postcode"><span>'+value.zipCode+'</span></div>\
-                <div class="operation"><a class="editAdd" href="javascript:void(0);">修改</a> <a class="delAdd redColor" href="javascript:void(0);">删除</a></div>\
+                <div class="operation"><a class="editAdd" href="javascript:void(0);">修改地址</a> <a class="delAdd redColor" href="javascript:void(0);">删除地址</a></div>\
                 </div>';
             $('.addressList').append(str);
         });
@@ -633,7 +597,7 @@ var  options ={
     success:function(data) {
         if(data.code == '200'){
             alert('保存成功！');
-            location.hash = vipspa.stringify('partnerManage');
+            location.hash = vipspa.stringify('partnerManage2')
         }
     },error:function() {
 

@@ -50,11 +50,14 @@ public class AuthPostMenuController extends BaseController{
     @ApiOperation(value = "根据岗位获取菜单或按钮" ,httpMethod = "GET", response = Object.class)
     @RequestMapping(value = "/findMenuOrButtonByPostId")
     @ResponseBody
-    public Object findMenuOrButtonByPostId(@ApiParam("岗位id") @RequestParam(name="postId") Integer postId,
+    public Object findMenuOrButtonByPostId(
+                                           @ApiParam(value = "email",required = true) @RequestParam(name="email",required = true) String email,
                                            @ApiParam(value = "菜单id",required = false) @RequestParam(name="menuId",required = false) Integer menuId,
                                            @ApiParam(value = "是否是菜单 1是（默认） 0 否",required = false) @RequestParam(name="isMenu",required = false) boolean isMenu
                                            ){
-        List<AuthPostMenuVo> authPostMenus = this.authPostMenuService.findMenuOrButtonByPostId(postId,menuId,isMenu);
+//        User user = this.getSessionUser();
+        User user = this.userService.selectUserByEmail(email);
+        List<AuthPostMenuVo> authPostMenus = this.authPostMenuService.findMenuOrButtonByPostId(user.getPostid(),menuId,isMenu);
         return this.success(authPostMenus);
     }
     @ApiOperation(value = "设置岗位权限" ,httpMethod = "POST", response = Object.class)
@@ -66,16 +69,22 @@ public class AuthPostMenuController extends BaseController{
         return this.success(null);
     }
 
-    @ApiOperation(value = "登录成功后调用接口" ,httpMethod = "GET", response = Object.class)
+    @ApiOperation(value = "登录成功后调用接口" ,httpMethod = "POST", response = Object.class)
     @RequestMapping(value = "/getLoginUserDetails")
     @ResponseBody
-    public void getLoginUserDetails( @ApiParam(value = "登录人邮箱") @RequestParam(name="email") String email){
+    public Object getLoginUserDetails( @ApiParam(value = "登录人邮箱") @RequestParam(name="email") String email){
         User user = userService.selectUserByEmail(email);
         HttpSession session = getRequest().getSession();
-        Object obj = session.getAttribute(email);
+        Object obj = session.getAttribute(TAG);
         if(obj == null){
             session.setAttribute(TAG,user);
             session.setMaxInactiveInterval(60*60*24);
         }
+        return this.success(getRequest().getSession().getId());
+
     }
 }
+//3FA618F018CA6F61C23D96E995456640
+//4E7CEC5C457C19C881C298C49C7239BF
+//  923CFB6C4006DAC01CBBD2D38A7504C6
+//269C9A4921C8FB86003A750BA876B3FF
