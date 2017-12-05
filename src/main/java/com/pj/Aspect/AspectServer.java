@@ -4,7 +4,6 @@ package com.pj.Aspect;
 import com.pj.auth.pojo.AuthMenu;
 import com.pj.auth.service.AuthMenuService;
 import com.pj.auth.service.AuthUserService;
-import com.pj.cache.PartnerDetailsCache;
 import com.pj.partner.mapper.PartnerDetailsShifFileMapper;
 import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.pojo.PartnerDetailsShifFile;
@@ -155,15 +154,14 @@ public class AspectServer {
         Object[] args = point.getArgs();
 
         //  查询转移的文件
-        Object o = PartnerDetailsCache.getValueByKey("details");
-        List<PartnerDetailsShifFile> shifFileList = (List<PartnerDetailsShifFile>) o;
+        List<PartnerDetailsShifFile> shifFileList = partnerDetailsService.selectShiftFile((Integer[])args[0]);
         List<PartnerDetailsShifFile> deleteFileList = new ArrayList<>();
         //  获取转移文件所有的子集
         for (PartnerDetailsShifFile fds:shifFileList) {
             List<PartnerDetailsShifFile> childList =partnerDetailsShifFileMapper.getChildList(fds.getId());
             //   如果子集中存在转移直的目录将其删除
             for (PartnerDetailsShifFile childFds:childList) {
-                if(childFds.getId() == Integer.parseInt(args[0].toString()) ){
+                if(childFds.getId() == Integer.parseInt(args[1].toString()) ){
                     deleteFileList.add(childFds);
                 }
             }
@@ -200,7 +198,7 @@ public class AspectServer {
                         Method getMethod = pd.getReadMethod();//获得get方法  
                         Object o = getMethod.invoke(oldfile);//执行get方法返回一个Object
                         // 日志内容拼接
-                        actionData+=""+"< "+o+" >（ " + args[0] + " ） ; ";
+                        actionData+=""+"< "+o+" >（ " + args[1] + " ） ; ";
                         flage = true;
                     }
                 }

@@ -26,10 +26,4 @@ public interface AuthPostMenuService extends BaseService<AuthPostMenu,Integer> {
     void editPostAuthority(Integer postId, Integer[] menuIds);
 
     boolean findOperatingAuthorizationByPostIdAndByButton(Integer postId , Integer button);
-
-    /**
-     *  设置默认权限
-     * @param postId
-     */
-    public void editDefaultAuth(Integer postId);
 }

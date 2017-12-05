@@ -14,7 +14,7 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
 
     public static final char UNDERLINE='_';
 
-    List<PartnerDetails> selectPartnerDetailsList( );
+    List<PartnerDetails> selectPartnerDetailsList();
 
     List<PartnerDetails> selectListByQuery(String name, Integer offPartner, Integer blacklistPartner,String partnerCategory);
 
@@ -63,11 +63,4 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
      * @return
      */
     Object[] getParentCodeList(Integer id);
-
-    /**
-     *  查询是否可以修改code
-     * @param id
-     * @return
-     */
-    boolean isEditCode(Integer id);
 }

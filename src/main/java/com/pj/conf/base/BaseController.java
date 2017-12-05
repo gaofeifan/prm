@@ -3,16 +3,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import com.pj.auth.pojo.User;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.json.MappingJacksonValue;
-
-import static javax.swing.text.html.CSS.getAttribute;
-
 /**
  * 
  * 项目名称：documentation   
@@ -128,16 +123,6 @@ public class BaseController extends AdvanceControllerSupport{
         } else {  
             return request.getRemoteAddr();  
         } 
-	}
-
-	protected  User getSessionUser(){
-		HttpSession session = getRequest().getSession();
-		Object o = session.getAttribute("user");
-		if(o != null){
-			return (User) o;
-		}
-		throw  new RuntimeException("用户未登录");
-
 	}
 	
 	

@@ -2,10 +2,8 @@ package com.pj.auth.service.impl;
 
 
 import com.pj.auth.mapper.AuthPostMenuMapper;
-import com.pj.auth.pojo.AuthMenu;
 import com.pj.auth.pojo.AuthPostMenu;
 import com.pj.auth.pojo.AuthPostMenuVo;
-import com.pj.auth.service.AuthMenuService;
 import com.pj.auth.service.AuthPostMenuService;
 import com.pj.conf.base.AbstractBaseServiceImpl;
 import com.pj.conf.base.BaseMapper;
@@ -23,8 +21,7 @@ import java.util.List;
 public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMenu,Integer> implements AuthPostMenuService {
     @Autowired
     private AuthPostMenuMapper authPostMenuMapper;
-    @Autowired
-    private AuthMenuService authMenuService;
+
     @Override
     public BaseMapper<AuthPostMenu> getMapper() {
         return authPostMenuMapper;
@@ -32,31 +29,18 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
 
     @Override
     public List<AuthPostMenuVo> findMenuByPostId(Integer postId) {
-        AuthPostMenu record = new AuthPostMenu();
-        record.setPostId(postId);
-        List<AuthPostMenu> menus = this.authPostMenuMapper.select(record);
-        List<AuthPostMenuVo> menu = authPostMenuMapper.findMenuByPostId(postId, null);
-        if(menus.size() != 0){
-            return menu;
-        }
-        editDefaultAuth(postId);
-        return authPostMenuMapper.findMenuByPostId(postId, null);
+        return authPostMenuMapper.findMenuByPostId(postId,null);
     }
     @Override
     public List<AuthPostMenuVo> findButtonByPostIdAndMenuIds(Integer postId, Integer[] menuIds) {
-        if(menuIds == null || menuIds.length == 0){
+        if(menuIds == null && menuIds.length == 0){
             return null;
         }
         return authPostMenuMapper.findMenuByPostId(postId,menuIds);
     }
 
     public List<AuthPostMenuVo> findMenuOrButtonByPostId(Integer postId, Integer menuId, boolean isMenu){
-        List<AuthPostMenuVo> list = authPostMenuMapper.findMenuOrButtonByPostId(postId, menuId, isMenu);
-        if(list.size() != 0){
-            return list;
-        }
-        editDefaultAuth(postId);
-        return authPostMenuMapper.findMenuOrButtonByPostId(postId, menuId, isMenu);
+        return authPostMenuMapper.findMenuOrButtonByPostId(postId,menuId,isMenu);
     }
 
     @Override
@@ -76,16 +60,4 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
         }
         return false;
     }
-
-    public void editDefaultAuth(Integer postId){
-        List<AuthMenu> menus = this.authMenuService.selectDefaultMenu();
-        AuthPostMenu apm = null;
-        for (AuthMenu am:menus) {
-            apm = new AuthPostMenu();
-            apm.setMenuId(am.getId());
-            apm.setPostId(postId);
-            this.authPostMenuMapper.insert(apm);
-        }
-    }
-
 }
