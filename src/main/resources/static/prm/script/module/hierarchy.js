@@ -77,7 +77,7 @@ $(function(){
 
      $.ajax({
             type:'post',
-            url:'http://'+gPathUrl+'/user/hierarchyUpdate',
+            url:'http://localhost:8083/user/hierarchyUpdate',
             crossDomain: false,//支持跨域发送cookie
             contentType: "application/json; charset=utf-8",
             data: commitDate3,

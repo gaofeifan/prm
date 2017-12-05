@@ -7,6 +7,20 @@ $(function(){
     var urlParameter = vipspa.parse();
     var id = urlParameter.param.id;
     $('#partnerId').val(id);
+    /*加载信用等级*/
+    $.ajax({
+        type: 'get',
+        async:false,
+        url: 'http://' + gPathUrl + '/user/level',
+        dataType: 'json',
+        success: function (data) {
+            var optionStr = '';
+            $.each(data.data,function(index,value){
+                optionStr = optionStr + '<option value="'+value.level+'">'+value.level+'-'+value.protocolType+'</option>';
+            });
+            $('.wbkhCreditRating').append(optionStr);
+        }
+    });
     /*回显各个字段的值*/
     $.ajax({
         url: 'http://'+gPathUrl+'/partner/details/selectPartnerDetailsById',
@@ -16,7 +30,6 @@ $(function(){
             id:id
         },
         success: function (data) {
-            console.log(data.data);
             $('#pId').val(data.data.pid);
             $('#mnemonicCode').val(data.data.code);//助记码
             $('#chineseName').val(data.data.chineseName);//中文全称
@@ -140,8 +153,6 @@ $(function(){
         }
     });
 
-
-
     /*控制代码填写区域*/
     if(!!id){
         $.ajax({
@@ -151,7 +162,6 @@ $(function(){
                 id:id
             },
             success: function (data) {
-                console.log(data)
                 if(data.code == '200'){
                     $.each(data.data,function (index,value) {
                         codes.eq(index).val(value);
