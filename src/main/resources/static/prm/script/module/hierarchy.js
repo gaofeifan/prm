@@ -25,7 +25,7 @@ $(function(){
         /*获取层数信息*/
         $.ajax({
             type:'get',
-            url:'http://localhost:8083/user/hierarchy',
+            url:'http://'+gPathUrl+'/user/hierarchy',
             crossDomain: false,//支持跨域发送cookie
             dataType:'json',
             success:function(data){

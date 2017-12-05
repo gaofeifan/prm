@@ -6,13 +6,16 @@ $(function(){
     var nn = 0;//控制编辑的是哪个code
     var urlParameter = vipspa.parse();
     var partnerId = urlParameter.param.id;
-    $('#pId').val(partnerId);
-    console.log(partnerId);
+    if(isNaN(partnerId)){
+        $('#pId').val('');
+    }else{
+        $('#pId').val(partnerId);
+    }
     /*控制代码填写区域*/
-    if(partnerId == 'null'){
+    if(isNaN(partnerId)){
         codes.prop('disabled','disabled');
         $('.code1').prop('disabled',false);
-    }else if(!!partnerId){
+    }else{
         $.ajax({
             url: 'http://' + gPathUrl + '/partner/details/getParentCodeList',
             type: 'get',
@@ -34,6 +37,20 @@ $(function(){
             }
         })
     }
+    /*加载信用等级*/
+    $.ajax({
+        type: 'get',
+        url: 'http://' + gPathUrl + '/user/level',
+        dataType: 'json',
+        success: function (data) {
+            var optionStr = '';
+            $.each(data.data,function(index,value){
+                optionStr = optionStr + '<option value="'+value.level+'">'+value.level+'-'+value.protocolType+'</option>';
+            });
+            $('.wbkhCreditRating').append(optionStr);
+        }
+    });
+
     //光标移开，校验代码字段的填写
     codes.blur(function(){
         var that = this;
@@ -274,10 +291,12 @@ $(function(){
                 $('.shipperInput input').eq(i).val($(val).val());
             });
             //发货人逻辑
-            $('input[name="sfhrIsShipper"]').val('0');
-            $('#sfhrIsShipper').prop('checked',false);
+            $('input[name="sfhrIsShipper"]').val('1');
+            $('#sfhrIsShipper').prop('checked',true);
         }else{
+            $('input[name="sfhrIsShipper"]').val('0');
             $('input[name="sfhrIsConsigneesAddress"]').val('0');
+            $('#sfhrIsShipper').prop('checked',false);
         }
     });
     /*合作伙伴分类*/
@@ -309,23 +328,29 @@ $(function(){
         addressListBox.append('' +
             '<div class="addingAdd clearfix">\
             <div class="no"><span>'+ listNum +'</span></div>\
-            <div class="addressType"><input  style="width: 80%;" type="text"></div>\
+            <div class="addressType"><select style="width:80%;"><option value="注册地址">注册地址</option><option value="办公地址">办公地址</option><option value="仓库地址">仓库地址</option></select></div>\
             <div class="short"><input style="width: 80%;" type="text"></div>\
             <div class="address"><input style="width: 88%;" type="text"></div>\
             <div class="postcode"><input  style="width: 80%;" type="text"></div>\
             <div class="operation"><a class="confirmAdd" href="javascript:void(0);">确定</a> <a class="cancelAdd redColor" href="javascript:void(0);">取消</a></div>\
             </div>');
     });
-    /*点击取消*/
+    /*新增地址-取消*/
     $('.addressList ').on('click','.cancelAdd',function(){
         $('.addingAdd').remove();
     });
-    /*点击确定*/
+    /*新增地址--确定*/
     $('.addressList ').on('click','.confirmAdd',function(){
         var newAddObj = {};
         var addingAdd = $('.addingAdd');
+        var addressTypeVal = addingAdd.find('.addressType select').val();
+        var addressShortName = addingAdd.find('.short input').val();
+        if(addressShortName.length <=0){
+            $('.short input').focus();
+            return false;
+        }
         newAddObj.id = addingAdd.find('.no').find('span').text();
-        newAddObj.addressType = addingAdd.find('.addressType input').val();
+        newAddObj.addressType = addressTypeVal;
         newAddObj.abbreviation = addingAdd.find('.short input').val();
         newAddObj.address = addingAdd.find('.address input').val();
         newAddObj.zipCode = addingAdd.find('.postcode input').val();
@@ -350,26 +375,38 @@ $(function(){
         thisList.after('' +
             '<div data-ListId="'+editId+'" class="editingAdd clearfix">\
             <div class="no"><span>'+ editIndex +'</span></div>\
-            <div class="addressType"><input  style="width: 80%;" type="text" value="'+editAddressType+'"></div>\
+            <div class="addressType"><select id="addTypeSelect" style="width:80%;"><option value="注册地址">注册地址</option><option value="办公地址">办公地址</option><option value="仓库地址">仓库地址</option></select></div>\
             <div class="short"><input style="width: 80%;" type="text" value="'+editAbbreviation+'"></div>\
             <div class="address"><input style="width: 88%;" type="text" value="'+editAddress+'"></div>\
             <div class="postcode"><input  style="width: 80%;" type="text" value="'+editZipCode+'"></div>\
             <div class="operation"><a class="confirmEdit" href="javascript:void(0);">确定</a> <a class="cancelEdit redColor" href="javascript:void(0);">取消</a></div>\
             </div>');
+        $('.addressType select').val(editAddressType);
         thisList.remove();
     });
-    /*修改的时候取消*/
+    /*修改地址-取消*/
     $('.addressList ').on('click','.cancelEdit',function(){
         addressObj.getAddressList();
     });
-    /*修改的时候确定*/
+    /*修改地址-确定*/
     $('.addressList ').on('click','.confirmEdit',function(){
         var EditObj = {};
         var Editing = $(this).parents('.editingAdd');
+        var typeVal = Editing.find('.addressType select').val();
+        var shortName = Editing.find('.short input').val();
+        var addressVal = Editing.find('.address input').val();
+        if(shortName.length <=0){
+            $('.short input').focus();
+            return false;
+        }
+        if(addressVal.length <=0){
+            $('.address input').focus();
+            return false;
+        }
         EditObj.id = Editing.attr('data-ListId');
-        EditObj.addressType = Editing.find('.addressType input').val();
-        EditObj.abbreviation = Editing.find('.short input').val();
-        EditObj.address = Editing.find('.address input').val();
+        EditObj.addressType = typeVal;
+        EditObj.abbreviation = shortName;
+        EditObj.address = addressVal;
         EditObj.zipCode = Editing.find('.postcode input').val();
         mm.removeObjWithArr(addressList,EditObj.id);
         addressList.push(EditObj);
@@ -505,7 +542,7 @@ $(function(){
             return false;
         }
         if(contactsList.length <=0){
-            alert('必须维护一个联系地址！');
+            alert('必须维护一个联系人！');
             return false;
         }
         //业务范畴循环
@@ -557,22 +594,7 @@ $(function(){
         return false;//阻止表单提交
     })
 });
-var addressList = [
-    {
-        id:1,
-        addressType:'注册地址',
-        abbreviation:'来广营',
-        address:'北京市朝阳区来广营地铁站望京城诚盈中心A座',
-        zipCode:'10000'
-    },
-    {
-        id:2,
-        addressType:'登录地址',
-        abbreviation:'三里屯',
-        address:'北京市朝阳区来广营地铁站望京城诚盈中心A座',
-        zipCode:'222222'
-    }
-];
+var addressList = [];
 var addressObj = {
     getAddressList:function(){
         $('.addressList').empty();
@@ -591,19 +613,7 @@ var addressObj = {
 };
 
 /*联系人*/
-var contactsList = [
-    {
-        id:1,
-        name:'张三',
-        obligation:'市场推广',
-        demp:'研发中心前端开发',
-        duty:'负责前端项目的研发',
-        fixPhone:'0527-8888888888',
-        phone:'18810513105',
-        email:'zhangshasmo@pj0l.com',
-        address:'北京市朝阳区来广营西路望京诚盈中心A座9层'
-    }
-];
+var contactsList = [];
 var contactsObj = {
     getContactsList:function(){
         $('.contactList').empty();
