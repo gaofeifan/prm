@@ -41,16 +41,6 @@
     <div id="main">
         <div id="left">
             <ul>
-                <li><a class="business" href="#business"><p>业务范畴查询</p></a></li>
-                <li><a class="serve" href="#serve"><p>服务类别查询</p></a></li>
-                <li><a class="credit" href="#credit"><p>信用等级管理</p></a></li>
-                <li><a class="hierarchy" href="#hierarchy"><p>层级位数管理</p></a></li>
-                <li><a class="partnerClassify" href="#partnerClassify"><p>合作伙伴分类</p></a></li>
-                <li><a class="partnerManage" href="#partnerManage"><p>合作伙伴管理</p></a></li>
-                <li><a class="partnerManage" href="#partnerManage2"><p>合作伙伴管理2</p></a></li>
-                <li><a class="partnerNew" href="#partnerNew"><p>合作伙伴新增</p></a></li>
-                <li><a class="partnerEdit" href="#partnerEdit"><p>合作伙伴修改</p></a></li>
-                <li><a class="partnerCheck" href="#partnerCheck"><p>合作伙伴查看</p></a></li>
             </ul>
         </div>
         <div class="right" id="ui-view">
@@ -63,33 +53,28 @@
 <script>
     var loginUsername = $.cookie('front_username');
     var userEmail = $.cookie('front_useremail');
-    var userCookie =  $.cookie('front_cookie');
     $(function(){
         if(!loginUsername){
             $('.user_name').text(loginUsername);
         }
-        /*$.ajax({
+        $.ajax({
             url: 'http://'+gPathUrl+'/auth/menu/findMenuOrButtonByPostId',
             type: 'get',
-          /!*  dataType:'json',*!/
-            crossDomain: true,
-            xhrFields: {
-                withCredentials: true
-            },
-//            headers: {'Set-Cookie':{'JSESSIONID':{'value':userCookie ,'path':'/','httpOnly':true}} },
+            async:false,
             data:{
-                isMenu:true
+                isMenu:true,
+                email:userEmail
             },
             success: function (data) {
-                console.log(22222222222)
-                console.log(data+"111111111");
+                $.each(data.data,function(i,val){
+                    var strMenuLi ='<li><a class="'+val.href+'" href="#'+val.href+'"><p>'+val.name+'</p></a></li>';
+                    $('#left ul').append(strMenuLi);
+                });
             },
             error: function (msg) {
-                console.log(33333333333)
+
             }
         });
-*/
-
     });
 
     function isActive(hash){

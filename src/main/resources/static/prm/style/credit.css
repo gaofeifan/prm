@@ -51,3 +51,6 @@
 #credit .content .body-box .bodyList .valid {
   width: 10%;
 }
+#credit .content #editBtn {
+  display: none;
+}

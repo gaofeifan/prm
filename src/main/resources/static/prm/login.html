@@ -112,18 +112,27 @@
                                     email:data.email
                                 },
                                 success: function (resp) {
-                                    console.log(resp.data);
-                                    $.cookie('front_cookie',resp.data);
-                                    //根据登录权限 加载全台链接和左侧菜单
                                 },
                                 complete: function (resp) {
 
                                 }
                             });
+                            $.ajax({
+                                url: 'http://'+gPathUrl+'/auth/menu/findMenuOrButtonByPostId',
+                                type: 'get',
+                                async:false,
+                                data:{
+                                    isMenu:true,
+                                    email:data.email
+                                },
+                                success: function (resp) {
+                                   var hash = resp.data[0].href;
+                                    window.location.href="./index.html#"+hash;
+                                }
+                            });
                             $.cookie('front_id',data.id);
                             $.cookie('front_username',data.username);
                             $.cookie('front_useremail',data.email);
-                            window.location.href="./index.html";
                         }
                     }else if(parseInt(data.status) == 404){
                         alert(data.error);

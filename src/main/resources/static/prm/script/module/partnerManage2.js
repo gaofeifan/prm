@@ -2,7 +2,103 @@
  * Created by Administrator on 2017/9/12.
  */
 /*frontcookie();*/
+var addressList = [
+    {
+        id:1,
+        addressType:'注册地址',
+        abbreviation:'来广营',
+        address:'北京市朝阳区来广营地铁站望京城诚盈中心A座',
+        zipCode:'10000'
+    },
+    {
+        id:2,
+        addressType:'登录地址',
+        abbreviation:'三里屯',
+        address:'北京市朝阳区来广营地铁站望京城诚盈中心A座',
+        zipCode:'222222'
+    }
+];
+var addressObj = {
+    getAddressList:function(){
+        $('.addressList').empty();
+        $.each(addressList,function(index,value){
+            var str= '<div data-listId="'+value.id+'" class="list clearfix">\
+                <div class="no"><span>'+(index+1)+'</span></div>\
+                <div class="addressType"><span>'+value.addressType+'</span></div>\
+                <div class="short"><span>'+value.abbreviation+'</span></div>\
+                <div class="address"><span>'+value.address+'</span></div>\
+                <div class="postcode"><span>'+value.zipCode+'</span></div>\
+                <div class="operation"></div>\
+                </div>';
+            $('.addressList').append(str);
+        });
+    }
+};
+
+/*联系人*/
+var contactsList = [
+    {
+        id:1,
+        name:'张三',
+        obligation:'市场推广',
+        demp:'研发中心前端开发',
+        duty:'负责前端项目的研发',
+        fixPhone:'0527-8888888888',
+        phone:'18810513105',
+        email:'zhangshasmo@pj0l.com',
+        address:'北京市朝阳区来广营西路望京诚盈中心A座9层'
+    }
+];
+var contactsObj = {
+    getContactsList:function(){
+        $('.contactList').empty();
+        $.each(contactsList,function(index,value){
+            var str= '<div data-listId="'+value.id+'" class="list clearfix">\
+                <div class="no"><span>'+(index+1)+'</span></div>\
+                <div class="name"><span>'+value.name+'</span></div>\
+                <div class="obligation"><span>'+value.obligation+'</span></div>\
+                <div class="demp"><span>'+value.demp+'</span></div>\
+                <div class="duty"><span>'+value.duty+'</span></div>\
+                <div class="tel"><span>'+value.fixPhone+'</span></div>\
+                <div class="phone"><span>'+value.phone+'</span></div>\
+                <div class="email"><span>'+value.email+'</span></div>\
+                <div class="address2"><span>'+value.address+'</span></div>\
+                <div class="operation"></div>\
+                </div>';
+            $('.contactList').append(str);
+        });
+    }
+};
 $(function(){
+    menuActive('partnerManage');
+    /*控制 新增 编辑 修改 删除 按钮*/
+    $.ajax({
+        url: 'http://'+gPathUrl+'/auth/menu/findMenuOrButtonByPostId',
+        type: 'get',
+        async:false,
+        data:{
+            isMenu:false,
+            menuId:6,
+            email:$.cookie('front_useremail')
+        },
+        success: function (resp) {
+            console.log(resp.data);
+            $.each(resp.data,function(index,value){
+                if(value.name == "合作伙伴管理 - 新增"){
+                    $('.new').show();
+                }else if(value.name == "合作伙伴管理 - 修改"){
+                    $('.alter').show();
+                }else if(value.name == "合作伙伴管理 - 转移"){
+                    $('#transferBtn').show();
+                }else if(value.name == "合作伙伴管理 - 删除"){
+                    $('#delete').show();
+                }else if(value.name == "合作伙伴管理 - 查询"){
+                    $('#query').show();
+                }
+            });
+        }
+    });
+
     var setting = {
         check: {
             enable: true,
@@ -59,67 +155,53 @@ $(function(){
         });
     }
     getDocList();
-    //关键字查询
-    var selected = [];
-    $('#query').click(function(){
-        var checkedOrderNoList = [];
-        $('.sortBox').find("input:checkbox").each(function(i,n) {
-            if ($(n).prop('checked') === true) {
-                if (typeof $(n).attr("data-orderNo") != "undefined") {
-                    checkedOrderNoList.push($(n).attr('data-orderNo'));
-                }
-            }
-        });
-        $.ajax({
-            url: 'http://'+gPathUrl+'/partner/details/selectListByQuery',
-            type: 'get',
-            dataType:'json',
-            data:{
-                name:$('#mainPoint').val(),
-                offPartner:'',
-                partnerCategory:checkedOrderNoList.join(','),
-                blacklistPartner:''
-            },
-            success: function (data) {
-                $('#screen').show();
-                if(data.code == '200'){
-                    if(data.data.length >0){
-                        var arrText = doT.template($("#selectTemplate").text());
-                        $('#selected').html(arrText(data));
+
+    var partnerObj = {
+        query:function(isStop,isBlack){
+            var checkedOrderNoList = [];
+            $('.sortBox').find("input:checkbox").each(function(i,n) {
+                if ($(n).prop('checked') === true) {
+                    if (typeof $(n).attr("data-orderNo") != "undefined") {
+                        checkedOrderNoList.push($(n).attr('data-orderNo'));
                     }
                 }
-            },
-            error: function (msg) {
+            });
+            $.ajax({
+                url: 'http://'+gPathUrl+'/partner/details/selectListByQuery',
+                type: 'get',
+                dataType:'json',
+                data:{
+                    name:$('#mainPoint').val(),
+                    offPartner:isStop,
+                    partnerCategory:checkedOrderNoList.join(','),
+                    blacklistPartner:isBlack
+                },
+                success: function (data) {
+                    $('#screen').show();
+                    if(data.code == '200'){
+                        if(data.data.length >0){
+                            var arrText = doT.template($("#selectTemplate").text());
+                            $('#selected').html(arrText(data));
+                        }
+                    }
+                },
+                error: function (msg) {
 
-            }
-        });
+                }
+            });
+        }
+    };
+    //关键字和分类查询
+    $('#query').click(function(){
+        partnerObj.query();
     });
-    //失效文件查询
-    $('#lose').click(function(){
-        $('#screen').show();
-        $.ajax({
-            url: 'http://'+gPathUrl+'/content/slelectListFileByQuery.do',
-            type: 'get',
-            xhrFields:{
-                withCredentials: true
-            },
-            crossDomain: true,//支持跨域发送cookie
-            jsonp: 'callback',
-            dataType:'jsonp',
-            data:{
-                email:$.cookie('front_useremail'),
-                keyword:$('#keyword').val(),
-                expiry:'1',
-                isAdmin:''
-            },
-            success: function (data) {
-                var arrText = doT.template($("#selectTemplate").text());
-                $('#selected').html(arrText(data));
-            },
-            error: function (msg) {
-
-            }
-        });
+    //查询停用
+    $('#queryStop').click(function(){
+        partnerObj.query(1,0);
+    });
+    //黑名单
+    $('#queryBlack').click(function(){
+        partnerObj.query(0,1);
     });
     //显示隐藏
     $('#toggle').click(function(){
@@ -343,7 +425,138 @@ function clickTree (){
  * @param treeNode
  */
 function zTreeOnClick(event, treeId, treeNode) {
-    location.hash = vipspa.stringify('partnerNew',{id:treeNode.id});
+    $('#infoWall').show().scrollTop(0);
+    /*回显各个字段的值*/
+    $.ajax({
+        url: 'http://'+gPathUrl+'/partner/details/selectPartnerDetailsById',
+        type: 'get',
+        async:false,
+        data:{
+            id:treeNode.id
+        },
+        success: function (data) {
+            $('input[name="code"]').val(data.data.code);
+            $('#mnemonicCode').val(data.data.mnemonicCode);//助记码
+            $('#chineseName').val(data.data.chineseName);//中文全称
+            $('#chineseAbbreviation').val(data.data.chineseAbbreviation);//中文简称
+            $('#englishName').val(data.data.englishName);//英文全称
+            $('#englishAbbreviation').val(data.data.englishAbbreviation);//英文简称
+            $('#financingCode').val(data.data.financingCode);//财务代码
+            $('#dutyInput').val(data.data.receiverName);//提醒接受者
+            $('#receiverId').val(data.data.receiverId);//提醒接受者ID
+            $('#receiverName').val(data.data.receiverName);//提醒接受者
+            //黑名单
+            $('#blackList').val(data.data.isBlacklist);
+            if(data.data.isBlacklist == 1){
+                $('#isBlacklist').attr('checked',true);
+            }else{
+                $('#isBlacklist').attr('checked',false)
+            }
+            //停用
+            $('#disable').val(data.data.isBlacklist);
+            if(data.data.isDisable == 1){
+                $('#isDisable').attr('checked',true);
+            }else{
+                $('#isDisable').attr('checked',false)
+            }
+            $('#disableRemark').val(data.data.disableRemark);//停用备注
+            addressList = data.data.addressList;//联系地址
+            contactsList = data.data.linkmansList;//联系人
+            $('#scopeBusiness').val(data.data.scopeBusiness);//业务范畴
+            $.each(data.data.scopeBusinesss,function(index,value){
+                $('.businessCheckbox').find("input:checkbox").each(function(i,n) {
+                    if(value == $(n).val()){
+                        $(n).attr('checked',true);
+                    }
+                });
+            });
+            $('#partnerCategory').val(data.data.partnerCategory);//合作伙伴分类
+            $.each(data.data.partnerCategorys,function(index,value){
+                $('.partnersCheckbox').find("input:checkbox").each(function(i,n) {
+                    if(value == $(n).val()){
+                        $(n).attr('checked',true);
+                    }
+                });
+            });
+            $('#wbkhCustomerClass').val(data.data.wbkhCustomerClass);//客户分类
+            $.each(data.data.wbkhCustomerClasss,function(index,value){
+                $('#customerClass').find("input:checkbox").each(function(i,n) {
+                    if(value == $(n).val()){
+                        $(n).attr('checked',true);
+                    }
+                });
+            });
+            //代垫
+            $('#wbkhIsPayForAnother').val(data.data.wbkhIsPayForAnother);
+            if(data.data.wbkhIsPayForAnother == 1){
+                $('.wbkhIsPayForAnother').attr('checked',true);
+                $('.daiDian').attr('disabled',false);
+            }else{
+                $('.wbkhIsPayForAnother').attr('checked',false);
+            }
+            $('.wbkhPaymentTerm').val(data.data.wbkhPaymentTerm);//代垫期限（天）
+            $('.wbkhPaidAmount').val(data.data.wbkhPaidAmount);//代垫额度（万元）
+            $('.wbkhCreditRating').val(data.data.wbkhCreditRating);//信用等级
+            $('.wbkhTypeCreditPeriod').val(data.data.wbkhTypeCreditPeriod);//信用期限类型
+            $('.wbkhCreditPeriod').val(data.data.wbkhCreditPeriod);//信用期限（天）
+            $('.wbkhLineCredit').val(data.data.wbkhLineCredit);//信用额度(万元)
+            $('.wbkhInvoiceType').val(data.data.wbkhInvoiceType);//开票类型
+            $('.invoiceTypeTitle').text(data.data.wbkhInvoiceType);//开票类型Title
+            $('.wbkhDepositBank ').val(data.data.wbkhDepositBank);//开户银行
+            $('.headingCode ').val(data.data.headingCode);//纳税人识别码
+            $('.wbkhBankAccount ').val(data.data.wbkhBankAccount);//银行账号
+            $('.wbkhCompanyTel ').val(data.data.wbkhCompanyTel);//公司电话
+            $('.wbkhCompanyAddress ').val(data.data.wbkhCompanyAddress);//公司地址
+            $('.hwdlTaxReceipt ').val(data.data.hwdlTaxReceipt);//进项税票
+            $('.hwdlTaxRate ').val(data.data.hwdlTaxRate);//进项税率%
+            $('#gxcyrClassOfService').val(data.data.gxcyrClassOfService);//服务类别
+            $.each(data.data.gxcyrClassOfServices,function(index,value){
+                $('.gxcyrClassOfServiceBox').find("input:checkbox").each(function(i,n) {
+                    if(value == $(n).val()){
+                        $(n).attr('checked',true);
+                    }
+                });
+            });
+            //收货人
+            $('input[name="sfhrIsConsignee"]').val(data.data.sfhrIsConsignee);
+            if(data.data.sfhrIsConsignee == 1){
+                $('#sfhrIsConsignee').attr('checked',true);
+                $('.consigneeInput').find('input').attr('disabled',false);
+            }else{
+                $('#sfhrIsConsignee').attr('checked',false);
+            }
+            $('#sfhrConsigneeNation').val(data.data.sfhrConsigneeNation)//收货人国家
+            $('input[name="sfhrConsigneeContinent"]').val(data.data.sfhrConsigneeContinent)//收货人州
+            $('input[name="sfhrConsigneeCity"]').val(data.data.sfhrConsigneeCity)//收货人城市
+            $('input[name="sfhrConsigneeZipCode"]').val(data.data.sfhrConsigneeZipCode)//收货人邮编
+            $('input[name="sfhrConsigneePhone"]').val(data.data.sfhrConsigneePhone)//收货人电话
+            $('input[name="sfhrConsigneeAddress"]').val(data.data.sfhrConsigneeAddress)//收货人地址
+
+            //与收货人地址相同
+            $('input[name="sfhrIsConsigneesAddress"]').val(data.data.sfhrIsConsigneesAddress);
+            if(data.data.sfhrIsConsignee == 1){
+                $('#sfhrIsConsigneesAddress').attr('checked',true);
+            }else{
+                $('#sfhrIsConsigneesAddress').attr('checked',false);
+            }
+            //发货人
+            $('input[name="sfhrIsShipper"]').val(data.data.sfhrIsConsignee);
+            if(data.data.sfhrIsShipper == 1){
+                $('#sfhrIsShipper').attr('checked',true);
+                $('.shipperInput').find('input').attr('disabled',false);
+            }else{
+                $('#sfhrIsShipper').attr('checked',false);
+            }
+            $('input[name="sfhrShipperNation"]').val(data.data.sfhrShipperNation)//发货人国家
+            $('input[name="sfhrShipperContinent"]').val(data.data.sfhrShipperContinent)//发货人州
+            $('input[name="sfhrShipperCity"]').val(data.data.sfhrShipperCity)//发货人城市
+            $('input[name="sfhrShipperZipCode"]').val(data.data.sfhrShipperZipCode)//发货人邮编
+            $('input[name="sfhrShipperPhone"]').val(data.data.sfhrShipperPhone)//发货人电话
+            $('input[name="sfhrShipperAddress"]').val(data.data.sfhrShipperAddress)//发货人地址
+            addressObj.getAddressList();
+            contactsObj.getContactsList();
+        }
+    });
 }
 /*
  转移选中的文件是都可以删除
