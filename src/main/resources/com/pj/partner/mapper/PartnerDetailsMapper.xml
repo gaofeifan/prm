@@ -28,12 +28,14 @@
             AND is_blacklist = #{isBlacklist}
           </if>
           <if test="isDisable != null">
-            AND is_disable = #{isDisable}
+            OR is_disable = #{isDisable}
           </if>
-                AND
-                <foreach  collection="partnerCategorys" item="partnerCategory" open="(" close=")" separator="OR">
-                    partner_category LIKE CONCAT('%',#{partnerCategory},'%')
-                </foreach>
+          <if test="partnerCategorys">
+            AND
+            <foreach  collection="partnerCategorys" item="partnerCategory" open="(" close=")" separator="OR">
+                partner_category LIKE CONCAT('%',#{partnerCategory},'%')
+            </foreach>
+          </if>
 
           <if test="dirName != null">
               and( heading_code LIKE  CONCAT('%',#{dirName},'%')
