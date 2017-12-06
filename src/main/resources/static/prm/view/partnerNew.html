@@ -191,8 +191,8 @@
                         <input class="wbkhIsPayForAnother" type="checkbox"><h6>代垫</h6>
                         <input class="hiddenInput" name="wbkhIsPayForAnother"  type="text" value="0">
                         <div>
-                            <div><span class="mark">*</span><label style="margin-bottom: 5px;" for="">代垫期限（天）</label><input class="daiDian wbkhPaymentTerm" type="text" disabled></div>
-                            <div><span class="mark">*</span><label for="">代垫额度（万元）</label><input class="daiDian wbkhPaidAmount" type="text" disabled></div>
+                            <div><span class="mark">*</span><label style="margin-bottom: 5px;" for="">代垫期限（天）</label><input class="daiDian wbkhPaymentTerm" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
+                            <div><span class="mark">*</span><label for="">代垫额度（万元）</label><input class="daiDian wbkhPaidAmount" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                         </div>
                     </div>
                 </div>
@@ -210,10 +210,10 @@
                         </select>
                     </div>
                     <div><span class="mark">*</span><label for="">信用期限（天）</label>
-                        <input name="wbkhCreditPeriod" class="wbkhCreditPeriod" type="text">
+                        <input name="wbkhCreditPeriod" class="wbkhCreditPeriod" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
                     </div>
                     <div><span class="mark">*</span><label for="">信用额度(万元)</label>
-                        <input name="wbkhLineCredit" class="wbkhLineCredit" type="text">
+                        <input name="wbkhLineCredit" class="wbkhLineCredit" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
                     </div>
                 </div>
                 <div class="fl fl3">
@@ -258,14 +258,14 @@
                         </div>
                         <div style="margin-top: 10px">
                             <span class="mark">*</span><label class="income"  for="">进项税率%：</label>
-                            <input class="hwdlTaxRate" name="hwdlTaxRate" style="width: 40%;" type="text">
+                            <input class="hwdlTaxRate" name="hwdlTaxRate" style="width: 40%;" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')">
                         </div>
                     </div>
                     <div class="bottomLayer">
                         <input class="wbkhIsPayForAnother" type="checkbox"><h6>代垫</h6>
                         <div>
-                            <div><span class="mark">*</span><label style="margin-bottom: 5px;" for="">代垫期限（天）</label><input class="daiDian wbkhPaymentTerm" type="text" disabled></div>
-                            <div><span class="mark">*</span><label for="">代垫额度（万元）</label><input class="daiDian wbkhPaidAmount" type="text" disabled></div>
+                            <div><span class="mark">*</span><label style="margin-bottom: 5px;" for="">代垫期限（天）</label><input class="daiDian wbkhPaymentTerm" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
+                            <div><span class="mark">*</span><label for="">代垫额度（万元）</label><input class="daiDian wbkhPaidAmount" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                         </div>
                     </div>
                 </div>
@@ -283,10 +283,10 @@
                         </select>
                     </div>
                     <div><span class="mark">*</span><label for="">信用期限（天）</label>
-                        <input class="wbkhCreditPeriod" type="text">
+                        <input class="wbkhCreditPeriod" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
                     </div>
                     <div><span class="mark">*</span><label for="">信用额度(万元)</label>
-                        <input class="wbkhLineCredit" type="text">
+                        <input class="wbkhLineCredit" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled>
                     </div>
                 </div>
                 <div class="fl fl3">
@@ -320,8 +320,8 @@
                     <div class="bottomLayer">
                         <input class="wbkhIsPayForAnother"  type="checkbox"><h6>代垫</h6>
                         <div>
-                            <div><span class="mark">*</span><label style="margin-bottom: 5px;" for="">代垫期限（天）</label><input class="daiDian wbkhPaymentTerm" type="text" disabled></div>
-                            <div><span class="mark">*</span><label for="">代垫额度（万元）</label><input class="daiDian wbkhPaidAmount" type="text" disabled></div>
+                            <div><span class="mark">*</span><label style="margin-bottom: 5px;" for="">代垫期限（天）</label><input class="daiDian wbkhPaymentTerm" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
+                            <div><span class="mark">*</span><label for="">代垫额度（万元）</label><input class="daiDian wbkhPaidAmount" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled></div>
                         </div>
                     </div>
                 </div>
@@ -339,10 +339,10 @@
                         </select>
                     </div>
                     <div><span class="mark">*</span><label for="">信用期限（天）</label>
-                        <input class="wbkhCreditPeriod" type="text">
+                        <input class="wbkhCreditPeriod" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled>
                     </div>
                     <div><span class="mark">*</span><label for="">信用额度(万元)</label>
-                        <input class="wbkhLineCredit" type="text" >
+                        <input class="wbkhLineCredit" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled>
                     </div>
                 </div>
             </div>
@@ -372,7 +372,7 @@
                         </div>
                         <div style="margin-top: 5px">
                             <span class="mark">*</span><label class="income"  for="">进项税率%：</label>
-                            <input class="hwdlTaxRate" style="width: 188px;" type="text">
+                            <input class="hwdlTaxRate" style="width: 188px;" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')">
                         </div>
                     </div>
                 </div>
@@ -403,7 +403,7 @@
                         </div>
                         <div style="margin-top: 5px">
                             <span class="mark">*</span><label class="income"  for="">进项税率%：</label>
-                            <input class="hwdlTaxRate" style="width: 188px;" type="text">
+                            <input class="hwdlTaxRate" style="width: 188px;" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')">
                         </div>
                     </div>
                 </div>
@@ -434,7 +434,7 @@
                         </div>
                         <div style="margin-top: 5px">
                             <span class="mark">*</span><label class="income"  for="">进项税率%：</label>
-                            <input class="hwdlTaxRate" style="width: 188px;" type="text">
+                            <input class="hwdlTaxRate" style="width: 188px;" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')">
                         </div>
                     </div>
                 </div>

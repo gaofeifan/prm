@@ -25,6 +25,7 @@ import java.util.List;
 @RequestMapping(value = "/auth/menu")
 public class AuthPostMenuController extends BaseController{
 
+
     public static final String TAG = "user";
     @Autowired
     private AuthPostMenuService authPostMenuService;
@@ -84,5 +85,5 @@ public class AuthPostMenuController extends BaseController{
 }
 //3FA618F018CA6F61C23D96E995456640
 //4E7CEC5C457C19C881C298C49C7239BF
-//  923CFB6C4006DAC01CBBD2D38A7504C6
+//923CFB6C4006DAC01CBBD2D38A7504C6
 //269C9A4921C8FB86003A750BA876B3FF

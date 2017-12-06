@@ -45,9 +45,13 @@ $(function(){
         success: function (data) {
             var optionStr = '';
             $.each(data.data,function(index,value){
-                optionStr = optionStr + '<option value="'+value.level+'">'+value.level+'-'+value.protocolType+'</option>';
+                optionStr = optionStr + '<option value="'+value.level+'-'+value.protocolType+'">'+value.level+'-'+value.protocolType+'</option>';
             });
             $('.wbkhCreditRating').append(optionStr);
+            if(data.data[0].protocolType =='协议/保函'){
+                $('.wbkhCreditPeriod').attr('disabled',false);
+                $('.wbkhLineCredit').attr('disabled',false);
+            }
         }
     });
 
@@ -165,12 +169,13 @@ $(function(){
     /*信用等级同时改变*/
     $('.wbkhCreditRating').change(function(){
         $('.wbkhCreditRating').val($(this).val());
-        if($(this).val()=='A-协议保函'){
+        var selectVal = $(this).val().slice(2,7);
+        if(selectVal=='协议/保函'){
             $('.wbkhCreditPeriod').attr('disabled',false);
             $('.wbkhLineCredit').attr('disabled',false);
         }else{
-            $('.wbkhCreditPeriod').attr('disabled',true);
-            $('.wbkhLineCredit').attr('disabled',true);
+            $('.wbkhCreditPeriod').val('').attr('disabled',true);
+            $('.wbkhLineCredit').val('').attr('disabled',true);
         }
     });
     /*信用期限类型*/
@@ -345,14 +350,19 @@ $(function(){
         var addingAdd = $('.addingAdd');
         var addressTypeVal = addingAdd.find('.addressType select').val();
         var addressShortName = addingAdd.find('.short input').val();
+        var addressAddVal = addingAdd.find('.address input').val();
         if(addressShortName.length <=0){
             $('.short input').focus();
+            return false;
+        }
+        if(addressAddVal.length <=0){
+            $('.address input').focus();
             return false;
         }
         newAddObj.id = addingAdd.find('.no').find('span').text();
         newAddObj.addressType = addressTypeVal;
         newAddObj.abbreviation = addingAdd.find('.short input').val();
-        newAddObj.address = addingAdd.find('.address input').val();
+        newAddObj.address = addressAddVal;
         newAddObj.zipCode = addingAdd.find('.postcode input').val();
         addressList.push(newAddObj);
         addressObj.getAddressList();
@@ -445,13 +455,28 @@ $(function(){
     $('.contactList').on('click','.confirmAdd',function(){
         var newConObj = {};
         var addingCon = $('.addingCon');
+        var addLinkmanName = addingCon.find('.name input').val();
+        var addLinkmanObl= addingCon.find('.obligation input').val();
+        var addLinkmanPhone = addingCon.find('.phone input').val();
+        if(addLinkmanName.length <=0){
+            $('.name input').focus();
+            return false;
+        }
+        if(addLinkmanObl.length <=0){
+            $('.obligation input').focus();
+            return false;
+        }
+        if(addLinkmanPhone.length <=0){
+            $('.phone input').focus();
+            return false;
+        }
         newConObj.id = addingCon.find('.no').find('span').text();
-        newConObj.name = addingCon.find('.name input').val();
-        newConObj.obligation = addingCon.find('.obligation input').val();
+        newConObj.name = addLinkmanName;
+        newConObj.obligation = addLinkmanObl;
         newConObj.demp = addingCon.find('.demp input').val();
         newConObj.duty = addingCon.find('.duty input').val();
         newConObj.fixPhone = addingCon.find('.tel input').val();
-        newConObj.phone = addingCon.find('.phone input').val();
+        newConObj.phone = addLinkmanPhone;
         newConObj.email = addingCon.find('.email input').val();
         newConObj.address = addingCon.find('.address2 input').val();
         contactsList.push(newConObj);
@@ -499,13 +524,28 @@ $(function(){
     $('.contactList ').on('click','.confirmEdit',function(){
         var EditConObj = {};
         var EditingCon = $(this).parents('.editingCon');
+        var editLinkmanName = EditingCon.find('.name input').val();
+        var editLinkmanObl= EditingCon.find('.obligation input').val();
+        var editLinkmanPhone = EditingCon.find('.phone input').val();
+        if(editLinkmanName.length <=0){
+            $('.name input').focus();
+            return false;
+        }
+        if(editLinkmanObl.length <=0){
+            $('.obligation input').focus();
+            return false;
+        }
+        if(editLinkmanPhone.length <=0){
+            $('.phone input').focus();
+            return false;
+        }
         EditConObj.id = EditingCon.attr('data-listId');
-        EditConObj.name = EditingCon.find('.name input').val();
-        EditConObj.obligation = EditingCon.find('.obligation input').val();
+        EditConObj.name = editLinkmanName;
+        EditConObj.obligation = editLinkmanObl;
         EditConObj.demp = EditingCon.find('.demp input').val();
         EditConObj.duty = EditingCon.find('.duty input').val();
         EditConObj.fixPhone = EditingCon.find('.tel input').val();
-        EditConObj.phone = EditingCon.find('.phone input').val();
+        EditConObj.phone = editLinkmanPhone;
         EditConObj.email = EditingCon.find('.email input').val();
         EditConObj.address = EditingCon.find('.address2 input').val();
         mm.removeObjWithArr(contactsList,EditConObj.id);
@@ -540,6 +580,17 @@ $(function(){
         if(addressList.length <=0){
             alert('必须维护一个联系地址！');
             return false;
+        }else{
+            var hasFlag = false;
+            $.each(addressList,function(i,n) {
+                if(n.addressType == "注册地址"){
+                    hasFlag = true;
+                }
+            });
+            if(!hasFlag){
+                alert('必须维护一个注册地址');
+                return false;
+            }
         }
         if(contactsList.length <=0){
             alert('必须维护一个联系人！');
@@ -604,7 +655,7 @@ var addressObj = {
                 <div class="addressType"><span>'+value.addressType+'</span></div>\
                 <div class="short"><span>'+value.abbreviation+'</span></div>\
                 <div class="address"><span>'+value.address+'</span></div>\
-                <div class="postcode"><span>'+value.zipCode+'</span></div>\
+                <div style="height:20px;"  class="postcode"><span>'+value.zipCode+'</span></div>\
                 <div class="operation"><a class="editAdd" href="javascript:void(0);">修改</a> <a class="delAdd redColor" href="javascript:void(0);">删除</a></div>\
                 </div>';
             $('.addressList').append(str);
@@ -619,16 +670,16 @@ var contactsObj = {
         $('.contactList').empty();
         $.each(contactsList,function(index,value){
             var str= '<div data-listId="'+value.id+'" class="list clearfix">\
-                <div class="no"><span>'+(index+1)+'</span></div>\
-                <div class="name"><span>'+value.name+'</span></div>\
-                <div class="obligation"><span>'+value.obligation+'</span></div>\
-                <div class="demp"><span>'+value.demp+'</span></div>\
-                <div class="duty"><span>'+value.duty+'</span></div>\
-                <div class="tel"><span>'+value.fixPhone+'</span></div>\
-                <div class="phone"><span>'+value.phone+'</span></div>\
-                <div class="email"><span>'+value.email+'</span></div>\
-                <div class="address2"><span>'+value.address+'</span></div>\
-                <div class="operation"><a class="editAdd" href="javascript:void(0);">修改</a> <a class="delAdd redColor" href="javascript:void(0);">删除</a></div>\
+                <div style="height:20px;" class="no"><span>'+(index+1)+'</span></div>\
+                <div style="height:20px;" class="name"><span>'+value.name+'</span></div>\
+                <div style="height:20px;" class="obligation"><span>'+value.obligation+'</span></div>\
+                <div style="height:20px;" class="demp"><span>'+value.demp+'</span></div>\
+                <div style="height:20px;" class="duty"><span>'+value.duty+'</span></div>\
+                <div style="height:20px;" class="tel"><span>'+value.fixPhone+'</span></div>\
+                <div style="height:20px;" class="phone"><span>'+value.phone+'</span></div>\
+                <div style="height:20px;" class="email"><span>'+value.email+'</span></div>\
+                <div style="height:20px;" class="address2"><span>'+value.address+'</span></div>\
+                <div style="height:20px;" class="operation"><a class="editAdd" href="javascript:void(0);">修改</a> <a class="delAdd redColor" href="javascript:void(0);">删除</a></div>\
                 </div>';
             $('.contactList').append(str);
         });

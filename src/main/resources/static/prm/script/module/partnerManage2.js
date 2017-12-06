@@ -352,7 +352,6 @@ var addressObj = {
                 <div class="short"><span>'+value.abbreviation+'</span></div>\
                 <div class="address"><span>'+value.address+'</span></div>\
                 <div class="postcode"><span>'+value.zipCode+'</span></div>\
-                <div class="operation"></div>\
                 </div>';
             $('.addressList').append(str);
         });
@@ -375,7 +374,6 @@ var contactsObj = {
                 <div class="phone"><span>'+value.phone+'</span></div>\
                 <div class="email"><span>'+value.email+'</span></div>\
                 <div class="address2"><span>'+value.address+'</span></div>\
-                <div class="operation"></div>\
                 </div>';
             $('.contactList').append(str);
         });

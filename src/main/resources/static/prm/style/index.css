@@ -997,6 +997,7 @@
 }
 #partnerNew .content .listBoxStyle .list > div {
   float: left;
+  height: 20px;
 }
 #partnerNew .content .listBoxStyle .list .no {
   width: 5%;
@@ -1235,7 +1236,7 @@
   height: 90px;
   border: 1px solid #dddddd;
   margin-bottom: 18px;
-  padding: 8px 15px;
+  padding: 8px 0 8px 15px;
 }
 #partnerNew .content .wbkhStyle .fl1 .topLayer label {
   width: auto;

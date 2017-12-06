@@ -29,7 +29,7 @@ $(function(){
     });
     $('#afterLogout').click(function(){
         allObj.afterLogout()
-    })
+    });
 });
 var allObj = {
     beforeLogout:function(){
