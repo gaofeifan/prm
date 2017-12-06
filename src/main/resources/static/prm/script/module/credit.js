@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2017/11/16.
  */
-/*backCookie();*/
+frontcookie();
 /*用户信用等级页面*/
 menuActive('credit');
 $(function(){

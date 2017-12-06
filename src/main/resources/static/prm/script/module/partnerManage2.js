@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2017/9/12.
  */
-/*frontcookie();*/
+frontcookie();
 $(function(){
     menuActive('partnerManage');
     /*控制 新增 编辑 修改 删除 按钮*/
@@ -403,7 +403,8 @@ function zTreeOnClick(event, treeId, treeNode) {
         .val('')
         .removeAttr('checked')
         .removeAttr('selected');
-    $('#infoWall').show().scrollTop(0);
+    $('#infoWall').show();
+    $('body').scrollTop(0);
     /*回显各个字段的值*/
     seePartner.show(treeNode.id);
 }

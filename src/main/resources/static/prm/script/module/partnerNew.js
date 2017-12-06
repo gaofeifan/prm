@@ -1,6 +1,7 @@
 /**
  * Created by Administrator on 2017/11/22.
  */
+frontcookie();
 $(function(){
     var codes = $('.code');
     var nn = 0;//控制编辑的是哪个code
@@ -568,7 +569,60 @@ $(function(){
     $('.packUpCon').click(function(){
         $('.contactList').slideUp();
     });
-    /*取消*/
+    /*业务范畴 复选框逻辑*/
+    $('.businessCheckbox input').change(function(){
+        businessCheckbox = [];
+        $('#scopeBusiness').val(businessCheckbox.join(','));
+        $('.businessCheckbox').find("input:checkbox").each(function(i,n) {
+            if ($(n).prop('checked') === true) {
+                if (typeof $(n).val() != "undefined") {
+                    businessCheckbox.push($(n).val());
+                }
+            }
+        });
+        $('#scopeBusiness').val(businessCheckbox.join(','));
+    });
+    /*合作伙伴*/
+    $('.partnersCheckbox input').change(function(){
+        var PartnersCheckbox = [];
+        $('#partnerCategory').val(PartnersCheckbox.join(','));
+        $('.partnersCheckbox').find("input:checkbox").each(function(i,n) {
+            if ($(n).prop('checked') === true) {
+                if (typeof $(n).val() != "undefined") {
+                    PartnersCheckbox.push($(n).val());
+                }
+            }
+        });
+        $('#partnerCategory').val(PartnersCheckbox.join(','));
+    });
+    /*客户分类*/
+    $('.customerClassBox input').change(function(){
+        var customerClass = [];
+        $('#wbkhCustomerClass').val(customerClass.join(','));
+        $('.customerClassBox').find("input:checkbox").each(function(i,n) {
+            if ($(n).prop('checked') === true) {
+                if (typeof $(n).val() != "undefined") {
+                    customerClass.push($(n).val());
+                }
+            }
+        });
+        $('#wbkhCustomerClass').val(customerClass.join(','));
+    });
+    //服务类别
+    $('.classOfServiceBox input').change(function(){
+        var gxcyrClassOfServiceArr = [];
+        $('#gxcyrClassOfService').val(gxcyrClassOfServiceArr.join(','));
+        $('.classOfServiceBox').find("input:checkbox").each(function(i,n) {
+            if ($(n).prop('checked') === true) {
+                if (typeof $(n).val() != "undefined") {
+                    gxcyrClassOfServiceArr.push($(n).val());
+                }
+            }
+        });
+        $('#gxcyrClassOfService').val(gxcyrClassOfServiceArr.join(','));
+    });
+
+    /*取消提交*/
     $('#callOff').click(function(){
         location.hash = vipspa.stringify('partnerManage');
     });
@@ -578,7 +632,7 @@ $(function(){
         $('#address').val(JSON.stringify(addressList));
         //判断地址和联系人必须维护一个
         if(addressList.length <=0){
-            alert('必须维护一个联系地址！');
+            alert('必须维护一个注册地址');
             return false;
         }else{
             var hasFlag = false;
@@ -596,51 +650,6 @@ $(function(){
             alert('必须维护一个联系人！');
             return false;
         }
-        //业务范畴循环
-        var businessCheckbox = [];
-        $('.businessCheckbox').find("input:checkbox").each(function(i,n) {
-            if ($(n).prop('checked') === true) {
-                if (typeof $(n).val() != "undefined") {
-                    businessCheckbox.push($(n).val());
-                }
-            }
-        });
-        $('#scopeBusiness').val(businessCheckbox.join(','));
-        //合作伙伴循环
-        var PartnersCheckbox = [];
-        $('.partnersCheckbox').find("input:checkbox").each(function(i,n) {
-            if ($(n).prop('checked') === true) {
-                if (typeof $(n).val() != "undefined") {
-                    PartnersCheckbox.push($(n).val());
-                }
-            }
-        });
-       /* if(PartnersCheckbox.length <=0){
-            $('#partnerCategory').attr('required',true);
-            alert('至少选择一个合作伙伴分类！');
-            return false;
-        }*/
-        $('#partnerCategory').val(PartnersCheckbox.join(','));
-        //客户分类
-        var customerClass = [];
-        $('#customerClass').find("input:checkbox").each(function(i,n) {
-            if ($(n).prop('checked') === true) {
-                if (typeof $(n).val() != "undefined") {
-                    customerClass.push($(n).val());
-                }
-            }
-        });
-        $('#wbkhCustomerClass').val(customerClass.join(','));
-        //服务类别
-        var gxcyrClassOfServiceArr = [];
-        $('.classOfServiceBox').find("input:checkbox").each(function(i,n) {
-            if ($(n).prop('checked') === true) {
-                if (typeof $(n).val() != "undefined") {
-                    gxcyrClassOfServiceArr.push($(n).val());
-                }
-            }
-        });
-        $('#gxcyrClassOfService').val(gxcyrClassOfServiceArr.join(','));
         $(this).ajaxSubmit(options);
         return false;//阻止表单提交
     })

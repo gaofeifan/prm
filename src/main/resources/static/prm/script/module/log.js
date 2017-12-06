@@ -1,13 +1,13 @@
 /**
  * Created by Administrator on 2017/11/16.
  */
-/*backCookie();*/
+backCookie();
 menuActive('log');
 $(function(){
     $('.topBar ol li').click(function(){
         $(this).siblings('li').removeClass('active');
         $(this).addClass('active');
-    })
+    });
     var url = "/log/operation";
     var type = 1;
     /*追加正文title*/

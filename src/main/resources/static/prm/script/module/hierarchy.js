@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2017/11/16.
  */
-/*backCookie();*/
+frontcookie();
 menuActive('hierarchy');
 $(function(){
     /*控制编辑按钮*/
