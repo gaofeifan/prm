@@ -74,13 +74,11 @@ public class AuthPostMenuController extends BaseController{
     @ResponseBody
     public Object getLoginUserDetails( @ApiParam(value = "登录人邮箱") @RequestParam(name="email") String email){
         User user = userService.selectUserByEmail(email);
-        HttpSession session = getRequest().getSession();
-        Object obj = session.getAttribute(TAG);
+        Object obj = getRequest().getAttribute(TAG);
         if(obj == null){
-            session.setAttribute(TAG,user);
-            session.setMaxInactiveInterval(60*60*24);
+            getRequest().setAttribute(TAG,user);
         }
-        return this.success(getRequest().getSession().getId());
+        return this.success("成功");
 
     }
 }

@@ -64,6 +64,7 @@ $(function(){
               $("#base_" + i + "").append('<div class="valid" id="base_mark_' + i + '"></div>');
               if(levels[i].mark.toString() =="null"){
                   levels[i].mark = '';
+
               }
               $("#base_mark_" + i + "").append('<textarea   style="height: 20px;" role="3" cols="50">'+ levels[i].mark +'</textarea>');
 

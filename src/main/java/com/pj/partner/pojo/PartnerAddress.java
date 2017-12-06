@@ -22,7 +22,7 @@ class PartnerAddress implements Serializable {
      */
     @Column
     @ApiModelProperty(value = "联系地址  地址类型" ,required = false)
-    private Integer addressType;
+    private String addressType;
 
     /**
      * 简称

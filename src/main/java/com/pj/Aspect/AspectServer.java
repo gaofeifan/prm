@@ -691,7 +691,7 @@ public class AspectServer {
             User user_object = (User) request.getSession().getAttribute("user");
             Operation operation =  new Operation();
             operation.setAction(actionData);
-             operation.setUserId(user_object.getEmail());
+            operation.setUserId(user_object.getEmail());
             operation.setUserName(user_object.getUsername());
             operation.setDepartment(user_object.getDempname());
             operation.setCompany(user_object.getCompanyname());

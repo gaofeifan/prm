@@ -117,6 +117,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         }
         if(address != null){
             for (PartnerAddress pa: address ) {
+                pa.setId(null);
                 pa.setDetailsId(record.getId());
             }
             this.partnerAddressService.insertList(address);
@@ -141,6 +142,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         }
         if(address != null){
             for (PartnerAddress pa: address ) {
+                pa.setId(null);
                 pa.setDetailsId(partnerDetails.getId());
             }
             this.partnerAddressService.insertList(address);
