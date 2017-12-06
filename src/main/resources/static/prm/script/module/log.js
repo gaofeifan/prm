@@ -66,7 +66,7 @@ function   initData (pageIndex,startdate,enddate,type,url) {  // type 为 1 — 
 
     var  totalPage ;
     $.ajax({
-        url : "http://localhost:8083"+url,
+        url : "http://"+gPathUrl+""+url,
         type : "post",
         async : false ,
         contentType : "application/json; charset=utf-8",
@@ -117,6 +117,7 @@ function   addOption ( melist) {
 
 }
 
+/*正文数据添加  权限日志正文*/
 /*正文数据添加  权限日志正文*/
 function   addPermissionsLog ( melist) {
     /*循环数据添加信息*/
