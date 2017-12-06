@@ -118,6 +118,8 @@
 		</dependency>
 
 		<!-- zookeeper -->
+
+
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
 			<artifactId>zookeeper</artifactId>
@@ -133,6 +135,8 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+
 
 		<!-- 日志 -->
 		<dependency>
@@ -339,7 +343,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<!-- <dependencies> spring热部署 <dependency> <groupId>org.springframework</groupId> 
+				<!-- <dependencies> spring热部署 <dependency> <groupId>org.springframework</groupId>
 					<artifactId>springloaded</artifactId> </dependency> </dependencies> -->
 			</plugin>
 			<plugin>

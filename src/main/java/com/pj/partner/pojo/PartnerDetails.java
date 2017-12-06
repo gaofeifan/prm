@@ -76,7 +76,9 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     private String englishAbbreviation;
 
     /**
+     *
      * 财务代码
+     *
      */
     @Column
     @ApiModelProperty(value = "财务代码" ,required = false)

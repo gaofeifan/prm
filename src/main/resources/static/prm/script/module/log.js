@@ -33,7 +33,11 @@ $(function(){
 
     /*根据时间查询*/
     $("#findBydate").click(function(){
-        addPagedate(initData(1,$("#startData").val(),  $("#endData").val(),type,url),type,url);
+        if((null!=$("#startData").val()&&""!=$("#startData").val())&&(null!=$("#endData").val()&&""!=$("#endData").val())){
+            addPagedate(initData(1,$("#startData").val(),  $("#endData").val(),type,url),type,url);
+        }else{
+            alert("时间不能为空");
+        }
     })
 });
 
@@ -52,7 +56,7 @@ function     addPagedate(totalPage,type,url){
         nextContent:'下页',
         callback:function(api){
             api.setPageCount( totalPage);
-            initData(api.getCurrent(),null,null,type,url);
+            initData(api.getCurrent(),$("#startData").val(),$("#endData").val(),type,url);
         }
     });
 }
@@ -68,7 +72,9 @@ function   initData (pageIndex,startdate,enddate,type,url) {  // type 为 1 — 
         contentType : "application/json; charset=utf-8",
         data : JSON.stringify({
             pageSize : 10,
-            pageNo :pageIndex
+            pageNo :pageIndex,
+            startDate:startdate,
+            endDate:enddate
         }),
         dataType : "json",
         success: function(data) {
@@ -85,7 +91,6 @@ function   initData (pageIndex,startdate,enddate,type,url) {  // type 为 1 — 
             }else if(type==2){
                 addPermissionsLog(melist);
             }
-
         }
     })
     return totalPage;
@@ -114,7 +119,6 @@ function   addOption ( melist) {
 
 /*正文数据添加  权限日志正文*/
 function   addPermissionsLog ( melist) {
-
     /*循环数据添加信息*/
     for (var i = 0 ; i <melist.length;i++ ){
         $("#log_base_body").append(' <div class="bodyList clearfix" id = "log_base_data_'+i+'"></div>');

@@ -688,14 +688,17 @@ public class AspectServer {
     private void addLogMethod(boolean flage, HttpServletRequest request,String actionData) {
         if(flage){
             // 获取  登录人信息
-            User user_object = (User) request.getSession().getAttribute("user");
+           User user_object = (User) request.getAttribute("user");
+
+            User user = authUserService.selectUserByEmail(user_object.getEmail());
+
             Operation operation =  new Operation();
             operation.setAction(actionData);
-            operation.setUserId(user_object.getEmail());
-            operation.setUserName(user_object.getUsername());
-            operation.setDepartment(user_object.getDempname());
-            operation.setCompany(user_object.getCompanyname());
-            operation.setJobs(user_object.getDempname());
+            operation.setUserId(user.getEmail());
+            operation.setUserName(user.getUsername());
+            operation.setDepartment(user.getDempname());
+            operation.setCompany(user.getCompanyname());
+            operation.setJobs(user.getDempname());
             // 追加日志记录
             aspectServer.logService.addOperationlLog(operation);
         }
