@@ -209,7 +209,7 @@ public class AspectServer {
 
         }
         // 操作日志追加
-        addLogMethod(flage,request , actionData);
+        addLogMethod(flage,request , actionData,args[args.length-1].toString());
         removeAttribute("oldShifFileList",request);
 
     }
@@ -293,7 +293,7 @@ public class AspectServer {
     @AfterReturning("PartnerDetailsServiceImplInsertSelective()")
     public void PartnerDetailsServiceImplInsertSelectiveAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         String actionData = "";
-
+        Object[] args = point.getArgs();
         HttpServletRequest request = requestinit();
 
         Object newData = getDateMethod(request, "new_partnerDetails");
@@ -324,7 +324,7 @@ public class AspectServer {
             }
         }
         // 操作日志追加
-        addLogMethod(flage, request, actionData);
+        addLogMethod(flage, request, actionData,args[args.length-1].toString());
         removeAttribute("new_partnerDetails", request);
     }
     // 删除  合伙人信息
@@ -340,7 +340,8 @@ public class AspectServer {
   @AfterReturning("PartnerDetailsServiceImplDeletePartnerDetailsById()")
     public void PartnerDetailsServiceImplDeletePartnerDetailsByIdAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         String actionData = "";
-        HttpServletRequest request  = requestinit();
+      Object[] args = point.getArgs();
+      HttpServletRequest request  = requestinit();
       Object oldData = request.getSession().getAttribute("deletepartnerDetails");
       Field[] declaredFields=  getfieldsMethod(oldData);
       boolean flage = false;
@@ -366,7 +367,7 @@ public class AspectServer {
                 }
             }
         // 操作日志追加
-        addLogMethod(flage,request , actionData);
+        addLogMethod(flage,request , actionData,args[args.length-1].toString());
       removeAttribute("deletepartnerDetails",request);
       }
 
@@ -377,7 +378,7 @@ public class AspectServer {
     public void PartnerDetailsServiceImplUpdateByPrimaryKeyAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         // 数组设定
         String actionData = "";
-
+        Object[] args = point.getArgs();
         HttpServletRequest request  = requestinit();
 
         Object oldData =   getDateMethod(request, "old_partnerDetails");
@@ -410,7 +411,7 @@ public class AspectServer {
             }
         }
         // 操作日志追加
-        addLogMethod(flage,request , actionData);
+        addLogMethod(flage,request , actionData,args[args.length-1].toString());
         removeAttribute("old_partnerDetails",request);
         removeAttribute("new_partnerDetails",request);
     }
@@ -419,6 +420,7 @@ public class AspectServer {
     @AfterReturning("PartnerAddressServiceImplInsert()")
     public void PartnerAddressServiceImplInsertAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         String actionData = "";
+        Object[] args = point.getArgs();
         ServletRequestAttributes attributes = RequestDate.requestInit();
         HttpServletRequest request = attributes.getRequest();
         List<Object> newData = (List<Object>) request.getSession().getAttribute("new_partnerAddress");
@@ -445,7 +447,7 @@ public class AspectServer {
             }
         }
         // 操作日志追加
-        addLogMethod(flage,request , actionData);
+        addLogMethod(flage,request , actionData,args[args.length-1].toString());
         removeAttribute("new_partnerAddress",request);
 
     }
@@ -455,6 +457,7 @@ public class AspectServer {
     @AfterReturning("deletePartnerAddressByDetails()")
     public void deletePartnerAddressByDetailsAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         String actionData = "";
+        Object[] args = point.getArgs();
         ServletRequestAttributes attributes = RequestDate.requestInit();
         HttpServletRequest request = attributes.getRequest();
 
@@ -484,7 +487,7 @@ public class AspectServer {
             }
         }
         // 操作日志追加
-        addLogMethod(flage,request , actionData);
+        addLogMethod(flage,request , actionData,args[args.length-1].toString());
         removeAttribute("old_partnerAddress",request);
     }
 
@@ -494,7 +497,7 @@ public class AspectServer {
         String actionData = "";
         ServletRequestAttributes attributes = RequestDate.requestInit();
         HttpServletRequest request = attributes.getRequest();
-
+        Object[] args = point.getArgs();
         List<Object> newData = (List<Object>) request.getSession().getAttribute("new_partnerLinkman");
         boolean flage = false;
         // 循环 已删除的旧数据
@@ -520,7 +523,7 @@ public class AspectServer {
             }
         }
         // 操作日志追加
-        addLogMethod(flage,request , actionData);
+        addLogMethod(flage,request , actionData,args[args.length-1].toString());
         removeAttribute("new_partnerLinkman",request);
     }
 
@@ -531,8 +534,8 @@ public class AspectServer {
             String actionData = "";
             ServletRequestAttributes attributes = RequestDate.requestInit();
             HttpServletRequest request = attributes.getRequest();
-
-            List<Object> oldData = (List<Object>) request.getSession().getAttribute("old_partnerLinkman");
+        Object[] args = point.getArgs();
+        List<Object> oldData = (List<Object>) request.getSession().getAttribute("old_partnerLinkman");
 
             boolean flage = false;
             // 循环 已删除的旧数据
@@ -558,7 +561,7 @@ public class AspectServer {
                 }
             }
         // 操作日志追加
-        addLogMethod(flage,request , actionData);
+        addLogMethod(flage,request , actionData,args[args.length-1].toString());
         removeAttribute("old_partnerLinkman",request);
     }
 
@@ -566,7 +569,7 @@ public class AspectServer {
     @AfterReturning("updateHierarchyListexecution()")
     public void updateHierarchyListexecutionAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         String actionData = "";
-
+        Object[] args = point.getArgs();
         HttpServletRequest request  = requestinit();
 
         List<Object> oldData = (List<Object>) getDateMethod(request, "oldHierarchyData");
@@ -596,7 +599,7 @@ public class AspectServer {
             }
         }
         // 操作日志追加
-        addLogMethod(flage,request , actionData);
+        addLogMethod(flage,request , actionData,args[args.length-1].toString());
         removeAttribute("oldHierarchyData",request);
         removeAttribute("newHierarchyData",request);
     }
@@ -607,8 +610,8 @@ public class AspectServer {
         // 数组设定
         String actionData = "";
             HttpServletRequest request  = requestinit();
-
-            Object oldData =   getDateMethod(request, "oldUserLevelData");
+        Object[] args = point.getArgs();
+        Object oldData =   getDateMethod(request, "oldUserLevelData");
             Object newData =   getDateMethod(request, "newUserLevelData");
             Field[] oldfields=  getfieldsMethod(oldData);
             Field[] newfields=  getfieldsMethod(newData);
@@ -641,7 +644,7 @@ public class AspectServer {
             }
         }
             // 操作日志追加
-            addLogMethod(flage,request , actionData);
+            addLogMethod(flage,request , actionData,args[args.length-1].toString());
         removeAttribute("oldUserLevelData",request);
         removeAttribute("newUserLevelData",request);
     }
@@ -685,13 +688,11 @@ public class AspectServer {
         }
     }
 /*用户操作日志*/
-    private void addLogMethod(boolean flage, HttpServletRequest request,String actionData) {
+    private void addLogMethod(boolean flage, HttpServletRequest request,String actionData,String email) {
         if(flage){
             // 获取  登录人信息
-           User user_object = (User) request.getAttribute("user");
-
-            User user = authUserService.selectUserByEmail(user_object.getEmail());
-
+          /* User user_object = (User) request.getAttribute("user");*/
+            User user = findUserDateByemail("123");
             Operation operation =  new Operation();
             operation.setAction(actionData);
             operation.setUserId(user.getEmail());
@@ -729,5 +730,11 @@ private Field[] getfieldsMethod(Object objectdata) {
     /*删除作用域*/
     private void removeAttribute(String key,HttpServletRequest request){
         request.getSession().removeAttribute(key);
+    }
+
+    /*获取用户信息*/
+
+    private User findUserDateByemail(String email){
+        return authUserService.selectUserByEmail(email);
     }
 }
