@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,6 +31,7 @@ public class DomainFilter  extends WebStatFilter{
 		res.addHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
 		res.addHeader( "Access-Control-Allow-Credentials","TRUE" );
 		res.addHeader("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With");
+		res.addCookie(new Cookie("JSSESIONID",rep.getSession().getId()));
 //		res.reset();
 //		res.setContentType("textml;charset=UTF-8");
 //		res.setHeader("Access-Control-Allow-Origin", res.getHeader("Origin"));

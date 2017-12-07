@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class AuthPostMenuController extends BaseController{
         User user = this.getSessionUser();
 //        User user = this.userService.selectUserByEmail(email);
         List<AuthPostMenuVo> authPostMenus = this.authPostMenuService.findMenuOrButtonByPostId(user.getPostid(),menuId,isMenu);
-        return this.successJsonp(authPostMenus);
+        return this.success(authPostMenus);
     }
     @ApiOperation(value = "设置岗位权限" ,httpMethod = "POST", response = Object.class)
     @RequestMapping(value = "/editPostAuthority")
@@ -73,13 +74,14 @@ public class AuthPostMenuController extends BaseController{
     @ApiOperation(value = "登录成功后调用接口" ,httpMethod = "GET", response = Object.class)
     @RequestMapping(value = "/getLoginUserDetails")
     @ResponseBody
-    public Object getLoginUserDetails( @ApiParam(value = "登录人邮箱") @RequestParam(name="email") String email){
+    public Object getLoginUserDetails(@ApiParam(value = "登录人邮箱") @RequestParam(name="email") String email, HttpServletRequest request){
+        System.out.println(request.getSession().getId().toString());
         User user = userService.selectUserByEmail(email);
         Object obj = getRequest().getSession().getAttribute(TAG);
         if(obj == null){
             getRequest().setAttribute(TAG,user);
         }
-        return this.successJsonp("成功");
+        return this.success("成功");
 
     }
 }
