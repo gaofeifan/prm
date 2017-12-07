@@ -60,7 +60,12 @@
         $.ajax({
             url: 'http://'+gPathUrl+'/auth/menu/findMenuOrButtonByPostId',
             type: 'get',
-            async:false,
+            xhrFields:{
+                withCredentials: true
+            },
+            crossDomain: true,//支持跨域发送cookie
+            jsonp: 'callback',
+            dataType:'jsonp',
             data:{
                 isMenu:true,
                 email:userEmail

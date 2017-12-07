@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2017/9/12.
  */
-/*frontcookie();*/
+frontcookie();
 $(function(){
     menuActive('partnerManage');
     /*控制 新增 编辑 修改 删除 按钮*/
@@ -352,7 +352,6 @@ var addressObj = {
                 <div class="short"><span>'+value.abbreviation+'</span></div>\
                 <div class="address"><span>'+value.address+'</span></div>\
                 <div class="postcode"><span>'+value.zipCode+'</span></div>\
-                <div class="operation"></div>\
                 </div>';
             $('.addressList').append(str);
         });
@@ -375,7 +374,6 @@ var contactsObj = {
                 <div class="phone"><span>'+value.phone+'</span></div>\
                 <div class="email"><span>'+value.email+'</span></div>\
                 <div class="address2"><span>'+value.address+'</span></div>\
-                <div class="operation"></div>\
                 </div>';
             $('.contactList').append(str);
         });
@@ -405,7 +403,8 @@ function zTreeOnClick(event, treeId, treeNode) {
         .val('')
         .removeAttr('checked')
         .removeAttr('selected');
-    $('#infoWall').show().scrollTop(0);
+    $('#infoWall').show();
+    $('body').scrollTop(0);
     /*回显各个字段的值*/
     seePartner.show(treeNode.id);
 }

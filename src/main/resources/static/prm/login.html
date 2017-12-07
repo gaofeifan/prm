@@ -12,6 +12,7 @@
         var oaPathUrl = '10.0.0.18:8083';
         var ssoPathUrl = '10.0.0.18:8085';
         var gPathUrl = '192.168.4.213:8083';
+//        var gPathUrl = '10.0.0.105:8083';
         var localPath = 'localhost:8083';
 
        /* var oaPathUrl = '139.129.236.180:8080';
@@ -107,8 +108,8 @@
                             /*记录登录的信息*/
                             $.ajax({
                                 url: 'http://' + gPathUrl + '/auth/menu/getLoginUserDetails',
-                                type: 'post',
-                                async:false,
+                                type: 'get',
+                                dataType:'json',
                                 data: {
                                     email:data.email
                                 },
@@ -122,6 +123,7 @@
                                 url: 'http://'+gPathUrl+'/auth/menu/findMenuOrButtonByPostId',
                                 type: 'get',
                                 async:false,
+                                dataType:"json",
                                 data:{
                                     isMenu:true,
                                     email:data.email

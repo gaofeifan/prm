@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2017/11/16.
  */
-/*backCookie();*/
+frontcookie();
 menuActive('hierarchy');
 $(function(){
     /*控制编辑按钮*/
@@ -67,17 +67,15 @@ $(function(){
         $("   option:selected ").each(function(vi,obj){
             /*判断标签类分别获取数据*/
             commitDate+=",{//id//:"+$(this).parent().prev().prev().val()+", //layerName//://"+$(this).parent().prev().val()+"//, //layerNumber//:"+$(this).val()+"}";
-            i+=$(this).val();
+            i+=parseInt($(this).val());
         });
-
         commitDate+="]}";
         var commitDate2 = commitDate.replace(",", "");
         var commitDate3 = commitDate2.replace(new RegExp("//","g"), '"');
         if(i<=20){
-
-     $.ajax({
+            $.ajax({
             type:'post',
-            url:'http://localhost:8083/user/hierarchyUpdate',
+            url:'http://'+gPathUrl+'/user/hierarchyUpdate',
             crossDomain: false,//支持跨域发送cookie
             contentType: "application/json; charset=utf-8",
             data: commitDate3,
@@ -87,12 +85,12 @@ $(function(){
             },
             error:function(){
 
-            }
-        }) ;
+                }
+            }) ;
         } else {
             alert("层数总和不能超过20！");
         }
-    })
+    });
 
     /*取消按钮*/
     $("#cancelClick").click(function(){

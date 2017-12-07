@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import java.util.List;
 @Api(value = "权限")
 @RequestMapping(value = "/auth/menu")
 public class AuthPostMenuController extends BaseController{
+
 
     public static final String TAG = "user";
     @Autowired
@@ -55,8 +57,8 @@ public class AuthPostMenuController extends BaseController{
                                            @ApiParam(value = "菜单id",required = false) @RequestParam(name="menuId",required = false) Integer menuId,
                                            @ApiParam(value = "是否是菜单 1是（默认） 0 否",required = false) @RequestParam(name="isMenu",required = false) boolean isMenu
                                            ){
-//        User user = this.getSessionUser();
-        User user = this.userService.selectUserByEmail(email);
+        User user = this.getSessionUser();
+//        User user = this.userService.selectUserByEmail(email);
         List<AuthPostMenuVo> authPostMenus = this.authPostMenuService.findMenuOrButtonByPostId(user.getPostid(),menuId,isMenu);
         return this.success(authPostMenus);
     }
@@ -69,12 +71,13 @@ public class AuthPostMenuController extends BaseController{
         return this.success(null);
     }
 
-    @ApiOperation(value = "登录成功后调用接口" ,httpMethod = "POST", response = Object.class)
+    @ApiOperation(value = "登录成功后调用接口" ,httpMethod = "GET", response = Object.class)
     @RequestMapping(value = "/getLoginUserDetails")
     @ResponseBody
-    public Object getLoginUserDetails( @ApiParam(value = "登录人邮箱") @RequestParam(name="email") String email){
+    public Object getLoginUserDetails(@ApiParam(value = "登录人邮箱") @RequestParam(name="email") String email, HttpServletRequest request){
+        System.out.println(request.getSession().getId().toString());
         User user = userService.selectUserByEmail(email);
-        Object obj = getRequest().getAttribute(TAG);
+        Object obj = getRequest().getSession().getAttribute(TAG);
         if(obj == null){
             getRequest().setAttribute(TAG,user);
         }
@@ -84,5 +87,5 @@ public class AuthPostMenuController extends BaseController{
 }
 //3FA618F018CA6F61C23D96E995456640
 //4E7CEC5C457C19C881C298C49C7239BF
-//  923CFB6C4006DAC01CBBD2D38A7504C6
+//923CFB6C4006DAC01CBBD2D38A7504C6
 //269C9A4921C8FB86003A750BA876B3FF
