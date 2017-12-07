@@ -56,10 +56,10 @@ public class AuthPostMenuController extends BaseController{
                                            @ApiParam(value = "菜单id",required = false) @RequestParam(name="menuId",required = false) Integer menuId,
                                            @ApiParam(value = "是否是菜单 1是（默认） 0 否",required = false) @RequestParam(name="isMenu",required = false) boolean isMenu
                                            ){
-//        User user = this.getSessionUser();
-        User user = this.userService.selectUserByEmail(email);
+        User user = this.getSessionUser();
+//        User user = this.userService.selectUserByEmail(email);
         List<AuthPostMenuVo> authPostMenus = this.authPostMenuService.findMenuOrButtonByPostId(user.getPostid(),menuId,isMenu);
-        return this.success(authPostMenus);
+        return this.successJsonp(authPostMenus);
     }
     @ApiOperation(value = "设置岗位权限" ,httpMethod = "POST", response = Object.class)
     @RequestMapping(value = "/editPostAuthority")
@@ -70,16 +70,16 @@ public class AuthPostMenuController extends BaseController{
         return this.success(null);
     }
 
-    @ApiOperation(value = "登录成功后调用接口" ,httpMethod = "POST", response = Object.class)
+    @ApiOperation(value = "登录成功后调用接口" ,httpMethod = "GET", response = Object.class)
     @RequestMapping(value = "/getLoginUserDetails")
     @ResponseBody
     public Object getLoginUserDetails( @ApiParam(value = "登录人邮箱") @RequestParam(name="email") String email){
         User user = userService.selectUserByEmail(email);
-        Object obj = getRequest().getAttribute(TAG);
+        Object obj = getRequest().getSession().getAttribute(TAG);
         if(obj == null){
             getRequest().setAttribute(TAG,user);
         }
-        return this.success("成功");
+        return this.successJsonp("成功");
 
     }
 }

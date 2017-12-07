@@ -15,13 +15,13 @@ $(function(){
     addPagedate(initData(1,null,null,type,url),type,url);
 
     /* 单击事件 清楚 表单数据 追加 操作日志  -- 分页展示   每页10条*/
-        $("#operationLog").click(function(){
-            url = "/log/operation";
-            type = 1;
-            addTitleOptions();
-            /*获取 开始时间 与结束时间*/
-            addPagedate(initData(1,$("#startData").val(),  $("#endData").val(),type,url),type,url);
-        })
+    $("#operationLog").click(function(){
+        url = "/log/operation";
+        type = 1;
+        addTitleOptions();
+        /*获取 开始时间 与结束时间*/
+        addPagedate(initData(1,$("#startData").val(),  $("#endData").val(),type,url),type,url);
+    })
 
     /* 单击事件 清楚 表单数据 追加 权限日志 -- 分页展示 每页10条*/
     $("#permissionsLog").click(function(){
@@ -33,7 +33,11 @@ $(function(){
 
     /*根据时间查询*/
     $("#findBydate").click(function(){
-        addPagedate(initData(1,$("#startData").val(),  $("#endData").val(),type,url),type,url);
+        if((null!=$("#startData").val()&&""!=$("#startData").val())&&(null!=$("#endData").val()&&""!=$("#endData").val())){
+            addPagedate(initData(1,$("#startData").val(),  $("#endData").val(),type,url),type,url);
+        }else{
+            alert("时间不能为空");
+        }
     })
 });
 
@@ -52,7 +56,7 @@ function     addPagedate(totalPage,type,url){
         nextContent:'下页',
         callback:function(api){
             api.setPageCount( totalPage);
-            initData(api.getCurrent(),null,null,type,url);
+            initData(api.getCurrent(),$("#startData").val(),$("#endData").val(),type,url);
         }
     });
 }
@@ -68,7 +72,9 @@ function   initData (pageIndex,startdate,enddate,type,url) {  // type 为 1 — 
         contentType : "application/json; charset=utf-8",
         data : JSON.stringify({
             pageSize : 10,
-            pageNo :pageIndex
+            pageNo :pageIndex,
+            startDate:startdate,
+            endDate:enddate
         }),
         dataType : "json",
         success: function(data) {
@@ -78,7 +84,7 @@ function   initData (pageIndex,startdate,enddate,type,url) {  // type 为 1 — 
             // 总量赋值
             var  melist = data.data.list;
             // 清空 陈旧数据
-           $("#log_base_body").empty();
+            $("#log_base_body").empty();
             // 追加 数据
             if(type==1){
                 addOption(melist);
@@ -100,7 +106,7 @@ function   addOption ( melist) {
         $("#log_base_body").append(' <div class="bodyList clearfix" id = "log_base_data_'+i+'"></div>');
 
         /*追加内部信息*/
-   /*     $("#log_base_data_"+i+"").append('  <div class="loginId">melist[i].id;</div>');*/
+        /*     $("#log_base_data_"+i+"").append('  <div class="loginId">melist[i].id;</div>');*/
         $("#log_base_data_"+i+"").append('  <div class="loginId">'+melist[i].userId+'</div>');
         $("#log_base_data_"+i+"").append('  <div class="name">'+melist[i].userName+'</div>');
         $("#log_base_data_"+i+"").append('  <div class="company">'+melist[i].company+'</div>');
@@ -119,11 +125,11 @@ function   addPermissionsLog ( melist) {
     for (var i = 0 ; i <melist.length;i++ ){
         $("#log_base_body").append(' <div class="bodyList clearfix" id = "log_base_data_'+i+'"></div>');
         /*追加内部信息*/
-   /*     $("#log_base_data_"+i+"").append('  <div class="loginId">melist[i].id;</div>');*/
+        /*     $("#log_base_data_"+i+"").append('  <div class="loginId">melist[i].id;</div>');*/
         $("#log_base_data_"+i+"").append('  <div class="loginId">'+melist[i].createDate+'</div>');
-        $("#log_base_data_"+i+"").append('  <div class="name">'+melist[i].type+'</div>');
-        $("#log_base_data_"+i+"").append('  <div class="company">'+melist[i].involvesUser+'</div>');
-        $("#log_base_data_"+i+"").append('  <div class="department">'+melist[i].involvesPermissions+'</div>');
+        $("#log_base_data_"+i+"").append('  <div class="type">'+melist[i].type+'</div>');
+        $("#log_base_data_"+i+"").append('  <div class="user">'+melist[i].involvesUser+'</div>');
+        $("#log_base_data_"+i+"").append('  <div class="power">'+melist[i].involvesPermissions+'</div>');
     }
 }
 
@@ -145,7 +151,7 @@ function   addTitleOptions ( ) {
 function   addTitlepermissionsLog ( ) {
     $("#log_basic_title").empty();
     $("#log_basic_title").append(' <div class="loginId">操作时间</div>');
-    $("#log_basic_title").append('<div class="name">操作类型</div>');
-    $("#log_basic_title").append('<div class="company">涉及用户</div>');
-    $("#log_basic_title").append('<div class="department">涉及权限</div>');
+    $("#log_basic_title").append('<div class="type">操作类型</div>');
+    $("#log_basic_title").append('<div class="user">涉及用户</div>');
+    $("#log_basic_title").append('<div class="power">涉及权限</div>');
 }

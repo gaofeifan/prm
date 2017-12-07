@@ -18,20 +18,22 @@
   color: #333;
 }
 #credit .content .thead-outer .thead-core .thead-content .no {
-  width: 10%;
+  width: 5%;
 }
 #credit .content .thead-outer .thead-core .thead-content .class {
   width: 10%;
 }
 #credit .content .thead-outer .thead-core .thead-content .protocolType {
-  width: 30%;
+  width: 25%;
 }
 #credit .content .thead-outer .thead-core .thead-content .valid {
   width: 10%;
 }
+#credit .content .thead-outer .thead-core .thead-content .remark {
+  width: 30%;
+}
 #credit .content .body-box .bodyList {
-  height: 48px;
-  line-height: 48px;
+  padding: 10px 0;
   border-bottom: 1px solid #dddddd;
 }
 #credit .content .body-box .bodyList div {
@@ -40,17 +42,43 @@
   color: #666;
 }
 #credit .content .body-box .bodyList .no {
-  width: 10%;
+  width: 5%;
 }
 #credit .content .body-box .bodyList .class {
   width: 10%;
 }
 #credit .content .body-box .bodyList .protocolType {
-  width: 30%;
+  width: 25%;
 }
 #credit .content .body-box .bodyList .valid {
   width: 10%;
 }
+#credit .content .body-box .bodyList .remark {
+  width: 30%;
+}
 #credit .content #editBtn {
   display: none;
+  width: 500px;
+  position: absolute;
+  left: 50%;
+  margin-left: -250px;
+  bottom: -250px;
+  margin-bottom: 200px;
+}
+#credit .content input {
+  width: 100%;
+  padding-left: 0;
+  text-align: center;
+}
+#credit .content input[type='radio'] {
+  margin-right: 2px;
+}
+#credit .content input[type='checkbox'] {
+  margin-right: 2px;
+}
+#credit .content input[type='button'] {
+  width: 100px;
+}
+#credit .content textarea {
+  border: 1px solid #dddddd;
 }

@@ -17,24 +17,26 @@
             color:#333;
           }
           .no{
-            width: 10%;
+            width: 5%;
           }
           .class{
             width: 10%;
           }
           .protocolType{
-            width: 30%;
+            width: 25%;
           }
           .valid{
-            width: 10%;
+             width: 10%;
+           }
+          .remark{
+            width: 30%;
           }
         }
       }
     }
     .body-box{
       .bodyList{
-        height: 48px;
-        line-height: 48px;
+        padding: 10px 0;
         border-bottom: 1px solid #dddddd;
         div{
           float: left;
@@ -42,21 +44,47 @@
           color:#666;
         }
         .no{
-          width: 10%;
+          width: 5%;
         }
         .class{
           width: 10%;
         }
         .protocolType{
-          width: 30%;
+          width: 25%;
         }
         .valid{
           width: 10%;
+        }
+        .remark{
+          width: 30%;
         }
       }
     }
     #editBtn{
       display: none;
+      width: 500px;
+      position: absolute;
+      left:50%;
+      margin-left: -250px;
+      bottom: -250px;
+      margin-bottom: 200px;
+    }
+    input{
+      width: 100%;
+      padding-left: 0;
+      text-align: center;
+    }
+    input[type='radio']{
+      margin-right: 2px;
+    }
+    input[type='checkbox']{
+      margin-right: 2px;
+    }
+    input[type='button']{
+     width: 100px;
+    }
+    textarea{
+      border:1px solid #dddddd;
     }
   }
 }

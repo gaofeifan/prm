@@ -61,7 +61,7 @@ $(function(){
                 $("input[name=type_boolean"+i+"][value="+levels[i].effectiveness+"]").attr("checked",true) ;
 
                 /*z追加备注框*/
-              $("#base_" + i + "").append('<div class="valid" id="base_mark_' + i + '"></div>');
+              $("#base_" + i + "").append('<div class="remark" id="base_mark_' + i + '"></div>');
               if(levels[i].mark.toString() =="null"){
                   levels[i].mark = '';
 
@@ -117,7 +117,7 @@ $(function(){
 
         $.ajax({
             type:'post',
-            url:'http://localhost:8083/user/levelUpdate',
+            url:'http://'+gPathUrl+'/user/levelUpdate',
             crossDomain: false,//支持跨域发送cookie
             contentType: "application/json; charset=utf-8",
             data: commitDate3,

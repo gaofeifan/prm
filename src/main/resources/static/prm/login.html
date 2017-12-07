@@ -107,8 +107,13 @@
                             /*记录登录的信息*/
                             $.ajax({
                                 url: 'http://' + gPathUrl + '/auth/menu/getLoginUserDetails',
-                                type: 'post',
-                                async:false,
+                                type: 'get',
+                                xhrFields:{
+                                    withCredentials: true
+                                },
+                                crossDomain: true,//支持跨域发送cookie
+                                jsonp: 'callback',
+                                dataType:'jsonp',
                                 data: {
                                     email:data.email
                                 },

@@ -690,7 +690,7 @@ public class AspectServer {
             // 获取  登录人信息
            User user_object = (User) request.getAttribute("user");
 
-          /*  User user = authUserService.selectUserByEmail(user_object.getEmail());
+            User user = authUserService.selectUserByEmail(user_object.getEmail());
 
             Operation operation =  new Operation();
             operation.setAction(actionData);
@@ -700,7 +700,7 @@ public class AspectServer {
             operation.setCompany(user.getCompanyname());
             operation.setJobs(user.getDempname());
             // 追加日志记录
-            aspectServer.logService.addOperationlLog(operation);*/
+            aspectServer.logService.addOperationlLog(operation);
         }
     }
     /*获取请求*/
