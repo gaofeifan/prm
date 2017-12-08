@@ -14,6 +14,7 @@ import com.pj.partner.service.impl.PartnerDetailsServiceImpl;
 import com.pj.user.Utils.RequestDate;
 import com.pj.user.pojo.Operation;
 import com.pj.user.pojo.Permissions;
+import com.pj.user.pojo.RequestParams;
 import com.pj.user.service.LogService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -570,6 +571,8 @@ public class AspectServer {
     public void updateHierarchyListexecutionAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         String actionData = "";
         Object[] args = point.getArgs();
+
+
         HttpServletRequest request  = requestinit();
 
         List<Object> oldData = (List<Object>) getDateMethod(request, "oldHierarchyData");

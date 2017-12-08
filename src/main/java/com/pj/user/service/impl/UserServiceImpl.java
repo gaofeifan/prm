@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void updateLevelById(UserLevel usel, HttpServletRequest request) {
+    public void updateLevelById(UserLevel usel, HttpServletRequest request, String email) {
 
        request.getSession().setAttribute("oldUserLevelData",userLevelMapper.selectByPrimaryKey(usel.getId()));
         userLevelMapper.updateByPrimaryKey(usel);
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void updateHierarchyList(List<Hierarchy> hierarchy, HttpServletRequest request) {
+    public void updateHierarchyList(List<Hierarchy> hierarchy, HttpServletRequest request, String email) {
         request.getSession().setAttribute("oldHierarchyData",hierarchyMapper.selectAll());
         if(null!=hierarchy){
             for (Hierarchy hi : hierarchy){

@@ -6,11 +6,10 @@ import com.pj.conf.base.BaseController;
 import com.pj.conf.base.page.Pagination;
 import com.pj.user.pojo.Operation;
 import com.pj.user.pojo.Permissions;
-import com.pj.user.pojo.RequestParam;
+import com.pj.user.pojo.RequestParams;
 import com.pj.user.service.LogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +32,7 @@ public class LogController extends BaseController {
     @ApiOperation(value = "日志-1.。权限日志查询  " , httpMethod = "POST" , response = Object.class)
     @RequestMapping("/permissions")
     @ResponseBody
-    public Map<String, Object> findPermissionsList(@RequestBody RequestParam requestParam ){
+    public Map<String, Object> findPermissionsList(@RequestBody RequestParams requestParam ){
 
             // 获取 分页元数据信息
             Page<Object> page = PageHelper.startPage(Pagination.cpn(requestParam.getPageNo()), requestParam.getPageSize(), true);
@@ -50,7 +49,7 @@ public class LogController extends BaseController {
     @RequestMapping("/operation")
     @ResponseBody
     @ApiOperation(value = "日志- 1.操作日志查询 ；" , httpMethod = "POST" , response = Object.class)
-    public Map<String, Object> findOperationList(@RequestBody  RequestParam requestParam ){
+    public Map<String, Object> findOperationList(@RequestBody RequestParams requestParam ){
         // 获取 分页元数据信息
         Page<Object> page = PageHelper.startPage(Pagination.cpn(requestParam.getPageNo()), requestParam.getPageSize(), true);
         List<Operation> operationLsit =  logService.findOPerationList(requestParam.getStartDate(),requestParam.getEndDate(),null);
