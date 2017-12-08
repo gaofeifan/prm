@@ -137,11 +137,16 @@ $(function(){
                 newEmail:alter_email
             },
             success: function (data) {
-                $.cookie('back_useremail',alter_email);
-                $('.emailShow').show();
-                $('#emailVal').show().text(alter_email);
-                $('.emailEdit').hide();
-                $('#emailConfirm').hide()
+                console.log(data)
+                if(data.status == 200){
+                    $.cookie('back_useremail',alter_email);
+                    $('.emailShow').show();
+                    $('#emailVal').show().text(alter_email);
+                    $('.emailEdit').hide();
+                    $('#emailConfirm').hide()
+                }else{
+                    alert(data.msgs);
+                }
             },
             error: function () {
 
@@ -162,7 +167,7 @@ function  operationLog(){
                 var str =
             '<div class="a-l-list clearfix"><div style="width: 40%;" class="fl clearfix">'+
                 '<p>操作时间：<span>'+(value.createDate||"")+'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;操作类型：<span>'+(value.type||'')+'</span> </p>'+
-                '<p>涉及用户：<span>'+(value.involvesUser||'')+'</span></p>'+
+                '<p style="height:auto;">涉及用户：<span>'+(value.involvesUser||'')+'</span></p>'+
             '</div><div style="width: 60%;" class="fr clearfix"><h4 style="color:#333;">涉及权限：</h4><span>'+(value.involvesPermissions||'')+'</span></div></div>';
                 $(str).appendTo($('#accessLog'));
             });

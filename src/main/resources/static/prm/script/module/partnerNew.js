@@ -104,6 +104,13 @@ $(function(){
             checkRepeat(that,'英文简称')
         }
     });
+    /*校验纳税人识别码*/
+    $('.headingCode').blur(function(){
+        var that = this;
+        if($(this).val().length >0){
+            checkRepeat(that,'纳税人识别码')
+        }
+    });
 
     /*提醒接受者逻辑*/
     $('#dutyInput').keyup(function(){
@@ -710,7 +717,7 @@ var  options ={
             location.hash = vipspa.stringify('partnerManage');
         }
     },error:function() {
-
+            alert('保存失败，请重试！')
     },complete:function() {
 
     }

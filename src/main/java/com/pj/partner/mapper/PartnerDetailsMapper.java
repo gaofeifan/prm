@@ -44,4 +44,10 @@ public interface PartnerDetailsMapper extends BaseMapper<PartnerDetails>{
      * @return
      */
     List<PartnerDetails> getParentList(Integer id);
+
+    /**
+     *  查询最大的code
+     * @return
+     */
+    String selectDetailsMaxCode();
 }

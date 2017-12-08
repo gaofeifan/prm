@@ -90,4 +90,18 @@ private  UserService userservice;
             return this.error();
         }
     }
+
+    //  检验是否可以修改
+    @RequestMapping("/checkIsEditHierarchy")
+    @ResponseBody
+    @ApiOperation(value = "校验是否可以修改层级位数" , httpMethod = "GET" , response = Object.class)
+    public  Map<String, Object> checkIsEditHierarchy(){
+        try {
+            boolean[] booleans = userservice.checkIsEditHierarchy();
+            return this.success(booleans);
+        }catch (Exception e){
+            System.out.println(e);
+            return this.error(e.getMessage());
+        }
+    }
 }

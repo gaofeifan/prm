@@ -18,4 +18,5 @@ public interface AuthPostMenuMapper extends BaseMapper<AuthPostMenu> {
    List<AuthPostMenuVo> findMenuByPostId(@Param("postId") Integer postId,@Param("menuIds") Integer[] menuIds);
 
    List<AuthPostMenuVo> findMenuOrButtonByPostId(@Param("postId")Integer postId, @Param("menuId") Integer menuId, @Param("isMenu") boolean isMenu);
+
 }

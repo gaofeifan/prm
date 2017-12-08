@@ -24,4 +24,9 @@ public interface UserService {
 
     // 更新层级位数
     void updateHierarchyList(List<Hierarchy> hierarchy, HttpServletRequest request, String email);
+
+    /**
+     *  校验是否可以修改
+     */
+    boolean[] checkIsEditHierarchy();
 }
