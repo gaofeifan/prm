@@ -1,5 +1,6 @@
 package com.pj.user.service.impl;
 
+import com.pj.partner.mapper.PartnerDetailsMapper;
 import com.pj.user.mapper.HierarchyMapper;
 import com.pj.user.mapper.UsaerLevelMapper;
 import com.pj.user.pojo.Hierarchy;
@@ -25,6 +26,8 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private HierarchyMapper hierarchyMapper;
+    @Autowired
+    private PartnerDetailsMapper partnerDetailsMapper;
 
     @Override
     public List<UserLevel> findUserLevelList() {
@@ -60,5 +63,21 @@ public class UserServiceImpl implements UserService{
             }
         }
         request.getSession().setAttribute("newHierarchyData", hierarchyMapper.selectAll());
+    }
+
+    @Override
+    public boolean[] checkIsEditHierarchy() {
+        String code = this.partnerDetailsMapper.selectDetailsMaxCode();
+        int num = 0;
+        List<Hierarchy> list = this.hierarchyMapper.selectAll();
+        boolean [] flag = new boolean[list.size()];
+        int i = 0;
+        for ( ;i<list.size();i++) {
+            num += list.get(i).getLayerNumber();
+            if (code.length() < num) {
+                flag[i] = true;
+            }
+        }
+            return flag;
     }
 }

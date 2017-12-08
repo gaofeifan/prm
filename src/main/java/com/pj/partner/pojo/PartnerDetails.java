@@ -195,7 +195,7 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
      */
     @Column
     @ApiModelProperty(value = "外部客户 公司电话" ,required = false)
-    private String wbkhCompanyTel;
+        private String wbkhCompanyTel;
 
     /**
      * 外部客户 公司地址

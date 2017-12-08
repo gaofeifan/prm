@@ -51,11 +51,12 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
     }
 
     public List<AuthPostMenuVo> findMenuOrButtonByPostId(Integer postId, Integer menuId, boolean isMenu){
-        List<AuthPostMenuVo> list = authPostMenuMapper.findMenuOrButtonByPostId(postId, menuId, isMenu);
-        if(list.size() != 0){
-            return list;
+        AuthPostMenu am = new AuthPostMenu();
+        am.setPostId(postId);
+        List<AuthPostMenu> list = authPostMenuMapper.select(am);
+        if(list.size() == 0){
+            editDefaultAuth(postId);
         }
-        editDefaultAuth(postId);
         return authPostMenuMapper.findMenuOrButtonByPostId(postId, menuId, isMenu);
     }
 

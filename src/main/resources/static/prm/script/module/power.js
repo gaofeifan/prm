@@ -124,6 +124,9 @@ var power = {
                     }else if(parseInt(value.isMenu) == 0 && value.checks == 1){
                         btnStr = btnStr + '<p><input class="nemuIn" data-id="'+value.id+'" type="checkbox" checked><label for="">'+value.name+'</label></p>';
                     }
+                    else if(parseInt(value.isMenu) == 0 && value.checks == 0){
+                        btnStr = btnStr + '<p><input class="nemuIn" data-id="'+value.id+'" type="checkbox"><label for="">'+value.name+'</label></p>';
+                    }
                 });
                 $(''+menuStr).appendTo('.nemuList');
                 $(''+btnStr).appendTo('.btnList')

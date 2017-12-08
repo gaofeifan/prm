@@ -32,6 +32,7 @@ public class AuthPostMenuController extends BaseController{
     private AuthPostMenuService authPostMenuService;
     @Autowired
     private AuthUserService userService;
+
     @ApiOperation(value = "根据岗位id查询菜单" ,httpMethod = "GET", response = Object.class)
     @RequestMapping(value = "/findMenuByPostId")
     @ResponseBody
