@@ -223,11 +223,11 @@ public class AspectServer {
         boolean flage = false;
         // 获取 未删除的 权限  根基postID 去查询
         List<AuthMenu> authMenuList = authMenuService.findAuthMenuListBypostId(Integer.parseInt(args[0].toString()));
+        request.getSession().setAttribute("oldAuthority",authMenuList);
         /*获取  权限操作涉及人*/
-        String emailsByPostId = authUserService.getEmailsByPostId(args[0].toString());
+        // String emailsByPostId = authUserService.getEmailsByPostId(args[0].toString());
 
-
-        if (null != authMenuList || authMenuList.size() != 0) {
+      /*  if (null != authMenuList || authMenuList.size() != 0) {
 
             // 循环获取 菜单
             for (AuthMenu menu : authMenuList) {
@@ -241,7 +241,6 @@ public class AspectServer {
                                 flage = true;
                             }
                         }
-
                     }
                 }
             }
@@ -250,7 +249,7 @@ public class AspectServer {
             } catch (Exception e) {
                 System.out.println(e);
             }
-        }
+        }*/
     }
 
     //  记录新增的权限···· 记录日志
@@ -262,16 +261,77 @@ public class AspectServer {
         boolean flage = false;
           /*获取  权限操作涉及人*/
         String emailsByPostId = authUserService.getEmailsByPostId(args[0].toString());
-        // 获取 未删除的 权限  根基postID 去查询
+        // 获取 新增的 权限  根基postID 去查询
         List<AuthMenu> authMenuList = authMenuService.findAuthMenuListBypostId(Integer.parseInt(args[0].toString()));
-        if (null != authMenuList || authMenuList.size() != 0) {
+        // 获取 旧的 权限  根基postID 去查询
+        List<AuthMenu>  oldAuthority = new ArrayList<AuthMenu>();
+        try {
+            oldAuthority = (List<AuthMenu>) request.getSession().getAttribute("oldAuthority");
+        }catch (Exception e){
 
+        }
+
+        // 比对 新旧权限
+        if(null != authMenuList && null != oldAuthority ){
+            List<AuthMenu>  oldIsmenu = new ArrayList<AuthMenu>();
+            List<AuthMenu>  newIsmenu = new ArrayList<AuthMenu>();
+            /*查找旧权限中独有的权限*/
+            for(AuthMenu olda : oldAuthority){
+                 boolean  flage2 = true;
+
+                for(AuthMenu news : authMenuList){
+                    if(olda.getName().equals(news.getName())){
+                        flage2 = false;
+                    }
+                }
+                if(flage){
+                    oldIsmenu.add(olda);
+                }
+            }
             // 循环获取 菜单
-            for (AuthMenu menu : authMenuList) {
+            for (AuthMenu menu : oldIsmenu) {
+
                 if (menu.getIsMenu() == 1) {
 
                     // 循环  获取按钮
-                    for (AuthMenu button : authMenuList) {
+                    for (AuthMenu button : oldIsmenu) {
+                        if (button.getIsMenu() == 0) {
+                            if ((button.getPId() == null ? 0 : button.getPId()) == menu.getId()) {
+                                actionData += menu.getName() + "-" + button.getName().split("-")[1] + " ; ";
+                                flage = true;
+                            }
+                        }
+                    }
+                }
+            }
+            try {
+                addAuthLogMethod(flage, request, actionData, "删除", emailsByPostId);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+            flage = false;
+
+            /*查找新权限中独有的权限*/
+            for(AuthMenu news : authMenuList){
+                boolean  flage2 = true;
+
+                for(AuthMenu olda : oldAuthority){
+                    if(news.getName().equals(olda.getName())){
+                        flage2 = false;
+                    }
+                }
+                if(flage){
+                    newIsmenu.add(news);
+                }
+            }
+            // 循环获取 菜单
+            for (AuthMenu menu : newIsmenu) {
+
+                if (menu.getIsMenu() == 1) {
+
+                    // 循环  获取按钮
+                    for (AuthMenu button : newIsmenu) {
                         if (button.getIsMenu() == 0) {
                             if ((button.getPId() == null ? 0 : button.getPId()) == menu.getId()) {
                                 actionData += menu.getName() + "-" + button.getName().split("-")[1] + " ; ";
@@ -286,8 +346,10 @@ public class AspectServer {
             } catch (Exception e) {
                 System.out.println(e);
             }
-
         }
+
+
+
     }
 
     // 新增  合伙人信息
@@ -358,7 +420,7 @@ public class AspectServer {
                     for (int j = 0; j < BasicProperties.Basic_PartnerDeta_paramName.length; j++) {
                         if (declaredFields[i].getName().toString().equals(BasicProperties.Basic_PartnerDeta_paramName[j].toString())) {
                             actionData += " " + BasicProperties.Basic_PartnerDeta_paramVal[j];
-                            actionData += "< 删除数据 >（ " + o + " ） ; ";
+                            actionData += "< "+o+">（删除数据  ） ; ";
                             flage = true;
                             break;
                         }
