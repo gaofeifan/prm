@@ -41,9 +41,9 @@ $(function(){
                 $("#base_" + i + "").append('<div class="protocolType" id="base_type_' + i + '"></div>');
 
                 /*追加单选框 判断是否 选中*/
-                $("#base_type_" + i + "").append('<input onclick="checkedType(this)" type="radio" id = "txt1'+i+'" name="type1' + i + '" value="协议/保函"   style="width:18px;height:18px;" ><label for="">协议/保函</label>');
-                $("#base_type_" + i + "").append('<input onclick="checkedType(this)"  type="radio" id = "txt2'+i+'"  name="type1' + i + '" value="付款买单" style="width:18px;height:18px;" ><label for="">付款买单</label>');
-                $("#base_type_" + i + "").append('<input  onclick="checkedType(this)" type="radio" id = "txt3'+i+'"  name="type1' + i + '" value="签约在途" style="width:18px;height:18px;" ><label for="">签约在途</label>');
+                $("#base_type_" + i + "").append('<input onclick="checkedType(this)" type="radio" id = "txt1'+i+'" name="type1' + i + '" value="协议/保函"   style="width:16px;height:16px;" ><label for="">协议/保函</label>');
+                $("#base_type_" + i + "").append('<input onclick="checkedType(this)"  type="radio" id = "txt2'+i+'"  name="type1' + i + '" value="付款买单" style="width:16px;height:16px;" ><label for="">付款买单</label>');
+                $("#base_type_" + i + "").append('<input  onclick="checkedType(this)" type="radio" id = "txt3'+i+'"  name="type1' + i + '" value="签约在途" style="width:16px;height:16px;" ><label for="">签约在途</label>');
 
                if (levels[i].protocolType.toString() == "协议/保函") {
                     $("#txt1" + i + "").attr("checked", true);
@@ -57,7 +57,7 @@ $(function(){
 
                 /*z追加是否有效单选框*/
                 $("#base_" + i + "").append('<div class="valid" id="base_boolean_' + i + '"></div>');
-                $("#base_boolean_" + i + "").append('<input type="checkbox" name="type_boolean' + i + '" value="1"  style="width:18px;height:18px;"><label for="">有效</label>');
+                $("#base_boolean_" + i + "").append('<input type="checkbox" name="type_boolean' + i + '" value="1"  style="width:16px;height:16px;"><label for="">有效</label>');
                 $("input[name=type_boolean"+i+"][value="+levels[i].effectiveness+"]").attr("checked",true) ;
 
                 /*z追加备注框*/
@@ -111,7 +111,7 @@ $(function(){
                   commitDate+=","+"//mark//://"+$(this).val()+"//}";
               }
         });
-        commitDate+="]}";
+        commitDate+="],//email//://"+$.cookie('front_useremail')+"//}";
         var commitDate2 = commitDate.replace(",", "");
         var commitDate3 = commitDate2.replace(new RegExp("//","g"), '"');
 

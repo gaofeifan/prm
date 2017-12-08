@@ -26,6 +26,7 @@ $(function(){
                     $('#delete').show();
                 }else if(value.name == "合作伙伴管理 - 查询"){
                     $('#query').show();
+                    getDocList();
                 }
             });
         }
@@ -84,7 +85,6 @@ $(function(){
             }
         });
     }
-    getDocList();
 
     var partnerObj = {
         query:function(isStop,isBlack){
@@ -189,7 +189,8 @@ $(function(){
                                      type: 'get',
                                      url: 'http://'+gPathUrl+'/partner/details/deletePartnerDetailsById',
                                      data:{
-                                         id:idGroup.join(',')
+                                         id:idGroup.join(','),
+                                         email:$.cookie('front_useremail')
                                     },
                                      dataType:'json',
                                      success: function (data) {
@@ -347,10 +348,10 @@ var addressObj = {
         $('.addressList').empty();
         $.each(addressList,function(index,value){
             var str= '<div data-listId="'+value.id+'" class="list clearfix">\
-                <div class="no"><span>'+(index+1)+'</span></div>\
+                <div style="width:6%;" class="no"><span>'+(index+1)+'</span></div>\
                 <div class="addressType"><span>'+value.addressType+'</span></div>\
-                <div class="short"><span>'+value.abbreviation+'</span></div>\
-                <div class="address"><span>'+value.address+'</span></div>\
+                <div style="width:16%;" class="short"><span>'+value.abbreviation+'</span></div>\
+                <div style="width:40%;" class="address"><span>'+value.address+'</span></div>\
                 <div class="postcode"><span>'+value.zipCode+'</span></div>\
                 </div>';
             $('.addressList').append(str);
@@ -367,13 +368,13 @@ var contactsObj = {
             var str= '<div data-listId="'+value.id+'" class="list clearfix">\
                 <div class="no"><span>'+(index+1)+'</span></div>\
                 <div class="name"><span>'+value.name+'</span></div>\
-                <div class="obligation"><span>'+value.obligation+'</span></div>\
+                <div style="width:8%;" class="obligation"><span>'+value.obligation+'</span></div>\
                 <div class="demp"><span>'+value.demp+'</span></div>\
-                <div class="duty"><span>'+value.duty+'</span></div>\
+                <div style="width: 8%;" class="duty"><span>'+value.duty+'</span></div>\
                 <div class="tel"><span>'+value.fixPhone+'</span></div>\
                 <div class="phone"><span>'+value.phone+'</span></div>\
-                <div class="email"><span>'+value.email+'</span></div>\
-                <div class="address2"><span>'+value.address+'</span></div>\
+                <div style="width:16%;" class="email"><span>'+value.email+'</span></div>\
+                <div style="width:28%;" class="address2"><span>'+value.address+'</span></div>\
                 </div>';
             $('.contactList').append(str);
         });

@@ -13,4 +13,6 @@ public interface PartnerAddressService extends BaseService<PartnerAddress,Intege
     void deletePartnerAddressByDetails(Integer detailsId);
 
     List<PartnerAddress> selectPartnerAddressesByDetailsId(Integer detailsId);
+
+    void insertList(List<PartnerAddress> address, String email);
 }

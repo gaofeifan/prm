@@ -107,13 +107,13 @@ function   addOption ( melist) {
 
         /*追加内部信息*/
         /*     $("#log_base_data_"+i+"").append('  <div class="loginId">melist[i].id;</div>');*/
-        $("#log_base_data_"+i+"").append('  <div class="loginId">'+melist[i].userId+'</div>');
-        $("#log_base_data_"+i+"").append('  <div class="name">'+melist[i].userName+'</div>');
-        $("#log_base_data_"+i+"").append('  <div class="company">'+melist[i].company+'</div>');
-        $("#log_base_data_"+i+"").append('  <div class="department">'+melist[i].department+'</div>');
-        $("#log_base_data_"+i+"").append('  <div class="post">'+melist[i].jobs+'</div>');
-        $("#log_base_data_"+i+"").append('  <div class="time">'+melist[i].createDate+'</div>');
-        $("#log_base_data_"+i+"").append('  <div class="log">'+melist[i].action+'</div>');
+        $("#log_base_data_"+i+"").append('  <div class="loginId">'+(melist[i].userId||'')+'</div>');
+        $("#log_base_data_"+i+"").append('  <div class="name">'+(melist[i].userName||'')+'</div>');
+        $("#log_base_data_"+i+"").append('  <div class="company">'+(melist[i].company||'')+'</div>');
+        $("#log_base_data_"+i+"").append('  <div class="department">'+(melist[i].department||'')+'</div>');
+        $("#log_base_data_"+i+"").append('  <div class="post">'+(melist[i].jobs||'')+'</div>');
+        $("#log_base_data_"+i+"").append('  <div class="time">'+(melist[i].createDate||'')+'</div>');
+        $("#log_base_data_"+i+"").append('  <div class="log">'+(melist[i].action||'')+'</div>');
     }
 
 }
@@ -126,10 +126,10 @@ function   addPermissionsLog ( melist) {
         $("#log_base_body").append(' <div class="bodyList clearfix" id = "log_base_data_'+i+'"></div>');
         /*追加内部信息*/
         /*     $("#log_base_data_"+i+"").append('  <div class="loginId">melist[i].id;</div>');*/
-        $("#log_base_data_"+i+"").append('  <div class="loginId">'+melist[i].createDate+'</div>');
-        $("#log_base_data_"+i+"").append('  <div class="type">'+melist[i].type+'</div>');
-        $("#log_base_data_"+i+"").append('  <div class="user">'+melist[i].involvesUser+'</div>');
-        $("#log_base_data_"+i+"").append('  <div class="power">'+melist[i].involvesPermissions+'</div>');
+        $("#log_base_data_"+i+"").append('  <div class="loginId">'+(melist[i].createDate||'')+'</div>');
+        $("#log_base_data_"+i+"").append('  <div class="type">'+(melist[i].type||'')+'</div>');
+        $("#log_base_data_"+i+"").append('  <div class="user">'+(melist[i].involvesUser||'')+'</div>');
+        $("#log_base_data_"+i+"").append('  <div class="power">'+(melist[i].involvesPermissions||'')+'</div>');
     }
 }
 

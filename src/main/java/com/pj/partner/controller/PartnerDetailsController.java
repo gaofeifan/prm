@@ -51,7 +51,8 @@ public class PartnerDetailsController extends BaseController {
     public Object selectListByQuery(@ApiParam("name") @RequestParam(name = "name",required = false) String name ,
                                      @ApiParam("查看停用Partner") @RequestParam(name = "offPartner",required = false) Integer offPartner ,
                                     @ApiParam("分类") @RequestParam(name = "partnerCategory",required = false) String partnerCategory ,
-                                    @ApiParam("查看黑名单Partner") @RequestParam(name = "blacklistPartner",required = false) Integer blacklistPartner){
+                                    @ApiParam("查看黑名单Partner") @RequestParam(name = "blacklistPartner",required = false) Integer blacklistPartner
+    ){
         List<PartnerDetails> list = this.partnerDetailsService.selectListByQuery(name,offPartner,blacklistPartner,partnerCategory);
         return this.success(list);
     }
@@ -92,7 +93,9 @@ public class PartnerDetailsController extends BaseController {
     @ResponseBody
     public Object updatePartnerDetailsById(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails,
                                            @ApiParam("联系方式") @RequestParam(name = "linkmans" ,required = false) String linkmans ,
-                                           @ApiParam("联系地址") @RequestParam(name = "address" ,required = false) String address){
+                                           @ApiParam("联系地址") @RequestParam(name = "address" ,required = false) String address,
+                                           @ApiParam("email") @RequestParam(name = "email" ,required = false) String email
+    ){
         if(linkmans != null){
             JSONArray array = JSONArray.fromString(linkmans);
             List<PartnerLinkman> list = JSONArray.toList(array, PartnerLinkman.class);
@@ -103,7 +106,7 @@ public class PartnerDetailsController extends BaseController {
             List<PartnerAddress> list = JSONArray.toList(array, PartnerAddress.class);
             partnerDetails.setAddressList(list);
         }
-        this.partnerDetailsService.updateByPrimaryKey(partnerDetails , getRequest());
+        this.partnerDetailsService.updateByPrimaryKey(partnerDetails , getRequest(),email);
         return this.success();
     }
 
@@ -118,7 +121,8 @@ public class PartnerDetailsController extends BaseController {
     @ResponseBody
     public Object insertPartnerDetails(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails,
                                        @ApiParam("联系方式") @RequestParam(name = "linkmans" ,required = false) String linkmans ,
-                                       @ApiParam("联系地址") @RequestParam(name = "address" ,required = false) String address){
+                                       @ApiParam("联系地址") @RequestParam(name = "address" ,required = false) String address,
+                                       @ApiParam("email") @RequestParam(name = "email" ,required = false) String email){
 
         if(linkmans != null){
             JSONArray array = JSONArray.fromString(linkmans);
@@ -130,7 +134,7 @@ public class PartnerDetailsController extends BaseController {
             List<PartnerAddress> list = JSONArray.toList(array, PartnerAddress.class);
             partnerDetails.setAddressList(list);
         }
-        this.partnerDetailsService.insertSelective(partnerDetails,getRequest());
+        this.partnerDetailsService.insertSelective(partnerDetails,getRequest(),email);
         return this.success();
     }
 
@@ -175,8 +179,10 @@ public class PartnerDetailsController extends BaseController {
     @ApiOperation(value = "根据主键删除合作伙伴" ,httpMethod = "GET", response = Object.class)
     @RequestMapping(value = "/deletePartnerDetailsById")
     @ResponseBody
-    public Object deletePartnerDetailsById(@ApiParam("id") @RequestParam(name = "id") Integer id){
-        this.partnerDetailsService.deletePartnerDetailsById(id);
+    public Object deletePartnerDetailsById(
+            @ApiParam("id") @RequestParam(name = "id") Integer id,
+            @ApiParam("email") @RequestParam(name = "email") String email){
+        this.partnerDetailsService.deletePartnerDetailsById(id,email);
         return this.success();
     }
 

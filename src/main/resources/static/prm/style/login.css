@@ -101,14 +101,14 @@ body {
   margin-bottom: 0;
 }
 #main #content .content-layout .login-box-warp #J_LoginBox .static-form input#account {
-  background-image: url('../image/sprite.png');
+  background-image: url('../image/sprite2.png');
   background-repeat: no-repeat;
-  background-position: -969px 9px;
+  background-position: 7px 7px;
 }
 #main #content .content-layout .login-box-warp #J_LoginBox .static-form input#password {
-  background-image: url('../image/sprite.png');
+  background-image: url('../image/sprite2.png');
   background-repeat: no-repeat;
-  background-position: -971px -75px;
+  background-position: 4px -74px;
 }
 #main #content .content-layout .login-box-warp #J_LoginBox .static-form .forget_password {
   text-align: right;

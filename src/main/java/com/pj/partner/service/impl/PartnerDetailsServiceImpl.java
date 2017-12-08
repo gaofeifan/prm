@@ -95,7 +95,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
 
 
     @Override
-    public void updateByPrimaryKey(PartnerDetails record, HttpServletRequest request){
+    public void updateByPrimaryKey(PartnerDetails record, HttpServletRequest request, String email){
         List<PartnerAddress> address = record.getAddressList();
         List<PartnerLinkman> linkmans = record.getLinkmansList();
         /**
@@ -113,20 +113,20 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             for(PartnerLinkman pl : linkmans){
                 pl.setDetailsId(record.getId());
             }
-            this.partnerLinkmanService.insertList(linkmans);
+            this.partnerLinkmanService.insertList(linkmans,email);
         }
         if(address != null){
             for (PartnerAddress pa: address ) {
                 pa.setId(null);
                 pa.setDetailsId(record.getId());
             }
-            this.partnerAddressService.insertList(address);
+            this.partnerAddressService.insertList(address,email);
         }
        super.updateByPrimaryKey(record);
     }
 
     @Override
-    public void insertSelective(PartnerDetails partnerDetails, HttpServletRequest request) {
+    public void insertSelective(PartnerDetails partnerDetails, HttpServletRequest request, String email) {
         partnerDetails.setCreateDate(new Date());
         super.insertSelective(partnerDetails);
         List<PartnerLinkman> linkmans = partnerDetails.getLinkmansList();
@@ -174,7 +174,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     }
 
     @Override
-    public void deletePartnerDetailsById(Integer id) {
+    public void deletePartnerDetailsById(Integer id, String email) {
         //  判断是否有子集文件 如果没有可以删除
         PartnerDetails partnerDetails = super.selectByPrimaryKey(id);
         partnerDetails.setIsDelete(1);

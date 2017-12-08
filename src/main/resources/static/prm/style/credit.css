@@ -82,3 +82,11 @@
 #credit .content textarea {
   border: 1px solid #dddddd;
 }
+#credit .content #cancelClick {
+  background-color: #f49633;
+}
+@media screen and (max-width: 1600px) {
+  #credit {
+    font-size: 14px;
+  }
+}

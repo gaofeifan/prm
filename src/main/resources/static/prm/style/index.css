@@ -8,8 +8,7 @@
   padding-bottom: 10px;
 }
 #business .content .thead-outer .thead-core {
-  height: 48px;
-  line-height: 48px;
+  padding: 15px 0;
   border-bottom: 1px solid #dddddd;
 }
 #business .content .thead-outer .thead-core .thead-content div {
@@ -27,8 +26,7 @@
   width: 30%;
 }
 #business .content .body-box .bodyList {
-  height: 48px;
-  line-height: 48px;
+  padding: 15px 0;
   border-bottom: 1px solid #dddddd;
 }
 #business .content .body-box .bodyList div {
@@ -44,6 +42,14 @@
 }
 #business .content .body-box .bodyList .description {
   width: 30%;
+}
+@media screen and (max-width: 1600px) {
+  #business {
+    font-size: 14px;
+  }
+  #business .content .body-box .bodyList {
+    padding: 15px 0;
+  }
 }
 #business .content {
   padding: 20px 20px 50px;
@@ -136,6 +142,14 @@
 #credit .content textarea {
   border: 1px solid #dddddd;
 }
+#credit .content #cancelClick {
+  background-color: #f49633;
+}
+@media screen and (max-width: 1600px) {
+  #credit {
+    font-size: 14px;
+  }
+}
 #hierarchy .content {
   padding: 20px 20px 50px;
   background-color: #fff;
@@ -184,6 +198,12 @@
   bottom: -250px;
   margin-bottom: 200px;
 }
+#hierarchy input[type='button'] {
+  padding-left: 0;
+}
+#hierarchy #cancelClick {
+  background-color: #f49633;
+}
 #partnerClassify .content {
   padding: 20px 20px 50px;
   background-color: #fff;
@@ -230,6 +250,11 @@
 }
 #partnerClassify .content .body-box .bodyList .description {
   width: 42%;
+}
+@media screen and (max-width: 1600px) {
+  #partnerClassify {
+    font-size: 14px;
+  }
 }
 #partnerManage .new,
 #partnerManage .alter,
@@ -777,6 +802,9 @@
   height: 38px;
   margin-right: 100px;
 }
+#power #cancel {
+  background-color: #f49633;
+}
 #log .content .topBar ol {
   margin-left: 10px;
 }
@@ -826,6 +854,7 @@
   line-height: 48px;
   float: left;
   text-align: center;
+  padding: 0 0.5%;
 }
 #log .content .logList .body-box .bodyList {
   border-bottom: 1px solid #dddddd;
@@ -833,12 +862,12 @@
 #log .content .logList .body-box .bodyList > div {
   /* height: 40px;
             line-height: 40px;*/
-  padding: 10px 0;
+  padding: 10px 0.5%;
   float: left;
   text-align: center;
 }
 #log .content .logList .loginId {
-  width: 15%;
+  width: 14%;
 }
 #log .content .logList .name {
   width: 5%;
@@ -847,25 +876,27 @@
   width: 10%;
 }
 #log .content .logList .company {
-  width: 16%;
+  width: 10%;
 }
 #log .content .logList .department {
-  width: 12%;
+  width: 10%;
 }
 #log .content .logList .post {
-  width: 12%;
+  width: 10%;
 }
 #log .content .logList .time {
   width: 10%;
 }
 #log .content .logList .log {
-  width: 30%;
+  width: 32%;
 }
 #log .content .logList .type {
   width: 10%;
 }
 #log .content .logList .user {
   width: 25%;
+  white-space: normal;
+  word-break: break-all;
 }
 #log .content .logList .power {
   width: 45%;
@@ -892,7 +923,7 @@
   font-size: 14px;
   position: relative;
 }
-#partnerNew .content form > div {
+#partnerNew .content form .baseInfo > div {
   margin-bottom: 15px;
 }
 #partnerNew .content form .buttonBox {
@@ -927,7 +958,7 @@
   width: 80%;
 }
 #partnerNew .content .flDiv input.code {
-  width: 11%;
+  width: 10%;
 }
 #partnerNew .content .frDiv {
   width: 30%;
@@ -1016,9 +1047,11 @@
 }
 #partnerNew .content .thead-outer .thead-core .name {
   width: 6%;
+  line-height: 42px;
 }
 #partnerNew .content .thead-outer .thead-core .obligation {
   width: 6%;
+  line-height: 42px;
 }
 #partnerNew .content .thead-outer .thead-core .demp {
   width: 8%;
@@ -1031,6 +1064,7 @@
 }
 #partnerNew .content .thead-outer .thead-core .phone {
   width: 10%;
+  line-height: 42px;
 }
 #partnerNew .content .thead-outer .thead-core .email {
   width: 12%;
@@ -1247,6 +1281,7 @@
   padding-left: 3%;
   border-bottom: 1px solid #dddddd;
   border-top: 1px solid #dddddd;
+  margin-top: 5px;
 }
 #partnerNew .content .classificationOfPartners input[type="checkbox"] {
   width: 16px;
@@ -1259,11 +1294,12 @@
   width: auto;
   margin-right: 4%;
 }
-#partnerNew .content .classificationOfPartners .classificationOfPartnersCheckbox {
+#partnerNew .content .classificationOfPartners .partnersCheckbox {
   padding: 10px 0;
   padding-left: 3%;
   border-bottom: 1px solid #dddddd;
   border-top: 1px solid #dddddd;
+  margin-top: 5px;
 }
 #partnerNew .content .wbkhStyle {
   padding-left: 20px;
@@ -1271,21 +1307,21 @@
 #partnerNew .content .wbkhStyle h5 {
   font-size: 16px;
   color: #333;
-  margin-top: 10px;
+  margin-top: 20px;
   margin-bottom: 10px;
 }
 #partnerNew .content .wbkhStyle h6 {
   display: inline;
 }
 #partnerNew .content .wbkhStyle .fl1 {
-  width: 25%;
+  width: 23%;
   height: 234px;
   margin-right: 1%;
 }
 #partnerNew .content .wbkhStyle .fl1 .topLayer {
   height: 90px;
   border: 1px solid #dddddd;
-  margin-bottom: 18px;
+  margin-bottom: 9px;
   padding: 8px 0 8px 15px;
 }
 #partnerNew .content .wbkhStyle .fl1 .topLayer label {
@@ -1302,7 +1338,7 @@
   margin-right: 2px;
 }
 #partnerNew .content .wbkhStyle .fl1 .bottomLayer {
-  height: 92px;
+  height: 100px;
   border: 1px solid #dddddd;
   padding: 8px 15px;
 }
@@ -1326,6 +1362,7 @@
 }
 #partnerNew .content .wbkhStyle .fl2 label {
   width: 100px;
+  margin-right: 0;
 }
 #partnerNew .content .wbkhStyle .fl2 div {
   height: 50px;
@@ -1339,7 +1376,7 @@
 }
 #partnerNew .content .wbkhStyle .fl3 {
   padding: 10px 1%;
-  width: 45%;
+  width: 48%;
   height: 212px;
   border: 1px solid #dddddd;
 }
@@ -1361,7 +1398,7 @@
   margin-right: 2%;
 }
 #partnerNew .content .wbkhStyle .fl3 .tel {
-  width: 25%;
+  width: 22%;
 }
 #partnerNew .content .wbkhStyle .fl3 .comAddress {
   width: 70%;
@@ -1447,19 +1484,28 @@
 #partnerNew .packUpCon {
   cursor: pointer;
 }
+#partnerNew #callOff {
+  background-color: #f49633;
+}
+#partnerNew #close {
+  background-color: #f49633;
+}
 @media screen and (max-width: 1600px) {
   #partnerNew .content form {
     font-size: 12px;
   }
+  #partnerNew .content form .wbkhStyle {
+    padding-left: 10px;
+  }
   #partnerNew .content form .wbkhStyle .fl1 {
-    width: 25%;
+    width: 23%;
     height: 234px;
     margin-right: 1%;
   }
   #partnerNew .content form .wbkhStyle .fl1 .topLayer {
     height: 90px;
     border: 1px solid #dddddd;
-    margin-bottom: 18px;
+    margin-bottom: 9px;
     padding: 8px 15px;
   }
   #partnerNew .content form .wbkhStyle .fl1 .topLayer label {
@@ -1476,7 +1522,7 @@
     margin-right: 2px;
   }
   #partnerNew .content form .wbkhStyle .fl1 .bottomLayer {
-    height: 92px;
+    height: 100px;
     border: 1px solid #dddddd;
     padding: 8px 15px;
   }
@@ -1489,10 +1535,11 @@
   }
   #partnerNew .content form .wbkhStyle .fl1 .bottomLayer input[type='text'] {
     height: 28px;
-    width: 40%;
+    width: 35%;
   }
   #partnerNew .content form .wbkhStyle .fl2 label {
     width: 84px;
+    margin-right: 0;
   }
   #partnerNew .content input {
     font-size: 12px;

@@ -41,4 +41,9 @@ public class PartnerAddressServiceImpl extends AbstractBaseServiceImpl<PartnerAd
         record.setDetailsId(detailsId);
         return this.partnerAddressMapper.select(record);
     }
+
+    @Override
+    public void insertList(List<PartnerAddress> address, String email) {
+        this.insertList(address);
+    }
 }
