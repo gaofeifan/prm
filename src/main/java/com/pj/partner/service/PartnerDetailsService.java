@@ -48,7 +48,7 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
      * @param ids
      * @param id
      */
-    void shiftPartnerDetailsFileByIds( Integer id);
+    void shiftPartnerDetailsFileByIds( Integer id,String email);
 
     /**
      *  判断是否可以删除

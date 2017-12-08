@@ -238,8 +238,10 @@ public class PartnerDetailsController extends BaseController {
     @ApiOperation(value = "修改转移目录" ,httpMethod = "GET", response = Object.class)
     @RequestMapping(value = "/shiftPartnerDetailsFileByIds")
     @ResponseBody
-    public Object shiftPartnerDetailsFileByIds(@ApiParam("id") @RequestParam(name = "id") Integer id){
-        this.partnerDetailsService.shiftPartnerDetailsFileByIds(id);
+    public Object shiftPartnerDetailsFileByIds(@ApiParam("id") @RequestParam(name = "id") Integer id,
+    @ApiParam("email") @RequestParam(name = "email") String email
+    ){
+        this.partnerDetailsService.shiftPartnerDetailsFileByIds(id,email);
         return this.success();
     }
 

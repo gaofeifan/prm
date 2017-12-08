@@ -190,7 +190,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     }
 
     @Override
-    public void shiftPartnerDetailsFileByIds( Integer id) {
+    public void shiftPartnerDetailsFileByIds( Integer id,String email) {
         //  查询转移的文件
         Object o = PartnerDetailsCache.getValueByKey("details");
         List<PartnerDetailsShifFile> shifFileList = (List<PartnerDetailsShifFile>) o;
