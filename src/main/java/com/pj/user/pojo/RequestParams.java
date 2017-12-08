@@ -11,7 +11,7 @@ import java.util.List;
  * Created by SenevBoy on 2017/11/9.
  */
 @Data
-public class RequestParam implements Serializable{
+public class RequestParams implements Serializable{
 
     @ApiModelProperty(value = "当前页", required = false)
     private Integer pageNo;
@@ -25,9 +25,16 @@ public class RequestParam implements Serializable{
     @ApiModelProperty(value = "结束时间", required = false)
     private String   endDate;
 
+    @ApiModelProperty(value = "用户邮箱email", required = false)
+    private String email;
+
     @ApiModelProperty(value = "信用等级集合", required = false)
     private List<UserLevel> userLevelList;
 
     @ApiModelProperty(value = "层级位数", required = false)
     private List<Hierarchy> hierarchyList;
+
+
+
+
 }

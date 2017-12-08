@@ -20,8 +20,8 @@ public interface UserService {
     // 获取旧数据用以支持日志统计
     UserLevel findOneOldDataById(UserLevel usel);
     // 更新用户等级
-    void updateLevelById(UserLevel usel, HttpServletRequest request);
+    void updateLevelById(UserLevel usel, HttpServletRequest request, String email);
 
     // 更新层级位数
-    void updateHierarchyList(List<Hierarchy> hierarchy, HttpServletRequest request);
+    void updateHierarchyList(List<Hierarchy> hierarchy, HttpServletRequest request, String email);
 }

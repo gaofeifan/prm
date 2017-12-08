@@ -1,7 +1,7 @@
 package com.pj.user.controller;
 
 import com.pj.conf.base.BaseController;
-import com.pj.user.pojo.RequestParam;
+import com.pj.user.pojo.RequestParams;
 import com.pj.user.pojo.UserLevel;
 import com.pj.user.service.EmailService;
 import com.pj.user.service.UserService;
@@ -46,10 +46,10 @@ private  UserService userservice;
     @RequestMapping("/levelUpdate")
     @ResponseBody
     @ApiOperation(value = "用户信用权限--修改接口" , httpMethod = "POST" , response = Object.class)
-    public Map<String, Object> updateLevel(@RequestBody RequestParam requestParam, HttpServletRequest request ){
+    public Map<String, Object> updateLevel(@RequestBody RequestParams requestParam, HttpServletRequest request ){
         try {
             for (UserLevel usel : requestParam.getUserLevelList()){
-                userservice.updateLevelById(usel,request);
+                userservice.updateLevelById(usel,request,requestParam.getEmail());
             }
             return  this.success();
         } catch (Exception e) {
@@ -81,9 +81,9 @@ private  UserService userservice;
     @RequestMapping("/hierarchyUpdate")
     @ResponseBody
     @ApiOperation(value = "层级位数管理  --修改" , httpMethod = "POST" , response = Object.class)
-    public  Map<String, Object> updateHierarchyList(@RequestBody RequestParam requestParam, HttpServletRequest request){
+    public  Map<String, Object> updateHierarchyList(@RequestBody RequestParams requestParam, HttpServletRequest request){
         try {
-            userservice.updateHierarchyList(requestParam.getHierarchyList(),request);
+            userservice.updateHierarchyList(requestParam.getHierarchyList(),request,requestParam.getEmail());
             return this.success();
         }catch (Exception e){
             System.out.println(e);
