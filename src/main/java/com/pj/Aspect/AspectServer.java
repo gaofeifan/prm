@@ -697,6 +697,7 @@ public class AspectServer {
           /* User user_object = (User) request.getAttribute("user");*/
             User user = findUserDateByemail(email);
             Operation operation =  new Operation();
+            operation.setCreateDate(new Date());
             operation.setAction(actionData);
             operation.setUserId(user.getEmail());
             operation.setUserName(user.getUsername());
