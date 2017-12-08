@@ -692,7 +692,7 @@ public class AspectServer {
         if(flage){
             // 获取  登录人信息
           /* User user_object = (User) request.getAttribute("user");*/
-            User user = findUserDateByemail("123");
+            User user = findUserDateByemail(email);
             Operation operation =  new Operation();
             operation.setAction(actionData);
             operation.setUserId(user.getEmail());
