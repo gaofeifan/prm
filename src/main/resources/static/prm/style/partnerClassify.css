@@ -45,3 +45,8 @@
 #partnerClassify .content .body-box .bodyList .description {
   width: 42%;
 }
+@media screen and (max-width: 1600px) {
+  #partnerClassify {
+    font-size: 14px;
+  }
+}

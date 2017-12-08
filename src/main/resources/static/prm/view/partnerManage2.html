@@ -94,65 +94,67 @@
                 <form style="padding: 0 1%;" id="checkForm" class="clearfix">
                     <input id="pId" name="pId" class="hiddenInput" type="text">
                     <h4>基础信息</h4>
-                    <div class="clearfix">
-                        <div class="fl flDiv">
-                            
-                            <label for="">代码</label>
-                            <input style="width: 80%;" name="code" class="code" type="text" readonly>
-                        </div>
-                        <div class="fr frDiv">
-                            
-                            <label for="">助记码</label>
-                            <input id="mnemonicCode" name="mnemonicCode" class="" type="text" readonly>
-                        </div>
-                    </div>
-                    <div class="clearfix">
-                        <div class="fl flDiv">
-                            
-                            <label for="">中文全称</label>
-                            <input id="chineseName" name="chineseName" type="text" readonly>
-                        </div>
-                        <div class="fr frDiv">
-                            
-                            <label for="">中文简称</label>
-                            <input id="chineseAbbreviation" name="chineseAbbreviation" class="" type="text" readonly>
-                        </div>
-                    </div>
-                    <div class="clearfix">
-                        <div class="fl flDiv">
-                            
-                            <label for="">英文全称</label>
-                            <input id="englishName" name="englishName" type="text" readonly>
-                        </div>
-                        <div class="fr frDiv">
-                            
-                            <label for="">英文简称</label>
-                            <input id="englishAbbreviation" name="englishAbbreviation" class="" type="text" readonly>
-                        </div>
-                    </div>
-                    <div class="clearfix">
-                        <div class="fl flDiv">
-                            <label for="">财务代码</label>
-                            <input id="financingCode" name="financingCode" type="text" readonly>
-                        </div>
-                        <div style="position: relative;height: 30px;" class="fr frDiv">
-                            
-                            <label style="width: 70px;margin-right:0;" for="">提醒接受者</label>
-                            <input id="dutyInput" type="text" value="" readonly><span class="warning dutyOfficer-waring"></span>
-                            <ul class="userNameLi">
+                    <div class="baseInfo">
+                        <div class="clearfix">
+                            <div class="fl flDiv">
 
-                            </ul>
-                            <input style="position: relative;top:-10px;" class="hiddenInput" id="receiverId" name="receiverId" type="text">
-                            <input style="position: relative;top:-30px;" class="hiddenInput" id="receiverName" name="receiverName" type="text">
+                                <label for="">代码</label>
+                                <input style="width: 80%;" name="code" class="code" type="text" readonly>
+                            </div>
+                            <div class="fr frDiv">
+
+                                <label for="">助记码</label>
+                                <input id="mnemonicCode" name="mnemonicCode" class="" type="text" readonly>
+                            </div>
                         </div>
-                    </div>
-                    <div class="status clearfix">
-                        <input id="isBlacklist" type="checkbox" disabled><label for="">黑名单</label>
-                        <!--隐藏黑名单-->
-                        <input class="hiddenInput" name="isBlacklist" type="text" value="0">
-                        <input id="isDisable" type="checkbox" disabled><label for="">停用</label>
-                        <input class="hiddenInput" name="isDisable" type="text" value="0">
-                        <span class="mark disableMark">*</span><label for="">停用备注</label><input id="disableRemark" name="disableRemark" class="reason" type="text" readonly>
+                        <div class="clearfix">
+                            <div class="fl flDiv">
+
+                                <label for="">中文全称</label>
+                                <input id="chineseName" name="chineseName" type="text" readonly>
+                            </div>
+                            <div class="fr frDiv">
+
+                                <label for="">中文简称</label>
+                                <input id="chineseAbbreviation" name="chineseAbbreviation" class="" type="text" readonly>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div class="fl flDiv">
+
+                                <label for="">英文全称</label>
+                                <input id="englishName" name="englishName" type="text" readonly>
+                            </div>
+                            <div class="fr frDiv">
+
+                                <label for="">英文简称</label>
+                                <input id="englishAbbreviation" name="englishAbbreviation" class="" type="text" readonly>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div class="fl flDiv">
+                                <label for="">财务代码</label>
+                                <input id="financingCode" name="financingCode" type="text" readonly>
+                            </div>
+                            <div style="position: relative;height: 30px;" class="fr frDiv">
+
+                                <label style="width: 70px;margin-right:0;" for="">提醒接受者</label>
+                                <input id="dutyInput" type="text" value="" readonly><span class="warning dutyOfficer-waring"></span>
+                                <ul class="userNameLi">
+
+                                </ul>
+                                <input style="position: relative;top:-10px;" class="hiddenInput" id="receiverId" name="receiverId" type="text">
+                                <input style="position: relative;top:-30px;" class="hiddenInput" id="receiverName" name="receiverName" type="text">
+                            </div>
+                        </div>
+                        <div class="status clearfix">
+                            <input id="isBlacklist" type="checkbox" disabled><label for="">黑名单</label>
+                            <!--隐藏黑名单-->
+                            <input class="hiddenInput" name="isBlacklist" type="text" value="0">
+                            <input id="isDisable" type="checkbox" disabled><label for="">停用</label>
+                            <input class="hiddenInput" name="isDisable" type="text" value="0">
+                            <span class="mark disableMark">*</span><label for="">停用备注</label><input id="disableRemark" name="disableRemark" class="reason" type="text" readonly>
+                        </div>
                     </div>
                     <div>
                         <div>
@@ -163,10 +165,10 @@
                         <div style="padding-left: 16px;">
                             <div class="thead-outer">
                                 <div class="thead-core">
-                                    <div class="no"><span>序号</span></div>
+                                    <div style="width:6%;" class="no"><span>序号</span></div>
                                     <div class="addressType"><span>地址类型</span></div>
-                                    <div class="short"><span>简称</span></div>
-                                    <div class="address"><span>地址</span></div>
+                                    <div style="width:16%;" class="short"><span>简称</span></div>
+                                    <div style="width:40%;" class="address"><span>地址</span></div>
                                     <div class="postcode"><span>邮编</span></div>
                                 </div>
                             </div>
@@ -195,13 +197,13 @@
                                 <div class="thead-core">
                                     <div class="no"><span>序号</span></div>
                                     <div class="name"><span>姓名</span></div>
-                                    <div class="obligation"><span>职责</span></div>
+                                    <div style="width:8%;" class="obligation"><span>职责</span></div>
                                     <div class="demp"><span>部门</span></div>
-                                    <div class="duty"><span>职务</span></div>
+                                    <div style="width: 8%;" class="duty"><span>职务</span></div>
                                     <div class="tel"><span>固话</span></div>
                                     <div class="phone"><span>手机</span></div>
-                                    <div class="email"><span>邮件</span></div>
-                                    <div class="address2"><span>地址</span></div>
+                                    <div style="width:16%;" class="email"><span>邮件</span></div>
+                                    <div style="width:28%;" class="address2"><span>地址</span></div>
                                 </div>
                             </div>
                             <div class="contactList listBoxStyle">
@@ -273,11 +275,6 @@
                         </div>
                         <div class="fl fl2">
                             <div><label for="">信用等级</label>
-                               <!-- <select name="wbkhCreditRating" class="wbkhCreditRating" disabled>
-                                    <option value="A-协议保函">A-协议保函</option>
-                                    <option value="B-协议保函">B-协议保函</option>
-                                    <option value="C-付款买单">C-付款买单</option>
-                                </select>-->
                                 <input class="wbkhCreditRating" type="text" readonly>
                             </div>
                             <div><label for="">信用期限类型</label>
@@ -302,9 +299,6 @@
                                     <option value="增值税专票">增值税专票</option>
                                     <option value="DebitNote">DebitNote</option>
                                 </select>
-                                <!--<input type="radio" class="invoiceType1" name="wbkhInvoiceType" value="增值税普票"><label for="">增值税普票</label>
-                                <input type="radio" class="invoiceType2" name="wbkhInvoiceType" value="增值税专票"><label for="">增值税专票</label>
-                                <input type="radio" class="invoiceType3" name="wbkhInvoiceType" value="DebitNote"><label for="">DebitNote</label>-->
                             </div>
                             <div class="invoiceTypeTitle"><span>增值税普票</span></div>
                             <div class="bankInfo clearfix">
@@ -432,7 +426,7 @@
                     </div>
                     <div class="wbkhStyle clearfix">
                         <h5>干线承运人</h5>
-                        <div style="padding: 20px;border: 1px solid #dddddd;width:96%;">
+                        <div style="padding:10px 20px 20px;border: 1px solid #dddddd;width:96%;">
                             <h6>服务类别</h6>
                             <input class="hiddenInput" id="gxcyrClassOfService" name="gxcyrClassOfService" type="text">
                             <div class="gxcyrClassOfServiceBox classOfServiceBox" style="margin: 10px;">
@@ -464,7 +458,7 @@
                     </div>
                     <div class="wbkhStyle clearfix">
                         <h5>不可控供应商</h5>
-                        <div style="padding: 20px;border: 1px solid #dddddd;width:96%;">
+                        <div style="padding:10px 20px 20px;border: 1px solid #dddddd;width:96%;">
                             <h6>服务类别</h6>
                             <div class="gxcyrClassOfServiceBox" style="margin: 10px;">
                                 <input class="classOfSer1" type="checkbox" value="干线运输" disabled><label style="width: auto;margin-right: 2%;" for="">干线运输</label>
@@ -495,7 +489,7 @@
                     </div>
                     <div class="wbkhStyle clearfix">
                         <h5>延伸服务供应商</h5>
-                        <div style="padding: 20px;border: 1px solid #dddddd;width:96%;">
+                        <div style="padding:10px 20px 20px;border: 1px solid #dddddd;width:96%;">
                             <h6>服务类别</h6>
                             <div class="gxcyrClassOfServiceBox" style="margin: 10px;">
                                 <input class="classOfSer1" type="checkbox" value="干线运输" disabled><label style="width: auto;margin-right: 2%;" for="">干线运输</label>

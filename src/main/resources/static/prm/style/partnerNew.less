@@ -13,7 +13,7 @@
       background-color: #fff;
       font-size: 14px;
       position: relative;
-      >div{
+      .baseInfo >div{
         margin-bottom: 15px;
       }
       .buttonBox{
@@ -48,7 +48,7 @@
         width: 80%;
       }
       input.code{
-        width: 11%;
+        width: 10%;
       }
     }
     .frDiv{
@@ -136,9 +136,11 @@
         }
         .name{
           width: 6%;
+          line-height: 42px;
         }
         .obligation{
           width: 6%;
+          line-height: 42px;
         }
         .demp{
           width: 8%;
@@ -151,6 +153,7 @@
         }
         .phone{
           width: 10%;
+          line-height: 42px;
         }
         .email{
           width: 12%;
@@ -315,6 +318,7 @@
         padding-left: 3%;
         border-bottom: 1px solid #dddddd;
         border-top: 1px solid #dddddd;
+        margin-top: 5px;
       }
     }
     .classificationOfPartners{
@@ -329,11 +333,12 @@
         width: auto;
         margin-right: 4%;
       }
-      .classificationOfPartnersCheckbox{
+      .partnersCheckbox{
         padding: 10px 0;
         padding-left: 3%;
         border-bottom: 1px solid #dddddd;
         border-top: 1px solid #dddddd;
+        margin-top: 5px;
       }
     }
     .wbkhStyle{
@@ -341,20 +346,20 @@
       h5{
         font-size: 16px;
         color: #333;
-        margin-top: 10px;
+        margin-top: 20px;
         margin-bottom: 10px;
       }
       h6{
         display: inline;
       }
       .fl1{
-        width: 25%;
+        width: 23%;
         height:234px;
         margin-right: 1%;
         .topLayer{
           height:90px;
           border: 1px solid #dddddd;
-          margin-bottom: 18px;
+          margin-bottom: 9px;
           padding:8px 0 8px 15px;
           label{
             width: auto;
@@ -371,7 +376,7 @@
           }
         }
         .bottomLayer{
-          height:92px;
+          height:100px;
           border: 1px solid #dddddd;
           padding:8px 15px;
           label{
@@ -395,6 +400,7 @@
         margin-right: 1%;
         label{
           width: 100px;
+          margin-right: 0;
         }
         div{
           height:50px;
@@ -409,7 +415,7 @@
       }
       .fl3{
         padding:10px 1%;
-        width: 45%;
+        width: 48%;
         height: 212px;
         border: 1px solid #dddddd;
         label{
@@ -430,7 +436,7 @@
           margin-right: 2%;
         }
         .tel{
-          width: 25%;
+          width: 22%;
         }
         .comAddress{
           width: 70%;
@@ -523,6 +529,12 @@
   .packUpCon{
     cursor: pointer;
   }
+  #callOff{
+    background-color: #f49633;
+  }
+  #close{
+    background-color: #f49633;
+  }
 }
 @media screen and (max-width: 1600px) {
   #partnerNew{
@@ -530,14 +542,15 @@
       form{
         font-size: 12px;
         .wbkhStyle{
+          padding-left: 10px;
           .fl1{
-            width: 25%;
+            width: 23%;
             height:234px;
             margin-right: 1%;
             .topLayer{
               height:90px;
               border: 1px solid #dddddd;
-              margin-bottom: 18px;
+              margin-bottom: 9px;
               padding:8px 15px;
               label{
                 width: auto;
@@ -554,7 +567,7 @@
               }
             }
             .bottomLayer{
-              height:92px;
+              height:100px;
               border: 1px solid #dddddd;
               padding:8px 15px;
               label{
@@ -566,13 +579,14 @@
               }
               input[type='text']{
                 height: 28px;
-                width: 40%;
+                width: 35%;
               }
             }
           }
           .fl2 label{
             width: 84px;
-          }
+            margin-right:0;
+        }
         }
       }
       input{

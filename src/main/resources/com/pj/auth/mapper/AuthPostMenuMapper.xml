@@ -25,6 +25,7 @@
                 #{id}
             </foreach>
         </if>
+        GROUP  BY  am.ID
         order BY  am.id
     </select>
     <select id="findMenuOrButtonByPostId" resultMap="BaseResultMap">

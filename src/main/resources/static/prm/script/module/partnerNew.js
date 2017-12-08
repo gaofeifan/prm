@@ -3,6 +3,7 @@
  */
 frontcookie();
 $(function(){
+    $('body').scrollTop(0);
     var codes = $('.code');
     var nn = 0;//控制编辑的是哪个code
     var urlParameter = vipspa.parse();
@@ -700,6 +701,9 @@ var  options ={
     url : 'http://'+gPathUrl+'/partner/details/insertPartnerDetails',
     type:'post',
     dataType:'json',
+    data:{
+        email:$.cookie('front_useremail')
+    },
     success:function(data) {
         if(data.code == '200'){
             alert('保存成功！');

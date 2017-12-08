@@ -18,9 +18,9 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
 
     List<PartnerDetails> selectListByQuery(String name, Integer offPartner, Integer blacklistPartner,String partnerCategory);
 
-    void updateByPrimaryKey(PartnerDetails partnerDetails , HttpServletRequest request);
+    void updateByPrimaryKey(PartnerDetails partnerDetails, HttpServletRequest request, String email);
 
-    void insertSelective(PartnerDetails partnerDetails , HttpServletRequest request);
+    void insertSelective(PartnerDetails partnerDetails , HttpServletRequest request, String email);
 
     /**
      *  校验字段值
@@ -34,7 +34,7 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
      *  根据主键删除id
      * @param id
      */
-    void deletePartnerDetailsById(Integer id);
+    void deletePartnerDetailsById(Integer id, String email);
 
     /**
      *  查询转移文件

@@ -71,8 +71,9 @@
                 email:userEmail
             },
             success: function (data) {
+                console.log(data);
                 $.each(data.data,function(i,val){
-                    var strMenuLi ='<li><a class="'+val.href+'" href="#'+val.href+'"><p>'+val.name+'</p></a></li>';
+                    var strMenuLi ='<li><a class="'+val.href+' '+isActive(val.href)+'" href="#'+val.href+'"><p>'+val.name+'</p></a></li>';
                     $('#left ul').append(strMenuLi);
                 });
             },

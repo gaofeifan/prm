@@ -38,4 +38,9 @@ public class PartnerLinkmanServiceImpl extends AbstractBaseServiceImpl<PartnerLi
         record.setDetailsId(detailsId);
         return this.partnerLinkmanMapper.select(record);
     }
+
+    @Override
+    public void insertList(List<PartnerLinkman> linkmans, String email) {
+        this.partnerLinkmanMapper.insertList(linkmans);
+    }
 }

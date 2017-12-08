@@ -69,7 +69,7 @@ $(function(){
             commitDate+=",{//id//:"+$(this).parent().prev().prev().val()+", //layerName//://"+$(this).parent().prev().val()+"//, //layerNumber//:"+$(this).val()+"}";
             i+=parseInt($(this).val());
         });
-        commitDate+="]}";
+        commitDate+="],//email//://"+$.cookie('front_useremail')+"//}";
         var commitDate2 = commitDate.replace(",", "");
         var commitDate3 = commitDate2.replace(new RegExp("//","g"), '"');
         if(i<=20){
@@ -84,7 +84,7 @@ $(function(){
                 location.reload();
             },
             error:function(){
-
+                    alert("信息修改异常！")
                 }
             }) ;
         } else {
