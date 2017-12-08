@@ -420,7 +420,7 @@ public class AspectServer {
                     for (int j = 0; j < BasicProperties.Basic_PartnerDeta_paramName.length; j++) {
                         if (declaredFields[i].getName().toString().equals(BasicProperties.Basic_PartnerDeta_paramName[j].toString())) {
                             actionData += " " + BasicProperties.Basic_PartnerDeta_paramVal[j];
-                            actionData += "< 删除数据 >（ " + o + " ） ; ";
+                            actionData += "< "+o+">（删除数据  ） ; ";
                             flage = true;
                             break;
                         }
