@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
 /***
@@ -21,21 +22,24 @@ import java.util.Map;
 public class EmailController {
 
 
+    @Resource
+   private ScheduledEmail scheduledEmail;
+
     //  用 hu信用等级
     @RequestMapping("/one")
     @ResponseBody
     @ApiOperation(value = "每月1号邮件" , httpMethod = "GET" , response = Object.class)
     public void sendEmail1day() throws Exception {
-        ScheduledEmail send = new ScheduledEmail();
-        send.findPartnerDetailsLastMonthDate();
+
+        scheduledEmail.findPartnerDetailsLastMonthDate();
     }
 
     @RequestMapping("/eight")
     @ResponseBody
     @ApiOperation(value = "每天八点邮件" , httpMethod = "GET" , response = Object.class)
     public void sendEmail8day() throws Exception {
-        ScheduledEmail send = new ScheduledEmail();
-        send.signingInTransit();
+
+        scheduledEmail.signingInTransit();
 
     }
 

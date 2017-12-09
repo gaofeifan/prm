@@ -195,14 +195,14 @@ public class AspectServer {
                         Method getMethod = pd.getReadMethod();//获得get方法  
                         Object o = getMethod.invoke(oldfile);//执行get方法返回一个Object
                      // 日志内容拼接
-                        actionData+=""+"ID( "+o+" )-目录等级";
+                        actionData+=""+"ID( "+(o==null?"":o)+" )-目录等级";
                     }
                     if(fiel.getName().equals("pId")){
                         PropertyDescriptor pd = new PropertyDescriptor(fiel.getName(), oldfile.getClass());
                         Method getMethod = pd.getReadMethod();//获得get方法  
                         Object o = getMethod.invoke(oldfile);//执行get方法返回一个Object
                         // 日志内容拼接
-                        actionData+=""+"< "+o+" >（ " + args[0] + " ） ; ";
+                        actionData+=""+"< "+(o==null?"":o)+" >（ " + args[0] + " ） ; ";
                         flage = true;
                     }
                 }
@@ -392,7 +392,7 @@ public class AspectServer {
                 for (int j = 0; j < BasicProperties.Basic_PartnerDeta_paramName.length; j++) {
                     if (declaredFields[i].getName().toString().equals(BasicProperties.Basic_PartnerDeta_paramName[j].toString())) {
                         actionData += " " + BasicProperties.Basic_PartnerDeta_paramVal[j];
-                        actionData += "< 新增数据 >（ " + o + " ） ; ";
+                        actionData += "< 新增数据 >（ " + (o==null?"":o) + " ） ; ";
                         flage = true;
                         break;
                     }
@@ -401,8 +401,9 @@ public class AspectServer {
 
             }
         }
+       String  data =  args[args.length-1].toString();
         // 操作日志追加
-        addLogMethod(flage, request, actionData,args[args.length-1].toString());
+        addLogMethod(flage, request, actionData,data);
         removeAttribute("new_partnerDetails", request);
     }
     // 删除  合伙人信息
@@ -435,7 +436,7 @@ public class AspectServer {
                     for (int j = 0; j < BasicProperties.Basic_PartnerDeta_paramName.length; j++) {
                         if (declaredFields[i].getName().toString().equals(BasicProperties.Basic_PartnerDeta_paramName[j].toString())) {
                             actionData += " " + BasicProperties.Basic_PartnerDeta_paramVal[j];
-                            actionData += "< "+o+">（删除数据  ） ; ";
+                            actionData += "< "+(o==null?"":o)+">（删除数据  ） ; ";
                             flage = true;
                             break;
                         }
@@ -479,7 +480,7 @@ public class AspectServer {
                     for (int j = 0; j < BasicProperties.Basic_PartnerDeta_paramName.length; j++) {
                         if (oldfields[i].getName().toString().equals(BasicProperties.Basic_PartnerDeta_paramName[j].toString())) {
                             actionData += " " + BasicProperties.Basic_PartnerDeta_paramVal[j];
-                            actionData += "< " + o + " >（ " + o2 + " ） ; ";
+                            actionData += "< " + (o==null?"":o) + " >（ " + (o2==null?"":o2) + " ） ; ";
                             flage = true;
                             break;
                         }
@@ -515,7 +516,7 @@ public class AspectServer {
                     for (int j = 0; j < BasicProperties.Basic_address_paramName.length; j++) {
                         if (old.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_address_paramName[j].toString())) {
                             actionData += " " + BasicProperties.Basic_address_paramVal[j];
-                            actionData += "< 新增数据 >（ " + o + " ） ; ";
+                            actionData += "< 新增数据 >（ " +( o==null?"":o )+ " ） ; ";
                             flage = true;
                             break;
                         }
@@ -555,7 +556,7 @@ public class AspectServer {
 
                         if (old.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_address_paramName[j].toString())) {
                             actionData += " " + BasicProperties.Basic_address_paramVal[j];
-                            actionData += "< " + o + " >（ 信息已删除 ） ; ";
+                            actionData += "< " + (o ==null?"":o)+ " >（ 信息已删除 ） ; ";
                             flage = true;
                             break;
                         }
@@ -591,7 +592,7 @@ public class AspectServer {
 
                         if (newdata.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_linkmanCN_paramName[j].toString())) {
                             actionData += " " + BasicProperties.Basic_linkmanCN_paramVal[j];
-                            actionData += "< 新增数据 >（ " + o + " ） ; ";
+                            actionData += "< 新增数据 >（ " + (o==null?"":o) + " ） ; ";
                             flage = true;
                             break;
                         }
@@ -629,7 +630,7 @@ public class AspectServer {
 
                             if (old.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_linkmanCN_paramName[j].toString())) {
                                 actionData += " " + BasicProperties.Basic_linkmanCN_paramVal[j];
-                                actionData += "< " + o + " >（ 信息已删除 ） ; ";
+                                actionData += "< " + (o==null?"":o) + " >（ 信息已删除 ） ; ";
                                 flage = true;
                                 break;
                             }
@@ -671,7 +672,7 @@ public class AspectServer {
 
                     if (!(o == null ? "" : o).toString().equals(o2 == null ? "" : o2.toString())) {
                             actionData += "   第"+(k+1)+"层 ";
-                            actionData += "< " + o + " >（" + o2 + " ） ; ";
+                            actionData += "< " + (o ==null?"":o)+ " >（" + (o2==null?"":o2) + " ） ; ";
                             flage = true;
                     }
 
@@ -714,7 +715,7 @@ public class AspectServer {
                     for (int j = 0; j < BasicProperties.Basic_UserLevel_paramName.length; j++) {
                         if (oldfields[i].getName().toString().equals(BasicProperties.Basic_UserLevel_paramName[j].toString())) {
                             actionData += " " + BasicProperties.Basic_UserLevel_paramVal[j];
-                            actionData += "< " + o + " >（ " + o2 + " ） ; ";
+                            actionData += "< " + (o ==null?"":o)+ " >（" + (o2==null?"":o2) + " ） ; ";
                             flage = true;
                             break;
                         }

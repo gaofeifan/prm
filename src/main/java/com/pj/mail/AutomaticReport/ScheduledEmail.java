@@ -18,16 +18,18 @@ import java.util.*;
 public class ScheduledEmail {
 
     private static final Logger logger = LoggerFactory.getLogger(ScheduledEmail.class);
-    private static final String basic_myEmailAccount = "gaofeifan@pj-l.com";
-    private static final String basic_myEmailPassword ="PJgff.1234";
-    private static final String basic_manager ="sevenboyliu@pj-l.com";
+  //  private static final String basic_myEmailAccount = "gaofeifan@pj-l.com";   // 个人
+  // private static final String basic_myEmailPassword ="PJgff.1234";
+    private static final String basic_myEmailAccount = "eams@pj-l.com"; // 测试
+    private static final String basic_myEmailPassword ="qwe.12345";
+ //   private static final String basic_manager ="sevenboyliu@pj-l.com"; // 测试
+ private static final String basic_manager ="";
 
 
-
-    @Autowired(required=false)
+    @Autowired
     private EmailService emailService;
 
-    @Autowired(required=false)
+    @Autowired
     private AuthUserService authUserService;
 
     //7.1     月新增Partner清单 每月一日，把上月所有新增的Partner，触发邮件列表给Admin；
@@ -41,9 +43,13 @@ public class ScheduledEmail {
         // 获取  上月新增的 partner
         try {
         List<PartnerDetails> lastPtData = this.emailService.findPartnerDetailsLastMonthDate();
-            String total = lastPtData+"月 新增Partner如下，如有问题，请联系相应Owner.";
-        StringBuffer mesagesVal = getMesagesVal(lastPtData,total);
-            SendEmailUtils.sendEWmail(mesagesVal,basic_myEmailAccount ,basic_myEmailPassword,basic_manager);
+        if (null ==lastPtData){
+            System.out.println("本月无新增人员");
+        }else{
+            String total = getLastdata()+"月 新增Partner如下，如有问题，请联系相应Owner.";
+            StringBuffer mesagesVal = getMesagesVal(lastPtData,total);
+            SendEmailUtils.sendEWmail(mesagesVal,basic_myEmailAccount ,basic_myEmailPassword,getadmin());
+        }
         }catch (Exception e){
           logger.error("月新增Partner清单 邮件信息获取异常请检查 exception   :" +e );
         }
@@ -63,7 +69,7 @@ public class ScheduledEmail {
         // 获取 签约在途 超过15 天的的信息
         List<PartnerDetails>  PartnerDetailsSigningInTransit = this.emailService.findPartnerDetailsGsigningInTransit();
         Integer lastReceiverID =0;
-        if(null!=PartnerDetailsSigningInTransit){
+        if(null!=PartnerDetailsSigningInTransit && PartnerDetailsSigningInTransit.size()!=0){
             Set<Integer> checkDuplicates = new HashSet<Integer>();
             Set<Integer> checkDuplicates2 = new HashSet<Integer>();
             // 获取 hash集合 去除重复接受者 id
@@ -111,7 +117,7 @@ public class ScheduledEmail {
                         // 邮件正文
                         String total = " 以下客户信用等级为签约在途，保存时间已经超过15/30个自然日，请注意跟进。";
                         StringBuffer mesagesVal = getMesagesVal(PartnerDetailsList2,total);
-                        SendEmailUtils.sendEWmail(mesagesVal, basic_myEmailAccount, basic_myEmailPassword, basic_manager);
+                        SendEmailUtils.sendEWmail(mesagesVal, basic_myEmailAccount, basic_myEmailPassword, getadmin());
                     }catch (Exception e){
                         logger.error("---发送给管理者的 签约在途信息统计邮件发送失败   "+e);
 
@@ -135,7 +141,7 @@ public class ScheduledEmail {
                             // 邮件正文
                             String total = " 以下提醒接收者（Owner）无效，请注意跟进。";
                             StringBuffer mesagesVal = getExceptionMesagesVal(userList);
-                            SendEmailUtils.sendEWmail(mesagesVal, basic_myEmailAccount, basic_myEmailPassword, basic_manager);
+                            SendEmailUtils.sendEWmail(mesagesVal, basic_myEmailAccount, basic_myEmailPassword, getadmin());
                         }catch (Exception e){
                             logger.error("---发送给管理者的异常信息统计邮件发送失败  ： "+e);
                         }
@@ -160,7 +166,7 @@ public class ScheduledEmail {
     // 获取邮件内容
     public StringBuffer getMesagesVal(List<PartnerDetails> PartnerDetailsList,String total){
         StringBuffer theMessage = new StringBuffer();
-        String lastdata = getLastdata();
+
         theMessage.append("<h2><font >"+total+"</font></h2>");
         theMessage.append("<hr>");
         theMessage.append("<table  border='1'>");
@@ -169,8 +175,8 @@ public class ScheduledEmail {
         if(null!=PartnerDetailsList){
             Integer i   = 1;
             for (PartnerDetails partnerDetails : PartnerDetailsList){
-                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetails.getCode()==null?"":partnerDetails.getCode()+"</td><td>"+partnerDetails.getMnemonicCode()==null?"":partnerDetails.getMnemonicCode()+"</td><td>"+partnerDetails.getChineseName()==null?"":partnerDetails.getChineseName()+"</td><td>"+partnerDetails.getChineseAbbreviation()==null?"":partnerDetails.getChineseAbbreviation()+"</td><td>"+partnerDetails.getEnglishName()==null?"":partnerDetails.getEnglishName()+"</td>" +
-                        "<td>"+partnerDetails.getEnglishAbbreviation()==null?"":partnerDetails.getEnglishAbbreviation()+"</td><td>"+partnerDetails.getReceiverName()==null?"":partnerDetails.getReceiverName()+"</td><td>"+partnerDetails.getScopeBusiness()==null?"":partnerDetails.getScopeBusiness()+"</td><td>"+partnerDetails.getPartnerCategory()==null?"":partnerDetails.getPartnerCategory()+"</td></tr>");
+                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetails.getCode() +"</td><td>"+partnerDetails.getMnemonicCode() +"</td><td>"+partnerDetails.getChineseName() +"</td><td>"+partnerDetails.getChineseAbbreviation() +"</td><td>"+partnerDetails.getEnglishName() +"</td>" +
+                        "<td>"+partnerDetails.getEnglishAbbreviation() +"</td><td>"+partnerDetails.getReceiverName() +"</td><td>"+partnerDetails.getScopeBusiness() +"</td><td>"+partnerDetails.getPartnerCategory() +"</td></tr>");
             }
         }
         theMessage.append("</table>");
@@ -187,7 +193,7 @@ public class ScheduledEmail {
         Integer i   = 1;
         if(null!=user){
             for (User use : user){
-                theMessage.append("<tr><td>"+ i++ +"</td><td>"+use.getUsername()==null?"":use.getUsername()+"</td><td>"+use.getCompanyname()==null?"":use.getCompanyname()+"</td><td>"+use.getDempname()==null?"":use.getDempname()+"</td><td>"+use.getPostname()==null?"":use.getPostname()+"</td><td>"+use.getPhone()==null?"":use.getPhone()+"</td><td>"+use.getEmail()==null?"":use.getEmail()+"</td></tr>");
+                theMessage.append("<tr><td>"+ i++ +"</td><td>"+use.getUsername() +"</td><td>"+use.getCompanyname() +"</td><td>"+use.getDempname() +"</td><td>"+use.getPostname() +"</td><td>"+use.getPhone() +"</td><td>"+use.getEmail() +"</td></tr>");
             }
         }
         theMessage.append("</table>");
@@ -207,6 +213,9 @@ public class ScheduledEmail {
         int days = (int) ((date2.getTime() - date1.getTime()) / (1000*3600*24));
         return days;
     }
-
+/*获取管理员 email*/
+ private String getadmin(){
+     return authUserService.selectAdminUserById().getEmail();
+ }
 
 }
