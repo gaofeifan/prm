@@ -168,7 +168,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         fieldName = this.toUnderlineJSONString(fieldName);
         Example example = new Example(PartnerDetails.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andCondition(fieldName+"=",fieldValue);
+        criteria.andCondition(fieldName+"=",fieldValue).andCondition("is_delete = 0");
         if(id != null){
             criteria.andCondition("id != ",id);
         }

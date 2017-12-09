@@ -9,5 +9,6 @@ public interface AuthUserService {
 
     public String getEmailsByPostId(String postId);
 
+    public User selectAdminUserById();
 
 }
