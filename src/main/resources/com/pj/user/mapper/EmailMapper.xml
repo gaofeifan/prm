@@ -38,7 +38,7 @@
         FROM
                    partner_details
         WHERE
-                 wbkh_credit_rating = '签约在途'
+                 wbkh_credit_rating like '%签约在途%'
         AND           DATEDIFF(now(),create_date)   &gt;= 15
         ORDER BY
                     receiver_id desc
