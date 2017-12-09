@@ -25,6 +25,8 @@
 }
 #partnerClassify .content .thead-outer .thead-core .thead-content .description {
   width: 42%;
+  text-align: left;
+  text-indent: 120px;
 }
 #partnerClassify .content .body-box .bodyList {
   height: 48px;
@@ -44,6 +46,8 @@
 }
 #partnerClassify .content .body-box .bodyList .description {
   width: 42%;
+  text-align: left;
+  text-indent: 100px;
 }
 @media screen and (max-width: 1600px) {
   #partnerClassify {

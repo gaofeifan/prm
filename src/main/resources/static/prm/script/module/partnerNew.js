@@ -13,6 +13,7 @@ $(function(){
     }else{
         $('#pId').val(partnerId);
     }
+    var parentsCode = '';
     /*控制代码填写区域*/
     if(isNaN(partnerId)){
         codes.prop('disabled','disabled');
@@ -25,6 +26,7 @@ $(function(){
                 id:partnerId
             },
             success: function (data) {
+                console.log(data.data.join(''));
                 if(data.code == '200'){
                     $.each(data.data,function (index,value) {
                         codes.eq(index).val(value).attr('disabled','disabled');
@@ -40,26 +42,6 @@ $(function(){
         })
     }
 
-    /*/!*置灰分类详情*!/
-    $('#externalClient input[type="text"]').val('').prop('disabled',true);//外部客户
-    $('#externalClient input[type="checkbox"]').removeAttr('checked').prop('disabled',true);
-    $('#externalClient select').removeAttr('selected').prop('disabled',true);
-
-    $('#eachAgent input').prop('disabled',true);//互为代理
-    $('#eachAgent select').prop('disabled',true);
-    $('#overseasAgency input').prop('disabled',true);//海外代理
-    $('#overseasAgency select').prop('disabled',true);
-    $('#trunkCarrier input').prop('disabled',true);//干线承运人
-    $('#trunkCarrier select').prop('disabled',true);
-    $('#uncontrollableSupplier input').prop('disabled',true);//不可控供应商
-    $('#uncontrollableSupplier select').prop('disabled',true);
-    $('#extendServiceProviders input').prop('disabled',true);//延伸服务供应商
-    $('#extendServiceProviders select').prop('disabled',true);
-    $('#consigneeAndConsigner input').prop('disabled',true);//收发货人
-    $('#consigneeAndConsigner select').prop('disabled',true);
-    $('#settlementObject input').prop('disabled',true);//结算对象
-    $('#settlementObject select').prop('disabled',true);
-     */
     var externalClientMark = $('#externalClient .mark');
     externalClientMark.css('color','#fff');
 
@@ -95,12 +77,10 @@ $(function(){
             //勾选
             eachAgentMark.css('color','#ed6e56');
             $('input[name="hwdlTaxRate"]').prop('required',true);//进项税率%
-            $('input[name="wbkhCreditRating"]').prop('required',true);//信用等级
-            $('input[name="wbkhTypeCreditPeriod"]').prop('required',true);//信用期限类型
-            $('input[name="wbkhCreditPeriod"]').prop('required',true);//信用期限（天）
-            $('input[name="wbkhLineCredit"]').prop('required',true);//信用额度(万元)
-            $('input[name="wbkhInvoiceType"]').prop('required',true);//开票类型
-            $('input[name="headingCode"]').prop('required',true);//纳税人识别码
+            $('.wbkhCreditPeriod2').prop('required',true);//信用等级
+            $('input[name="wbkhCreditPeriod2"]').prop('required',true);//信用期限（天）
+            $('input[name="wbkhLineCredit2"]').prop('required',true);//信用额度(万元)
+            $('input[name="headingCode2"]').prop('required',true);//纳税人识别码
         }else{//取消勾选
             eachAgentMark.css('color','#fff');
         }

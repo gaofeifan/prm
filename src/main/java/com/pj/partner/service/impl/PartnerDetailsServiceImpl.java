@@ -90,12 +90,19 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         linkman.setDetailsId(key);
         List<PartnerLinkman> linkmens = this.partnerLinkmanService.select(linkman);
         pd.setLinkmansList(linkmens);
+        Object[] codeList = this.getParentCodeList(pd.getId());
+        StringBuilder sb = new StringBuilder();
+        for (Object obj : codeList){
+            sb.append(obj);
+        }
+        pd.setCodes(sb.toString());
         return pd;
     }
 
 
     @Override
     public void updateByPrimaryKey(PartnerDetails record, HttpServletRequest request, String email){
+        record.setIsDelete(0);
         List<PartnerAddress> address = record.getAddressList();
         List<PartnerLinkman> linkmans = record.getLinkmansList();
         /**
@@ -107,8 +114,8 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         request.getSession().setAttribute("new_partnerAddress",address);
         request.getSession().setAttribute("old_partnerDetails",this.partnerDetailsMapper.selectByPrimaryKey(record.getId()));
         request.getSession().setAttribute("new_partnerDetails",record);
-        this.partnerLinkmanService.deletePartnerLinkmanByDetailsId(record.getId());
-        this.partnerAddressService.deletePartnerAddressByDetails(record.getId());
+        this.partnerLinkmanService.deletePartnerLinkmanByDetailsId(record.getId(),email);
+        this.partnerAddressService.deletePartnerAddressByDetails(record.getId(),email);
         if(linkmans != null){
             for(PartnerLinkman pl : linkmans){
                 pl.setDetailsId(record.getId());

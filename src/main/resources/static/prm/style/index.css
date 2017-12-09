@@ -24,6 +24,8 @@
 }
 #business .content .thead-outer .thead-core .thead-content .description {
   width: 30%;
+  text-align: left;
+  text-indent: 120px;
 }
 #business .content .body-box .bodyList {
   padding: 15px 0;
@@ -42,6 +44,8 @@
 }
 #business .content .body-box .bodyList .description {
   width: 30%;
+  text-align: left;
+  text-indent: 100px;
 }
 @media screen and (max-width: 1600px) {
   #business {
@@ -231,6 +235,8 @@
 }
 #partnerClassify .content .thead-outer .thead-core .thead-content .description {
   width: 42%;
+  text-align: left;
+  text-indent: 120px;
 }
 #partnerClassify .content .body-box .bodyList {
   height: 48px;
@@ -250,6 +256,8 @@
 }
 #partnerClassify .content .body-box .bodyList .description {
   width: 42%;
+  text-align: left;
+  text-indent: 100px;
 }
 @media screen and (max-width: 1600px) {
   #partnerClassify {
@@ -931,9 +939,24 @@
   background-position: 122px -228px;
   cursor: default;
 }
+#partnerNew {
+  /*.nav{
+    position: fixed;
+    z-index: 99;
+    top:120px;
+    left:220px;
+    right:0;
+    #navigationBar{
+      height:186px;
+      width: 100%;
+      background-color: yellow;
+    }
+  }*/
+}
 #partnerNew .content {
   color: #666;
   padding-bottom: 200px;
+  /* margin-top: 230px;*/
 }
 #partnerNew .content h4 {
   color: #333;

@@ -49,5 +49,5 @@ public interface PartnerDetailsMapper extends BaseMapper<PartnerDetails>{
      *  查询最大的code
      * @return
      */
-    String selectDetailsMaxCode();
+    Integer selectDetailsMaxCode();
 }

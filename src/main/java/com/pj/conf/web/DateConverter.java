@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
  * @parameter
  * @since 1.8
  */
-@Component
+@Configuration
 public class DateConverter implements Converter<String, Date> {
 	private static final String dateFormat = "yyyy-MM-dd HH:mm:ss";
 	private static final String shortDateFormat = "yyyy-MM-dd";

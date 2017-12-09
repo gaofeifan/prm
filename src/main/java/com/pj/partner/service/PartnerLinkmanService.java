@@ -1,7 +1,6 @@
 package com.pj.partner.service;
 
 import com.pj.conf.base.BaseService;
-import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.pojo.PartnerLinkman;
 
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
  */
 public interface PartnerLinkmanService extends BaseService<PartnerLinkman,Integer> {
 
-    void deletePartnerLinkmanByDetailsId(Integer detailsId);
+    void deletePartnerLinkmanByDetailsId(Integer detailsId, String email);
 
     List<PartnerLinkman> selectPartnerLinkmansByDetailsId(Integer id);
 

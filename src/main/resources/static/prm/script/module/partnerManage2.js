@@ -72,7 +72,6 @@ $(function(){
             data:{
             },
             success: function (data) {
-                console.log(data);
                 if(data.code == 200) {
                     var zNodes = data.data;
                     $.fn.zTree.init($("#tree"), setting, zNodes);
@@ -291,7 +290,8 @@ $(function(){
                 type: 'get',
                 dataType:'json',
                 data:{
-                    id:$('#toId').val()
+                    id:$('#toId').val(),
+                    email:$.cookie('front_useremail')
                 },
                 success: function (data) {
                     if(data.code == 200){
@@ -419,7 +419,16 @@ var seePartner = {
                 id:treeNodeId
             },
             success: function (data) {
-                $('input[name="code"]').val(data.data.code);
+                $.ajax({
+                    url: 'http://' + gPathUrl + '/partner/details/getParentCodeList',
+                    type: 'get',
+                    data: {
+                        id:treeNodeId
+                    },
+                    success: function (data) {
+                        $('input[name="code"]').val(data.data.join(''));//代码
+                    }
+                });
                 $('#mnemonicCode').val(data.data.mnemonicCode);//助记码
                 $('#chineseName').val(data.data.chineseName);//中文全称
                 $('#chineseAbbreviation').val(data.data.chineseAbbreviation);//中文简称

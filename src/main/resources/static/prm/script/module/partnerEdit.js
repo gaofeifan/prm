@@ -9,6 +9,7 @@ $(function(){
     var urlParameter = vipspa.parse();
     var id = urlParameter.param.id;
     $('#partnerId').val(id);
+
     /*加载信用等级*/
     $.ajax({
         type: 'get',
@@ -23,6 +24,7 @@ $(function(){
             $('.wbkhCreditRating').append(optionStr);
         }
     });
+
     /*回显各个字段的值*/
     $.ajax({
         url: 'http://'+gPathUrl+'/partner/details/selectPartnerDetailsById',
@@ -32,6 +34,7 @@ $(function(){
             id:id
         },
         success: function (data) {
+            console.log(data);
             $('#pId').val(data.data.pid);
             $('#mnemonicCode').val(data.data.code);//助记码
             $('#chineseName').val(data.data.chineseName);//中文全称
@@ -881,7 +884,8 @@ function  checkRepeat(that,name){
         type: 'get',
         data:{
             fieldName:$(that).attr('name'),
-            fieldValue:$(that).val()
+            fieldValue:$(that).val(),
+            id:id
         },
         success: function (data) {
             if(data.code == 200){

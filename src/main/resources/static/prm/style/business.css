@@ -24,6 +24,8 @@
 }
 #business .content .thead-outer .thead-core .thead-content .description {
   width: 30%;
+  text-align: left;
+  text-indent: 120px;
 }
 #business .content .body-box .bodyList {
   padding: 15px 0;
@@ -42,6 +44,8 @@
 }
 #business .content .body-box .bodyList .description {
   width: 30%;
+  text-align: left;
+  text-indent: 100px;
 }
 @media screen and (max-width: 1600px) {
   #business {

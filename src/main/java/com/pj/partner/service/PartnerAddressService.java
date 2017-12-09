@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface PartnerAddressService extends BaseService<PartnerAddress,Integer> {
 
-    void deletePartnerAddressByDetails(Integer detailsId);
+    void deletePartnerAddressByDetails(Integer detailsId, String email);
 
     List<PartnerAddress> selectPartnerAddressesByDetailsId(Integer detailsId);
 

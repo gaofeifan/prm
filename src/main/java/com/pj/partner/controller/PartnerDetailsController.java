@@ -7,6 +7,7 @@ import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.pojo.PartnerDetailsShifFile;
 import com.pj.partner.pojo.PartnerLinkman;
 import com.pj.partner.service.PartnerDetailsService;
+import com.pj.user.Utils.ObjectTrim;
 import com.pj.user.mapper.HierarchyMapper;
 import com.pj.user.pojo.Hierarchy;
 import io.swagger.annotations.Api;
@@ -106,6 +107,7 @@ public class PartnerDetailsController extends BaseController {
             List<PartnerAddress> list = JSONArray.toList(array, PartnerAddress.class);
             partnerDetails.setAddressList(list);
         }
+        partnerDetails = (PartnerDetails) ObjectTrim.beanAttributeValueTrim(partnerDetails);
         this.partnerDetailsService.updateByPrimaryKey(partnerDetails , getRequest(),email);
         return this.success();
     }
@@ -134,6 +136,7 @@ public class PartnerDetailsController extends BaseController {
             List<PartnerAddress> list = JSONArray.toList(array, PartnerAddress.class);
             partnerDetails.setAddressList(list);
         }
+        partnerDetails = (PartnerDetails) ObjectTrim.beanAttributeValueTrim(partnerDetails);
         this.partnerDetailsService.insertSelective(partnerDetails,getRequest(),email);
         return this.success();
     }

@@ -176,11 +176,11 @@ function  operationLog(){
                 '<div class="o-l-list clearfix">'+
                 '<div class="fl">'+
                 '<p><em>'+(value.userName||'')+'</em> &nbsp;&nbsp;&nbsp;&nbsp;<span>'+(value.createDate||'')+'</span></p>'+
-                '<p>ID：<span>'+(value.userId||'')+'</span>&nbsp;&nbsp;&nbsp;&nbsp; 公司：<span>'+(value.company||'')+'</span></p>'+
+                '<p style="height: auto;line-height: 28px;">ID：<span>'+(value.userId||'')+'</span>&nbsp;&nbsp;&nbsp;&nbsp; 公司：<span>'+(value.company||'')+'</span></p>'+
                 '<p>部门：<span>'+(value.department||'')+'</span> &nbsp;&nbsp;&nbsp;&nbsp;岗位：<span>'+(value.jobs||'')+'</span></p>'+
                 '</div>'+
                 '<div class="fr"> <h4>操作日志：</h4>'+
-                '<span>'+(value.action||'')+'</span>'+
+                '<span style="line-height: 28px;">'+(value.action||'')+'</span>'+
                 '</div>'+
                 '</div>';
                 $(str).appendTo($('#operationLog'));

@@ -67,14 +67,18 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public boolean[] checkIsEditHierarchy() {
-        String code = this.partnerDetailsMapper.selectDetailsMaxCode();
+        Integer length = this.partnerDetailsMapper.selectDetailsMaxCode();
         int num = 0;
         List<Hierarchy> list = this.hierarchyMapper.selectAll();
         boolean [] flag = new boolean[list.size()];
         int i = 0;
         for ( ;i<list.size();i++) {
+
             num += list.get(i).getLayerNumber();
-            if (code.length() < num) {
+            if( i ==0){
+                continue;
+            }
+            if (length < num) {
                 flag[i] = true;
             }
         }

@@ -402,6 +402,9 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     @Transient
     @ApiModelProperty(value = "客户分类" ,required = false)
     private String[] wbkhCustomerClasss;
+    @Transient
+    @ApiModelProperty(value = "总长度code" ,required = false)
+    private String codes;
 
     public String[] getScopeBusinesss() {
         if(null!=scopeBusiness){

@@ -26,7 +26,7 @@ public class PartnerLinkmanServiceImpl extends AbstractBaseServiceImpl<PartnerLi
     }
 
     @Override
-    public void deletePartnerLinkmanByDetailsId(Integer detailsId) {
+    public void deletePartnerLinkmanByDetailsId(Integer detailsId, String email) {
         PartnerLinkman partnerLinkman = new PartnerLinkman();
         partnerLinkman.setDetailsId(detailsId);
         this.partnerLinkmanMapper.delete(partnerLinkman);

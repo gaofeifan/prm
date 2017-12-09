@@ -29,7 +29,7 @@ public class PartnerAddressServiceImpl extends AbstractBaseServiceImpl<PartnerAd
     }
 
     @Override
-    public void deletePartnerAddressByDetails(Integer detailsId) {
+    public void deletePartnerAddressByDetails(Integer detailsId, String email) {
         PartnerAddress record = new PartnerAddress();
         record.setDetailsId(detailsId);
         this.partnerAddressMapper.delete(record);
