@@ -158,7 +158,7 @@ public class ScheduledEmail {
     public static String getLastdata( ) {
         Calendar calendar = Calendar.getInstance();//日历对象
         calendar.setTime(new Date());//设置当前日期
-        calendar.add(Calendar.MONTH, 1);//月份减一
+        calendar.add(Calendar.MONTH, -1);//月份减一
         SimpleDateFormat simpledate = new SimpleDateFormat("YYYY-MM");
         return  simpledate.format(calendar.getTime()) ;// 上个月的日期
     }
@@ -217,5 +217,6 @@ public class ScheduledEmail {
  private String getadmin(){
      return authUserService.selectAdminUserById().getEmail();
  }
+
 
 }
