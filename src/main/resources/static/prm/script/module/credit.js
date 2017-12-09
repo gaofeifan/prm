@@ -5,29 +5,12 @@ frontcookie();
 /*用户信用等级页面*/
 menuActive('credit');
 $(function(){
-    /*控制编辑按钮*/
-    $.ajax({
-        url: 'http://'+gPathUrl+'/auth/menu/findMenuOrButtonByPostId',
-        type: 'get',
-        async:false,
-        data:{
-            isMenu:false,
-            menuId:3,
-            email:$.cookie('front_useremail')
-        },
-        success: function (resp) {
-            $.each(resp.data,function(index,value){
-                if(value.name=="信用等级管理 - 修改"){
-                    $('#editBtn').show();
-                }
-            });
-        }
-    });
     /*获取用户信用等级列表 */
     $.ajax({
         type:'get',
         url:'http://'+gPathUrl+'/user/level',
         crossDomain: false,//支持跨域发送cookie
+        async:false,
         dataType:'json',
         success:function(data){
            var levels =  data.data;
@@ -75,6 +58,32 @@ $(function(){
         }
     });
 
+    /*控制编辑按钮*/
+    $.ajax({
+        url: 'http://'+gPathUrl+'/auth/menu/findMenuOrButtonByPostId',
+        type: 'get',
+        data:{
+            isMenu:false,
+            menuId:3,
+            email:$.cookie('front_useremail')
+        },
+        success: function (resp) {
+            if(resp.data.length >0){
+                $.each(resp.data,function(index,value){
+                    if(value.name=="信用等级管理 - 修改"){
+                        $('#editBtn').show();
+                    }
+                });
+            }else{
+                var inputRadio = $('input[type=radio]');
+                var inputCheckbox = $('input[type=checkbox]');
+                var remarkText = $('textarea');
+                inputRadio.attr('disabled',true);
+                inputCheckbox.attr('disabled',true);
+                remarkText.attr('disabled',true);
+            }
+        }
+    });
 
 /*确认按钮*/
     $("#confirmClick").click(function(){

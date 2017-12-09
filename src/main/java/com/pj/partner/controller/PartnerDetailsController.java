@@ -166,8 +166,10 @@ public class PartnerDetailsController extends BaseController {
     @RequestMapping(value = "/verifyValueRepeat")
     @ResponseBody
     public Object verifyValueRepeat(@ApiParam("字段名称") @RequestParam(name = "fieldName") String fieldName ,
-                                     @ApiParam("字段值") @RequestParam(name = "fieldValue") String fieldValue ){
-        boolean flag = this.partnerDetailsService.verifyValueRepeat(fieldName,fieldValue);
+                                     @ApiParam("字段值") @RequestParam(name = "fieldValue") String fieldValue ,
+                                     @ApiParam("id" ) @RequestParam(name = "id" , required = false) Integer id
+    ){
+        boolean flag = this.partnerDetailsService.verifyValueRepeat(id,fieldName,fieldValue);
         return this.success(flag);
     }
 
@@ -237,10 +239,10 @@ public class PartnerDetailsController extends BaseController {
      */
     @ApiOperation(value = "修改转移目录" ,httpMethod = "GET", response = Object.class)
     @RequestMapping(value = "/shiftPartnerDetailsFileByIds")
+
     @ResponseBody
     public Object shiftPartnerDetailsFileByIds(@ApiParam("id") @RequestParam(name = "id") Integer id,
-    @ApiParam("email") @RequestParam(name = "email") String email
-    ){
+    @ApiParam("email") @RequestParam(name = "email") String email){
         this.partnerDetailsService.shiftPartnerDetailsFileByIds(id,email);
         return this.success();
     }
@@ -260,4 +262,6 @@ public class PartnerDetailsController extends BaseController {
         boolean flag = this.partnerDetailsService.isEditCode(id);
         return this.success(flag);
     }
+
+
 }

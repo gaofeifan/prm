@@ -566,6 +566,24 @@
 #homePage .content .access-log .a-l-list .fr h4 {
   color: #333;
 }
+#homePage .h4Title {
+  color: #333;
+  height: 28px;
+  font-size: 18px;
+}
+#homePage .aboutUser {
+  height: auto;
+  line-height: 28px;
+}
+#homePage .aboutPower {
+  line-height: 28px;
+}
+/*
+@media screen and (max-width: 1600px) {
+  #homePage{
+    font-size: 14px;
+  }
+}*/
 #user .content {
   /*padding: 20px 20px 50px;*/
   color: #666;
@@ -636,6 +654,12 @@
 #user .content .user .email {
   width: 24%;
 }
+/*
+@media screen and (max-width: 1600px) {
+  #homePage{
+    font-size: 14px;
+  }
+}*/
 #power .content {
   background-color: #f8f7fa;
 }
@@ -965,16 +989,6 @@
 }
 #partnerNew .content .frDiv input {
   width: 60%;
-}
-#partnerNew .content span.mark {
-  color: #ed6e56;
-  font-size: 20px;
-  position: relative;
-  top: 5px;
-  margin-right: 5px;
-}
-#partnerNew .content span.mark.disableMark {
-  color: #fff;
 }
 #partnerNew .content .line {
   font-size: 1%;
@@ -1489,6 +1503,19 @@
 }
 #partnerNew #close {
   background-color: #f49633;
+}
+#partnerNew .mark {
+  color: #ed6e56;
+  font-size: 20px;
+  position: relative;
+  top: 5px;
+  margin-right: 5px;
+}
+#partnerNew .mark.disableMark {
+  color: #fff;
+}
+#partnerNew .wbkhStyle .mark {
+  background-color: #fff;
 }
 @media screen and (max-width: 1600px) {
   #partnerNew .content form {

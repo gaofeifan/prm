@@ -1,6 +1,5 @@
 package com.pj.partner.service.impl;
 
-import com.pj.auth.pojo.User;
 import com.pj.auth.service.AuthUserService;
 import com.pj.cache.PartnerDetailsCache;
 import com.pj.conf.base.AbstractBaseServiceImpl;
@@ -27,6 +26,7 @@ import java.util.*;
 /**
  * Created by Administrator on 2017/11/8.
  */
+
 @Service
 @Transactional
 public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDetails,Integer> implements PartnerDetailsService {
@@ -123,6 +123,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             this.partnerAddressService.insertList(address,email);
         }
        super.updateByPrimaryKey(record);
+        deleteParentMnemonicCode(record.getId());
     }
 
     @Override
@@ -147,10 +148,11 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             }
             this.partnerAddressService.insertList(address);
         }
+        deleteParentMnemonicCode(partnerDetails.getId());
     }
 
     @Override
-    public boolean verifyValueRepeat(String fieldName, String fieldValue) {
+    public boolean verifyValueRepeat(Integer id, String fieldName, String fieldValue) {
         try {
             boolean b = verifyfeildIsExist(fieldName);
         } catch (NoSuchFieldException e) {
@@ -158,7 +160,11 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         }
         fieldName = this.toUnderlineJSONString(fieldName);
         Example example = new Example(PartnerDetails.class);
-        example.createCriteria().andCondition(fieldName+"=",fieldValue);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andCondition(fieldName+"=",fieldValue);
+        if(id != null){
+            criteria.andCondition("id != ",id);
+        }
         List<PartnerDetails> pds =super.selectByExample(example);
 
         if(pds.size() != 0){
@@ -316,5 +322,18 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             return false;
         }
         return true;
+    }
+
+    /**
+     *  删除所有父集的助记码
+     * @param id
+     */
+    private void deleteParentMnemonicCode(Integer id){
+        List<PartnerDetails> parentList = this.getParentList(id);
+        parentList.remove(parentList.size()-1);
+        for (PartnerDetails pd : parentList){
+            pd.setMnemonicCode(null);
+            this.partnerDetailsMapper.updateByPrimaryKey(pd);
+        }
     }
 }

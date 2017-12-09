@@ -52,6 +52,11 @@
 </html>
 <script>
     var loginUsername = $.cookie('front_username');
+    if(loginUsername !='null'){
+        $('.user_name').text(loginUsername);
+    }else{
+        $('.user_name').text('');
+    }
     var userEmail = $.cookie('front_useremail');
     $(function(){
         if(!loginUsername){
@@ -71,7 +76,7 @@
                 email:userEmail
             },
             success: function (data) {
-                console.log(data);
+                $('#left ul').empty();
                 $.each(data.data,function(i,val){
                     var strMenuLi ='<li><a class="'+val.href+' '+isActive(val.href)+'" href="#'+val.href+'"><p>'+val.name+'</p></a></li>';
                     $('#left ul').append(strMenuLi);

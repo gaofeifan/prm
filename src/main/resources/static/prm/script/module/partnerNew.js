@@ -39,24 +39,76 @@ $(function(){
             }
         })
     }
-    /*加载信用等级*/
-    $.ajax({
-        type: 'get',
-        url: 'http://' + gPathUrl + '/user/level',
-        dataType: 'json',
-        success: function (data) {
-            var optionStr = '';
-            $.each(data.data,function(index,value){
-                optionStr = optionStr + '<option value="'+value.level+'-'+value.protocolType+'">'+value.level+'-'+value.protocolType+'</option>';
-            });
-            $('.wbkhCreditRating').append(optionStr);
-            if(data.data[0].protocolType =='协议/保函'){
-                $('.wbkhCreditPeriod').attr('disabled',false);
-                $('.wbkhLineCredit').attr('disabled',false);
-            }
+
+    /*/!*置灰分类详情*!/
+    $('#externalClient input[type="text"]').val('').prop('disabled',true);//外部客户
+    $('#externalClient input[type="checkbox"]').removeAttr('checked').prop('disabled',true);
+    $('#externalClient select').removeAttr('selected').prop('disabled',true);
+
+    $('#eachAgent input').prop('disabled',true);//互为代理
+    $('#eachAgent select').prop('disabled',true);
+    $('#overseasAgency input').prop('disabled',true);//海外代理
+    $('#overseasAgency select').prop('disabled',true);
+    $('#trunkCarrier input').prop('disabled',true);//干线承运人
+    $('#trunkCarrier select').prop('disabled',true);
+    $('#uncontrollableSupplier input').prop('disabled',true);//不可控供应商
+    $('#uncontrollableSupplier select').prop('disabled',true);
+    $('#extendServiceProviders input').prop('disabled',true);//延伸服务供应商
+    $('#extendServiceProviders select').prop('disabled',true);
+    $('#consigneeAndConsigner input').prop('disabled',true);//收发货人
+    $('#consigneeAndConsigner select').prop('disabled',true);
+    $('#settlementObject input').prop('disabled',true);//结算对象
+    $('#settlementObject select').prop('disabled',true);
+     */
+    var externalClientMark = $('#externalClient .mark');
+    externalClientMark.css('color','#fff');
+
+    $('.partnersCheckbox').on('change','.externalClient',function(){
+        var thisVal = $(this).prop('checked');
+        if(thisVal){
+            //勾选
+            externalClientMark.css('color','#ed6e56');
+            $('input[name="wbkhCustomerClass"]').prop('required',true);//客户分类
+            $('input[name="wbkhCreditRating"]').prop('required',true);//信用等级
+            $('input[name="wbkhTypeCreditPeriod"]').prop('required',true);//信用期限类型
+            $('input[name="wbkhCreditPeriod"]').prop('required',true);//信用期限（天）
+            $('input[name="wbkhLineCredit"]').prop('required',true);//信用额度(万元)
+            $('input[name="wbkhInvoiceType"]').prop('required',true);//开票类型
+            $('input[name="headingCode"]').prop('required',true);//纳税人识别码
+        }else{//取消勾选
+            externalClientMark.css('color','#fff');
+            $('input[name="wbkhCustomerClass"]').prop('required',false);//客户分类
+            $('input[name="wbkhCreditRating"]').prop('required',false);//信用等级
+            $('input[name="wbkhTypeCreditPeriod"]').prop('required',false);//信用期限类型
+            $('input[name="wbkhCreditPeriod"]').prop('required',false);//信用期限（天）
+            $('input[name="wbkhLineCredit"]').prop('required',false);//信用额度(万元)
+            $('input[name="wbkhInvoiceType"]').prop('required',false);//开票类型
+            $('input[name="headingCode"]').prop('required',false);//纳税人识别码
+        }
+    });
+    /*互为代理*/
+    var eachAgentMark = $('#eachAgent .mark');
+    eachAgentMark.css('color','#fff');
+    $('.partnersCheckbox').on('change','.eachAgent',function(){
+        var thisVal = $(this).prop('checked');
+        if(thisVal){
+            //勾选
+            eachAgentMark.css('color','#ed6e56');
+            $('input[name="hwdlTaxRate"]').prop('required',true);//进项税率%
+            $('input[name="wbkhCreditRating"]').prop('required',true);//信用等级
+            $('input[name="wbkhTypeCreditPeriod"]').prop('required',true);//信用期限类型
+            $('input[name="wbkhCreditPeriod"]').prop('required',true);//信用期限（天）
+            $('input[name="wbkhLineCredit"]').prop('required',true);//信用额度(万元)
+            $('input[name="wbkhInvoiceType"]').prop('required',true);//开票类型
+            $('input[name="headingCode"]').prop('required',true);//纳税人识别码
+        }else{//取消勾选
+            eachAgentMark.css('color','#fff');
         }
     });
 
+
+   /*加载信用等级*/
+    qualityRating();
     //光标移开，校验代码字段的填写
     codes.blur(function(){
         var that = this;
@@ -182,9 +234,13 @@ $(function(){
         if(selectVal=='协议/保函'){
             $('.wbkhCreditPeriod').attr('disabled',false);
             $('.wbkhLineCredit').attr('disabled',false);
+            $('.wbkhIsPayForAnother').attr('disabled',false);
+        }else if(selectVal=='签约在途'){
+            $('.wbkhIsPayForAnother').attr('disabled',false);
         }else{
             $('.wbkhCreditPeriod').val('').attr('disabled',true);
             $('.wbkhLineCredit').val('').attr('disabled',true);
+            $('.wbkhIsPayForAnother').attr('disabled',true);
         }
     });
     /*信用期限类型*/
@@ -314,7 +370,7 @@ $(function(){
         }
     });
     /*合作伙伴分类*/
-    $('.partnersCheckbox input').change(function(){
+    $('.partnersCheckbox').on('change','input',function(){
         var partnersCheck = $('.partnersCheckbox input');
         var flag1 = true;
         $.each(partnersCheck,function(index,value){
@@ -327,9 +383,7 @@ $(function(){
         }else{
             $('#partnerCategory').prop('required',false);
         }
-
     });
-
     /*加载地址列表*/
     addressObj.getAddressList();
     /*点击新增地址逻辑*/
@@ -662,6 +716,34 @@ $(function(){
         return false;//阻止表单提交
     })
 });
+/**
+ *加载信用等级
+ */
+function qualityRating(){
+    $.ajax({
+        type: 'get',
+        url: 'http://' + gPathUrl + '/user/level',
+        dataType: 'json',
+        async:false,
+        success: function (data) {
+            var optionStr = '';
+            $.each(data.data,function(index,value){
+                if(parseInt(value.effectiveness)== 1){
+                    optionStr = optionStr + '<option value="'+value.level+'-'+value.protocolType+'">'+value.level+'-'+value.protocolType+'</option>';
+                }
+            });
+            $('.wbkhCreditRating').append(optionStr);
+            if(data.data[0].protocolType =='协议/保函'){
+                 $('.wbkhCreditPeriod').attr('disabled',false);
+                 $('.wbkhLineCredit').attr('disabled',false);
+                $('.wbkhIsPayForAnother').attr('disabled',false);
+            }else if(data.data[0].protocolType =='签约在途 '){
+                $('.wbkhIsPayForAnother').attr('disabled',false);
+            }
+        }
+    });
+}
+
 var addressList = [];
 var addressObj = {
     getAddressList:function(){

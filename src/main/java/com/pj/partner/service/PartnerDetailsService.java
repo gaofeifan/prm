@@ -24,11 +24,13 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
 
     /**
      *  校验字段值
+     *
+     * @param id
      * @param fieldName
      * @param fieldValue
      * @return
      */
-    boolean verifyValueRepeat(String fieldName, String fieldValue);
+    boolean verifyValueRepeat(Integer id, String fieldName, String fieldValue);
 
     /**
      *  根据主键删除id

@@ -160,46 +160,48 @@
                 </div>
             </div>
             <!--业务范畴 end-->
+
             <!--合作伙伴分类 start-->
             <div class="classificationOfPartners">
                 <div>
                     <span class="mark">*</span><label for="">合作伙伴分类</label>
                     <div style="padding-left: 3%;" class="partnersCheckbox">
-                        <input type="checkbox" value="外部客户"><label for="">外部客户</label>
-                        <input type="checkbox" value="互为代理"><label for="">互为代理</label>
-                        <input type="checkbox" value="海外代理"><label for="">海外代理</label>
-                        <input type="checkbox" value="干线承运人"><label for="">干线承运人</label>
-                        <input type="checkbox" value="不可控供应商"><label for="">不可控供应商</label>
-                        <input type="checkbox" value="延伸服务供应商"><label for="">延伸服务供应商</label>
-                        <input type="checkbox" value="收发货人"><label for="">收发货人</label>
-                        <input type="checkbox" value="结算对象"><label for="">结算对象</label>
+                        <input class="externalClient" type="checkbox" value="外部客户"><label for="">外部客户</label>
+                        <input class="eachAgent" type="checkbox" value="互为代理"><label for="">互为代理</label>
+                        <input class="overseasAgency" type="checkbox" value="海外代理"><label for="">海外代理</label>
+                        <input class="trunkCarrier" type="checkbox" value="干线承运人"><label for="">干线承运人</label>
+                        <input class="uncontrollableSupplier" type="checkbox" value="不可控供应商"><label for="">不可控供应商</label>
+                        <input class="extendServiceProviders" type="checkbox" value="延伸服务供应商"><label for="">延伸服务供应商</label>
+                        <input class="consigneeAndConsigner" type="checkbox" value="收发货人"><label for="">收发货人</label>
+                        <input class="settlementObject" type="checkbox" value="结算对象"><label for="">结算对象</label>
                     </div>
                     <!--隐藏的合作伙伴分类-->
                     <input id="partnerCategory" class="hiddenInput" type="text" name="partnerCategory" required>
                 </div>
             </div>
             <!--合作伙伴分类 end-->
+
             <h4>分类详细信息</h4>
             <!--外部客户 start-->
-            <div class="wbkhStyle clearfix">
+            <div id="externalClient" class="wbkhStyle clearfix">
                 <h5>外部客户</h5>
                 <div class="fl fl1">
                     <div class="topLayer">
                         <div><span class="mark">*</span><h6>客户分类</h6></div>
                         <div class="customerClassBox">
-                            <input class="customerClass" type="checkbox"><label for="">直客</label>
-                            <input class="customerClass" type="checkbox"><label for="">关键客户</label>
-                            <input class="customerClass" type="checkbox"><label for="">代理</label>
-                            <input class="customerClass" type="checkbox"><label for="">海外客户</label>
+                            <input class="customerClass" type="checkbox" value="直客"><label for="">直客</label>
+                            <input class="customerClass" type="checkbox" value="关键客户"><label for="">关键客户</label>
+                            <input class="customerClass" type="checkbox" value="代理"><label for="">代理</label>
+                            <input class="customerClass" type="checkbox" value="海外客户"><label for="">海外客户</label>
                         </div>
-                        <input class="hiddenInput" id="wbkhCustomerClass" type="text" name="wbkhCustomerClass" required>
+                        <input class="hiddenInput" id="wbkhCustomerClass" type="text" name="wbkhCustomerClass">
                     </div>
                     <div class="bottomLayer">
-                        <input class="wbkhIsPayForAnother" type="checkbox"><h6>代垫</h6>
+                        <input class="wbkhIsPayForAnother" type="checkbox" disabled><h6>代垫</h6>
                         <input class="hiddenInput" name="wbkhIsPayForAnother"  type="text" value="0">
                         <div>
-                            <div><span class="mark">*</span><label style="margin-bottom: 5px;" for="">代垫期限（天）</label><input class="daiDian wbkhPaymentTerm" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" required disabled></div>
-                            <div><span class="mark">*</span><label for="">代垫额度（万元）</label><input class="daiDian wbkhPaidAmount" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" required disabled></div>
+                            <div><span class="mark">*</span><label style="margin-bottom: 5px;" for="">代垫期限（天）</label><input class="daiDian wbkhPaymentTerm" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
+                            <div><span class="mark">*</span><label for="">代垫额度（万元）</label><input class="daiDian wbkhPaidAmount" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                         </div>
                     </div>
                 </div>
@@ -217,10 +219,10 @@
                         </select>
                     </div>
                     <div><span class="mark">*</span><label for="">信用期限（天）</label>
-                        <input name="wbkhCreditPeriod" class="wbkhCreditPeriod" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" required disabled>
+                        <input name="wbkhCreditPeriod" class="wbkhCreditPeriod quality" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" required disabled>
                     </div>
                     <div><span class="mark">*</span><label for="">信用额度(万元)</label>
-                        <input name="wbkhLineCredit" class="wbkhLineCredit" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" required disabled>
+                        <input name="wbkhLineCredit" class="wbkhLineCredit quality" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" required disabled>
                     </div>
                 </div>
                 <div class="fl fl3">
@@ -231,15 +233,12 @@
                             <option value="增值税专票">增值税专票</option>
                             <option value="DebitNote">DebitNote</option>
                         </select>
-                        <!--<input type="radio" class="invoiceType1" name="wbkhInvoiceType" value="增值税普票"><label for="">增值税普票</label>
-                        <input type="radio" class="invoiceType2" name="wbkhInvoiceType" value="增值税专票"><label for="">增值税专票</label>
-                        <input type="radio" class="invoiceType3" name="wbkhInvoiceType" value="DebitNote"><label for="">DebitNote</label>-->
                     </div>
                     <div class="invoiceTypeTitle"><span>增值税普票</span></div>
                     <div class="bankInfo clearfix">
                         <div class="fl3Div">
                             <span class="mark">*</span><label for="">开户银行</label><input name="wbkhDepositBank" class="wbkhDepositBank bank" type="text">
-                            <span class="mark sbmMark">*</span><label for="">纳税人识别码</label><input name="headingCode" class="Taxpayers headingCode" type="text" required>
+                            <span class="mark sbmMark">*</span><label for="">纳税人识别码</label><input name="headingCode" class="Taxpayers headingCode" type="text">
                         </div>
                         <div class="fl3Div">
                             <span class="mark">*</span><label for="">银行账号</label><input name="wbkhBankAccount" class="bankNo wbkhBankAccount" type="text">
@@ -252,8 +251,9 @@
                 </div>
             </div>
             <!--外部客户 end-->
+
             <!--互为代理 start-->
-            <div class="wbkhStyle clearfix">
+            <div id="eachAgent" class="wbkhStyle clearfix">
                 <h5>互为代理</h5>
                 <div class="fl fl1">
                     <div class="topLayer">
@@ -267,11 +267,11 @@
                         </div>
                         <div style="margin-top: 10px">
                             <span class="mark">*</span><label class="income"  for="">进项税率%：</label>
-                            <input class="hwdlTaxRate" name="hwdlTaxRate" style="width: 40%;" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" required>
+                            <input class="hwdlTaxRate hwdlTaxRate2" name="hwdlTaxRate" style="width: 40%;" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')">
                         </div>
                     </div>
                     <div class="bottomLayer">
-                        <input class="wbkhIsPayForAnother" type="checkbox"><h6>代垫</h6>
+                        <input class="wbkhIsPayForAnother" type="checkbox" disabled><h6>代垫</h6>
                         <div>
                             <div><span class="mark">*</span><label style="margin-bottom: 5px;" for="">代垫期限（天）</label><input class="daiDian wbkhPaymentTerm" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" required disabled></div>
                             <div><span class="mark">*</span><label for="">代垫额度（万元）</label><input class="daiDian wbkhPaidAmount" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" required disabled></div>
@@ -326,11 +326,11 @@
             <!--互为代理 end-->
 
             <!--海外代理 start-->
-            <div class="wbkhStyle clearfix">
+            <div id="overseasAgency" class="wbkhStyle clearfix">
                 <h5>海外代理</h5>
                 <div class="fl fl1">
                     <div class="bottomLayer">
-                        <input class="wbkhIsPayForAnother"  type="checkbox"><h6>代垫</h6>
+                        <input class="wbkhIsPayForAnother"  type="checkbox" disabled><h6>代垫</h6>
                         <div>
                             <div><span class="mark">*</span><label style="margin-bottom: 5px;" for="">代垫期限（天）</label><input class="daiDian wbkhPaymentTerm" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" required disabled></div>
                             <div><span class="mark">*</span><label for="">代垫额度（万元）</label><input class="daiDian wbkhPaidAmount" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" required disabled></div>
@@ -359,8 +359,9 @@
                 </div>
             </div>
             <!--海外代理 end-->
+
             <!--干线承运人 start-->
-            <div class="wbkhStyle clearfix">
+            <div id="trunkCarrier" class="wbkhStyle clearfix">
                 <h5>干线承运人</h5>
                 <div style="padding:10px 20px 20px;border: 1px solid #dddddd;width:96%;">
                     <span class="mark">*</span><h6>服务类别</h6>
@@ -393,8 +394,9 @@
                 <div></div>
             </div>
             <!--干线承运人 end-->
+
             <!--不可控供应商 start-->
-            <div class="wbkhStyle clearfix">
+            <div id="uncontrollableSupplier" class="wbkhStyle clearfix">
                 <h5>不可控供应商</h5>
                 <div style="padding:10px 20px 20px;border: 1px solid #dddddd;width:96%;">
                     <span class="mark">*</span><h6>服务类别</h6>
@@ -426,8 +428,9 @@
                 <div></div>
             </div>
             <!--不可控供应商 end-->
+
             <!--延伸服务供应商 start-->
-            <div class="wbkhStyle clearfix">
+            <div id="extendServiceProviders" class="wbkhStyle clearfix">
                 <h5>延伸服务供应商</h5>
                 <div style="padding:10px 20px 20px;border: 1px solid #dddddd;width:96%;">
                     <span class="mark">*</span><h6>服务类别</h6>
@@ -459,8 +462,9 @@
                 <div></div>
             </div>
             <!--延伸服务供应商 start-->
+
             <!--收发货人 start-->
-            <div class="wbkhStyle clearfix">
+            <div id="consigneeAndConsigner" class="wbkhStyle clearfix">
                 <h5>收发货人</h5>
                 <div class="consignee clearfix">
                     <div>
@@ -499,8 +503,9 @@
                 </div>
             </div>
             <!--收发货人 end-->
+
             <!--结算对象 start-->
-            <div class="wbkhStyle clearfix">
+            <div id="settlementObject" class="wbkhStyle clearfix">
                 <h5>结算对象</h5>
                 <div class="fl fl3">
                     <div style="margin-bottom: 15px">

@@ -165,10 +165,10 @@ function  operationLog(){
         success: function (data) {
             $.each(data.data.permissionsOneWeekLsit, function (index, value) {
                 var str =
-            '<div class="a-l-list clearfix"><div style="width: 40%;" class="fl clearfix">'+
+            '<div class="a-l-list clearfix"><div style="width: 49%;" class="fl clearfix">'+
                 '<p>操作时间：<span>'+(value.createDate||"")+'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;操作类型：<span>'+(value.type||'')+'</span> </p>'+
-                '<p style="height:auto;">涉及用户：<span>'+(value.involvesUser||'')+'</span></p>'+
-            '</div><div style="width: 60%;" class="fr clearfix"><h4 style="color:#333;">涉及权限：</h4><span>'+(value.involvesPermissions||'')+'</span></div></div>';
+                '<p class="aboutUser">涉及用户：<span>'+(value.involvesUser||'')+'</span></p>'+
+            '</div><div style="width: 49%;" class="fr clearfix"><h4 class="h4Title">涉及权限：</h4><span class="aboutPower">'+(value.involvesPermissions||'')+'</span></div></div>';
                 $(str).appendTo($('#accessLog'));
             });
             $.each(data.data.operationOneDayLsit, function (index, value) {
