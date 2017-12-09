@@ -36,7 +36,7 @@ public class ScheduledEmail {
 
     //序号 代码 助记码 中文全称 中文简称 英文全称 英文简称 提醒接受者 业务范畴 合作伙伴分类
 
-   // @Scheduled(cron="0 15 0 1 * ?")
+    //@Scheduled(cron="0 15 0 1 * ?")
     public void findPartnerDetailsLastMonthDate() throws Exception {
         // 获取  上月新增的 partner
         try {
@@ -58,7 +58,7 @@ public class ScheduledEmail {
     //      序号 代码 助记码 中文全称 中文简称 英文全称 英文简称 提醒接受者 业务范畴 合作伙伴分类
 
     // @Scheduled(cron="60*10 * * * * ?")
-    //-@Scheduled(cron="0 0 8 * * ?")
+     //@Scheduled(cron="0 0 8 * * ?")
     public void signingInTransit() throws Exception {
         // 获取 签约在途 超过15 天的的信息
         List<PartnerDetails>  PartnerDetailsSigningInTransit = this.emailService.findPartnerDetailsGsigningInTransit();
@@ -78,7 +78,7 @@ public class ScheduledEmail {
                     List<PartnerDetails> PartnerDetailsList = new ArrayList<PartnerDetails>();
                     // 循环list集合
                     for (PartnerDetails partnerDetails : PartnerDetailsSigningInTransit){
-                        if(partnerDetails.getReceiverId()==it){
+                        if(partnerDetails.getReceiverId().equals(it)){
                             // 所有大于  15 天的 相同提醒人
                             PartnerDetailsList.add(partnerDetails);
                             int num = differentDaysByMillisecond(partnerDetails.getCreateDate(), new Date());
@@ -169,8 +169,8 @@ public class ScheduledEmail {
         if(null!=PartnerDetailsList){
             Integer i   = 1;
             for (PartnerDetails partnerDetails : PartnerDetailsList){
-                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetails.getCode()+"</td><td>"+partnerDetails.getMnemonicCode()+"</td><td>"+partnerDetails.getChineseName()+"</td><td>"+partnerDetails.getChineseAbbreviation()+"</td><td>"+partnerDetails.getEnglishName()+"</td>" +
-                        "<td>"+partnerDetails.getEnglishAbbreviation()+"</td><td>"+partnerDetails.getReceiverName()+"</td><td>"+partnerDetails.getScopeBusiness()+"</td><td>"+partnerDetails.getPartnerCategory()+"</td></tr>");
+                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetails.getCode()==null?"":partnerDetails.getCode()+"</td><td>"+partnerDetails.getMnemonicCode()==null?"":partnerDetails.getMnemonicCode()+"</td><td>"+partnerDetails.getChineseName()==null?"":partnerDetails.getChineseName()+"</td><td>"+partnerDetails.getChineseAbbreviation()==null?"":partnerDetails.getChineseAbbreviation()+"</td><td>"+partnerDetails.getEnglishName()==null?"":partnerDetails.getEnglishName()+"</td>" +
+                        "<td>"+partnerDetails.getEnglishAbbreviation()==null?"":partnerDetails.getEnglishAbbreviation()+"</td><td>"+partnerDetails.getReceiverName()==null?"":partnerDetails.getReceiverName()+"</td><td>"+partnerDetails.getScopeBusiness()==null?"":partnerDetails.getScopeBusiness()+"</td><td>"+partnerDetails.getPartnerCategory()==null?"":partnerDetails.getPartnerCategory()+"</td></tr>");
             }
         }
         theMessage.append("</table>");
@@ -187,7 +187,7 @@ public class ScheduledEmail {
         Integer i   = 1;
         if(null!=user){
             for (User use : user){
-                theMessage.append("<tr><td>"+ i++ +"</td><td>"+use.getUsername()+"</td><td>"+use.getCompanyname()+"</td><td>"+use.getDempname()+"</td><td>"+use.getPostname()+"</td><td>"+use.getPhone()+"</td><td>"+use.getEmail()+"</td></tr>");
+                theMessage.append("<tr><td>"+ i++ +"</td><td>"+use.getUsername()==null?"":use.getUsername()+"</td><td>"+use.getCompanyname()==null?"":use.getCompanyname()+"</td><td>"+use.getDempname()==null?"":use.getDempname()+"</td><td>"+use.getPostname()==null?"":use.getPostname()+"</td><td>"+use.getPhone()==null?"":use.getPhone()+"</td><td>"+use.getEmail()==null?"":use.getEmail()+"</td></tr>");
             }
         }
         theMessage.append("</table>");

@@ -273,8 +273,9 @@ public class AspectServer {
 
         // 比对 新旧权限
         if(null != authMenuList && null != oldAuthority ){
-            List<AuthMenu>  oldIsmenu = new LinkedList<AuthMenu>();
-            List<AuthMenu>  newIsmenu = new LinkedList<AuthMenu>();
+
+            HashSet<AuthMenu> oldIsmenu = new HashSet<AuthMenu>();
+            HashSet<AuthMenu> newIsmenu = new HashSet<AuthMenu>();
             /*查找旧权限中独有的权限*/
             for(AuthMenu olda : oldAuthority){
                  boolean  flage2 = true;
@@ -291,7 +292,9 @@ public class AspectServer {
                     if(olda.getIsMenu()!=1){
                         for(AuthMenu olda2 : oldAuthority){
                             if(olda.getPId().equals(olda2.getId())){
+
                                 oldIsmenu.add(olda2);
+
                             }
                         }
                     }
@@ -305,6 +308,7 @@ public class AspectServer {
                             if(button.getPId().equals(dat.getId())){
                                 actionData += dat.getName() + "-" + button.getName().split("-")[1] + " ; ";
                                 flage = true;
+                                break;
                             }
                         }
                 }
@@ -350,6 +354,7 @@ public class AspectServer {
                         if(button.getPId().equals(dat.getId())){
                             actionData += dat.getName() + "-" + button.getName().split("-")[1] + " ; ";
                             flage = true;
+                            break;
                         }
                     }
                 }
