@@ -273,8 +273,8 @@ public class AspectServer {
 
         // 比对 新旧权限
         if(null != authMenuList && null != oldAuthority ){
-            List<AuthMenu>  oldIsmenu = new ArrayList<AuthMenu>();
-            List<AuthMenu>  newIsmenu = new ArrayList<AuthMenu>();
+            List<AuthMenu>  oldIsmenu = new LinkedList<AuthMenu>();
+            List<AuthMenu>  newIsmenu = new LinkedList<AuthMenu>();
             /*查找旧权限中独有的权限*/
             for(AuthMenu olda : oldAuthority){
                  boolean  flage2 = true;
@@ -282,26 +282,31 @@ public class AspectServer {
                 for(AuthMenu news : authMenuList){
                     if(olda.getName().equals(news.getName())){
                         flage2 = false;
+                        break;
                     }
                 }
-                if(flage){
+                /*判断并添加父级*/
+                if(flage2){
                     oldIsmenu.add(olda);
-                }
-            }
-            // 循环获取 菜单
-            for (AuthMenu menu : oldIsmenu) {
-
-                if (menu.getIsMenu() == 1) {
-
-                    // 循环  获取按钮
-                    for (AuthMenu button : oldIsmenu) {
-                        if (button.getIsMenu() == 0) {
-                            if ((button.getPId() == null ? 0 : button.getPId()) == menu.getId()) {
-                                actionData += menu.getName() + "-" + button.getName().split("-")[1] + " ; ";
-                                flage = true;
+                    if(olda.getIsMenu()!=1){
+                        for(AuthMenu olda2 : oldAuthority){
+                            if(olda.getPId().equals(olda2.getId())){
+                                oldIsmenu.add(olda2);
                             }
                         }
                     }
+                }
+
+            }
+            // 循环获取 菜单
+            for (AuthMenu button : oldIsmenu) {
+                if (button.getIsMenu() == 0) {
+                        for(AuthMenu dat : oldIsmenu){
+                            if(button.getPId().equals(dat.getId())){
+                                actionData += dat.getName() + "-" + button.getName().split("-")[1] + " ; ";
+                                flage = true;
+                            }
+                        }
                 }
             }
             try {
@@ -317,26 +322,34 @@ public class AspectServer {
                 boolean  flage2 = true;
 
                 for(AuthMenu olda : oldAuthority){
+
                     if(news.getName().equals(olda.getName())){
                         flage2 = false;
+                        break;
                     }
                 }
-                if(flage){
+                if(flage2){
                     newIsmenu.add(news);
-                }
-            }
-            // 循环获取 菜单
-            for (AuthMenu menu : newIsmenu) {
-
-                if (menu.getIsMenu() == 1) {
-
-                    // 循环  获取按钮
-                    for (AuthMenu button : newIsmenu) {
-                        if (button.getIsMenu() == 0) {
-                            if ((button.getPId() == null ? 0 : button.getPId()) == menu.getId()) {
-                                actionData += menu.getName() + "-" + button.getName().split("-")[1] + " ; ";
-                                flage = true;
+                    if(news.getIsMenu()!=1){
+                        for(AuthMenu news2 : authMenuList){
+                            if(news.getPId().equals(news2.getId())){
+                                newIsmenu.add(news2);
+                                break;
                             }
+                        }
+                    }
+                }
+
+            }
+            actionData = "权限管理  ：";
+            // 循环获取 菜单
+            for (AuthMenu button : newIsmenu) {
+
+                if (button.getIsMenu() == 0) {
+                    for(AuthMenu dat : newIsmenu){
+                        if(button.getPId().equals(dat.getId())){
+                            actionData += dat.getName() + "-" + button.getName().split("-")[1] + " ; ";
+                            flage = true;
                         }
                     }
                 }
@@ -347,9 +360,6 @@ public class AspectServer {
                 System.out.println(e);
             }
         }
-
-
-
     }
 
     // 新增  合伙人信息
