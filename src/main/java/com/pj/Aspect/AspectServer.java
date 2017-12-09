@@ -775,7 +775,7 @@ public class AspectServer {
             operation.setUserName(user.getUsername());
             operation.setDepartment(user.getDempname());
             operation.setCompany(user.getCompanyname());
-            operation.setJobs(user.getDempname());
+            operation.setJobs(user.getPostname());
             // 追加日志记录
             aspectServer.logService.addOperationlLog(operation);
         }
