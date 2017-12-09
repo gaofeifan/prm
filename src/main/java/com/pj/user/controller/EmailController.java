@@ -25,21 +25,19 @@ public class EmailController {
     @RequestMapping("/one")
     @ResponseBody
     @ApiOperation(value = "每月1号邮件" , httpMethod = "GET" , response = Object.class)
-    public void sendEmail1day(){
+    public void sendEmail1day() throws Exception {
         ScheduledEmail send = new ScheduledEmail();
+        send.findPartnerDetailsLastMonthDate();
     }
 
     @RequestMapping("/eight")
     @ResponseBody
     @ApiOperation(value = "每天八点邮件" , httpMethod = "GET" , response = Object.class)
-    public void sendEmail8day(){
+    public void sendEmail8day() throws Exception {
+        ScheduledEmail send = new ScheduledEmail();
+        send.signingInTransit();
 
     }
 
-    @RequestMapping("/fifteen")
-    @ResponseBody
-    @ApiOperation(value = "超15 天邮件" , httpMethod = "GET" , response = Object.class)
-    public void sendEmail15day(){
 
-    }
 }
