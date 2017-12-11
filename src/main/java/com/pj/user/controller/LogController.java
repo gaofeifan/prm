@@ -57,6 +57,8 @@ public class LogController extends BaseController {
         return  this.success(pagination);
 
     }
+
+
     @ApiOperation(value = "日志-  2. 首页日志 展示当天数据  与 展示一周数据" , httpMethod = "POST" , response = Object.class)
     @RequestMapping("/home")
     @ResponseBody
@@ -68,6 +70,5 @@ public class LogController extends BaseController {
         map.put("permissionsOneWeekLsit",permissionsLsit);
         return  this.success(map);
     }
-
 
 }

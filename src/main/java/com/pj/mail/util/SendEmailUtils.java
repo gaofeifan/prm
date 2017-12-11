@@ -27,13 +27,13 @@ public class SendEmailUtils {
 	// 网易163邮箱的 SMTP 服务器地址为: smtp.163.com
 	public static String myEmailSMTPHost = basic_myEmailSMTPHost;
 
+	public synchronized  static void  sendEWmail(StringBuffer theMessage, String basic_myEmailAccount, String basic_myEmailPassword, String foremail) throws Exception {
 
-	public static void sendEWmail(StringBuffer theMessage, String basic_myEmailAccount, String basic_myEmailPassword, String foremail) throws Exception {
 
 // 发件人的 邮箱 和 密码（替换为自己的邮箱和密码）
 		// PS: 某些邮箱服务器为了增加邮箱本身密码的安全性，给 SMTP 客户端设置了独立密码（有的邮箱称为“授权码”）,
 		//     对于开启了独立密码的邮箱, 这里的邮箱密码必需使用这个独立密码（授权码）。
-	  String myEmailAccount = basic_myEmailAccount;
+	  String myEmailAccount = basic_myEmailAccount;    // 	shihuayong@pj-l.com
 	  String myEmailPassword = basic_myEmailPassword;
 			// 收件人邮箱（替换为自己知道的有效邮箱）
 		  String receiveMailAccount = foremail;
@@ -42,7 +42,7 @@ public class SendEmailUtils {
 		props.setProperty("mail.transport.protocol", "smtp");   // 使用的协议（JavaMail规范要求）
 		props.setProperty("mail.smtp.host", myEmailSMTPHost);   // 发件人的邮箱的 SMTP 服务器地址
 		props.setProperty("mail.smtp.auth", "true");            // 需要请求认证
-
+		props.put("mail.smtp.starttls.enable", "true");
 		// PS: 某些邮箱服务器要求 SMTP 连接需要使用 SSL 安全认证 (为了提高安全性, 邮箱支持SSL连接, 也可以自己开启),
 		//     如果无法连接邮件服务器, 仔细查看控制台打印的 log, 如果有有类似 “连接失败, 要求 SSL 安全连接” 等错误,
 		//     打开下面 /* ... */ 之间的注释代码, 开启 SSL 安全连接。

@@ -22,7 +22,7 @@
                log_permissions
         where 1=1
             <if test="startDate != '' and startDate != null and endDate !=null and endDate !=''" >
-                and  create_date BETWEEN  #{startDate,jdbcType=VARCHAR} and #{endDate,jdbcType=VARCHAR}
+                and    DATE_FORMAT(create_date, '%Y-%m-%d')   &gt;=   DATE_FORMAT( #{startDate,jdbcType=VARCHAR}, '%Y-%m-%d')   and   DATE_FORMAT(create_date, '%Y-%m-%d') &lt;=  DATE_FORMAT(#{endDate,jdbcType=VARCHAR}, '%Y-%m-%d')
             </if>
             <if test="showWeekData==true" >
                and  date(create_date) &gt;= curdate()-7
