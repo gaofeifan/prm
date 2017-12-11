@@ -126,3 +126,36 @@ function backCookie(){
         window.location.href="./login.html";
     }
 }
+/**
+ *
+ * @param i
+ * @param num
+ * @returns {boolean}
+ * @constructor
+ */
+function StatusOn(i,num){
+    if( isNaN(i) || i > num || i <= 0){
+        return false;
+    }else{
+        var statusDivs = document.getElementsByClassName("status-div");
+        for(var j = 0;j < statusDivs.length;j++){
+            statusDivs[j].classList.remove("active");
+            statusDivs[j].children[1].classList.remove("active");
+            statusDivs[j].classList.remove("on");
+            statusDivs[j].children[1].classList.remove("on");
+            /* statusDivs[j].classList.remove("next");*/
+        }
+        for(var j = 0;j < statusDivs.length;j++){
+            if(j < i){
+                statusDivs[j].classList.add("active");
+                statusDivs[j].children[1].classList.add("active");
+            }
+        }
+        var nowStatus = statusDivs[i-1].children;
+        nowStatus[1].classList.add("on");
+        statusDivs[i-1].classList.add("on");
+        /*if(i<num){
+         statusDivs[i].classList.add("next");
+         }*/
+    }
+}

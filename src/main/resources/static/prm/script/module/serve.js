@@ -6,6 +6,7 @@
  */
 frontcookie();
 menuActive('serve');
+$(window).unbind("scroll");
 $(function(){
 
 });

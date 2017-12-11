@@ -3,7 +3,7 @@
  */
 frontcookie();
 $(function(){
-    $('body').scrollTop(0);
+    $("body,html").scrollTop(0);
     var codes = $('.code');
     var nn = 0;//控制编辑的是哪个code
     var urlParameter = vipspa.parse();
@@ -26,7 +26,6 @@ $(function(){
                 id:partnerId
             },
             success: function (data) {
-                console.log(data.data.join(''));
                 if(data.code == '200'){
                     $.each(data.data,function (index,value) {
                         codes.eq(index).val(value).attr('disabled','disabled');
@@ -41,6 +40,55 @@ $(function(){
             }
         })
     }
+    /*flow*/
+    StatusOn(1,13);
+    /*滚动*/
+    $('#navigationBar').on('click','.status-div',function(){
+        var thisIndex = $(this).index();
+        var _top = parseInt($('#newForm .lump').eq(thisIndex).offset().top);
+        $("body,html").animate({scrollTop:(_top-288)},500);
+    });
+    var _top1 = parseInt($('#newForm .lump').eq(0).offset().top);
+    var _top2 = parseInt($('#newForm .lump').eq(1).offset().top);
+    var _top3 = parseInt($('#newForm .lump').eq(2).offset().top);
+    var _top4 = parseInt($('#newForm .lump').eq(3).offset().top);
+    var _top5 = parseInt($('#newForm .lump').eq(4).offset().top);
+    var _top6 = parseInt($('#newForm .lump').eq(5).offset().top);
+    var _top7 = parseInt($('#newForm .lump').eq(6).offset().top);
+    var _top8 = parseInt($('#newForm .lump').eq(7).offset().top);
+    var _top9 = parseInt($('#newForm .lump').eq(8).offset().top);
+    var _top10 = parseInt($('#newForm .lump').eq(9).offset().top);
+    var _top11 = parseInt($('#newForm .lump').eq(10).offset().top);
+    var _top12 = parseInt($('#newForm .lump').eq(11).offset().top);
+    $(window).scroll(function() {
+        var htmlScrollTop = parseInt($(document).scrollTop());
+        if(_top1 <= htmlScrollTop && htmlScrollTop < _top2){ //基础表单
+            StatusOn(2,13);
+        }else if(_top2 < htmlScrollTop && htmlScrollTop<_top3){//联系地址
+            StatusOn(3,13);
+        }else if(_top3 < htmlScrollTop && htmlScrollTop<_top4){//联系人资料
+            StatusOn(4,13);
+        }else if(_top4 < htmlScrollTop && htmlScrollTop < _top5){//业务范畴
+            StatusOn(5,13);
+        }else if(_top5 < htmlScrollTop && htmlScrollTop<_top6){//合作伙伴分类
+            StatusOn(6,13);
+        }else if(_top6 < htmlScrollTop && htmlScrollTop<_top7){//外部客户
+            StatusOn(7,13);
+        }else if(_top7 < htmlScrollTop && htmlScrollTop<_top8){//互为代理
+            StatusOn(8,13);
+        }else if(_top8 < htmlScrollTop && htmlScrollTop<_top9){//海外代理
+            StatusOn(9,13);
+        }else if(_top9 < htmlScrollTop && htmlScrollTop<_top10){//干线承运人
+            StatusOn(10,13);
+        }else if(_top10 < htmlScrollTop && htmlScrollTop<_top11){//不可控供应商
+            StatusOn(11,13);
+        }else if(_top11 < htmlScrollTop && htmlScrollTop<_top12){//延伸服务供应商
+            StatusOn(12,13);
+        }else if(_top12 < htmlScrollTop && htmlScrollTop<_top13){//收发货人
+            StatusOn(13,13);
+        }
+    });
+
 
     var externalClientMark = $('#externalClient .mark');
     externalClientMark.css('color','#fff');
@@ -240,6 +288,9 @@ $(function(){
         var selectInvoiceType = $(this).val();
         $('.wbkhInvoiceType').val(selectInvoiceType);
         $('.invoiceTypeTitle').text(selectInvoiceType);
+        if(PartnersCheckbox.indexOf('外部客户') > 0){
+
+        }
         if(selectInvoiceType =="增值税普票"){
             $('.bankInfo .mark').hide();
             $('.sbmMark').show();
@@ -625,8 +676,9 @@ $(function(){
         $('#scopeBusiness').val(businessCheckbox.join(','));
     });
     /*合作伙伴*/
+    var PartnersCheckbox = [];
     $('.partnersCheckbox input').change(function(){
-        var PartnersCheckbox = [];
+        PartnersCheckbox = [];
         $('#partnerCategory').val(PartnersCheckbox.join(','));
         $('.partnersCheckbox').find("input:checkbox").each(function(i,n) {
             if ($(n).prop('checked') === true) {
@@ -666,6 +718,7 @@ $(function(){
 
     /*取消提交*/
     $('#callOff').click(function(){
+        $(window).unbind("scroll");
         location.hash = vipspa.stringify('partnerManage');
     });
     /*表单提交*/
@@ -776,6 +829,7 @@ var  options ={
     success:function(data) {
         if(data.code == '200'){
             alert('保存成功！');
+            $(window).unbind("scroll");
             location.hash = vipspa.stringify('partnerManage');
         }
     },error:function() {

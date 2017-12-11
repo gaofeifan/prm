@@ -3,6 +3,7 @@
  */
 frontcookie();
 menuActive('hierarchy');
+$(window).unbind("scroll");
 $(function(){
     /*控制编辑按钮*/
     $.ajax({
@@ -22,30 +23,16 @@ $(function(){
             });
         }
     });
-    var booleans;
-    /*调用接口判断本层是否已经被使用是否可以修改*/
-    $.ajax({
-        type:'get',
-        url:'http://'+gPathUrl+'/user/checkIsEditHierarchy',
-        crossDomain: false,//支持跨域发送cookie
-        async:false,
-        dataType:'json',
-        success:function(data){
-            booleans = data.data;
-        }})
-
         /*获取层数信息*/
         $.ajax({
             type:'get',
             url:'http://'+gPathUrl+'/user/hierarchy',
             crossDomain: false,//支持跨域发送cookie
-            async:false,
             dataType:'json',
             success:function(data){
-                    var baseData =  data.data;
+                var baseData =  data.data;
 
-
-                       /* 循环追加信用等级信息到页面中*/
+                /* 循环追加信用等级信息到页面中*/
                 for (var i = 0 ; i<baseData.length;i++) {
 
                     /*追加第几层*/
@@ -59,15 +46,11 @@ $(function(){
                     $("#base_body_"+i+"").append('<input type="text"  hidden = "true" name = "layerName" value='+baseData[i].layerName+'> ');
 
                     /*追加 下拉数字*/
-                    $("#base_body_"+i+"").append(' <select  id = "select_'+i+'" name=""> <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option><option value="5">5</option><option value="6">6</option></select> ');
+                    $("#base_body_"+i+"").append(' <select name=""> <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option><option value="5">5</option><option value="6">6</option></select> ');
 
                     /*遍历默认选中数字*/
                     $("#base_body_"+i+" option[value="+baseData[i].layerNumber+"]").attr("selected", true);
-                    /*置灰*/
-                    if(!booleans[i]){
-                        $("#select_"+i+"").attr("disabled",true);
-                        $("#select_"+i+"").attr("style","background-color: #bdbdbd");
-                    }
+
                 }
             },
             error:function(){

@@ -23,7 +23,7 @@
   width: 20%;
 }
 #business .content .thead-outer .thead-core .thead-content .description {
-  width: 30%;
+  width: 40%;
   text-align: left;
   text-indent: 120px;
 }
@@ -43,7 +43,7 @@
   width: 20%;
 }
 #business .content .body-box .bodyList .description {
-  width: 30%;
+  width: 40%;
   text-align: left;
   text-indent: 100px;
 }
@@ -88,7 +88,7 @@
   width: 10%;
 }
 #credit .content .thead-outer .thead-core .thead-content .protocolType {
-  width: 25%;
+  width: 26%;
 }
 #credit .content .thead-outer .thead-core .thead-content .valid {
   width: 10%;
@@ -112,7 +112,7 @@
   width: 10%;
 }
 #credit .content .body-box .bodyList .protocolType {
-  width: 25%;
+  width: 26%;
 }
 #credit .content .body-box .bodyList .valid {
   width: 10%;
@@ -234,7 +234,7 @@
   width: 15%;
 }
 #partnerClassify .content .thead-outer .thead-core .thead-content .description {
-  width: 42%;
+  width: 60%;
   text-align: left;
   text-indent: 120px;
 }
@@ -255,7 +255,7 @@
   width: 15%;
 }
 #partnerClassify .content .body-box .bodyList .description {
-  width: 42%;
+  width: 60%;
   text-align: left;
   text-indent: 100px;
 }
@@ -478,6 +478,9 @@
   left: 0;
   right: 0;
   z-index: 999;
+  display: none;
+}
+#partnerManage .clickLink {
   display: none;
 }
 #homePage .content {
@@ -939,24 +942,10 @@
   background-position: 122px -228px;
   cursor: default;
 }
-#partnerNew {
-  /*.nav{
-    position: fixed;
-    z-index: 99;
-    top:120px;
-    left:220px;
-    right:0;
-    #navigationBar{
-      height:186px;
-      width: 100%;
-      background-color: yellow;
-    }
-  }*/
-}
 #partnerNew .content {
   color: #666;
   padding-bottom: 200px;
-  /* margin-top: 230px;*/
+  margin-top: 210px;
 }
 #partnerNew .content h4 {
   color: #333;
@@ -1540,6 +1529,115 @@
 #partnerNew .wbkhStyle .mark {
   background-color: #fff;
 }
+#specialNav {
+  height: 230px;
+  position: fixed;
+  z-index: 99;
+  top: 60px;
+  left: 220px;
+  right: 20px;
+  background-color: #f8f7fa;
+}
+#specialNav #navigationBar {
+  padding: 0 2%;
+  background-color: #fff;
+  box-shadow: 0 2px 5 #000;
+  margin-top: 20px;
+}
+#specialNav #navigationBar h3 {
+  font-size: 18px;
+  color: #ed6e56;
+  position: relative;
+  top: 25px;
+}
+#specialNav #navigationBar .title {
+  font-size: 18px;
+  color: #333;
+  text-align: center;
+  margin: 0 0 10px 0;
+}
+#specialNav h2 {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #666;
+  border-left: 6px solid #ed6e56;
+  text-indent: 16px;
+}
+#specialNav #flow > div {
+  width: 7.68%;
+  height: 90px;
+  float: left;
+  cursor: pointer;
+}
+#specialNav .bor-Size {
+  width: 100%;
+  height: 12px;
+  position: relative;
+}
+#specialNav .borden-l {
+  border-top: 3px solid #bfc0c1;
+  width: 40%;
+  height: 0;
+  margin: 4px auto;
+  position: absolute;
+  left: 0;
+}
+#specialNav .borden-r {
+  border-top: 3px solid #bfc0c1;
+  width: 40%;
+  height: 0;
+  margin: 4px auto;
+  position: absolute;
+  right: 0;
+}
+#specialNav .borden1 {
+  display: none;
+}
+#specialNav .yuan {
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  position: absolute;
+  left: 50%;
+  margin-left: -6px;
+  background-color: #bfc0c1;
+}
+#specialNav .active .yuan {
+  background-color: #ed6e56;
+}
+#specialNav .active .borden-r {
+  border-top: 3px solid #ed6e56;
+}
+#specialNav .active .borden-l {
+  border-top: 3px solid #ed6e56;
+}
+#specialNav .on .yuan {
+  background-color: #ed6e56;
+}
+#specialNav .on .borden-r {
+  border-top: 3px solid #ed6e56;
+}
+#specialNav .next .borden-l {
+  border-top: 3px solid #ed6e56;
+}
+#specialNav .status-div .status.on p {
+  color: #ed6e56;
+}
+#specialNav .status {
+  height: 45px;
+  margin-top: 30px;
+}
+#specialNav .status.active p {
+  color: #ed6e56;
+}
+#specialNav .status p {
+  font-size: 16px;
+  text-align: center;
+  line-height: 18px;
+  width: 80%;
+  margin: 0 auto;
+  color: #666;
+}
 @media screen and (max-width: 1600px) {
   #partnerNew .content form {
     font-size: 12px;
@@ -1601,6 +1699,10 @@
   }
   #partnerNew select {
     padding-left: 5px;
+  }
+  #partnerNew .status p {
+    font-size: 14px;
+    line-height: 16px;
   }
 }
 html,
@@ -1833,7 +1935,7 @@ body {
 .right .right_content {
   min-height: 100%;
   background-color: #f8f7fa;
-  padding: 20px 2%;
+  padding: 20px 20px;
   box-sizing: border-box;
 }
 .right .right_content .nav {

@@ -23,5 +23,8 @@ public  @Data
     private Integer isDelete;
 
     @Column
+    private String code;
+
+    @Column
     private String chineseAbbreviation;
 }

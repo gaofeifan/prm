@@ -2,7 +2,7 @@
   .content{
     color: #666;
     padding-bottom: 200px;
-   /* margin-top: 230px;*/
+    margin-top: 210px;
     h4{
       color: #333;
       margin-bottom: 15px;
@@ -539,18 +539,115 @@
   .wbkhStyle .mark{
     background-color: #fff;
   }
-  /*.nav{
-    position: fixed;
-    z-index: 99;
-    top:120px;
-    left:220px;
-    right:0;
-    #navigationBar{
-      height:186px;
-      width: 100%;
-      background-color: yellow;
+}
+#specialNav{
+  height: 230px;
+  position: fixed;
+  z-index: 99;
+  top:60px;
+  left:220px;
+  right:20px;
+  background-color: #f8f7fa;
+  #navigationBar{
+    padding:0 2%;
+    background-color: #fff;
+    box-shadow: 0 2px 5 #000;
+    margin-top: 20px;
+    h3{
+      font-size: 18px;
+      color: #ed6e56;
+      position: relative;
+      top: 25px;
     }
-  }*/
+    .title{
+      font-size: 18px;
+      color: #333;
+      text-align: center;
+      margin:0 0 10px 0;
+    }
+  }
+  h2{
+    margin-top: 20px;
+    font-size: 18px;
+    color: #666;
+    border-left: 6px solid #ed6e56;
+    text-indent: 16px;
+  }
+  #flow>div{
+    width: 7.68%;
+    height: 90px;
+    float:left;
+    cursor: pointer;
+  }
+  .bor-Size{
+    width: 100%;
+    height:12px;
+    position: relative;
+  }
+  .borden-l {
+    border-top: 3px solid #bfc0c1;
+    width:40%;
+    height: 0;
+    margin: 4px auto;
+    position: absolute;
+    left: 0;
+  }
+  .borden-r {
+    border-top: 3px solid #bfc0c1;
+    width:40%;
+    height: 0;
+    margin: 4px auto;
+    position: absolute;
+    right: 0;
+  }
+  .borden1{
+    display: none;
+  }
+  .yuan {
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    position: absolute;
+    left: 50%;
+    margin-left: -6px;
+    background-color: #bfc0c1;
+  }
+  .active .yuan{
+    background-color: #ed6e56;
+  }
+  .active .borden-r {
+    border-top: 3px solid #ed6e56;
+  }
+  .active .borden-l {
+    border-top: 3px solid #ed6e56;
+  }
+  .on .yuan{
+    background-color: #ed6e56;
+  }
+  .on .borden-r {
+    border-top: 3px solid #ed6e56;
+  }
+  .next .borden-l {
+    border-top: 3px solid #ed6e56;
+  }
+  .status-div .status.on p{
+    color:#ed6e56;
+  }
+  .status {
+    height:45px;
+    margin-top:30px;
+  }
+  .status.active p {
+    color:#ed6e56;
+  }
+  .status p {
+    font-size: 16px;
+    text-align: center;
+    line-height: 18px;
+    width: 80%;
+    margin: 0 auto;
+    color:#666;
+  }
 }
 @media screen and (max-width: 1600px) {
   #partnerNew{
@@ -616,6 +713,10 @@
     }
     select {
       padding-left: 5px;
+    }
+    .status p {
+      font-size: 14px;
+      line-height: 16px;
     }
   }
 }
