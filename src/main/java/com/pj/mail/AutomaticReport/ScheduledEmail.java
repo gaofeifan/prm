@@ -79,9 +79,9 @@ public class ScheduledEmail {
             //遍历  hash结合 存储相同数据
             try {
             if(checkDuplicates.size()!=0){
-                List<PartnerDetails> PartnerDetailsList2 = new ArrayList<PartnerDetails>();
+                List<PartnerDetails> PartnerDetailsList2 = new ArrayList<PartnerDetails>();      //   /*大于30 天的 集合*/
                 for (Integer it : checkDuplicates){
-                    List<PartnerDetails> PartnerDetailsList = new ArrayList<PartnerDetails>();
+                    List<PartnerDetails> PartnerDetailsList = new ArrayList<PartnerDetails>();              //  /*大于15 天的集合*/
                     // 循环list集合
                     for (PartnerDetails partnerDetails : PartnerDetailsSigningInTransit){
                         if(partnerDetails.getReceiverId().equals(it)){
@@ -98,7 +98,7 @@ public class ScheduledEmail {
                         // 调用接口 获取 email 发给 接收者
                         User user = authUserService.selectUserByEmail(PartnerDetailsList.get(0).getReceiverId());
                         // 邮件正文
-                        checkDuplicates2.add(PartnerDetailsList.get(0).getReceiverId());
+                      //  checkDuplicates2.add(PartnerDetailsList.get(0).getReceiverId());
                         if(PartnerDetailsList.size()!=0){
                         String total = " 以下客户信用等级为签约在途，保存时间已经超过15/30个自然日，请注意跟进。";
                         StringBuffer mesagesVal = getMesagesVal(PartnerDetailsList,total);

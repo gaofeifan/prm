@@ -44,7 +44,6 @@ $(function(){
             success:function(data){
                     var baseData =  data.data;
 
-
                        /* 循环追加信用等级信息到页面中*/
                 for (var i = 0 ; i<baseData.length;i++) {
 
