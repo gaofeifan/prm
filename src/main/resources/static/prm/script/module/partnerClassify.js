@@ -6,6 +6,7 @@
  */
 frontcookie();
 menuActive('partnerClassify');
+$(window).unbind("scroll");
 $(function(){
 
 });

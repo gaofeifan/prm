@@ -4,6 +4,7 @@
 frontcookie();
 /*用户信用等级页面*/
 menuActive('credit');
+$(window).unbind("scroll");
 $(function(){
     /*获取用户信用等级列表 */
     $.ajax({

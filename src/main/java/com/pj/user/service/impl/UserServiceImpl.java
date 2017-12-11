@@ -1,6 +1,9 @@
 package com.pj.user.service.impl;
 
 import com.pj.partner.mapper.PartnerDetailsMapper;
+import com.pj.partner.mapper.PartnerDetailsShifFileMapper;
+import com.pj.partner.pojo.PartnerDetails;
+import com.pj.partner.pojo.PartnerDetailsShifFile;
 import com.pj.user.mapper.HierarchyMapper;
 import com.pj.user.mapper.UsaerLevelMapper;
 import com.pj.user.pojo.Hierarchy;
@@ -10,8 +13,10 @@ import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +33,8 @@ public class UserServiceImpl implements UserService{
     private HierarchyMapper hierarchyMapper;
     @Autowired
     private PartnerDetailsMapper partnerDetailsMapper;
-
+    @Autowired
+    private PartnerDetailsShifFileMapper partnerDetailsShifFileMapper;
     @Override
     public List<UserLevel> findUserLevelList() {
         return userLevelMapper.selectAll();
@@ -67,13 +73,38 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public boolean[] checkIsEditHierarchy() {
-        Integer length = this.partnerDetailsMapper.selectDetailsMaxCode();
+//        Integer length = this.partnerDetailsMapper.selectDetailsMaxCode();
+        Example example = new Example(PartnerDetails.class);
+        example.createCriteria().andCondition("is_delete = 0").andIsNotNull("pId");
+        List<PartnerDetails> partnerDetails = this.partnerDetailsMapper.selectByExample(example);
+        List<List<PartnerDetails>> lists = new ArrayList<>();
+
+        for (PartnerDetails pd : partnerDetails){
+            List<PartnerDetails> parentList = this.partnerDetailsMapper.getParentList(pd.getId());
+            lists.add(parentList);
+        }
+        int number = 0;
+        List<PartnerDetails> partnerDetailsShifFiles = new ArrayList<>();
+
+        for ( int i = 0;i <  lists.size();i++){
+            if(number<lists.get(i).size()){
+                number =   lists.get(i).size();
+               partnerDetailsShifFiles = lists.get(i);
+            }
+        }
+        Object[] objects = partnerDetailsShifFiles.stream().map(pd -> pd.getCode()).toArray();
+        StringBuilder sb = new StringBuilder();
+        for (Object obj: objects) {
+                sb.append(obj.toString());
+        }
+       int length = sb.toString().length();
+
+
         int num = 0;
         List<Hierarchy> list = this.hierarchyMapper.selectAll();
         boolean [] flag = new boolean[list.size()];
         int i = 0;
         for ( ;i<list.size();i++) {
-
             num += list.get(i).getLayerNumber();
             if( i ==0){
                 continue;

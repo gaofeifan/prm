@@ -5,7 +5,6 @@ backCookie();
 menuActive('user');
 $(function(){
     gettotalCount();
-
     $('#search').click(function(){
         gettotalCount();
     });

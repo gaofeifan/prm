@@ -3,7 +3,7 @@
  */
 frontcookie();
 $(function(){
-    $('body').scrollTop(0);
+    $("body,html").scrollTop(0);
     var codes = $('.code');
     var nn = 0;//控制编辑的是哪个code
     var urlParameter = vipspa.parse();
@@ -24,7 +24,8 @@ $(function(){
             $('.wbkhCreditRating').append(optionStr);
         }
     });
-
+    /*flow*/
+    StatusOn(1,13);
     /*回显各个字段的值*/
     $.ajax({
         url: 'http://'+gPathUrl+'/partner/details/selectPartnerDetailsById',
@@ -34,9 +35,8 @@ $(function(){
             id:id
         },
         success: function (data) {
-            console.log(data);
             $('#pId').val(data.data.pid);
-            $('#mnemonicCode').val(data.data.code);//助记码
+            $('#mnemonicCode').val(data.data.mnemonicCode);//助记码
             $('#chineseName').val(data.data.chineseName);//中文全称
             $('#chineseAbbreviation').val(data.data.chineseAbbreviation);//中文简称
             $('#englishName').val(data.data.englishName);//英文全称
@@ -162,6 +162,54 @@ $(function(){
         }
     });
 
+    /*滚动*/
+    $('#navigationBar').on('click','.status-div',function(){
+        var thisIndex = $(this).index();
+        /* StatusOn(parseInt(thisIndex)+1,13);*/
+        var _top = parseInt($('#newForm .lump').eq(thisIndex).offset().top);
+        $("body,html").animate({scrollTop:(_top-288)},500);
+    });
+    var _top1 = parseInt($('#newForm .lump').eq(0).offset().top);
+    var _top2 = parseInt($('#newForm .lump').eq(1).offset().top);
+    var _top3 = parseInt($('#newForm .lump').eq(2).offset().top);
+    var _top4 = parseInt($('#newForm .lump').eq(3).offset().top);
+    var _top5 = parseInt($('#newForm .lump').eq(4).offset().top);
+    var _top6 = parseInt($('#newForm .lump').eq(5).offset().top);
+    var _top7 = parseInt($('#newForm .lump').eq(6).offset().top);
+    var _top8 = parseInt($('#newForm .lump').eq(7).offset().top);
+    var _top9 = parseInt($('#newForm .lump').eq(8).offset().top);
+    var _top10 = parseInt($('#newForm .lump').eq(9).offset().top);
+    var _top11 = parseInt($('#newForm .lump').eq(10).offset().top);
+    var _top12 = parseInt($('#newForm .lump').eq(11).offset().top);
+
+    $(window).scroll(function() {
+        var htmlScrollTop = parseInt($(document).scrollTop());
+        if(0 < htmlScrollTop && htmlScrollTop < _top1){ //基础表单
+            StatusOn(2,13);
+        }else if(_top1 < htmlScrollTop && htmlScrollTop<_top2){//联系地址
+            StatusOn(3,13);
+        }else if(_top2 < htmlScrollTop && htmlScrollTop<_top3){//联系人资料
+            StatusOn(4,13);
+        }else if(_top3 < htmlScrollTop && htmlScrollTop < _top4){//业务范畴
+            StatusOn(5,13);
+        }else if(_top4 < htmlScrollTop && htmlScrollTop<_top5){//合作伙伴分类
+            StatusOn(6,13);
+        }else if(_top5 < htmlScrollTop && htmlScrollTop<_top6){//外部客户
+            StatusOn(7,13);
+        }else if(_top6 < htmlScrollTop && htmlScrollTop<_top7){//互为代理
+            StatusOn(8,13);
+        }else if(_top7 < htmlScrollTop && htmlScrollTop<_top8){//海外代理
+            StatusOn(9,13);
+        }else if(_top8 < htmlScrollTop && htmlScrollTop<_top9){//干线承运人
+            StatusOn(10,13);
+        }else if(_top9 < htmlScrollTop && htmlScrollTop<_top10){//不可控供应商
+            StatusOn(11,13);
+        }else if(_top10 < htmlScrollTop && htmlScrollTop<_top11){//延伸服务供应商
+            StatusOn(12,13);
+        }else if(_top11 < htmlScrollTop && htmlScrollTop<_top12){//收发货人
+            StatusOn(13,13);
+        }
+    });
     /*控制代码填写区域*/
     if(!!id){
         $.ajax({
@@ -508,8 +556,6 @@ $(function(){
     /*删除地址*/
     $('.addressList ').on('click','.delAdd',function(){
         var delListId = $(this).parents('.list').attr('data-listId');
-        console.log(delListId);
-        console.log(addressList);
         mm.removeObjWithArr(addressList,delListId);
         addressObj.getAddressList();
     });
@@ -763,6 +809,7 @@ $(function(){
 
     /*取消*/
     $('#callOff').click(function(){
+        $(window).unbind("scroll");
         location.hash = vipspa.stringify('partnerManage');
     });
     /*表单提交*/
@@ -791,7 +838,7 @@ $(function(){
         }
         $(this).ajaxSubmit(options);
         return false;//阻止表单提交
-    })
+    });
 });
 var addressList = [
     /*{
@@ -865,6 +912,7 @@ var  options ={
     success:function(data) {
         if(data.code == '200'){
             alert('保存成功！');
+            $(window).unbind("scroll");
             location.hash = vipspa.stringify('partnerManage')
         }
     },error:function() {

@@ -339,8 +339,9 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         List<PartnerDetails> parentList = this.getParentList(id);
         parentList.remove(parentList.size()-1);
         for (PartnerDetails pd : parentList){
-            pd.setMnemonicCode(null);
-            this.partnerDetailsMapper.updateByPrimaryKey(pd);
+            PartnerDetails details = this.partnerDetailsMapper.selectByPrimaryKey(pd.getId());
+            details.setMnemonicCode(null);
+            this.partnerDetailsMapper.updateByPrimaryKey(details);
         }
     }
 }

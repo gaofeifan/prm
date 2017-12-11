@@ -2,6 +2,7 @@
  * Created by Administrator on 2017/9/12.
  */
 frontcookie();
+$(window).unbind("scroll");
 $(function(){
     menuActive('partnerManage');
     /*控制 新增 编辑 修改 删除 按钮*/
@@ -26,6 +27,7 @@ $(function(){
                     $('#delete').show();
                 }else if(value.name == "合作伙伴管理 - 查询"){
                     $('#query').show();
+                    $('.clickLink').show();
                     getDocList();
                 }
             });
@@ -425,10 +427,11 @@ var seePartner = {
                     data: {
                         id:treeNodeId
                     },
-                    success: function (data) {
-                        $('input[name="code"]').val(data.data.join(''));//代码
+                    success: function (resp) {
+                        $('input[name="code"]').val(resp.data.join(''));//代码
                     }
                 });
+                console.log(data);
                 $('#mnemonicCode').val(data.data.mnemonicCode);//助记码
                 $('#chineseName').val(data.data.chineseName);//中文全称
                 $('#chineseAbbreviation').val(data.data.chineseAbbreviation);//中文简称

@@ -5,9 +5,10 @@
         <result  column="id" property="id" jdbcType="INTEGER" />
         <result  column="dir_name" property="dirName" jdbcType="VARCHAR" />
         <result  column="p_id" property="pId" jdbcType="INTEGER" />
+        <result  column="code" property="code" jdbcType="VARCHAR" />
     </resultMap>
 
     <select id="getChildList" resultMap="BaseResultMap">
-        select id,dir_name,p_id FROM partner_details 	where FIND_IN_SET(id,getChildList(#{id}))
+        select id,code,dir_name,p_id FROM partner_details 	where FIND_IN_SET(id,getChildList(#{id}))
     </select>
 </mapper>
