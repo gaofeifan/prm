@@ -672,7 +672,9 @@ public class AspectServer {
 
                     if (!(o == null ? "" : o).toString().equals(o2 == null ? "" : o2.toString())) {
                             actionData += "   第"+(k+1)+"层 ";
-                            actionData += "< " + (o ==null?"":o)+ " >（" + (o2==null?"":o2) + " ） ; ";
+                            //有效无效转换
+
+                            actionData += "< " + (o ==null?"":o) + " >（" + (o2==null?"":o2) + " ） ; ";
                             flage = true;
                     }
 
@@ -707,9 +709,17 @@ public class AspectServer {
                 if(oldfields[i].getName().equals("id")){
                     actionData+="序号 "+o+" ";
                 }
+
                 PropertyDescriptor pd2 = new PropertyDescriptor(newfields[i].getName(), oldData.getClass());
                 Method getMethod2 = pd2.getReadMethod();//获得get方法  
                 Object o2 = getMethod.invoke(newData);//执行get方法返回一个Object
+
+                    /*信用等级是否有效文案展示*/
+                if(oldfields[i].getName().equals("effectiveness")) {
+                    o = checkEffectiveness(o);
+                    o2 = checkEffectiveness(o2);
+                }
+
                 if (!((o==null?"":o).toString()).equals(o2==null?"":o2.toString())) {
                     // 判断字段名称
                     for (int j = 0; j < BasicProperties.Basic_UserLevel_paramName.length; j++) {
@@ -818,5 +828,15 @@ private Field[] getfieldsMethod(Object objectdata) {
 
     private User findUserDateByemail(String email){
         return authUserService.selectUserByEmail(email);
+    }
+
+    /*信用等级是否有效文案展示*/
+    private String checkEffectiveness(  Object o) {
+        if (Integer.valueOf(o.toString()) == 1) {
+            o = "有效";
+        } else if (Integer.valueOf(o.toString()) == 0) {
+            o = "无效";
+        }
+        return o.toString();
     }
 }
