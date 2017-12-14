@@ -26,7 +26,6 @@ function gettotalCount() {
                 $('.M-box4').pagination({
                     pageCount: data.data.pagination.totalPage,
                     jump: true,
-                    isHide:true,
                     callback:function(api){
                         InitData(api.getCurrent())
                     }

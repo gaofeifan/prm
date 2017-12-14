@@ -102,6 +102,7 @@ public class PartnerDetailsController extends BaseController {
             List<PartnerLinkman> list = JSONArray.toList(array, PartnerLinkman.class);
             partnerDetails.setLinkmansList(list);
         }
+
         if(address != null){
             JSONArray array = JSONArray.fromString(address);
             List<PartnerAddress> list = JSONArray.toList(array, PartnerAddress.class);
@@ -186,6 +187,7 @@ public class PartnerDetailsController extends BaseController {
     @ResponseBody
     public Object deletePartnerDetailsById(
             @ApiParam("id") @RequestParam(name = "id") Integer id,
+
             @ApiParam("email") @RequestParam(name = "email") String email){
         this.partnerDetailsService.deletePartnerDetailsById(id,email);
         return this.success();

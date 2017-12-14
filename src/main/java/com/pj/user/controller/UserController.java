@@ -100,7 +100,6 @@ private  UserService userservice;
             boolean[] booleans = userservice.checkIsEditHierarchy();
             return this.success(booleans);
         }catch (Exception e){
-            System.out.println(e);
             return this.error(e.getMessage());
         }
     }
