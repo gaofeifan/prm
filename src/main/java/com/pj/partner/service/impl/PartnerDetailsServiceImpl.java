@@ -143,7 +143,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         List<PartnerAddress> address = partnerDetails.getAddressList();
         request.getSession().setAttribute("new_partnerAddress",address);
         request.getSession().setAttribute("new_partnerLinkman",linkmans);
-
+        request.getSession().setAttribute("new_partnerDetails",partnerDetails);
         if(linkmans != null){
             for(PartnerLinkman pl : linkmans){
                 pl.setDetailsId(partnerDetails.getId());
