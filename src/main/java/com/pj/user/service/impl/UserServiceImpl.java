@@ -98,7 +98,12 @@ public class UserServiceImpl implements UserService{
                 sb.append(obj.toString());
         }
        int length = sb.toString().length();
-
+        List<PartnerDetails> partnerPIdIsNull = null;
+        if(partnerDetails.size() == 0){
+            example.clear();
+            example.createCriteria().andCondition("is_delete = 0").andIsNull("pId");
+            partnerPIdIsNull = this.partnerDetailsMapper.selectByExample(example);
+        }
 
         int num = 0;
         List<Hierarchy> list = this.hierarchyMapper.selectAll();
@@ -107,6 +112,9 @@ public class UserServiceImpl implements UserService{
         for ( ;i<list.size();i++) {
             num += list.get(i).getLayerNumber();
             if( i ==0){
+                if((partnerPIdIsNull == null || partnerPIdIsNull.size() ==0) && partnerDetails.size() == 0){
+                    flag[i] = true;
+                }
                 continue;
             }
             if (length < num) {

@@ -49,7 +49,9 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     public List<PartnerDetails> selectPartnerDetailsList() {
         PartnerDetails pd = new PartnerDetails();
         pd.setIsDelete(0);
-        return this.partnerDetailsMapper.select(pd);
+        List<PartnerDetails> list = windowsSort(this.partnerDetailsMapper.select(pd));
+        return list;
+
     }
 
     @Override
@@ -141,7 +143,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         List<PartnerAddress> address = partnerDetails.getAddressList();
         request.getSession().setAttribute("new_partnerAddress",address);
         request.getSession().setAttribute("new_partnerLinkman",linkmans);
-        request.getSession().setAttribute("new_partnerDetails",partnerDetails);
+
         if(linkmans != null){
             for(PartnerLinkman pl : linkmans){
                 pl.setDetailsId(partnerDetails.getId());
@@ -247,8 +249,8 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         TreeSet<PartnerDetails> tree = new TreeSet<>(new Comparator<PartnerDetails>() {
             @Override
             public int compare(PartnerDetails a1, PartnerDetails a2) {
-                String s1 = ((String) a1.getChineseAbbreviation()).toLowerCase();
-                String s2 = ((String) a2.getChineseAbbreviation()).toLowerCase();
+                String s1 = ((String) a1.getChineseName()).toLowerCase();
+                String s2 = ((String) a2.getChineseName()).toLowerCase();
                 return s1.compareTo(s2);
             }
         });
@@ -259,7 +261,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         TreeSet<PartnerDetails> endTree = new TreeSet<>(new Comparator<PartnerDetails>() {
             @Override
             public int compare(PartnerDetails a1, PartnerDetails a2) {
-                int to = a1.getChineseAbbreviation().compareTo(a2.getChineseAbbreviation());
+                int to = a1.getChineseName().compareTo(a2.getChineseName());
                 return to;
             }
         });

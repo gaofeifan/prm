@@ -944,7 +944,7 @@
 }
 #partnerNew .content {
   color: #666;
-  padding-bottom: 200px;
+  padding-bottom: 360px;
   margin-top: 210px;
 }
 #partnerNew .content h4 {
@@ -1898,29 +1898,29 @@ body {
   padding-left: 30px;
   color: #666;
 }
-#wrapper #left ul#home2 li .tax::before {
-  background-position: -78px -332px;
+#wrapper #left ul#home2 li .homePage::before {
+  background-position: 8px -260px;
 }
-#wrapper #left ul#home2 li .tax.active::before {
-  background-position: -121px -332px;
+#wrapper #left ul#home2 li .homePage.active::before {
+  background-position: -23px -260px;
 }
-#wrapper #left ul#home2 li .copy::before {
-  background-position: -78px -370px;
+#wrapper #left ul#home2 li .user::before {
+  background-position: 8px -288px;
 }
-#wrapper #left ul#home2 li .copy.active::before {
-  background-position: -121px -370px;
+#wrapper #left ul#home2 li .user.active::before {
+  background-position: -23px -288px;
 }
-#wrapper #left ul#home2 li .process::before {
-  background-position: -78px -417px;
+#wrapper #left ul#home2 li .power::before {
+  background-position: 8px -320px;
 }
-#wrapper #left ul#home2 li .process.active::before {
-  background-position: -121px -417px;
+#wrapper #left ul#home2 li .power.active::before {
+  background-position: -23px -320px;
 }
-#wrapper #left ul#home2 li .process2::before {
-  background-position: -78px -417px;
+#wrapper #left ul#home2 li .log::before {
+  background-position: 8px -352px;
 }
-#wrapper #left ul#home2 li .process2.active::before {
-  background-position: -121px -417px;
+#wrapper #left ul#home2 li .log.active::before {
+  background-position: -23px -352px;
 }
 #wrapper #left ul#home2 li .maintenance::before {
   background-position: -78px -417px;
@@ -2047,4 +2047,7 @@ input.date_in {
 }
 .redColor {
   color: #ed6e56;
+}
+.hidden {
+  display: none;
 }

@@ -40,102 +40,7 @@ $(function(){
             }
         })
     }
-    /*flow*/
-    StatusOn(1,13);
-    /*滚动*/
-    $('#navigationBar').on('click','.status-div',function(){
-        var thisIndex = $(this).index();
-        var _top = parseInt($('#newForm .lump').eq(thisIndex).offset().top);
-        $("body,html").animate({scrollTop:(_top-288)},500);
-    });
-    var _top1 = parseInt($('#newForm .lump').eq(0).offset().top);
-    var _top2 = parseInt($('#newForm .lump').eq(1).offset().top);
-    var _top3 = parseInt($('#newForm .lump').eq(2).offset().top);
-    var _top4 = parseInt($('#newForm .lump').eq(3).offset().top);
-    var _top5 = parseInt($('#newForm .lump').eq(4).offset().top);
-    var _top6 = parseInt($('#newForm .lump').eq(5).offset().top);
-    var _top7 = parseInt($('#newForm .lump').eq(6).offset().top);
-    var _top8 = parseInt($('#newForm .lump').eq(7).offset().top);
-    var _top9 = parseInt($('#newForm .lump').eq(8).offset().top);
-    var _top10 = parseInt($('#newForm .lump').eq(9).offset().top);
-    var _top11 = parseInt($('#newForm .lump').eq(10).offset().top);
-    var _top12 = parseInt($('#newForm .lump').eq(11).offset().top);
-    $(window).scroll(function() {
-        var htmlScrollTop = parseInt($(document).scrollTop());
-        if(_top1 <= htmlScrollTop && htmlScrollTop < _top2){ //基础表单
-            StatusOn(2,13);
-        }else if(_top2 < htmlScrollTop && htmlScrollTop<_top3){//联系地址
-            StatusOn(3,13);
-        }else if(_top3 < htmlScrollTop && htmlScrollTop<_top4){//联系人资料
-            StatusOn(4,13);
-        }else if(_top4 < htmlScrollTop && htmlScrollTop < _top5){//业务范畴
-            StatusOn(5,13);
-        }else if(_top5 < htmlScrollTop && htmlScrollTop<_top6){//合作伙伴分类
-            StatusOn(6,13);
-        }else if(_top6 < htmlScrollTop && htmlScrollTop<_top7){//外部客户
-            StatusOn(7,13);
-        }else if(_top7 < htmlScrollTop && htmlScrollTop<_top8){//互为代理
-            StatusOn(8,13);
-        }else if(_top8 < htmlScrollTop && htmlScrollTop<_top9){//海外代理
-            StatusOn(9,13);
-        }else if(_top9 < htmlScrollTop && htmlScrollTop<_top10){//干线承运人
-            StatusOn(10,13);
-        }else if(_top10 < htmlScrollTop && htmlScrollTop<_top11){//不可控供应商
-            StatusOn(11,13);
-        }else if(_top11 < htmlScrollTop && htmlScrollTop<_top12){//延伸服务供应商
-            StatusOn(12,13);
-        }else if(_top12 < htmlScrollTop && htmlScrollTop<_top13){//收发货人
-            StatusOn(13,13);
-        }
-    });
-
-
-    var externalClientMark = $('#externalClient .mark');
-    externalClientMark.css('color','#fff');
-
-    $('.partnersCheckbox').on('change','.externalClient',function(){
-        var thisVal = $(this).prop('checked');
-        if(thisVal){
-            //勾选
-            externalClientMark.css('color','#ed6e56');
-            $('input[name="wbkhCustomerClass"]').prop('required',true);//客户分类
-            $('input[name="wbkhCreditRating"]').prop('required',true);//信用等级
-            $('input[name="wbkhTypeCreditPeriod"]').prop('required',true);//信用期限类型
-            $('input[name="wbkhCreditPeriod"]').prop('required',true);//信用期限（天）
-            $('input[name="wbkhLineCredit"]').prop('required',true);//信用额度(万元)
-            $('input[name="wbkhInvoiceType"]').prop('required',true);//开票类型
-            $('input[name="headingCode"]').prop('required',true);//纳税人识别码
-        }else{//取消勾选
-            externalClientMark.css('color','#fff');
-            $('input[name="wbkhCustomerClass"]').prop('required',false);//客户分类
-            $('input[name="wbkhCreditRating"]').prop('required',false);//信用等级
-            $('input[name="wbkhTypeCreditPeriod"]').prop('required',false);//信用期限类型
-            $('input[name="wbkhCreditPeriod"]').prop('required',false);//信用期限（天）
-            $('input[name="wbkhLineCredit"]').prop('required',false);//信用额度(万元)
-            $('input[name="wbkhInvoiceType"]').prop('required',false);//开票类型
-            $('input[name="headingCode"]').prop('required',false);//纳税人识别码
-        }
-    });
-    /*互为代理*/
-    var eachAgentMark = $('#eachAgent .mark');
-    eachAgentMark.css('color','#fff');
-    $('.partnersCheckbox').on('change','.eachAgent',function(){
-        var thisVal = $(this).prop('checked');
-        if(thisVal){
-            //勾选
-            eachAgentMark.css('color','#ed6e56');
-            $('input[name="hwdlTaxRate"]').prop('required',true);//进项税率%
-            $('.wbkhCreditPeriod2').prop('required',true);//信用等级
-            $('input[name="wbkhCreditPeriod2"]').prop('required',true);//信用期限（天）
-            $('input[name="wbkhLineCredit2"]').prop('required',true);//信用额度(万元)
-            $('input[name="headingCode2"]').prop('required',true);//纳税人识别码
-        }else{//取消勾选
-            eachAgentMark.css('color','#fff');
-        }
-    });
-
-
-   /*加载信用等级*/
+    /*加载信用等级*/
     qualityRating();
     //光标移开，校验代码字段的填写
     codes.blur(function(){
@@ -160,35 +65,35 @@ $(function(){
     $('#chineseName').blur(function(){
         var that = this;
         if($(this).val().length >0){
-            checkRepeat(that,'中文全称')
+            checkRepeat('chineseName',that,'中文全称')
         }
     });
     /*校验中文简称*/
     $('#chineseAbbreviation').blur(function(){
         var that = this;
         if($(this).val().length >0){
-            checkRepeat(that,'中文简称')
+            checkRepeat('chineseAbbreviation',that,'中文简称')
         }
     });
     /*校验英文名称*/
     $('#englishName').blur(function(){
         var that = this;
         if($(this).val().length >0){
-            checkRepeat(that,'英文全称')
+            checkRepeat('englishName',that,'英文全称')
         }
     });
     /*校验英文简称*/
     $('#englishAbbreviation').blur(function(){
         var that = this;
         if($(this).val().length >0){
-            checkRepeat(that,'英文简称')
+            checkRepeat('englishAbbreviation',that,'英文简称')
         }
     });
     /*校验纳税人识别码*/
     $('.headingCode').blur(function(){
         var that = this;
         if($(this).val().length >0){
-            checkRepeat(that,'纳税人识别码')
+            checkRepeat('headingCode',that,'纳税人识别码')
         }
     });
 
@@ -255,6 +160,279 @@ $(function(){
             $('.disableMark').css('color','#fff');
         }
     });
+    /*flow*/
+    StatusOn(1,13);
+    /*滚动*/
+    $('#navigationBar').on('click','.status-div',function(){
+        var thisIndex = parseInt($(this).index());
+       /* StatusOn(thisIndex+1,13);*/
+        var _top = parseInt($('#newForm .lump').eq(thisIndex).offset().top);
+        $("body,html").animate({scrollTop:(_top-288)},500);
+        console.log(_top-288);
+    });
+    var _top0 = parseInt($('#newForm .lump').eq(0).offset().top)-288;
+    var _top1 = parseInt($('#newForm .lump').eq(1).offset().top)-288;
+    var _top2 = parseInt($('#newForm .lump').eq(2).offset().top)-288;
+    var _top3 = parseInt($('#newForm .lump').eq(3).offset().top)-288;
+    var _top4 = parseInt($('#newForm .lump').eq(4).offset().top)-288;
+    var _top5 = parseInt($('#newForm .lump').eq(5).offset().top)-288;
+    var _top6 = parseInt($('#newForm .lump').eq(6).offset().top)-288;
+    var _top7 = parseInt($('#newForm .lump').eq(7).offset().top)-288;
+    var _top8 = parseInt($('#newForm .lump').eq(8).offset().top)-288;
+    var _top9 = parseInt($('#newForm .lump').eq(9).offset().top)-288;
+    var _top10 = parseInt($('#newForm .lump').eq(10).offset().top)-288;
+    var _top11 = parseInt($('#newForm .lump').eq(11).offset().top)-288;
+    var _top12 = parseInt($('#newForm .lump').eq(12).offset().top)-288;
+    $(window).scroll(function() {
+        var htmlScrollTop = parseInt($(document).scrollTop())+50;
+        if(0 < htmlScrollTop && htmlScrollTop < _top1){ //基础表单
+            StatusOn(1,13);
+        }else if(_top1 <= htmlScrollTop && htmlScrollTop<_top2){//联系人资料
+            StatusOn(2,13);
+        }else if(_top2 <= htmlScrollTop && htmlScrollTop<_top3){//联系人资料
+            StatusOn(3,13);
+        }else if(_top3 <= htmlScrollTop && htmlScrollTop < _top4){//业务范畴
+            StatusOn(4,13);
+        }else if(_top4 <= htmlScrollTop && htmlScrollTop<_top5){//合作伙伴分类
+            StatusOn(5,13);
+        }else if(_top5 <= htmlScrollTop && htmlScrollTop<_top6){//外部客户
+            StatusOn(6,13);
+        }else if(_top6 <= htmlScrollTop && htmlScrollTop<_top7){//互为代理
+            StatusOn(7,13);
+        }else if(_top7 <= htmlScrollTop && htmlScrollTop<_top8){//海外代理
+            StatusOn(8,13);
+        }else if(_top8 <= htmlScrollTop && htmlScrollTop<_top9){//干线承运人
+            StatusOn(9,13);
+        }else if(_top9 <= htmlScrollTop && htmlScrollTop<_top10){//不可控供应商
+            StatusOn(10,13);
+        }else if(_top10 <= htmlScrollTop && htmlScrollTop<_top11){//延伸服务供应商
+            StatusOn(11,13);
+        }else if(_top11 <= htmlScrollTop && htmlScrollTop<_top12){//收发货人
+            StatusOn(12,13);
+        }else if((_top12) <= htmlScrollTop){//收发货人
+            StatusOn(13,13);
+        }
+    });
+
+
+/*选中合作伙伴分类显示必填项校验*/
+    /*外部客户*/
+    var externalClientMark = $('#externalClient .mark');
+    externalClientMark.css('color','#fff');
+    var externalClientFlag = 0;
+    $('.partnersCheckbox').on('change','.externalClient',function(){
+        var thisVal = $(this).prop('checked');
+        if(thisVal){
+            //勾选
+            externalClientFlag = 1;
+            externalClientMark.css('color','#ed6e56');
+            $('#externalClient .must').prop('required',true);
+        }else{//取消勾选
+            externalClientFlag = 0;
+            externalClientMark.css('color','#fff');
+            $('#externalClient .must').prop('required',false);
+        }
+    });
+    /*客户分类*/
+    $('.customerClassBox input').change(function(){
+        var customerClass = [];
+        $('#wbkhCustomerClass').val(customerClass.join(','));
+        $('.customerClassBox').find("input:checkbox").each(function(i,n) {
+            if ($(n).prop('checked') === true) {
+                if (typeof $(n).val() != "undefined") {
+                    customerClass.push($(n).val());
+                }
+            }
+        });
+        $('#wbkhCustomerClass').val(customerClass.join(','));
+    });
+    /*开票类型 1*/
+    $('.wbkhInvoiceType1').change(function(){
+        var selectInvoiceType = $(this).val();
+        $('.wbkhInvoiceType').val(selectInvoiceType);
+        $('.invoiceTypeTitle').text(selectInvoiceType);
+        if(selectInvoiceType =="增值税普票"){
+            $('.bankInfo1 .mark').css('color','#fff');
+            $('.bankInfo1 .hCMark1').css('color','#ed6e56');
+            $('.bankInfo1 input').attr('required',false);
+            $('.Taxpayers1').attr('required',true);
+        }else if(selectInvoiceType =="增值税专票"){
+            $('.bankInfo1 .mark').show().css('color','#ed6e56');
+            $('.bankInfo1 input').attr('required',true);
+        }else if(selectInvoiceType =="DebitNote"){
+            $('.bankInfo1 .mark').css('color','#fff');
+            $('.bankInfo1 input').attr('required',false);
+        }
+    });
+
+
+    /*互为代理*/
+    var eachAgentMark = $('#eachAgent .mark');
+    eachAgentMark.css('color','#fff');
+    $('.partnersCheckbox').on('change','.eachAgent',function(){
+        var thisVal = $(this).prop('checked');
+        if(thisVal){
+            //勾选
+            eachAgentMark.css('color','#ed6e56');
+            $('#eachAgent .must').prop('required',true);
+        }else{//取消勾选
+            eachAgentMark.css('color','#fff');
+            $('#eachAgent .must').prop('required',false);
+        }
+    });
+    /*开票类型 2*/
+    $('.wbkhInvoiceType2').change(function(){
+        var selectInvoiceType2 = $(this).val();
+        $('.wbkhInvoiceType').val(selectInvoiceType2);
+        $('.invoiceTypeTitle').text(selectInvoiceType2);
+        if(selectInvoiceType2 =="增值税普票"){
+            $('.bankInfo2 .mark').css('color','#fff');
+            $('.bankInfo2 .hCMark2').css('color','#ed6e56');
+            $('.bankInfo2 input').attr('required',false);
+            $('.Taxpayers2').attr('required',true);
+        }else if(selectInvoiceType2 =="增值税专票"){
+            $('.bankInfo2 .mark').show().css('color','#ed6e56');
+            $('.bankInfo2 input').attr('required',true);
+        }else if(selectInvoiceType2 =="DebitNote"){
+            $('.bankInfo2 .mark').css('color','#fff');
+            $('.bankInfo2 input').attr('required',false);
+        }
+    });
+
+    /*海外代理*/
+    var overseasAgencyMark = $('#overseasAgency .mark');
+    overseasAgencyMark.css('color','#fff');
+    $('.partnersCheckbox').on('change','.overseasAgency',function(){
+        var thisVal = $(this).prop('checked');
+        if(thisVal){
+            //勾选
+            overseasAgencyMark.css('color','#ed6e56');
+            $('#overseasAgency .must').prop('required',true);
+        }else{//取消勾选
+            overseasAgencyMark.css('color','#fff');
+            $('#overseasAgency .must').prop('required',false);
+        }
+    });
+    /*干线承运人*/
+    var trunkCarrierMark = $('#trunkCarrier .mark');
+    trunkCarrierMark.css('color','#fff');
+    $('.partnersCheckbox').on('change','.trunkCarrier',function(){
+        var thisVal = $(this).prop('checked');
+        if(thisVal){
+            //勾选
+            trunkCarrierMark.css('color','#ed6e56');
+            $('#trunkCarrier .must').prop('required',true);
+        }else{//取消勾选
+            trunkCarrierMark.css('color','#fff');
+            $('#trunkCarrier .must').prop('required',false);
+        }
+    });
+    /*控制三个服务类别同时变动*/
+    $('.gxcyrClassOfServiceBox input[type=checkbox]').change(function () {
+        var className = $(this).prop('className');
+        var isChecked = $(this).prop('checked');
+        $('.'+className).prop('checked',isChecked)
+    });
+    //服务类别
+    $('.classOfServiceBox input').change(function(){
+        var gxcyrClassOfServiceArr = [];
+        $('#gxcyrClassOfService').val(gxcyrClassOfServiceArr.join(','));
+        $('.service1').val(gxcyrClassOfServiceArr.join(','));
+        $('.service2').val(gxcyrClassOfServiceArr.join(','));
+        $('.service3').val(gxcyrClassOfServiceArr.join(','));
+        $('.classOfServiceBox').find("input:checkbox").each(function(i,n) {
+            if ($(n).prop('checked') === true) {
+                if (typeof $(n).val() != "undefined") {
+                    gxcyrClassOfServiceArr.push($(n).val());
+                }
+            }
+        });
+        $('#gxcyrClassOfService').val(gxcyrClassOfServiceArr.join(','));
+        $('.service1').val(gxcyrClassOfServiceArr.join(','));
+        $('.service2').val(gxcyrClassOfServiceArr.join(','));
+        $('.service3').val(gxcyrClassOfServiceArr.join(','));
+    });
+
+
+
+
+    /*不可控供应商*/
+    var uncontrollableSupplierMark = $('#uncontrollableSupplier .mark');
+    uncontrollableSupplierMark.css('color','#fff');
+    $('.partnersCheckbox').on('change','.uncontrollableSupplier',function(){
+        var thisVal = $(this).prop('checked');
+        if(thisVal){
+            //勾选
+            uncontrollableSupplierMark.css('color','#ed6e56');
+            $('#uncontrollableSupplier .must').prop('required',true);
+        }else{//取消勾选
+            uncontrollableSupplierMark.css('color','#fff');
+            $('#uncontrollableSupplier .must').prop('required',false);
+        }
+    });
+
+    /*延伸服务供应商*/
+    var extendServiceProvidersMark = $('#extendServiceProviders .mark');
+    extendServiceProvidersMark.css('color','#fff');
+    $('.partnersCheckbox').on('change','.extendServiceProviders',function(){
+        var thisVal = $(this).prop('checked');
+        if(thisVal){
+            //勾选
+            extendServiceProvidersMark.css('color','#ed6e56');
+            $('#extendServiceProviders .must').prop('required',true);
+        }else{//取消勾选
+            extendServiceProvidersMark.css('color','#fff');
+            $('#extendServiceProviders .must').prop('required',false);
+        }
+    });
+
+    /*收发货人*/
+    var consigneeAndConsignerMark = $('#consigneeAndConsigner .mark');
+    consigneeAndConsignerMark.css('color','#fff');
+    $('.partnersCheckbox').on('change','.consigneeAndConsigner',function(){
+        var thisVal = $(this).prop('checked');
+        if(thisVal){
+            //勾选
+            consigneeAndConsignerMark.css('color','#ed6e56');
+            $('#consigneeAndConsigner input').prop('required',true)
+        }else{//取消勾选
+            consigneeAndConsignerMark.css('color','#fff');
+            $('#consigneeAndConsigner input').prop('required',false)
+        }
+    });
+    /*结算对象*/
+    var settlementObjectMark = $('#settlementObject .mark');
+    settlementObjectMark.css('color','#fff');
+    $('.partnersCheckbox').on('change','.settlementObject',function(){
+        var thisVal = $(this).prop('checked');
+        if(thisVal){
+            //勾选
+            settlementObjectMark.css('color','#ed6e56');
+            $('#settlementObject .must').prop('required',true);
+        }else{//取消勾选
+            settlementObjectMark.css('color','#fff');
+            $('#settlementObject .must').prop('required',false);
+        }
+    });
+    /*开票类型 2*/
+    $('.wbkhInvoiceType3').change(function(){
+        var selectInvoiceType3 = $(this).val();
+        $('.wbkhInvoiceType').val(selectInvoiceType3);
+        $('.invoiceTypeTitle').text(selectInvoiceType3);
+        if(selectInvoiceType3 =="增值税普票"){
+            $('.bankInfo3 .mark').css('color','#fff');
+            $('.bankInfo3 .hCMark3').show().css('color','#ed6e56');
+            $('.bankInfo3 input').attr('required',false);
+            $('.Taxpayers3').attr('required',true);
+        }else if(selectInvoiceType3 =="增值税专票"){
+            $('.bankInfo3 .mark').show().css('color','#ed6e56');
+            $('.bankInfo3 input').attr('required',true);
+        }else if(selectInvoiceType3 =="DebitNote"){
+            $('.bankInfo3 .mark').css('color','#fff');
+            $('.bankInfo3 input').attr('required',false);
+        }
+    });
+
     /*信用等级同时改变*/
     $('.wbkhCreditRating').change(function(){
         $('.wbkhCreditRating').val($(this).val());
@@ -264,11 +442,16 @@ $(function(){
             $('.wbkhLineCredit').attr('disabled',false);
             $('.wbkhIsPayForAnother').attr('disabled',false);
         }else if(selectVal=='签约在途'){
+            $('.wbkhCreditPeriod').val('').attr('disabled',true);
+            $('.wbkhLineCredit').val('').attr('disabled',true);
             $('.wbkhIsPayForAnother').attr('disabled',false);
         }else{
             $('.wbkhCreditPeriod').val('').attr('disabled',true);
             $('.wbkhLineCredit').val('').attr('disabled',true);
+            $('.wbkhIsPayForAnother').prop('checked',false);
             $('.wbkhIsPayForAnother').attr('disabled',true);
+            $('input[name="wbkhIsPayForAnother"]').val('0');
+            $('.daiDian ').val('').attr('disabled',true);
         }
     });
     /*信用期限类型*/
@@ -283,27 +466,7 @@ $(function(){
     $('.wbkhLineCredit').keyup(function(){
         $('.wbkhLineCredit').val($(this).val());
     });
-    /*开票类型*/
-    $('.wbkhInvoiceType').change(function(){
-        var selectInvoiceType = $(this).val();
-        $('.wbkhInvoiceType').val(selectInvoiceType);
-        $('.invoiceTypeTitle').text(selectInvoiceType);
-        if(PartnersCheckbox.indexOf('外部客户') > 0){
 
-        }
-        if(selectInvoiceType =="增值税普票"){
-            $('.bankInfo .mark').hide();
-            $('.sbmMark').show();
-            $('.bankInfo input').attr('required',false);
-            $('.Taxpayers').attr('required',true);
-        }else if(selectInvoiceType =="增值税专票"){
-            $('.bankInfo .mark').show();
-            $('.bankInfo input').attr('required',true);
-        }else if(selectInvoiceType =="DebitNote"){
-            $('.bankInfo .mark').hide();
-            $('.bankInfo input').attr('required',false);
-        }
-    });
     /*代垫逻辑*/
     $('.wbkhIsPayForAnother').change(function(){
         var isPay = $(this).prop('checked');
@@ -343,12 +506,6 @@ $(function(){
     /*公司地址*/
     $('.wbkhCompanyAddress').keyup(function(){
         $('.wbkhCompanyAddress').val($(this).val());
-    });
-    /*服务类别*/
-    $('.gxcyrClassOfServiceBox input[type=checkbox]').change(function () {
-        var className = $(this).prop('className');
-        var isChecked = $(this).prop('checked');
-        $('.'+className).prop('checked',isChecked)
     });
     /*进项税票*/
     $('.hwdlTaxReceipt').change(function(){
@@ -543,7 +700,7 @@ $(function(){
     });
     /*新增-取消*/
     $('.contactList').on('click','.cancelAdd',function(){
-        $('.addingAdd').remove();
+        $('.addingCon').remove();
     });
     /*新增-确定*/
     $('.contactList').on('click','.confirmAdd',function(){
@@ -649,18 +806,26 @@ $(function(){
     /*联系人展开*/
     $('.spreadAdd').click(function(){
         $('.addressList').slideDown();
+        $(this).hide();
+        $('.packUpAdd').show();
     });
     /*联系人收起*/
     $('.packUpAdd').click(function(){
         $('.addressList').slideUp();
+        $(this).hide();
+        $('.spreadAdd').show();
     });
     /*联系人展开*/
     $('.spreadCon').click(function(){
         $('.contactList').slideDown();
+        $(this).hide();
+        $('.packUpCon').show();
     });
     /*联系人收起*/
     $('.packUpCon').click(function(){
         $('.contactList').slideUp();
+        $(this).hide();
+        $('.spreadCon').show();
     });
     /*业务范畴 复选框逻辑*/
     $('.businessCheckbox input').change(function(){
@@ -689,33 +854,6 @@ $(function(){
         });
         $('#partnerCategory').val(PartnersCheckbox.join(','));
     });
-    /*客户分类*/
-    $('.customerClassBox input').change(function(){
-        var customerClass = [];
-        $('#wbkhCustomerClass').val(customerClass.join(','));
-        $('.customerClassBox').find("input:checkbox").each(function(i,n) {
-            if ($(n).prop('checked') === true) {
-                if (typeof $(n).val() != "undefined") {
-                    customerClass.push($(n).val());
-                }
-            }
-        });
-        $('#wbkhCustomerClass').val(customerClass.join(','));
-    });
-    //服务类别
-    $('.classOfServiceBox input').change(function(){
-        var gxcyrClassOfServiceArr = [];
-        $('#gxcyrClassOfService').val(gxcyrClassOfServiceArr.join(','));
-        $('.classOfServiceBox').find("input:checkbox").each(function(i,n) {
-            if ($(n).prop('checked') === true) {
-                if (typeof $(n).val() != "undefined") {
-                    gxcyrClassOfServiceArr.push($(n).val());
-                }
-            }
-        });
-        $('#gxcyrClassOfService').val(gxcyrClassOfServiceArr.join(','));
-    });
-
     /*取消提交*/
     $('#callOff').click(function(){
         $(window).unbind("scroll");
@@ -746,6 +884,7 @@ $(function(){
             return false;
         }
         $(this).ajaxSubmit(options);
+       /* ('#savePartner').attr('disabled',true);//阻止重复点击多次提交*/
         return false;//阻止表单提交
     })
 });
@@ -835,7 +974,7 @@ var  options ={
     },error:function() {
             alert('保存失败，请重试！')
     },complete:function() {
-
+       /* $('#savePartner').removeAttr('disabled');*/
     }
 };
 /**
@@ -843,18 +982,18 @@ var  options ={
  * @param that
  * @param name
  */
-function  checkRepeat(that,name){
+function  checkRepeat(name,that,worlds){
     $.ajax({
         url: 'http://' + gPathUrl + '/partner/details/verifyValueRepeat',
         type: 'get',
         data:{
-            fieldName:$(that).attr('name'),
+            fieldName:name,
             fieldValue:$(that).val()
         },
         success: function (data) {
             if(data.code == 200){
                 if(!data.data){
-                    alert(''+name+'不允许重复！');
+                    alert(''+worlds+'不允许重复！');
                     $(that).val('');
                     return false;
                 }

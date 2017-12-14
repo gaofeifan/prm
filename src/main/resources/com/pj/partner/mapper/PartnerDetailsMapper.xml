@@ -27,11 +27,11 @@
             partner_details
         <where>
           is_delete = 0
-          <if test="isBlacklist != null">
+            <if test="isBlacklist == 1">
             AND is_blacklist = #{isBlacklist}
           </if>
-          <if test="isDisable != null">
-            OR is_disable = #{isDisable}
+          <if test="isDisable == 1">
+            AND is_disable = #{isDisable}
           </if>
           <if test="partnerCategorys">
             AND
