@@ -106,7 +106,7 @@ public class AspectServer {
     }
 
     // 关注 新增联系人 记录日志
-    @Pointcut("execution(* com.pj.partner.*.*.PartnerLinkmanServiceImpl.insert(..))")
+    @Pointcut("execution(* com.pj.partner.*.*.PartnerLinkmanServiceImpl.insertList(..))")
     public void PartnerLinkmanServiceImplInsertList() {
     }
 
@@ -117,7 +117,7 @@ public class AspectServer {
     }
 
     // 关注 新增联系地址 记录日志
-    @Pointcut("execution(* com.pj.partner.*.*.PartnerAddressServiceImpl.insert(..))")
+    @Pointcut("execution(* com.pj.partner.*.*.PartnerAddressServiceImpl.insertList(..))")
     public void PartnerAddressServiceImplInsert() {
     }
 
