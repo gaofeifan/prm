@@ -367,11 +367,18 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     private Date createDate;
 
     /**
-     *到期日
+     *到期日 开始日期
      */
     @Column
-    @ApiModelProperty(value = "到期日" ,required = false)
-    private Date maturityDate;
+    @ApiModelProperty(value = "到期日開始" ,required = false)
+    private Date maturityDateBegan;
+
+    /**
+     *到期日 結束日期
+     */
+    @Column
+    @ApiModelProperty(value = "到期日结束" ,required = false)
+    private Date maturityDateEnd;
 
     /**
      * 是否删除  0否 1 是
