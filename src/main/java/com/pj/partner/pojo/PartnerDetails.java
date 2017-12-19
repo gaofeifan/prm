@@ -367,6 +367,13 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     private Date createDate;
 
     /**
+     *到期日
+     */
+    @Column
+    @ApiModelProperty(value = "到期日" ,required = false)
+    private Date maturityDate;
+
+    /**
      * 是否删除  0否 1 是
      */
     @Column
