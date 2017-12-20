@@ -18,4 +18,9 @@ public interface EmailService {
 
 
     List<PartnerDetails> findPartnerDetailsGsigningInTransit();  // 获取 签约在途 超过15 天的的信息
+
+    List<PartnerDetails> findPartnerDetailsLastIsAboutToExpire(); // 获取 即将到期的Partner清单
+
+
+
 }
