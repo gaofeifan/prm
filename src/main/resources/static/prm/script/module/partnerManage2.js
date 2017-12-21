@@ -530,7 +530,7 @@ var seePartner = {
 
                 //与收货人地址相同
                 $('input[name="sfhrIsConsigneesAddress"]').val(data.data.sfhrIsConsigneesAddress);
-                if(data.data.sfhrIsConsignee == 1){
+                if(data.data.sfhrIsConsigneesAddress == 1){
                     $('#sfhrIsConsigneesAddress').attr('checked',true);
                 }else{
                     $('#sfhrIsConsigneesAddress').attr('checked',false);

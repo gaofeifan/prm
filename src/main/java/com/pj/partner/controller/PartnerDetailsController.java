@@ -42,6 +42,7 @@ public class PartnerDetailsController extends BaseController {
      *  查询树桩数据
      * @user  GFF
      * @param name
+     * \
      * @param offPartner
      * @param blacklistPartner
      * @return
@@ -142,10 +143,13 @@ public class PartnerDetailsController extends BaseController {
         return this.success();
     }
 
-    /**
+    /**-
+     *
+     *
      * 获取代码长度
      * @User  GFF
      * @return
+     * @param fieldValue
      */
     @ApiOperation(value = "获取代码长度" ,httpMethod = "GET", response = Object.class)
     @RequestMapping(value = "/getCodeLength")
@@ -163,7 +167,6 @@ public class PartnerDetailsController extends BaseController {
     /**
      *  校验字段是否重复
      * @param fieldName
-     * @param fieldValue
      * @return
      */
     @ApiOperation(value = "校验字段是否重复" ,httpMethod = "GET", response = Object.class)
@@ -252,6 +255,7 @@ public class PartnerDetailsController extends BaseController {
         return this.success();
     }
 
+
     @ApiOperation(value = "获取父集代码集合" ,httpMethod = "GET", response = Object.class)
     @RequestMapping(value = "/getParentCodeList")
     @ResponseBody
@@ -266,6 +270,22 @@ public class PartnerDetailsController extends BaseController {
     public Object isEditCode(@ApiParam("id") @RequestParam(name = "id") Integer id){
         boolean flag = this.partnerDetailsService.isEditCode(id);
         return this.success(flag);
+    }
+
+
+
+    @ApiOperation(value = "查询是否有子集  返回值 true有(置灰)  false没有(必填)" ,httpMethod = "GET", response = Object.class)
+    @RequestMapping(value = "/selectIsChild")
+    @ResponseBody
+    public Object selectIsChild(@ApiParam("id") @RequestParam(name = "id") Integer id){
+        boolean flag = this.partnerDetailsService.selectIsChild(id);
+        return this.success(flag);
+    }
+
+
+    public Object checkPhone(){
+
+        return null;
     }
 
 

@@ -45,6 +45,9 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         return partnerDetailsMapper;
     }
 
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_DETAILS = "detailsId";
+
     @Override
     public List<PartnerDetails> selectPartnerDetailsList() {
         PartnerDetails pd = new PartnerDetails();
@@ -116,25 +119,151 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         request.getSession().setAttribute("new_partnerAddress",address);
         request.getSession().setAttribute("old_partnerDetails",this.partnerDetailsMapper.selectByPrimaryKey(record.getId()));
         request.getSession().setAttribute("new_partnerDetails",record);
-        this.partnerLinkmanService.deletePartnerLinkmanByDetailsId(record.getId(),email);
-        this.partnerAddressService.deletePartnerAddressByDetails(record.getId(),email);
+//        this.partnerLinkmanService.deletePartnerLinkmanByDetailsId(record.getId(),email);
+//        this.partnerAddressService.deletePartnerAddressByDetails(record.getId(),email);
         if(linkmans != null){
-            for(PartnerLinkman pl : linkmans){
-                pl.setDetailsId(record.getId());
-            }
-            this.partnerLinkmanService.insertList(linkmans,email);
+            this.updatePartnerLinkman(linkmans,record.getId(),email);
         }
         if(address != null){
-            for (PartnerAddress pa: address ) {
-                pa.setId(null);
-                pa.setDetailsId(record.getId());
-            }
-            this.partnerAddressService.insertList(address,email);
+            this.updatePartnerAddres(address,record.getId(),email);
         }
+        this.updateStatus(record,request);
        super.updateByPrimaryKey(record);
         deleteParentMnemonicCode(record.getId());
     }
 
+    /**
+     *  更新停用 黑名单状态
+     * @param record
+     */
+    private void updateStatus(PartnerDetails record,HttpServletRequest request) {;
+        PartnerDetails details = this.partnerDetailsMapper.selectByPrimaryKey(record.getId());
+        List<PartnerDetails> list = this.partnerDetailsMapper.getChildList(details.getId());
+        request.getSession().setAttribute("old_state_list",list);
+        for (PartnerDetails pd : list){
+            pd.setIsBlacklist(record.getIsBlacklist());
+            pd.setIsDisable(record.getIsDisable());
+            pd.setDisableRemark(record.getDisableRemark());
+            this.partnerDetailsMapper.updateByPrimaryKey(pd);
+        }
+
+
+    }
+
+    /**
+     *  更新联系地址
+     * @param address
+     * @param id
+     * @param email
+     */
+    private void updatePartnerAddres(List<PartnerAddress> address, Integer id, String email) {
+        List<PartnerAddress> deleteAddress = new ArrayList<>();
+        List<PartnerAddress> addresses = this.partnerAddressService.selectPartnerAddressesByDetailsId(id);
+        for (PartnerAddress pa: addresses ) {
+            //  判断新增的集合中是否包含原数据
+            boolean b = contains(address, pa.getId(), FIELD_ID);
+            //  存在进行更新原数据
+            if(b){
+                //  根据id查询新增集合中的数据
+                PartnerAddress partnerAddress = get(address, pa.getId(), FIELD_ID);
+                if(partnerAddress != null){
+                    this.partnerAddressService.updateByPrimaryKey(partnerAddress,email);
+                }
+            }else{
+                // 不存在则数据已删除保存删除的集合中
+                deleteAddress.add(pa);
+            }
+        }
+        //  新增集合中数据都为新增的
+        for (PartnerAddress pa: address ) {
+            pa.setId(null);
+            pa.setDetailsId(id);
+        }
+        this.partnerAddressService.insertList(address,email);
+        // 将新增集合中不存在的元数据进行删除
+        for(PartnerAddress pa : deleteAddress){
+            this.partnerAddressService.delete(pa,email);
+        }
+    }
+
+    /**
+     *  更新联系人
+     * @param linkmans
+     */
+    private void updatePartnerLinkman(List<PartnerLinkman> linkmans , Integer detailsId,String email) {
+        List<PartnerLinkman> deleteLinkman = new ArrayList<>();
+        //  查询原数据
+        List<PartnerLinkman> oPartnerLinkmen = this.partnerLinkmanService.selectPartnerLinkmansByDetailsId(detailsId);
+        for(PartnerLinkman pl : oPartnerLinkmen){
+            //  判断新增的集合中是否包含原数据
+            boolean b = contains(linkmans, pl.getId(), FIELD_ID);
+            //  存在进行更新原数据
+            if(b){
+                //  根据id查询新增集合中的数据
+                PartnerLinkman partnerLinkman = get(linkmans, pl.getId(), FIELD_ID);
+                if(partnerLinkman != null){
+                    this.partnerLinkmanService.updateByPrimaryKey(partnerLinkman,email);
+                }
+                //  删除该条更新的数据
+                linkmans.remove(partnerLinkman);
+            }else{
+                // 不存在则数据已删除保存删除的集合中
+                deleteLinkman.add(pl);
+            }
+        }
+        //  新增集合中数据都为新增的
+        for(PartnerLinkman pl : linkmans){
+            pl.setDetailsId(detailsId);
+        }
+        this.partnerLinkmanService.insertList(linkmans,email);
+        // 将新增集合中不存在的元数据进行删除
+        for(PartnerLinkman pl : deleteLinkman){
+            this.partnerLinkmanService.delete(pl,email);
+        }
+    }
+
+    private <T> boolean  contains( List<T> objs, Integer detailsId,String filedName){
+        for (T obj : objs){
+            Class<?> clazz = obj.getClass();
+            try {
+                Field field = clazz.getDeclaredField(filedName);
+                Object o = field.get(obj);
+                if(o != null){
+                    String str = o.toString();
+                    if(str.equals(detailsId.toString())){
+                        return true;
+                    }
+                }
+
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+    private <T> T  get( List<T> objs, Integer detailsId,String filedName){
+        for (T obj : objs){
+            Class<?> clazz = obj.getClass();
+            try {
+                Field field = clazz.getDeclaredField(filedName);
+                Object o = field.get(obj);
+                if(o != null){
+                    String str = o.toString();
+                    if(str.equals(detailsId.toString())){
+                        return obj;
+                    }
+                }
+
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
     @Override
     public void insertSelective(PartnerDetails partnerDetails, HttpServletRequest request, String email) {
         partnerDetails.setCreateDate(new Date());
@@ -345,5 +474,14 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             details.setMnemonicCode(null);
             this.partnerDetailsMapper.updateByPrimaryKey(details);
         }
+    }
+
+    @Override
+    public boolean selectIsChild(Integer id) {
+        List<PartnerDetailsShifFile> childList = this.partnerDetailsShifFileMapper.getChildList(id);
+        if(childList.size() > 1){
+            return true;
+        }
+        return false;
     }
 }

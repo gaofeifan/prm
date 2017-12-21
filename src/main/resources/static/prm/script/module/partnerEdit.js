@@ -12,8 +12,7 @@ $(function(){
 
     /*加载信用等级*/
     qualityRating();
-    /*flow*/
-    StatusOn(1,13);
+
     var partnerCategorys = [];
     /*回显各个字段的值*/
     $.ajax({
@@ -134,7 +133,7 @@ $(function(){
 
             //与收货人地址相同
             $('input[name="sfhrIsConsigneesAddress"]').val(data.data.sfhrIsConsigneesAddress);
-            if(data.data.sfhrIsConsignee == 1){
+            if(data.data.sfhrIsConsigneesAddress == 1){
                 $('#sfhrIsConsigneesAddress').attr('checked',true);
             }else{
                 $('#sfhrIsConsigneesAddress').attr('checked',false);
@@ -157,7 +156,21 @@ $(function(){
             $('input[name="isDelete"]').val(data.data.isDelete);//isDelete
         }
     });
-
+    /*助记码是否可以修改*/
+    $.ajax({
+        url: 'http://' + gPathUrl + '/partner/details/selectIsChild',
+        type: 'get',
+        data: {
+            id:id
+        },
+        success: function (data) {
+            if(data.code == '200'){
+                if(data.data){
+                    $('#mnemonicCode').attr('disabled',true);
+                }
+            }
+        }
+    });
     /*flow*/
     StatusOn(1,13);
     /*滚动*/
@@ -221,6 +234,7 @@ $(function(){
                 id:id
             },
             success: function (data) {
+                console.log(data)
                 if(data.code == '200'){
                     $.each(data.data,function (index,value) {
                         codes.eq(index).val(value);
@@ -248,7 +262,7 @@ $(function(){
         success: function (data) {
             if(data.code == 200){
                 if(!data.data){
-                    $('.code').attr('disabled',true);
+                    $('.code').attr('readonly',true).css('background-color',' rgb(235, 235, 228)');
                 }
             }
         }
@@ -574,10 +588,8 @@ $(function(){
     var consigneeAndConsignerMust = $('#consigneeAndConsigner .must');
     if(partnerCategorys.indexOf('收发货人')>=0){
         consigneeAndConsignerMark.css('color','#ed6e56');
-        consigneeAndConsignerMust.prop('required',true);
     }else{
         consigneeAndConsignerMark.css('color','#fff');
-        consigneeAndConsignerMust.prop('required',false);
     }
     $('.partnersCheckbox').on('change','.consigneeAndConsigner',function(){
         var thisVal = $(this).prop('checked');
@@ -717,9 +729,11 @@ $(function(){
         if(isConsignee){
             $('input[name="sfhrIsConsignee"]').val('1');
             $('.consigneeInput input').attr('disabled',false);
+            $('.consigneeInput input').attr('required',true);
         }else{
             $('input[name="sfhrIsConsignee"]').val('0');
             $('.consigneeInput input').attr('disabled',true);
+            $('.consigneeInput input').attr('required',false);
         }
     });
     /*发货人*/
@@ -727,13 +741,14 @@ $(function(){
         var isShipper = $(this).prop('checked');
         if(isShipper){
             $('input[name="sfhrIsShipper"]').val('1');
-            //与发货人地址相同的逻辑
-            $('input[name="sfhrIsConsigneesAddress"]').val('0');
-            $('#sfhrIsConsigneesAddress').prop('checked',false);
             $('.shipperInput input').attr('disabled',false);
+            $('.shipperInput input').attr('required',true);
         }else{
             $('input[name="sfhrIsShipper"]').val('0');
-            $('.shipperInput input').attr('disabled',true);
+            $('.shipperInput input').val('').attr('disabled',true);
+            $('input[name="sfhrIsConsigneesAddress"]').val('0');
+            $('#sfhrIsConsigneesAddress').prop('checked',false);
+            $('.shipperInput input').attr('required',false);
         }
     });
     /*与收货人地址相同*/
@@ -747,10 +762,14 @@ $(function(){
             //发货人逻辑
             $('input[name="sfhrIsShipper"]').val('1');
             $('#sfhrIsShipper').prop('checked',true);
+            $('.shipperInput input').attr('disabled',false);
+            $('.shipperInput input').attr('required',true);
         }else{
             $('input[name="sfhrIsShipper"]').val('0');
             $('input[name="sfhrIsConsigneesAddress"]').val('0');
             $('#sfhrIsShipper').prop('checked',false);
+            $('.shipperInput input').val('').attr('disabled',true);
+            $('.shipperInput input').attr('required',false);
         }
     });
     /*合作伙伴分类*/
@@ -932,7 +951,7 @@ $(function(){
     });
     /*删除联系人*/
     $('.contactList ').on('click','.delAdd',function(){
-        var delListId = $(this).parents('.list').find('.no span').text();
+        var delListId = $(this).parents('.list').attr('data-listId');
         mm.removeObjWithArr(contactsList,delListId);
         contactsObj.getContactsList();
     });

@@ -3,8 +3,8 @@
  */
 var oaPathUrl = '10.0.0.18:8083';
 var ssoPathUrl = '10.0.0.18:8085';
-var gPathUrl = '192.168.4.213:8083';
-// var gPathUrl = '10.0.0.105:8083';//测试环境
+// var gPathUrl = '192.168.4.213:8083';
+var gPathUrl = '10.0.0.105:8083';//测试环境
 
 
 /*var oaPathUrl = '139.129.236.180:8080';
@@ -21,7 +21,7 @@ vipspa.start({
             templateUrl: 'view/serve.html',
             controller: 'script/module/serve.js'
         },
-        'credit': { //信用等级
+        'credit': { //信用等级x
             templateUrl: 'view/credit.html',
             controller: 'script/module/credit.js'
         },

@@ -43,4 +43,14 @@ public class PartnerLinkmanServiceImpl extends AbstractBaseServiceImpl<PartnerLi
     public void insertList(List<PartnerLinkman> linkmans, String email) {
         this.partnerLinkmanMapper.insertList(linkmans);
     }
+
+    @Override
+    public void updateByPrimaryKey(PartnerLinkman partnerLinkman, String email) {
+        this.partnerLinkmanMapper.updateByPrimaryKey(partnerLinkman);
+    }
+
+    @Override
+    public void delete(PartnerLinkman pl, String email) {
+        this.partnerLinkmanMapper.delete(pl);
+    }
 }
