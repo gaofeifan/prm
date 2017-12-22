@@ -3,6 +3,12 @@ package com.pj.Aspect;
  * Created by SenevBoy on 2017/11/10.
  */
 public class BasicProperties {
+
+    /**
+     *  修改修改的字段
+     */
+    public static final String [] PartnerDetailsstatus_name = new String[]{"isBlacklist","isDisable","disableRemark" };
+    public static final String [] PartnerDetailsstatus_paramVal  = new String[]{"是否黑名单","是否停用","停用备注" };
     // 用户信用等级
             public static  final  String[]  Basic_UserLevel_paramName ={"id",   "level",    "protocolType","effectiveness","mark"};
             public static  final  String[]  Basic_UserLevel_paramVal  ={"序列号","信用等级","协议类型",    "是否有效","备注"};

@@ -7,9 +7,12 @@ import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.pojo.PartnerDetailsShifFile;
 import com.pj.partner.pojo.PartnerLinkman;
 import com.pj.partner.service.PartnerDetailsService;
+import com.pj.partner.service.PartnerLinkmanService;
+import com.pj.partner.service.impl.PartnerLinkmanServiceImpl;
 import com.pj.user.Utils.ObjectTrim;
 import com.pj.user.mapper.HierarchyMapper;
 import com.pj.user.pojo.Hierarchy;
+import com.pj.user.pojo.RequestParams;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -18,14 +21,13 @@ import net.sf.json.JSONObject;
 import net.sf.json.JSONString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Example;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 @Controller
@@ -37,6 +39,8 @@ public class PartnerDetailsController extends BaseController {
     private PartnerDetailsService partnerDetailsService;
     @Autowired
     private HierarchyMapper hierarchyMapper;
+  @Autowired
+    private PartnerLinkmanService partnerLinkmanService;
 
     /**
      *  查询树桩数据
@@ -96,11 +100,13 @@ public class PartnerDetailsController extends BaseController {
     public Object updatePartnerDetailsById(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails,
                                            @ApiParam("联系方式") @RequestParam(name = "linkmans" ,required = false) String linkmans ,
                                            @ApiParam("联系地址") @RequestParam(name = "address" ,required = false) String address,
-                                           @ApiParam("email") @RequestParam(name = "email" ,required = false) String email
+                                           @ApiParam("email") @RequestParam(name = "email" ,required = false) String email ,
+                                           HttpServletRequest request
     ){
         if(linkmans != null){
             JSONArray array = JSONArray.fromString(linkmans);
             List<PartnerLinkman> list = JSONArray.toList(array, PartnerLinkman.class);
+        //    checkPhoneSendEmail(request,list);
             partnerDetails.setLinkmansList(list);
         }
 
@@ -289,4 +295,47 @@ public class PartnerDetailsController extends BaseController {
     }
 
 
+    /**
+     * @Description: 校验是否存在重复的手机号
+     * @author SevenBoy
+     * @param  partnerLinkman
+     * @return java.lang.Object 
+     * @Date 2017/12/22
+     */
+    @ApiOperation(value = "校验联系人电话是否重复  返回值 true重复  false不重复" ,httpMethod = "POST", response = Object.class)
+    @RequestMapping(value = "/checkPhone")
+    @ResponseBody
+    public Object selectIsChild(@RequestBody PartnerLinkman partnerLinkman){
+        List<PartnerLinkman> partnerLinkmen = this.partnerLinkmanService.selectListByPhone(partnerLinkman);
+        if(null!=partnerLinkmen && partnerLinkmen.size()!=0 ){
+            return this.success(true);
+        }
+        return this.success(false);
+    }
+
+
+    /**
+     *  createBY   sevenBoyLiu
+     *  验证 是否存在重复联系人 并发送邮件到提醒接受者
+     */
+    private void checkPhoneSendEmail(HttpServletRequest requseet,List<PartnerLinkman> partnerLinkmanList){
+        HashSet<PartnerLinkman> partnerLinkmenAl = new HashSet<PartnerLinkman>();
+        if(null!=partnerLinkmanList  && partnerLinkmanList.size()!=0){
+            for (PartnerLinkman parList : partnerLinkmanList){        // 循环联系人检测 是否存在重复联系人电话
+                List<PartnerLinkman> partnerLinkmen = this.partnerLinkmanService.selectListByPhone(parList);
+                // 循环集合排除本身信息
+                if(null!=parList.getId()){
+                        for (PartnerLinkman par:partnerLinkmen){
+                                if(par.getId().equals(parList.getId())){
+                                    par.setName(par.getName());
+                                    partnerLinkmen.remove(par);
+                                }
+                        }
+                }
+                partnerLinkmenAl.addAll(partnerLinkmen);  // 存储所有
+            }
+        }
+            //获取所有 提醒接受者信息 然后发送邮件
+
+    }
 }

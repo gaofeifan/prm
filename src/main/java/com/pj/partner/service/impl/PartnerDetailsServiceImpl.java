@@ -121,33 +121,38 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         request.getSession().setAttribute("new_partnerDetails",record);
 //        this.partnerLinkmanService.deletePartnerLinkmanByDetailsId(record.getId(),email);
 //        this.partnerAddressService.deletePartnerAddressByDetails(record.getId(),email);
+        /*更新联系人*/
         if(linkmans != null){
             this.updatePartnerLinkman(linkmans,record.getId(),email);
         }
+              /*更新联系地址*/
         if(address != null){
             this.updatePartnerAddres(address,record.getId(),email);
         }
-        this.updateStatus(record,request);
-       super.updateByPrimaryKey(record);
-        deleteParentMnemonicCode(record.getId());
+
+        this.updateStatus(record,request); /*   更新停用 黑名单状态*/
+
+       super.updateByPrimaryKey(record);   /*    根据主键更新*/
+
+        deleteParentMnemonicCode(record.getId());    /* 删除所有父集的助记码*/
     }
 
     /**
      *  更新停用 黑名单状态
      * @param record
      */
-    private void updateStatus(PartnerDetails record,HttpServletRequest request) {;
+    public void updateStatus(PartnerDetails record,HttpServletRequest request) {;
         PartnerDetails details = this.partnerDetailsMapper.selectByPrimaryKey(record.getId());
         List<PartnerDetails> list = this.partnerDetailsMapper.getChildList(details.getId());
         request.getSession().setAttribute("old_state_list",list);
         for (PartnerDetails pd : list){
-            pd.setIsBlacklist(record.getIsBlacklist());
-            pd.setIsDisable(record.getIsDisable());
-            pd.setDisableRemark(record.getDisableRemark());
-            this.partnerDetailsMapper.updateByPrimaryKey(pd);
+            if((!pd.getIsBlacklist().equals(record.getIsBlacklist()) )|| (!pd.getIsDisable().equals(record.getIsDisable())) || (!pd.getDisableRemark() .equals(record.getDisableRemark()))){
+                pd.setIsBlacklist(record.getIsBlacklist());
+                pd.setIsDisable(record.getIsDisable());
+                pd.setDisableRemark(record.getDisableRemark());
+                this.partnerDetailsMapper.updateByPrimaryKey(pd);
+            }
         }
-
-
     }
 
     /**
@@ -484,4 +489,6 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         }
         return false;
     }
+
+
 }

@@ -3,6 +3,7 @@ package com.pj.conf.base;
 import java.io.Serializable;
 import java.util.List;
 
+import com.pj.partner.pojo.PartnerLinkman;
 import tk.mybatis.mapper.entity.Example;
 
 /**
@@ -143,5 +144,6 @@ public abstract class AbstractBaseServiceImpl<T, ID extends Serializable> implem
 	public int deleteByKey(Integer primaryKey) {
 		return getMapper().deleteByPrimaryKey(primaryKey);
 	}
+
 
 }

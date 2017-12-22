@@ -53,4 +53,14 @@ public class PartnerLinkmanServiceImpl extends AbstractBaseServiceImpl<PartnerLi
     public void delete(PartnerLinkman pl, String email) {
         this.partnerLinkmanMapper.delete(pl);
     }
+
+    /**
+     * 校验联系人手机号是否重复
+     * @param partnerLinkman
+     * @return
+     */
+    @Override
+    public List<PartnerLinkman> selectListByPhone(PartnerLinkman partnerLinkman) {
+        return partnerLinkmanMapper.select(partnerLinkman );
+    }
 }
