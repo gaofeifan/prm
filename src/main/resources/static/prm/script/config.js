@@ -2,8 +2,8 @@
  * Created by Administrator on 2017/9/12.
  */
 var oaPathUrl = '10.0.0.18:8083';
-var ssoPathUrl = '10.0.0.18:8085';
-var gPathUrl = '192.168.4.213:8083';
+var  ssoPathUrl = '10.0.0.18:8085';
+var gPathUrl = 'localhost:8083';
 // var gPathUrl = '10.0.0.105:8083';//测试环境
 
 
