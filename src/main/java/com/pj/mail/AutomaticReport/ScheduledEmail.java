@@ -155,6 +155,75 @@ public class ScheduledEmail {
 
 
 
+    //   邮件自动报表里面增加，有效期即将到期的提醒（距离到期日相差45天或者小于45天）：
+    //           1、根据合作伙伴中的有效期结束日期和当前日期进行计算
+    //   每天发一次，发给相应的提醒接受者，邮件格式见详情
+
+
+    // @Scheduled(cron="60*10 * * * * ?")
+    //@Scheduled(cron="0 0 8 * * ?")
+    public void IsAboutToExpire() throws Exception {
+                try {
+                    // 获取所有快到期的合作伙伴信息
+                    List<PartnerDetails> IsAboutToExpireData = this.emailService.findPartnerDetailsLastIsAboutToExpire();
+                    if(null!=IsAboutToExpireData || IsAboutToExpireData.size()!=0) {
+                        // 发送邮件
+                        //整理提醒接受者
+                        HashSet<Integer> receiverIds = new HashSet<Integer>();
+                        for (PartnerDetails datasList : IsAboutToExpireData) {
+                            receiverIds.add(datasList.getReceiverId());
+                        }
+
+                        // 存储失败接受者人员信息
+                        HashSet<Integer> failurePersonnel = new HashSet<Integer>();
+                        // 遍历 接受者 并发送邮件
+                        for (Integer receiverId : receiverIds) {
+
+                            List<PartnerDetails> sendEmailsDatas = new ArrayList<PartnerDetails>();
+                            for (PartnerDetails datasList : IsAboutToExpireData) {
+                                if (datasList.getReceiverId().equals(receiverId)) {
+                                    sendEmailsDatas.add(datasList);
+                                }
+                            }
+                            //发送邮件到接受者
+                            if (null != sendEmailsDatas || sendEmailsDatas.size() != 0) {
+                                // 调用接口 获取 email 发给 接收者
+                                User user = authUserService.selectUserByEmail(sendEmailsDatas.get(0).getReceiverId());
+                                try {
+                                    // 邮件正文
+                                    String total = "以下即将到期清单，请注意跟进。";
+                                    StringBuffer mesagesVal = getMesagesValExpiry(sendEmailsDatas, total);
+                                    SendEmailUtils.sendEWmail(mesagesVal, basic_myEmailAccount, basic_myEmailPassword, user.getEmail());
+                                } catch (Exception e) {
+                                    failurePersonnel.add(sendEmailsDatas.get(0).getReceiverId());
+                                    logger.error("有效期即将到期Partner清单 邮件信息获取异常请检查 exception 信息已存储稍后发送给管理员失败接受者信息   :" + e);
+
+                                }
+                            }
+                        }
+                        // 发送失败人员信息到管理员
+                        // 发送给接受者邮件失败后整体发送给 管理者
+                        List<User> userList = new ArrayList<>();
+                        if (failurePersonnel.size() != 0) {
+                            for (Integer ids : failurePersonnel) {
+                                // 调用接口 获取 接收者email
+                                userList.add(authUserService.selectUserByEmail(ids));
+                            }
+                        }
+                        try {
+                            String total = " 以下提醒即将到期Partner清单接收者（Owner）无效，请注意跟进。";
+                            StringBuffer mesagesVal = getExceptionMesagesVal(userList);
+                            SendEmailUtils.sendEWmail(mesagesVal, basic_myEmailAccount, basic_myEmailPassword, getadmin());
+                        }catch (Exception e){
+                            logger.error("---即将到期Partner清单接收者（Owner）无效发送给管理者的异常信息统计邮件发送失败  ： "+e);
+                        }
+                    }
+                }catch (Exception e){
+                    logger.error("有效期即将到期Partner清单 邮件信息获取异常请检查 exception   :" +e );
+                }
+    }
+
+
     public static String getLastdata( ) {
         Calendar calendar = Calendar.getInstance();//日历对象
         calendar.setTime(new Date());//设置当前日期
@@ -177,6 +246,29 @@ public class ScheduledEmail {
             for (PartnerDetails partnerDetails : PartnerDetailsList){
                 theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetails.getCode() +"</td><td>"+partnerDetails.getMnemonicCode() +"</td><td>"+partnerDetails.getChineseName() +"</td><td>"+partnerDetails.getChineseAbbreviation() +"</td><td>"+partnerDetails.getEnglishName() +"</td>" +
                         "<td>"+partnerDetails.getEnglishAbbreviation() +"</td><td>"+partnerDetails.getReceiverName() +"</td><td>"+partnerDetails.getScopeBusiness() +"</td><td>"+partnerDetails.getPartnerCategory() +"</td></tr>");
+            }
+        }
+        theMessage.append("</table>");
+        return theMessage;
+    }
+
+
+
+    // 获取邮件内容 即将到期邮件正文
+    public StringBuffer getMesagesValExpiry(List<PartnerDetails> PartnerDetailsList,String total){
+        StringBuffer theMessage = new StringBuffer();
+
+        theMessage.append("<h2><font >"+total+"</font></h2>");
+        theMessage.append("<hr>");
+        theMessage.append("<table  border='1'>");
+        theMessage.append("<tr><td>序号</td><td>代码</td><td>助记码</td><td>中文全称</td><td>中文简称</td><td>英文全称</td><td>英文简称</td>" +
+                "<td>提醒接受者</td><td>业务范畴</td><td>合作伙伴分类</td><td>有效期开始日</td><td>有效期结束日</td></tr>");
+        if(null!=PartnerDetailsList){
+            Integer i   = 1;
+            for (PartnerDetails partnerDetails : PartnerDetailsList){
+                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetails.getCode() +"</td><td>"+partnerDetails.getMnemonicCode() +"</td><td>"+partnerDetails.getChineseName() +"</td><td>"+partnerDetails.getChineseAbbreviation() +"</td><td>"+partnerDetails.getEnglishName() +"</td>" +
+                        "<td>"+partnerDetails.getEnglishAbbreviation() +"</td><td>"+partnerDetails.getReceiverName() +"</td><td>"+partnerDetails.getScopeBusiness() +"</td><td>"+partnerDetails.getPartnerCategory() +"</td>" +
+                        "<td>"+partnerDetails.getMaturityDateBegan() +"</td><td>"+partnerDetails.getMaturityDateEnd() +"</td></tr>");
             }
         }
         theMessage.append("</table>");
@@ -208,8 +300,7 @@ public class ScheduledEmail {
      * @param date2
      * @return
      */
-    public static int differentDaysByMillisecond(Date date1,Date date2)
-    {
+    public static int differentDaysByMillisecond(Date date1,Date date2) {
         int days = (int) ((date2.getTime() - date1.getTime()) / (1000*3600*24));
         return days;
     }

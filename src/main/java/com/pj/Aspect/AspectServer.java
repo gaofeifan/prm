@@ -106,7 +106,7 @@ public class AspectServer {
     }
 
     // 关注 新增联系人 记录日志
-    @Pointcut("execution(* com.pj.partner.*.*.PartnerLinkmanServiceImpl.insert(..))")
+    @Pointcut("execution(* com.pj.partner.*.*.PartnerLinkmanServiceImpl.insertList(..))")
     public void PartnerLinkmanServiceImplInsertList() {
     }
 
@@ -117,7 +117,7 @@ public class AspectServer {
     }
 
     // 关注 新增联系地址 记录日志
-    @Pointcut("execution(* com.pj.partner.*.*.PartnerAddressServiceImpl.insert(..))")
+    @Pointcut("execution(* com.pj.partner.*.*.PartnerAddressServiceImpl.insertList(..))")
     public void PartnerAddressServiceImplInsert() {
     }
 
@@ -148,9 +148,28 @@ public class AspectServer {
     public void shiftPartnerDetailsFileByIdsexecution() {
     }
 
+    // 停用 黑名单 备注 日志切面  循环修改 切面日志
 
 
-    // 关注 合作伙伴文件转移   before
+    // 停用 黑名单 备注 日志切面
+    //  记录新增的权限···· 记录日志
+    @AfterReturning("editPostAuthorityExecution()")
+    public void editPostAuthorityPointcutAfter2(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+
+    }
+    //   ------- 合作伙伴相关的联系人联系地址数据信息切面
+    //  ---   新增联系人
+    //  ---   删除联系人
+    //  ---   修改联系人
+
+    //  ---   新增联系地址
+    //  ---   删除联系地址
+    //  ---   修改联系地址
+
+
+
+
+        // 关注 合作伙伴文件转移   before
     @Before("shiftPartnerDetailsFileByIdsexecution( )")
     public void shiftPartnerDetailsFileByIdsexecutionBefore(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         HttpServletRequest request = requestinit();
@@ -207,7 +226,6 @@ public class AspectServer {
                     }
                 }
             }
-
         }
         // 操作日志追加
         addLogMethod(flage,request , actionData,args[args.length-1].toString());

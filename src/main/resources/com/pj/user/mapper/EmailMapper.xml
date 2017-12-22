@@ -15,32 +15,47 @@
     <result  column="partner_category" property="partnerCategory" jdbcType="VARCHAR" />
     <result  column="receiver_id" property="receiverId" jdbcType="INTEGER" />
     <result  column="create_date" property="createDate" jdbcType="DATE" />
+    <result  column="maturity_date_began" property="maturityDateBegan" jdbcType="DATE" />
+    <result  column="maturity_date_end" property="maturityDateEnd" jdbcType="DATE" />
 </resultMap>
 
     <!-- sql -->
     <sql id="baseSelect_email">
         ID ,code , receiver_id, mnemonic_code , chinese_name  ,chinese_abbreviation  , english_name    ,
         english_abbreviation  , receiver_name  ,scope_business ,partner_category , create_date
+        ,maturity_date_began,maturity_date_end
     </sql>
 
-    <select id="findPartnerDetailsLastMonthDate" resultMap="BaseResultMap">
-        SELECT
-                    <include refid="baseSelect_email"></include>
-        FROM
-                    partner_details
-        WHERE
-                    date_format(create_date,'%Y-%m')=date_format(DATE_SUB(curdate(), INTERVAL 1 MONTH),'%Y-%m')
+        <select id="findPartnerDetailsLastMonthDate" resultMap="BaseResultMap">
+            SELECT
+                        <include refid="baseSelect_email"></include>
+            FROM
+                        partner_details
+            WHERE
+                        date_format(create_date,'%Y-%m')=date_format(DATE_SUB(curdate(), INTERVAL 1 MONTH),'%Y-%m')
 
-    </select>
-    <select id="findPartnerDetailsGsigningInTransit"  resultMap="BaseResultMap">
-        SELECT
-                    <include refid="baseSelect_email"></include>
-        FROM
-                   partner_details
-        WHERE
-                 wbkh_credit_rating like '%签约在途%'
-        AND           DATEDIFF(now(),create_date)   &gt;= 15
-        ORDER BY
-                    receiver_id desc
-    </select>
+        </select>
+
+            <select id="findPartnerDetailsGsigningInTransit"  resultMap="BaseResultMap">
+                SELECT
+                            <include refid="baseSelect_email"></include>
+                FROM
+                           partner_details
+                WHERE
+                         wbkh_credit_rating like '%签约在途%'
+                AND           DATEDIFF(now(),create_date)   &gt;= 15
+                ORDER BY
+                            receiver_id desc
+            </select>
+    <!-- 获取 即将到期的Partner清单  小于 等于  当前日期 45 天 -->
+            <select id="findPartnerDetailsLastIsAboutToExpire"  resultMap="BaseResultMap">
+                SELECT
+                            <include refid="baseSelect_email"></include>
+                FROM
+                           partner_details
+                WHERE
+                              DATEDIFF(now(),maturity_date_end)   &lt;= 45
+                ORDER BY
+                            receiver_id desc
+            </select>
 </mapper>

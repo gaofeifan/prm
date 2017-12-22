@@ -50,11 +50,11 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
 
     @Override
     public List<PartnerDetails> selectPartnerDetailsList() {
+
         PartnerDetails pd = new PartnerDetails();
         pd.setIsDelete(0);
         List<PartnerDetails> list = windowsSort(this.partnerDetailsMapper.select(pd));
         return list;
-
     }
 
     @Override

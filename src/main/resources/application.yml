@@ -15,11 +15,11 @@ spring:
     
   profiles:
     active: dev
-    
+
 
 logging:
-  config: classpath:logback/logback-boot.xml 
-    
+  config: classpath:logback/logback-boot.xml
+
 #    minIdle: 1
 #    maxActive: 2
 #    initialSize: 1

@@ -19,4 +19,6 @@ public interface EmailMapper extends  BaseMapper<PartnerDetails>{
     List<PartnerDetails> findPartnerDetailsLastMonthDate();    // 获取  上月新增的 partner
 
     List<PartnerDetails> findPartnerDetailsGsigningInTransit();  // 获取 签约在途 超过15 天的的信息
+
+    List<PartnerDetails> findPartnerDetailsLastIsAboutToExpire(); // 获取 即将到期的Partner清单
 }

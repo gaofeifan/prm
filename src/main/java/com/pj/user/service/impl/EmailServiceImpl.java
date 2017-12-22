@@ -33,4 +33,9 @@ public class EmailServiceImpl implements EmailService {
     public List<PartnerDetails> findPartnerDetailsGsigningInTransit() {
         return emailMapper.findPartnerDetailsGsigningInTransit();
     }
+
+    @Override
+    public List<PartnerDetails> findPartnerDetailsLastIsAboutToExpire() {
+        return emailMapper.findPartnerDetailsLastIsAboutToExpire();
+    }
 }

@@ -15,7 +15,7 @@ import javax.mail.internet.MimeMessage;
  * @parameter
  * @since 1.8
  */
-public class SendEmailUtils {
+public     class  SendEmailUtils {
 
 	private static final String basic_myEmailSMTPHost ="smtp.pj-l.com";
 	private static final String basic_receiveMailAccount =  "sevenboyliu@pj-l.com";
