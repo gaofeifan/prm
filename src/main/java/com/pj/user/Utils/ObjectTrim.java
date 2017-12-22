@@ -24,7 +24,6 @@ public class ObjectTrim {
                     if(o == null){
                         continue;
                     }
-                    System.out.println(o.toString());
                     method.invoke(obj,o.toString().trim());
                 } catch (NoSuchMethodException e) {
                     e.printStackTrace();

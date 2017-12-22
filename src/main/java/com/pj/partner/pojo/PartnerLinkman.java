@@ -76,6 +76,14 @@ class PartnerLinkman implements Serializable {
     @ApiModelProperty(value = "联系人   详情管理id" ,required = false)
     private Integer detailsId;
 
+    @Column
+    @ApiModelProperty(value = "qq" ,required = false)
+    private String qq;
+
+    @Column
+    @ApiModelProperty(value = "微信" ,required = false)
+    private String weChat;
+
     private static final long serialVersionUID = 1L;
 
 

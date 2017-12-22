@@ -29,6 +29,11 @@ public class PartnerAddressServiceImpl extends AbstractBaseServiceImpl<PartnerAd
     }
 
     @Override
+    public void delete(PartnerAddress pa, String email) {
+        this.partnerAddressMapper.delete(pa);
+    }
+
+    @Override
     public void deletePartnerAddressByDetails(Integer detailsId, String email) {
         PartnerAddress record = new PartnerAddress();
         record.setDetailsId(detailsId);
@@ -40,6 +45,11 @@ public class PartnerAddressServiceImpl extends AbstractBaseServiceImpl<PartnerAd
         PartnerAddress record = new PartnerAddress();
         record.setDetailsId(detailsId);
         return this.partnerAddressMapper.select(record);
+    }
+
+    @Override
+    public void updateByPrimaryKey(PartnerAddress partnerAddress, String email) {
+        this.partnerAddressMapper.updateByPrimaryKey(partnerAddress);
     }
 
     @Override

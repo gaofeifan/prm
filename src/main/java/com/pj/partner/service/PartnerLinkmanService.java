@@ -16,4 +16,8 @@ public interface PartnerLinkmanService extends BaseService<PartnerLinkman,Intege
 
 
     void insertList(List<PartnerLinkman> linkmans, String email);
+
+    void updateByPrimaryKey(PartnerLinkman partnerLinkman, String email);
+
+    void delete(PartnerLinkman pl, String email);
 }

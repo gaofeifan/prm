@@ -33,6 +33,8 @@ logging:
 mybatis:
   mapper-locations: classpath:com/pj/*/mapper/*.xml
   type-aliases-package: com.pj.*.pojo
+  configuration:
+    map-underscore-to-camel-case: true
 
 
 

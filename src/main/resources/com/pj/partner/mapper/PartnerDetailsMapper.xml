@@ -85,6 +85,9 @@
     <select id="getParentList" resultMap="BaseResultMap">
         select id,code,dir_name,p_id FROM partner_details 	where FIND_IN_SET(id,getParentList(#{id}))
     </select>
+    <select id="getChildList" resultType="com.pj.partner.pojo.PartnerDetails">
+        select *  FROM partner_details 	where FIND_IN_SET(id,getChildList(#{id}))
+    </select>
     <select id="selectDetailsMaxCode" resultType="int">
          SELECT Max(LENGTH(code)) FROM partner_details
     </select>

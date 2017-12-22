@@ -394,12 +394,13 @@ $(function(){
         if(thisVal){
             //勾选
             consigneeAndConsignerMark.css('color','#ed6e56');
-            $('#consigneeAndConsigner input').prop('required',true)
+           /* $('#consigneeAndConsigner input').prop('required',true)*/
         }else{//取消勾选
             consigneeAndConsignerMark.css('color','#fff');
-            $('#consigneeAndConsigner input').prop('required',false)
+            /*$('#consigneeAndConsigner input').prop('required',false)*/
         }
     });
+
     /*结算对象*/
     var settlementObjectMark = $('#settlementObject .mark');
     settlementObjectMark.css('color','#fff');
@@ -521,9 +522,11 @@ $(function(){
         if(isConsignee){
             $('input[name="sfhrIsConsignee"]').val('1');
             $('.consigneeInput input').attr('disabled',false);
+            $('.consigneeInput input').attr('required',true);
         }else{
             $('input[name="sfhrIsConsignee"]').val('0');
             $('.consigneeInput input').attr('disabled',true);
+            $('.consigneeInput input').attr('required',false);
         }
     });
     /*发货人*/
@@ -531,13 +534,14 @@ $(function(){
         var isShipper = $(this).prop('checked');
         if(isShipper){
             $('input[name="sfhrIsShipper"]').val('1');
-            //与发货人地址相同的逻辑
-            $('input[name="sfhrIsConsigneesAddress"]').val('0');
-            $('#sfhrIsConsigneesAddress').prop('checked',false);
             $('.shipperInput input').attr('disabled',false);
+            $('.shipperInput input').attr('required',true);
         }else{
             $('input[name="sfhrIsShipper"]').val('0');
-            $('.shipperInput input').attr('disabled',true);
+            $('.shipperInput input').val('').attr('disabled',true);
+            $('input[name="sfhrIsConsigneesAddress"]').val('0');
+            $('#sfhrIsConsigneesAddress').prop('checked',false);
+            $('.shipperInput input').attr('required',false);
         }
     });
     /*与收货人地址相同*/
@@ -551,10 +555,14 @@ $(function(){
             //发货人逻辑
             $('input[name="sfhrIsShipper"]').val('1');
             $('#sfhrIsShipper').prop('checked',true);
+            $('.shipperInput input').attr('disabled',false);
+            $('.shipperInput input').attr('required',true);
         }else{
             $('input[name="sfhrIsShipper"]').val('0');
             $('input[name="sfhrIsConsigneesAddress"]').val('0');
             $('#sfhrIsShipper').prop('checked',false);
+            $('.shipperInput input').val('').attr('disabled',true);
+            $('.shipperInput input').attr('required',false);
         }
     });
     /*合作伙伴分类*/

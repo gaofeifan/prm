@@ -14,6 +14,11 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
 
     public static final char UNDERLINE='_';
 
+    /**
+     *  修改修改的字段
+     */
+    public static final String [] statuss = new String[]{"isDisable","disableRemark","isBlacklist"};
+
     List<PartnerDetails> selectPartnerDetailsList( );
 
     List<PartnerDetails> selectListByQuery(String name, Integer offPartner, Integer blacklistPartner,String partnerCategory);
@@ -72,4 +77,11 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
      * @return
      */
     boolean isEditCode(Integer id);
+
+    /**
+     *  查询是否有子集
+     * @param id
+     * @return
+     */
+    boolean selectIsChild(Integer id);
 }

@@ -2,8 +2,10 @@ package com.pj.partner.mapper;
 
 import com.pj.conf.base.BaseMapper;
 import com.pj.partner.pojo.PartnerDetails;
+import com.pj.partner.pojo.PartnerDetailsShifFile;
 import com.pj.partner.service.PartnerDetailsService;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -50,4 +52,11 @@ public interface PartnerDetailsMapper extends BaseMapper<PartnerDetails>{
      * @return
      */
     Integer selectDetailsMaxCode();
+
+    /**
+     *  查询所有子集
+     * @param id
+     * @return
+     */
+    public List<PartnerDetails> getChildList(@Param("id") Integer id);
 }
