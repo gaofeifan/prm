@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 public @Data @Table(name="partner_linkman")
-class PartnerLinkman implements Serializable {
+class PartnerLinkman implements Serializable  {
     @ApiModelProperty(value = "联系人 id" ,required = false)
     @GeneratedValue(generator = "JDBC")
     @Id
@@ -86,6 +86,16 @@ class PartnerLinkman implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Column
+    @ApiModelProperty(value = "联系人  合作伙伴中文全称-新维护重复名称" ,required = false)
+    private String newchineseName;
 
+    @Column
+    @ApiModelProperty(value = "联系人  合作伙伴中文全称-元数据被重复名称 " ,required = false)
+    private String oldchineseName;
+
+    @Column
+    @ApiModelProperty(value = "联系人  合作伙伴中文全称-接受者ID " ,required = false)
+    private Integer receiverId;
 
 }

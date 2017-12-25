@@ -2,6 +2,7 @@ package com.pj.partner.controller;
 
 import com.pj.cache.PartnerDetailsCache;
 import com.pj.conf.base.BaseController;
+import com.pj.conf.utils.ThreadEmail;
 import com.pj.partner.pojo.PartnerAddress;
 import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.pojo.PartnerDetailsShifFile;
@@ -106,8 +107,10 @@ public class PartnerDetailsController extends BaseController {
         if(linkmans != null){
             JSONArray array = JSONArray.fromString(linkmans);
             List<PartnerLinkman> list = JSONArray.toList(array, PartnerLinkman.class);
-        //    checkPhoneSendEmail(request,list);
             partnerDetails.setLinkmansList(list);
+            // 校验手机号 发送邮件
+            checkPhoneSendEmail(request,list, partnerDetails.getChineseName());
+
         }
 
         if(address != null){
@@ -132,12 +135,16 @@ public class PartnerDetailsController extends BaseController {
     public Object insertPartnerDetails(@ModelAttribute("partnerDetails") PartnerDetails partnerDetails,
                                        @ApiParam("联系方式") @RequestParam(name = "linkmans" ,required = false) String linkmans ,
                                        @ApiParam("联系地址") @RequestParam(name = "address" ,required = false) String address,
-                                       @ApiParam("email") @RequestParam(name = "email" ,required = false) String email){
+                                       @ApiParam("email") @RequestParam(name = "email" ,required = false) String email,
+                                       HttpServletRequest request   ){
 
         if(linkmans != null){
+
             JSONArray array = JSONArray.fromString(linkmans);
             List<PartnerLinkman> list = JSONArray.toList(array, PartnerLinkman.class);
             partnerDetails.setLinkmansList(list);
+            // 校验手机号 发送邮件
+            checkPhoneSendEmail(request,list, partnerDetails.getChineseName());
         }
         if(address != null){
             JSONArray array = JSONArray.fromString(address);
@@ -155,7 +162,6 @@ public class PartnerDetailsController extends BaseController {
      * 获取代码长度
      * @User  GFF
      * @return
-     * @param fieldValue
      */
     @ApiOperation(value = "获取代码长度" ,httpMethod = "GET", response = Object.class)
     @RequestMapping(value = "/getCodeLength")
@@ -318,8 +324,8 @@ public class PartnerDetailsController extends BaseController {
      *  createBY   sevenBoyLiu
      *  验证 是否存在重复联系人 并发送邮件到提醒接受者
      */
-    private void checkPhoneSendEmail(HttpServletRequest requseet,List<PartnerLinkman> partnerLinkmanList){
-        HashSet<PartnerLinkman> partnerLinkmenAl = new HashSet<PartnerLinkman>();
+    private void checkPhoneSendEmail(HttpServletRequest requseet,List<PartnerLinkman> partnerLinkmanList,String chinesName){
+        List<PartnerLinkman> partnerLinkmenAl = new ArrayList<PartnerLinkman>();
         if(null!=partnerLinkmanList  && partnerLinkmanList.size()!=0){
             for (PartnerLinkman parList : partnerLinkmanList){        // 循环联系人检测 是否存在重复联系人电话
                 List<PartnerLinkman> partnerLinkmen = this.partnerLinkmanService.selectListByPhone(parList);
@@ -327,7 +333,8 @@ public class PartnerDetailsController extends BaseController {
                 if(null!=parList.getId()){
                         for (PartnerLinkman par:partnerLinkmen){
                                 if(par.getId().equals(parList.getId())){
-                                    par.setName(par.getName());
+                                    // 新旧合作伙伴中文名去全称 赋值
+                                    par.setNewchineseName(chinesName);
                                     partnerLinkmen.remove(par);
                                 }
                         }
@@ -335,7 +342,9 @@ public class PartnerDetailsController extends BaseController {
                 partnerLinkmenAl.addAll(partnerLinkmen);  // 存储所有
             }
         }
-            //获取所有 提醒接受者信息 然后发送邮件
-
+            // 线程执行获取所有 提醒接受者信息 然后发送邮件
+        requseet.getSession().setAttribute("partnerLinkmenAl",partnerLinkmenAl);
+        ThreadEmail threadEmail = new ThreadEmail(requseet);
+        threadEmail.start();
     }
 }

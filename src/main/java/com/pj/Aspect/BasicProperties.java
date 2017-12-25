@@ -66,6 +66,32 @@ public class BasicProperties {
                     "开户银行","银行账号","公司地址","公司电话"*/
             };
 
+
+
+
+     //  手机号校验邮箱发送total信息 error信息
+     //重复联系人
+  public static final  String  total_repetition_telephone = " 以下提醒重复联系人（Owner）无效，请注意跟进。";
+  public static final   String  error_repetition_telephone = "---重复联系人（Owner）无效发送给管理者的异常信息统计邮件发送失败  ： ";
+
+  // 新增Partner
+    public static final  String  total_The_new_Partner = "月 新增Partner如下，如有问题，请联系相应Owner.";
+    public static final   String  error_The_new_Partner = "月新增Partner清单 邮件信息获取异常请检查 exception   :";
+
+    //  签约在途告警邮件
+    public static final  String  total_signing_In_Transit =  " 以下客户信用等级为签约在途，保存时间已经超过15/30个自然日，请注意跟进。";
+    public static final   String  error_signing_In_Transit = "-- 发送给提醒接受者 的邮件发送失败 已存储并已转发通知管理员--";
+
+    // 信用等级
+    public static final  String  total_A_credit_rating =  " 以下客户信用等级为签约在途，保存时间已经超过15/30个自然日，请注意跟进。";
+    public static final   String  error_A_credit_rating = "-- 发送给提醒接受者 的邮件发送失败 已存储并已转发通知管理员--";
+
+    // total
+
+    public static final  String  total_basic_data =   " 以下提醒接收者（Owner）无效，请注意跟进。";
+
+
+
     public static void main(String[] args) {
         System.out.println(Basic_PartnerDeta_paramName.length);
         System.out.println(Basic_PartnerDeta_paramVal.length);

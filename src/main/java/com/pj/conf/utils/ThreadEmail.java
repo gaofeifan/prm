@@ -1,7 +1,17 @@
 package com.pj.conf.utils;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import com.pj.auth.pojo.User;
+import com.pj.auth.service.AuthUserService;
+import com.pj.mail.AutomaticReport.ScheduledEmail;
+import com.pj.mail.util.SendEmailUtils;
+import com.pj.partner.pojo.PartnerDetails;
+import com.pj.partner.pojo.PartnerLinkman;
+import com.pj.partner.service.PartnerDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 /***
  * @ClassName: Thread
@@ -9,24 +19,30 @@ import java.util.Queue;
  * @author SenevBoy
  * @date 2017/12/22 16:15   
  **/
+@Component
 public class ThreadEmail  extends  Thread{
 
+    @Autowired
+    private AuthUserService authUserService;
+    @Autowired
+    private PartnerDetailsService partnerDetailsService;
+
     private Queue<Integer> queue =  new LinkedList<Integer>();
-    private int maxSize;
+    private int maxSize=1;
+    private HttpServletRequest request;
+    public ThreadEmail(HttpServletRequest request) {
+        this.request =request;
 
-    public ThreadEmail(Queue<Integer> queue , String name) {
-        super(name);
-        this.queue = queue;
-        this.maxSize = 1;
     }
-
 
     @Override
     public void run() {
         while (true) {
             synchronized (queue) {
                     try {
-
+                        ScheduledEmail scheduledEmail = new ScheduledEmail();
+                        // 发送邮件
+                        scheduledEmail.sendPhoneEmail(request,partnerDetailsService);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }finally {
@@ -35,5 +51,4 @@ public class ThreadEmail  extends  Thread{
             }
         }
     }
-
 }

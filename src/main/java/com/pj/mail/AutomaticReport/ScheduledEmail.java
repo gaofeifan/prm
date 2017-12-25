@@ -4,11 +4,15 @@ import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.pj.auth.pojo.User;
 import com.pj.mail.util.SendEmailUtils;
 import com.pj.partner.pojo.PartnerDetails;
+import com.pj.partner.pojo.PartnerLinkman;
+import com.pj.partner.service.PartnerDetailsService;
 import com.pj.user.service.EmailService;
 import com.pj.auth.service.AuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.*;
 /**
@@ -224,6 +228,66 @@ public class ScheduledEmail {
     }
 
 
+    //  联系人电话重复提醒邮件
+    public void sendPhoneEmail(HttpServletRequest request, PartnerDetailsService partnerDetailsService) throws Exception {
+
+        HashSet<Integer> partnerDetaisl = new HashSet<Integer>();  // 所有合作伙伴id集合
+
+        // 获取请求中的  联系人集合
+        List<PartnerLinkman> partnerLinkmenAl = (  ArrayList<PartnerLinkman>)request.getSession().getAttribute("partnerLinkmenAl");
+        for  ( PartnerLinkman parData : partnerLinkmenAl){
+            partnerDetaisl.add(parData.getDetailsId());
+        }
+        // 存储失败接受者人员信息
+        HashSet<Integer> failurePersonnel = new HashSet<Integer>();
+
+        for (Integer  detailsId  : partnerDetaisl){
+            List<PartnerLinkman> emailListData = new ArrayList<PartnerLinkman>(); // 所有待发送邮件的 人员集合 根据 接受者分类
+            for  ( PartnerLinkman parData : partnerLinkmenAl){
+                if(parData.getDetailsId().equals(detailsId)){
+                    PartnerDetails partnerDetails = partnerDetailsService.selectByPrimaryKey(detailsId);
+                    parData.setOldchineseName(partnerDetails.getChineseName());
+                    parData.setReceiverId(partnerDetails.getReceiverId());
+                    emailListData.add(parData);
+                }
+            }
+
+            // 获取 邮箱并发送邮件
+            //发送邮件到接受者
+            // 调用接口 获取 email 发给 接收者
+            User user = authUserService.selectUserByEmail(emailListData.get(0).getReceiverId());
+            try {
+
+                // 邮件正文
+                String total = "新增合作伙伴（中文全称）维护了新的联系人，与您名下的合作伙伴（中文全称）中的以下联系人重复，请核实。。";
+                StringBuffer mesagesVal =  getMesagesValPartnerLinkman(emailListData, total);
+                SendEmailUtils.sendEWmail(mesagesVal, ScheduledEmail.basic_myEmailAccount, basic_myEmailPassword, user.getEmail());
+            } catch (Exception e) {
+
+                failurePersonnel.add(emailListData.get(0).getReceiverId());
+                logger.error("  邮件信息获取异常请检查 exception 信息已存储稍后发送给管理员失败接受者信息   :" + e);
+            }
+        }
+
+        // 发送失败人员信息到管理员
+        // 发送给接受者邮件失败后整体发送给 管理者
+        List<User> userList = new ArrayList<>();
+        if (failurePersonnel.size() != 0) {
+            for (Integer ids : failurePersonnel) {
+                // 调用接口 获取 接收者email
+                userList.add(authUserService.selectUserByEmail(ids));
+            }
+        }
+        try {
+            String total = " 以下提醒重複（Owner）无效，请注意跟进。";
+            StringBuffer mesagesVal = getExceptionMesagesVal(userList);
+            SendEmailUtils.sendEWmail(mesagesVal, basic_myEmailAccount, basic_myEmailPassword, getadmin());
+        }catch (Exception e){
+            logger.error("--- 接收者（Owner）无效发送给管理者的异常信息统计邮件发送失败  ： "+e);
+        }
+    }
+
+
     public static String getLastdata( ) {
         Calendar calendar = Calendar.getInstance();//日历对象
         calendar.setTime(new Date());//设置当前日期
@@ -231,6 +295,29 @@ public class ScheduledEmail {
         SimpleDateFormat simpledate = new SimpleDateFormat("YYYY-MM");
         return  simpledate.format(calendar.getTime()) ;// 上个月的日期
     }
+
+
+    // 获取邮件内容 联系人重复邮件信息
+    public StringBuffer getMesagesValPartnerLinkman(List<PartnerLinkman> PartnerDetailsList, String total){
+        StringBuffer theMessage = new StringBuffer();
+
+        theMessage.append("<h2><font >"+total+"</font></h2>");
+        theMessage.append("<hr>");
+        theMessage.append("<table  border='1'>");
+        theMessage.append("<tr><td>序号</td><td>联系人名称</td><td>新合作伙伴中文全称</td><td>新合作伙伴中文全称</td><td>职责</td><td>部门</td><td>职务</td><td>固话</td>" +
+                "<td>手机</td><td>邮件</td><td>微信</td><td>QQ</td><td>地址</td></tr>");
+        if(null!=PartnerDetailsList){
+            Integer i   = 1;
+            for (PartnerLinkman partnerDetails : PartnerDetailsList){
+                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetails.getNewchineseName() +"</td><td>"+partnerDetails.getOldchineseName() +"</td><td>"+ (partnerDetails.getObligation()==null?"":partnerDetails.getObligation()) +"</td><td>"+(partnerDetails.getDemp()==null?"":partnerDetails.getDemp()) +"</td><td>"+(partnerDetails.getFixPhone()==null?"":partnerDetails.getFixPhone()) +"</td>" +
+                        "<td>"+ (partnerDetails.getPhone()==null?"":partnerDetails.getPhone()) +"</td><td>"+(partnerDetails.getEmail()==null?"":partnerDetails.getEmail())+"</td><td>"+(partnerDetails.getWeChat()==null?"":partnerDetails.getWeChat())+"</td><td>"+(partnerDetails.getQq()==null?"":partnerDetails.getQq()) +"</td>" +
+                        "<td>"+(partnerDetails.getAddress()==null?"":partnerDetails.getAddress())+"</td></tr>");
+            }
+        }
+        theMessage.append("</table>");
+        return theMessage;
+    }
+
 
     // 获取邮件内容
     public StringBuffer getMesagesVal(List<PartnerDetails> PartnerDetailsList,String total){
