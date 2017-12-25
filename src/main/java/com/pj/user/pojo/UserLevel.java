@@ -39,4 +39,14 @@ public class UserLevel implements Serializable{
     @ApiModelProperty(value = " 备注  ", required = false)
     private String mark;
 
+
+    @Column(name = "default_quota")
+    @ApiModelProperty(value = " 默认额度  ", required = false)
+    private String defaultQuota;
+
+
+    @Column(name = "default_time")
+    @ApiModelProperty(value = " 默认期限  ", required = false)
+    private String defaultTtime;
+
 }
