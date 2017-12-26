@@ -3,72 +3,86 @@
 <mapper namespace="com.pj.partner.mapper.PartnerDetailsMapper">
     <resultMap id="BaseResultMapAll" type="com.pj.partner.pojo.PartnerDetails" >
 
-            <id column="id" property="id" jdbcType="INTEGER" />
-            <result column="dir_name" property="dirName" jdbcType="VARCHAR" />
-            <result column="code" property="code" jdbcType="VARCHAR" />
-            <result column="mnemonic_code" property="mnemonicCode" jdbcType="VARCHAR" />
-            <result column="chinese_name" property="chineseName" jdbcType="VARCHAR" />
-            <result column="chinese_abbreviation" property="chineseAbbreviation" jdbcType="VARCHAR" />
-            <result column="heading_code" property="headingCode" jdbcType="VARCHAR" />
-            <result column="english_name" property="englishName" jdbcType="VARCHAR" />
-            <result column="english_abbreviation" property="englishAbbreviation" jdbcType="VARCHAR" />
-            <result column="financing_code" property="financingCode" jdbcType="VARCHAR" />
-            <result column="receiver_id" property="receiverId" jdbcType="INTEGER" />
-            <result column="receiver_name" property="receiverName" jdbcType="VARCHAR" />
-            <result column="scope_business" property="scopeBusiness" jdbcType="VARCHAR" />
-            <result column="partner_category" property="partnerCategory" jdbcType="VARCHAR" />
-            <result column="is_blacklist" property="isBlacklist" jdbcType="INTEGER" />
-            <result column="is_disable" property="isDisable" jdbcType="INTEGER" />
-            <result column="disable_remark" property="disableRemark" jdbcType="VARCHAR" />
-            <result column="wbkh_customer_class" property="wbkhCustomerClass" jdbcType="VARCHAR" />
-            <result column="wbkh_credit_rating" property="wbkhCreditRating" jdbcType="VARCHAR" />
-            <result column="wbkh_invoice_type" property="wbkhInvoiceType" jdbcType="VARCHAR" />
-            <result column="wbkh_type_credit_period" property="wbkhTypeCreditPeriod" jdbcType="VARCHAR" />
-            <result column="wbkh_credit_period" property="wbkhCreditPeriod" jdbcType="DECIMAL" />
-            <result column="wbkh_line_credit" property="wbkhLineCredit" jdbcType="DECIMAL" />
-            <result column="wbkh_deposit_bank" property="wbkhDepositBank" jdbcType="VARCHAR" />
-            <result column="wbkh_bank_account" property="wbkhBankAccount" jdbcType="VARCHAR" />
-            <result column="wbkh_company_tel" property="wbkhCompanyTel" jdbcType="VARCHAR" />
-            <result column="wbkh_company_address" property="wbkhCompanyAddress" jdbcType="VARCHAR" />
-            <result column="wbkh_is_pay_for_another" property="wbkhIsPayForAnother" jdbcType="INTEGER" />
-            <result column="wbkh_payment_term" property="wbkhPaymentTerm" jdbcType="DECIMAL" />
-            <result column="wbkh_paid_amount" property="wbkhPaidAmount" jdbcType="DECIMAL" />
-            <result column="hwdl_tax_receipt" property="hwdlTaxReceipt" jdbcType="VARCHAR" />
-            <result column="hwdl_tax_rate" property="hwdlTaxRate" jdbcType="DECIMAL" />
-            <result column="gxcyr_class_of_service" property="gxcyrClassOfService" jdbcType="VARCHAR" />
-            <result column="sfhr_is_consignee" property="sfhrIsConsignee" jdbcType="INTEGER" />
-            <result column="sfhr_is_shipper" property="sfhrIsShipper" jdbcType="INTEGER" />
-            <result column="sfhr_is_consignees_address" property="sfhrIsConsigneesAddress" jdbcType="INTEGER" />
-            <result column="sfhr_consignee_nation" property="sfhrConsigneeNation" jdbcType="VARCHAR" />
-            <result column="sfhr_consignee_continent" property="sfhrConsigneeContinent" jdbcType="VARCHAR" />
-            <result column="sfhr_consignee_city" property="sfhrConsigneeCity" jdbcType="VARCHAR" />
-            <result column="sfhr_consignee_phone" property="sfhrConsigneePhone" jdbcType="VARCHAR" />
-            <result column="sfhr_consignee_address" property="sfhrConsigneeAddress" jdbcType="VARCHAR" />
-            <result column="sfhr_shipper_nation" property="sfhrShipperNation" jdbcType="VARCHAR" />
-            <result column="sfhr_shipper_continent" property="sfhrShipperContinent" jdbcType="VARCHAR" />
-            <result column="sfhr_shipper_city" property="sfhrShipperCity" jdbcType="VARCHAR" />
-            <result column="sfhr_shipper_phone" property="sfhrShipperPhone" jdbcType="VARCHAR" />
-            <result column="sfhr_shipper_zip_code" property="sfhrShipperZipCode" jdbcType="VARCHAR" />
-            <result column="sfhr_shipper_address" property="sfhrShipperAddress" jdbcType="VARCHAR" />
-            <result column="sfhr_consignee_zip_code" property="sfhrConsigneeZipCode" jdbcType="VARCHAR" />
-            <result column="is_dir" property="isDir" jdbcType="INTEGER" />
-            <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
-            <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
-            <result column="p_id" property="pId" jdbcType="INTEGER" />
-            <result column="maturity_date_began" property="maturityDateBegan" jdbcType="TIMESTAMP" />
-            <result column="maturity_date_end" property="maturityDateEnd" jdbcType="TIMESTAMP" />
-
-
-
-        <result  column="id" property="id" jdbcType="INTEGER" />
-        <result  column="dir_name" property="dirName" jdbcType="VARCHAR" />
-        <result  column="heading_code" property="headingCode" jdbcType="VARCHAR" />
-        <result  column="code" property="code" jdbcType="VARCHAR" />
-        <result  column="chinese_name" property="chineseName" jdbcType="VARCHAR" />
-        <result  column="chinese_abbreviation" property="chineseAbbreviation" jdbcType="VARCHAR" />
-        <result  column="english_name" property="englishName" jdbcType="VARCHAR" />
-        <result  column="english_abbreviation" property="englishAbbreviation" jdbcType="VARCHAR" />
-        <result  column="p_id" property="pId" jdbcType="INTEGER" />
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="dir_name" property="dirName" jdbcType="VARCHAR" />
+        <result column="code" property="code" jdbcType="VARCHAR" />
+        <result column="mnemonic_code" property="mnemonicCode" jdbcType="VARCHAR" />
+        <result column="chinese_name" property="chineseName" jdbcType="VARCHAR" />
+        <result column="chinese_abbreviation" property="chineseAbbreviation" jdbcType="VARCHAR" />
+        <result column="heading_code" property="headingCode" jdbcType="VARCHAR" />
+        <result column="english_name" property="englishName" jdbcType="VARCHAR" />
+        <result column="english_abbreviation" property="englishAbbreviation" jdbcType="VARCHAR" />
+        <result column="financing_code" property="financingCode" jdbcType="VARCHAR" />
+        <result column="receiver_id" property="receiverId" jdbcType="INTEGER" />
+        <result column="receiver_name" property="receiverName" jdbcType="VARCHAR" />
+        <result column="scope_business" property="scopeBusiness" jdbcType="VARCHAR" />
+        <result column="partner_category" property="partnerCategory" jdbcType="VARCHAR" />
+        <result column="is_blacklist" property="isBlacklist" jdbcType="INTEGER" />
+        <result column="is_disable" property="isDisable" jdbcType="INTEGER" />
+        <result column="disable_remark" property="disableRemark" jdbcType="VARCHAR" />
+        <result column="wbkh_customer_class" property="wbkhCustomerClass" jdbcType="VARCHAR" />
+        <result column="wbkh_credit_rating" property="wbkhCreditRating" jdbcType="VARCHAR" />
+        <result column="wbkh_invoice_type" property="wbkhInvoiceType" jdbcType="VARCHAR" />
+        <result column="wbkh_type_credit_period" property="wbkhTypeCreditPeriod" jdbcType="VARCHAR" />
+        <result column="wbkh_credit_period" property="wbkhCreditPeriod" jdbcType="DECIMAL" />
+        <result column="wbkh_line_credit" property="wbkhLineCredit" jdbcType="DECIMAL" />
+        <result column="wbkh_deposit_bank" property="wbkhDepositBank" jdbcType="VARCHAR" />
+        <result column="wbkh_bank_account" property="wbkhBankAccount" jdbcType="VARCHAR" />
+        <result column="wbkh_company_tel" property="wbkhCompanyTel" jdbcType="VARCHAR" />
+        <result column="wbkh_company_address" property="wbkhCompanyAddress" jdbcType="VARCHAR" />
+        <result column="wbkh_is_pay_for_another" property="wbkhIsPayForAnother" jdbcType="INTEGER" />
+        <result column="wbkh_payment_term" property="wbkhPaymentTerm" jdbcType="DECIMAL" />
+        <result column="wbkh_paid_amount" property="wbkhPaidAmount" jdbcType="DECIMAL" />
+        <result column="hwdl_tax_receipt" property="hwdlTaxReceipt" jdbcType="VARCHAR" />
+        <result column="hwdl_tax_rate" property="hwdlTaxRate" jdbcType="DECIMAL" />
+        <result column="gxcyr_class_of_service" property="gxcyrClassOfService" jdbcType="VARCHAR" />
+        <result column="sfhr_is_consignee" property="sfhrIsConsignee" jdbcType="INTEGER" />
+        <result column="sfhr_is_shipper" property="sfhrIsShipper" jdbcType="INTEGER" />
+        <result column="sfhr_is_consignees_address" property="sfhrIsConsigneesAddress" jdbcType="INTEGER" />
+        <result column="sfhr_consignee_nation" property="sfhrConsigneeNation" jdbcType="VARCHAR" />
+        <result column="sfhr_consignee_continent" property="sfhrConsigneeContinent" jdbcType="VARCHAR" />
+        <result column="sfhr_consignee_city" property="sfhrConsigneeCity" jdbcType="VARCHAR" />
+        <result column="sfhr_consignee_phone" property="sfhrConsigneePhone" jdbcType="VARCHAR" />
+        <result column="sfhr_consignee_address" property="sfhrConsigneeAddress" jdbcType="VARCHAR" />
+        <result column="sfhr_shipper_nation" property="sfhrShipperNation" jdbcType="VARCHAR" />
+        <result column="sfhr_shipper_continent" property="sfhrShipperContinent" jdbcType="VARCHAR" />
+        <result column="sfhr_shipper_city" property="sfhrShipperCity" jdbcType="VARCHAR" />
+        <result column="sfhr_shipper_phone" property="sfhrShipperPhone" jdbcType="VARCHAR" />
+        <result column="sfhr_shipper_zip_code" property="sfhrShipperZipCode" jdbcType="VARCHAR" />
+        <result column="sfhr_shipper_address" property="sfhrShipperAddress" jdbcType="VARCHAR" />
+        <result column="sfhr_consignee_zip_code" property="sfhrConsigneeZipCode" jdbcType="VARCHAR" />
+        <result column="is_dir" property="isDir" jdbcType="INTEGER" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+        <result column="p_id" property="pId" jdbcType="INTEGER" />
+        <result column="maturity_date_began" property="maturityDateBegan" jdbcType="TIMESTAMP" />
+        <result column="maturity_date_end" property="maturityDateEnd" jdbcType="TIMESTAMP" />
+        <result column="hwdl_output_rate" property="hwdlOutputRate" jdbcType="VARCHAR" />
+        <result column="use_quota" property="useQuota" jdbcType="DECIMAL" />
+        <result column="ai_type_credit_period" property="aiTypeCreditPeriod" jdbcType="VARCHAR" />
+        <result column="ai_credit_period" property="aiCreditPeriod" jdbcType="DECIMAL" />
+        <result column="ae_type_credit_period" property="aeTypeCreditPeriod" jdbcType="VARCHAR" />
+        <result column="ae_credit_period" property="aeCreditPeriod" jdbcType="DECIMAL" />
+        <result column="si_type_credit_period" property="siTypeCreditPeriod" jdbcType="VARCHAR" />
+        <result column="si_credit_period" property="siCreditPeriod" jdbcType="DECIMAL" />
+        <result column="se_type_credit_period" property="seTypeCreditPeriod" jdbcType="VARCHAR" />
+        <result column="se_credit_period" property="seCreditPeriod" jdbcType="DECIMAL" />
+        <result column="ti_type_credit_period" property="tiTypeCreditPeriod" jdbcType="VARCHAR" />
+        <result column="ti_credit_period" property="tiCreditPeriod" jdbcType="DECIMAL" />
+        <result column="te_type_credit_period" property="teTypeCreditPeriod" jdbcType="VARCHAR" />
+        <result column="te_credit_period" property="teCreditPeriod" jdbcType="DECIMAL" />
+        <result column="oi_type_credit_period" property="oiTypeCreditPeriod" jdbcType="VARCHAR" />
+        <result column="oi_credit_period" property="oiCreditPeriod" jdbcType="DECIMAL" />
+        <result column="oe_type_credit_period" property="oeTypeCreditPeriod" jdbcType="VARCHAR" />
+        <result column="oe_credit_period" property="oeCreditPeriod" jdbcType="DECIMAL" />
+        <result column="it_type_credit_period" property="itTypeCreditPeriod" jdbcType="VARCHAR" />
+        <result column="it_credit_period" property="itCreditPeriod" jdbcType="DECIMAL" />
+        <result column="ddn_type_credit_period" property="ddnTypeCreditPeriod" jdbcType="VARCHAR" />
+        <result column="ddn_credit_period" property="ddnCreditPeriod" jdbcType="DECIMAL" />
+        <result column="yyox_type_credit_period" property="yyoxTypeCreditPeriod" jdbcType="VARCHAR" />
+        <result column="yyox_credit_period" property="yyoxCreditPeriod" jdbcType="DECIMAL" />
+        <result column="industrial_type_credit_period" property="industrialTypeCreditPeriod" jdbcType="VARCHAR" />
+        <result column="industrial_credit_period" property="industrialCreditPeriod" jdbcType="DECIMAL" />
     </resultMap>
     <resultMap id="BaseResultMap" type="com.pj.partner.pojo.PartnerDetails" >
         <result  column="id" property="id" jdbcType="INTEGER" />
@@ -79,7 +93,7 @@
         <result  column="chinese_abbreviation" property="chineseAbbreviation" jdbcType="VARCHAR" />
         <result  column="english_name" property="englishName" jdbcType="VARCHAR" />
         <result  column="english_abbreviation" property="englishAbbreviation" jdbcType="VARCHAR" />
-        <result  column="p_id" property="pId" jdbcType="INTEGER" />
+
     </resultMap>
 
     <select id="getParentList" resultMap="BaseResultMap">

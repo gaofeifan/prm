@@ -7,8 +7,10 @@ import com.pj.auth.service.AuthMenuService;
 import com.pj.auth.service.AuthUserService;
 import com.pj.cache.PartnerDetailsCache;
 import com.pj.partner.mapper.PartnerDetailsShifFileMapper;
+import com.pj.partner.pojo.PartnerAddress;
 import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.pojo.PartnerDetailsShifFile;
+import com.pj.partner.pojo.PartnerLinkman;
 import com.pj.partner.service.PartnerDetailsService;
 import com.pj.partner.service.impl.PartnerDetailsServiceImpl;
 import com.pj.user.Utils.RequestDate;
@@ -100,21 +102,23 @@ public class AspectServer {
     public void updateHierarchyListexecution() {
     }
 
+/*
     // 关注 刪除联系人 记录日志
     @Pointcut("execution(* com.pj.partner.service.*.deletePartnerLinkmanByDetailsId(..))")
     public void deletePartnerLinkmanByDetailsId() {
     }
+*/
 
-    // 关注 新增联系人 记录日志
+/*    // 关注 新增联系人 记录日志
     @Pointcut("execution(* com.pj.partner.*.*.PartnerLinkmanServiceImpl.insertList(..))")
     public void PartnerLinkmanServiceImplInsertList() {
-    }
+    }*/
 
 
-    // 关注 刪除联系地址 记录日志
+/*    // 关注 刪除联系地址 记录日志
     @Pointcut("execution(* com.pj.partner.*.*.deletePartnerAddressByDetails(..))")
     public void deletePartnerAddressByDetails() {
-    }
+    }*/
 
     // 关注 新增联系地址 记录日志
     @Pointcut("execution(* com.pj.partner.*.*.PartnerAddressServiceImpl.insertList(..))")
@@ -150,26 +154,264 @@ public class AspectServer {
 
     // 停用 黑名单 备注 日志切面  循环修改 切面日志
 
+    @Pointcut("execution(* com.pj.partner.service.*.PartnerDetailsServiceImpl.updateStatus.updateByPrimaryKey(..))")
+    public void partnerDetailsUpdateStatusexecution() { }
 
-    // 停用 黑名单 备注 日志切面
-    //  记录新增的权限···· 记录日志
-    @AfterReturning("editPostAuthorityExecution()")
-    public void editPostAuthorityPointcutAfter2(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
 
-    }
-    //   ------- 合作伙伴相关的联系人联系地址数据信息切面
-    //  ---   新增联系人
-    //  ---   删除联系人
-    //  ---   修改联系人
+
+    /**
+     *   合作伙伴相关的联系人联系地址数据信息切面
+     */
+
+    //  ---   修改 联系人
+    @Pointcut("execution(* com.pj.partner.*.*.PartnerDetailsServiceImpl.updatePartnerLinkman.updateByPrimaryKey(..))")
+    public void PartnerLinkmanServiceImplUpdateList() {  }
+
+    //  ---   删除 联系人
+    @Pointcut("execution(* com.pj.partner.*.*.PartnerDetailsServiceImpl.updatePartnerLinkman.delete(..))")
+    public void PartnerLinkmanServiceImplDeleteList() {  }
+
+    //  ---   新增 联系人
+    @Pointcut("execution(* com.pj.partner.*.*.PartnerDetailsServiceImpl.updatePartnerLinkman.insertList(..))")
+    public void PartnerLinkmanServiceImplInsertList() {  }
+
+
+
+
+    //  ---   修改联系地址
+    @Pointcut("execution(* com.pj.partner.*.*.PartnerDetailsServiceImpl.updatePartnerAddres.updateByPrimaryKey(..))")
+    public void PartneraddressImplUpdateList() {  }
+
+    //  ---   删除联系地址
+    @Pointcut("execution(* com.pj.partner.*.*.PartnerDetailsServiceImpl.updatePartnerAddres.delete(..))")
+    public void PartneraddressImpllDeleteList() {  }
 
     //  ---   新增联系地址
-    //  ---   删除联系地址
-    //  ---   修改联系地址
+    @Pointcut("execution(* com.pj.partner.*.*.PartnerDetailsServiceImpl.updatePartnerAddres.insertList(..))")
+    public void PartneraddressImplInsertList() {  }
+
+
+    // 停用 黑名单 备注 日志切面
+
+    @AfterReturning("partnerDetailsUpdateStatusexecution()")
+    public void partnerDetailsUpdateStatusexecutionAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        String actionData = "";
+        ServletRequestAttributes attributes = RequestDate.requestInit();
+        HttpServletRequest request = attributes.getRequest();
+        Object[] args = point.getArgs();
+        PartnerDetails partnerDetails =  (PartnerDetails)args[0];
+        List<PartnerDetails>  oldPartnerDetails = (  List<PartnerDetails> ) request.getSession().getAttribute("old_state_list");
+        boolean flage = false;
+
+        Field[] oldfields=  getfieldsMethod(oldPartnerDetails);
+        Field[] newfields=  getfieldsMethod(partnerDetails);
+
+        actionData+="合作伙伴管理-停用与黑名单：";
+        // 循环旧数据  判断旧数据的 id 是否存在
+        for (PartnerDetails oldData : oldPartnerDetails){
+            if(partnerDetails.getId() .equals(oldData.getId())){
+                actionData+="中文全称"+partnerDetails.getChineseName()+" : ";
+                //判断并记录更新的信息
+                for (int i = 0 ; i <oldfields.length;i++ ) {
+                    if( oldfields[i].getName().equals("isBlacklist") ||   oldfields[i].getName().equals("isDisable") || oldfields[i].getName().equals("disableRemark")  ){
+
+                        PropertyDescriptor pd = new PropertyDescriptor(oldData.getClass().getDeclaredFields()[i].getName(), oldData.getClass());
+                        Method getMethod = pd.getReadMethod();//获得get方法  
+                        Object o = getMethod.invoke(oldData);//执行get方法返回一个Object
+                        PropertyDescriptor pd2 = new PropertyDescriptor(oldData.getClass().getDeclaredFields()[i].getName(), oldData.getClass());
+                        Method getMethod2 = pd2.getReadMethod();//获得get方法  
+                        Object o2= getMethod2.invoke(partnerDetails);//执行get方法返回一个Object
+                            // 判断字段名称
+                            for (int j = 0; j < BasicProperties.Basic_address_paramName.length; j++) {
+                                if (oldfields[i].getName().toString().equals(BasicProperties.Basic_address_paramName[j].toString())) {
+                                    actionData += " " + BasicProperties.Basic_address_paramVal[j];
+                                    actionData += "< " + (o.equals(1)?"是":"否") + " >（ " + (o2.equals(1)?"是":"否") + " ） ; ";
+                                    flage = true;
+                                    break;
+                                }
+                            }
+                    }
+                }
+                // 操作日志追加
+                addLogMethod(flage,request , actionData,args[args.length-1].toString());
+            }
+            break;
+        }
+    }
+
+    // 删除  刪除联系地址  日志统计
+    @AfterReturning("PartneraddressImpllDeleteList()")
+    public void PartneraddressImpllDeleteListAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        String actionData = "";
+        Object[] args = point.getArgs();
+        ServletRequestAttributes attributes = RequestDate.requestInit();
+        HttpServletRequest request = attributes.getRequest();
+
+        PartnerAddress old = ( PartnerAddress ) args[0];
+
+        boolean flage = false;
+        // 循环 已删除的旧数据
+        actionData+="合作伙伴管理-联系地址：";
+
+            for (int i = 0 ; i <old.getClass().getDeclaredFields().length;i++ ) {
+                if (checkSeralize(old.getClass().getDeclaredFields()[i].getName())) {
+                    PropertyDescriptor pd = new PropertyDescriptor(old.getClass().getDeclaredFields()[i].getName(), old.getClass());
+                    Method getMethod = pd.getReadMethod();//获得get方法  
+                    Object o = getMethod.invoke(old);//执行get方法返回一个Object
+                    // 判断字段名称
+                    for (int j = 0; j < BasicProperties.Basic_address_paramName.length; j++) {
+
+                        if (old.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_address_paramName[j].toString())) {
+                            actionData += " " + BasicProperties.Basic_address_paramVal[j];
+                            actionData += "< " + (o ==null?"":o)+ " >（ 信息已删除 ） ; ";
+                            flage = true;
+                            break;
+                        }
+                    }
+
+                }
+            }
+
+        // 操作日志追加
+        addLogMethod(flage,request , actionData,args[args.length-1].toString());
+    }
+
+    // 新增  新增联系人  日志统计
+    @AfterReturning("PartneraddressImplInsertList()")
+    public void PartneraddressImplInsertListAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        String actionData = "";
+        ServletRequestAttributes attributes = RequestDate.requestInit();
+        HttpServletRequest request = attributes.getRequest();
+        Object[] args = point.getArgs();
+        List<PartnerLinkman> newData = (List<PartnerLinkman>)args[0] ;
+        boolean flage = false;
+        // 循环 已删除的旧数据
+        actionData+="合作伙伴管理-联系地址：";
+        for(Object  newdata  : newData){
+            for (int i = 0 ; i <newdata.getClass().getDeclaredFields().length;i++ ) {
+                if (checkSeralize(newdata.getClass().getDeclaredFields()[i].getName())) {
+                    PropertyDescriptor pd = new PropertyDescriptor(newdata.getClass().getDeclaredFields()[i].getName(), newdata.getClass());
+                    Method getMethod = pd.getReadMethod();//获得get方法  
+                    Object o = getMethod.invoke(newdata);//执行get方法返回一个Object
+                    // 判断字段名称
+                    for (int j = 0; j < BasicProperties.Basic_address_paramName.length; j++) {
+
+                        if (newdata.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_address_paramName[j].toString())) {
+                            actionData += " " + BasicProperties.Basic_address_paramVal[j];
+                            actionData += "< 新增数据 >（ " + (o==null?"":o) + " ） ; ";
+                            flage = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        // 操作日志追加
+        addLogMethod(flage,request , actionData,args[args.length-1].toString());
+    }
+
+
+    //    修改联系地址 日志统计
+    @AfterReturning("PartneraddressImplUpdateList()")
+    public void PartneraddressImplUpdateListAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        String actionData = "";
+        ServletRequestAttributes attributes = RequestDate.requestInit();
+        HttpServletRequest request = attributes.getRequest();
+        Object[] args = point.getArgs();
+        PartnerAddress partneraddress =  (PartnerAddress)args[0];
+        List<PartnerAddress> oldPartneraddress = (List<PartnerAddress>) request.getSession().getAttribute("old_partnerAddress");
+        boolean flage = false;
+
+        Field[] oldfields=  getfieldsMethod(oldPartneraddress);
+        Field[] newfields=  getfieldsMethod(partneraddress);
+
+        actionData+="合作伙伴管理-联系地址：";
+        // 循环旧数据  判断旧数据的 id 是否存在
+        for (PartnerAddress oldData : oldPartneraddress){
+            if(partneraddress.getId() .equals(oldData.getId())){
+                //判断并记录更新的信息
+                for (int i = 0 ; i <oldfields.length;i++ ) {
+                    if(checkSeralize(oldfields[i].getName())){
+                        PropertyDescriptor pd = new PropertyDescriptor(oldfields[i].getName(), oldData.getClass());
+                        Method getMethod = pd.getReadMethod();//获得get方法  
+                        Object o = getMethod.invoke(oldData);//执行get方法返回一个Object
+                        PropertyDescriptor pd2 = new PropertyDescriptor(newfields[i].getName(), oldData.getClass());
+                        Method getMethod2 = pd2.getReadMethod();//获得get方法  
+                        Object o2 = getMethod.invoke(partneraddress);//执行get方法返回一个Object
+                        if (!(o==null?"":o).toString().equals((o2==null?"":o2).toString())) {
+                            // 判断字段名称
+                            for (int j = 0; j < BasicProperties.Basic_address_paramName.length; j++) {
+                                if (oldfields[i].getName().toString().equals(BasicProperties.Basic_address_paramName[j].toString())) {
+                                    actionData += " " + BasicProperties.Basic_address_paramVal[j];
+                                    actionData += "< " + (o==null?"":o) + " >（ " + (o2==null?"":o2) + " ） ; ";
+                                    flage = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                // 操作日志追加
+                addLogMethod(flage,request , actionData,args[args.length-1].toString());
+            }
+            break;
+        }
+    }
+
+
+
+    //    修改联系人  日志统计
+    @AfterReturning("PartnerLinkmanServiceImplUpdateList()")
+    public void PartnerLinkmanServiceImplUpdateListAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        String actionData = "";
+        ServletRequestAttributes attributes = RequestDate.requestInit();
+        HttpServletRequest request = attributes.getRequest();
+        Object[] args = point.getArgs();
+        PartnerLinkman partnerLinkman =  (PartnerLinkman)args[0];
+        List<PartnerLinkman> oldPartnerLinkman = (List<PartnerLinkman>) request.getSession().getAttribute("old_partnerLinkman");
+        boolean flage = false;
+
+        Field[] oldfields=  getfieldsMethod(oldPartnerLinkman);
+        Field[] newfields=  getfieldsMethod(partnerLinkman);
+
+        actionData+="合作伙伴管理-联系人：";
+        // 循环旧数据  判断旧数据的 id 是否存在
+        for (PartnerLinkman oldData : oldPartnerLinkman){
+                if(partnerLinkman.getId() .equals(oldData.getId())){
+                    //判断并记录更新的信息
+                    for (int i = 0 ; i <oldfields.length;i++ ) {
+                        if(checkSeralize(oldfields[i].getName())){
+                            PropertyDescriptor pd = new PropertyDescriptor(oldfields[i].getName(), oldData.getClass());
+                            Method getMethod = pd.getReadMethod();//获得get方法  
+                            Object o = getMethod.invoke(oldData);//执行get方法返回一个Object
+                            PropertyDescriptor pd2 = new PropertyDescriptor(newfields[i].getName(), oldData.getClass());
+                            Method getMethod2 = pd2.getReadMethod();//获得get方法  
+                            Object o2 = getMethod.invoke(partnerLinkman);//执行get方法返回一个Object
+                            if (!(o==null?"":o).toString().equals((o2==null?"":o2).toString())) {
+                                // 判断字段名称
+                                for (int j = 0; j < BasicProperties.Basic_linkmanCN_paramName.length; j++) {
+                                    if (oldfields[i].getName().toString().equals(BasicProperties.Basic_linkmanCN_paramName[j].toString())) {
+                                        actionData += " " + BasicProperties.Basic_linkmanCN_paramVal[j];
+                                        actionData += "< " + (o==null?"":o) + " >（ " + (o2==null?"":o2) + " ） ; ";
+                                        flage = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    // 操作日志追加
+                    addLogMethod(flage,request , actionData,args[args.length-1].toString());
+                }
+                    break;
+                }
+        }
 
 
 
 
-        // 关注 合作伙伴文件转移   before
+
+    // 关注 合作伙伴文件转移   before
     @Before("shiftPartnerDetailsFileByIdsexecution( )")
     public void shiftPartnerDetailsFileByIdsexecutionBefore(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         HttpServletRequest request = requestinit();
@@ -550,94 +792,20 @@ public class AspectServer {
     }
 
 
-    // 删除  刪除联系地址  日志统计
-    @AfterReturning("deletePartnerAddressByDetails()")
-    public void deletePartnerAddressByDetailsAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
-        String actionData = "";
-        Object[] args = point.getArgs();
-        ServletRequestAttributes attributes = RequestDate.requestInit();
-        HttpServletRequest request = attributes.getRequest();
-
-        List<Object> oldData = (List<Object>) request.getSession().getAttribute("old_partnerAddress");
-
-        boolean flage = false;
-        // 循环 已删除的旧数据
-        actionData+="合作伙伴管理-联系人：";
-        for(Object  old  : oldData){
-            for (int i = 0 ; i <old.getClass().getDeclaredFields().length;i++ ) {
-                if (checkSeralize(old.getClass().getDeclaredFields()[i].getName())) {
-                    PropertyDescriptor pd = new PropertyDescriptor(old.getClass().getDeclaredFields()[i].getName(), old.getClass());
-                    Method getMethod = pd.getReadMethod();//获得get方法  
-                    Object o = getMethod.invoke(old);//执行get方法返回一个Object
-                    // 判断字段名称
-                    for (int j = 0; j < BasicProperties.Basic_address_paramName.length; j++) {
-
-                        if (old.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_address_paramName[j].toString())) {
-                            actionData += " " + BasicProperties.Basic_address_paramVal[j];
-                            actionData += "< " + (o ==null?"":o)+ " >（ 信息已删除 ） ; ";
-                            flage = true;
-                            break;
-                        }
-                    }
-
-                }
-            }
-        }
-        // 操作日志追加
-        addLogMethod(flage,request , actionData,args[args.length-1].toString());
-        removeAttribute("old_partnerAddress",request);
-    }
-
-    // 新增  新增联系人  日志统计
-    @AfterReturning("PartnerLinkmanServiceImplInsertList()")
-    public void PartnerLinkmanServiceImplInsertListAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
-        String actionData = "";
-        ServletRequestAttributes attributes = RequestDate.requestInit();
-        HttpServletRequest request = attributes.getRequest();
-        Object[] args = point.getArgs();
-        List<Object> newData = (List<Object>) request.getSession().getAttribute("new_partnerLinkman");
-        boolean flage = false;
-        // 循环 已删除的旧数据
-        actionData+="合作伙伴管理-联系地址：";
-        for(Object  newdata  : newData){
-            for (int i = 0 ; i <newdata.getClass().getDeclaredFields().length;i++ ) {
-                if (checkSeralize(newdata.getClass().getDeclaredFields()[i].getName())) {
-                    PropertyDescriptor pd = new PropertyDescriptor(newdata.getClass().getDeclaredFields()[i].getName(), newdata.getClass());
-                    Method getMethod = pd.getReadMethod();//获得get方法  
-                    Object o = getMethod.invoke(newdata);//执行get方法返回一个Object
-                    // 判断字段名称
-                    for (int j = 0; j < BasicProperties.Basic_linkmanCN_paramName.length; j++) {
-
-                        if (newdata.getClass().getDeclaredFields()[i].getName().toString().equals(BasicProperties.Basic_linkmanCN_paramName[j].toString())) {
-                            actionData += " " + BasicProperties.Basic_linkmanCN_paramVal[j];
-                            actionData += "< 新增数据 >（ " + (o==null?"":o) + " ） ; ";
-                            flage = true;
-                            break;
-                        }
-                    }
-
-                }
-            }
-        }
-        // 操作日志追加
-        addLogMethod(flage,request , actionData,args[args.length-1].toString());
-        removeAttribute("new_partnerLinkman",request);
-    }
-
 
     // 删除  刪除联系人  日志统计
-    @AfterReturning("deletePartnerLinkmanByDetailsId()")
-    public void deletePartnerLinkmanByDetailsIdAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+    @AfterReturning("PartnerLinkmanServiceImplDeleteList()")
+    public void PartnerLinkmanServiceImplDeleteListAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
             String actionData = "";
             ServletRequestAttributes attributes = RequestDate.requestInit();
             HttpServletRequest request = attributes.getRequest();
-        Object[] args = point.getArgs();
-        List<Object> oldData = (List<Object>) request.getSession().getAttribute("old_partnerLinkman");
+            Object[] args = point.getArgs();
 
+        PartnerLinkman old  = (PartnerLinkman)args[0];
             boolean flage = false;
             // 循环 已删除的旧数据
-            actionData+="合作伙伴管理-联系地址：";
-            for(Object  old  : oldData){
+            actionData+="合作伙伴管理-联系人：";
+
                 for (int i = 0 ; i <old.getClass().getDeclaredFields().length;i++ ) {
                     if (checkSeralize(old.getClass().getDeclaredFields()[i].getName())) {
                         PropertyDescriptor pd = new PropertyDescriptor(old.getClass().getDeclaredFields()[i].getName(), old.getClass());
@@ -653,13 +821,10 @@ public class AspectServer {
                                 break;
                             }
                         }
-
                     }
                 }
-            }
         // 操作日志追加
         addLogMethod(flage,request , actionData,args[args.length-1].toString());
-        removeAttribute("old_partnerLinkman",request);
     }
 
 
@@ -757,8 +922,6 @@ public class AspectServer {
         removeAttribute("oldUserLevelData",request);
         removeAttribute("newUserLevelData",request);
     }
-
-
 
 
     /**

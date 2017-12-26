@@ -3,6 +3,7 @@ package com.pj.partner.service;
 import com.pj.conf.base.BaseService;
 import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.pojo.PartnerDetailsShifFile;
+import com.pj.partner.pojo.PartnerLinkman;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -14,10 +15,6 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
 
     public static final char UNDERLINE='_';
 
-    /**
-     *  修改修改的字段
-     */
-    public static final String [] statuss = new String[]{"isDisable","disableRemark","isBlacklist"};
 
     List<PartnerDetails> selectPartnerDetailsList( );
 
@@ -52,8 +49,8 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
 
     /**
      *  转移文件
-     * @param ids
      * @param id
+     * @param email
      */
     void shiftPartnerDetailsFileByIds( Integer id,String email);
 
@@ -84,4 +81,7 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
      * @return
      */
     boolean selectIsChild(Integer id);
+
+
+
 }

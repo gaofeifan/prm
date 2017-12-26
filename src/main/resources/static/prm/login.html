@@ -12,8 +12,8 @@
         var oaPathUrl = '10.0.0.18:8083';
         var ssoPathUrl = '10.0.0.18:8085';
 //        var gPathUrl = '192.168.4.213:8083';
-        var gPathUrl = '10.0.0.105:8083';//测试环境
-
+   //     var gPathUrl = '10.0.0.18:8083';//测试环境
+        var gPathUrl = '192.168.4.168:8083';//刘哲测试
        /* var oaPathUrl = '139.129.236.180:8080';
         var ssoPathUrl = '139.129.236.180:8081';
         var dPathUrl = '139.129.236.180:86';*/
@@ -96,7 +96,10 @@
                 },
                 success : function(data) {
                     if(parseInt(data.status) == 200){
-                        if(!reg.test(account)){
+                    	/*  用工号和email登录全是进前台系统,工号为8位数字，x.gao 20171226  */
+                        var email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                        var number=/\d{8}$/;
+                        if(!(email.test(account))&&!(number.test(account))){
                             //后台
                             $.cookie('back_id',data.id);
                             $.cookie('back_username',data.username);
