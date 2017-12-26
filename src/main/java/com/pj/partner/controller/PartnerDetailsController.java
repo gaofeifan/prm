@@ -263,7 +263,10 @@ public class PartnerDetailsController extends BaseController {
     @ResponseBody
     public Object shiftPartnerDetailsFileByIds(@ApiParam("id") @RequestParam(name = "id") Integer id,
     @ApiParam("email") @RequestParam(name = "email") String email){
-        this.partnerDetailsService.shiftPartnerDetailsFileByIds(id,email);
+        boolean flag = this.partnerDetailsService.shiftPartnerDetailsFileByIds(id,email);
+        if(!flag){
+            return this.error("合作伙伴代码重复，请返回修改");
+        }
         return this.success();
     }
 
