@@ -239,6 +239,14 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     @ApiModelProperty(value = "互为代理  进项税率" ,required = false)
     private BigDecimal hwdlTaxRate;
 
+    /**
+     * createBy SevenBoyLiu 2017年12月25日17:44:16
+     * 销项税率
+     */
+    @Column
+    @ApiModelProperty(value = " 销项税率" ,required = false)
+    private BigDecimal hwdlOutputRate;
+
 
     /**
      * 干线承运人 服务类别

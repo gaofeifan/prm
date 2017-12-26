@@ -57,18 +57,8 @@
             <result column="p_id" property="pId" jdbcType="INTEGER" />
             <result column="maturity_date_began" property="maturityDateBegan" jdbcType="TIMESTAMP" />
             <result column="maturity_date_end" property="maturityDateEnd" jdbcType="TIMESTAMP" />
+            <result column="hwdl_output_rate" property="hwdlOutputRate" jdbcType="VARCHAR" />
 
-
-
-        <result  column="id" property="id" jdbcType="INTEGER" />
-        <result  column="dir_name" property="dirName" jdbcType="VARCHAR" />
-        <result  column="heading_code" property="headingCode" jdbcType="VARCHAR" />
-        <result  column="code" property="code" jdbcType="VARCHAR" />
-        <result  column="chinese_name" property="chineseName" jdbcType="VARCHAR" />
-        <result  column="chinese_abbreviation" property="chineseAbbreviation" jdbcType="VARCHAR" />
-        <result  column="english_name" property="englishName" jdbcType="VARCHAR" />
-        <result  column="english_abbreviation" property="englishAbbreviation" jdbcType="VARCHAR" />
-        <result  column="p_id" property="pId" jdbcType="INTEGER" />
     </resultMap>
     <resultMap id="BaseResultMap" type="com.pj.partner.pojo.PartnerDetails" >
         <result  column="id" property="id" jdbcType="INTEGER" />
