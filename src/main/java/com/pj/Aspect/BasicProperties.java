@@ -19,6 +19,7 @@ public class BasicProperties {
 
             public static final String Basic_address_paramName[] = {"id" ,"addressType","abbreviation","address","zipCode"};
             public static final String Basic_address_paramVal [] = {"序列号","地址类型","简称","地址","邮编"};
+
     // 联系人
             public static final String Basic_linkmanCN_paramName [] = {"id" ,"name","obligation","duty","demp","fixPhone","phone","email" ,"address"};
             public static final String Basic_linkmanCN_paramVal  [] = {"序列号","名称","职责","职务","部门","固话","电话","邮箱","地址"};
@@ -32,19 +33,25 @@ public class BasicProperties {
                      "wbkhInvoiceType","wbkhIsPayForAnother","wbkhPaymentTerm","wbkhPaidAmount","wbkhCreditPeriod","wbkhLineCredit","wbkhDepositBank","wbkhBankAccount","wbkhCompanyAddress","wbkhCompanyTel",
               /*互为代理*/
                      "hwdlTaxReceipt","hwdlTaxRate",  "hwdlOutputRate",/*"hwdlCreditRating","hwdlInvoiceType","hwdlTypeCreditPeriod","hwdlIsPayForAnother","hwdlPaymentTerm","hwdlPaidAmount","hwdlCreditPeriod","hwdlLineCredit","hwdlDepositBank","hwdlBankAccount","hwdlCompanyAddress","hwdlCompanyTel",*/
-           /*海外代理*/
+              /*海外代理*/
                    /*  "hwIsPayForAnother","hwPaymentTerm","hwPaidAmount","hwCreditRating","hwTypeCreditPeriod","hwCreditPeriod","hwLineCredit",*/
-             /*干线运城*/
+              /*干线运城*/
                      "gxcyrClassOfService",/*"gxcyrTaxReceipt","gxcyrTaxRate",
-            *//*不可控供应商*//*
+              *//*不可控供应商*//*
                       "bkkgysClassOfService","bkkgysTaxReceipt","bkkgysTaxRate",
-            *//*延伸服务供应商*//*
+              *//*延伸服务供应商*//*
                       "ysfwgysClassOfService","ysfwgysTaxReceipt","ysfwgysTaxRate",*/
-            /*发货人*/
+              /*发货人*/
                       "sfhrIsConsignee","sfhrIsShipper","sfhrIsConsigneesAddress","sfhrConsigneeNation","sfhrConsigneeAddress","sfhrConsigneeContinent","sfhrConsigneeCity","sfhrConsigneePhone","sfhrShipperZipCode",
                         "sfhrShipperNation","sfhrShipperAddress","sfhrShipperContinent","sfhrShipperCity","sfhrShipperZipCode","sfhrShipperPhone"/*,*/
-             /*结算对象*/
-                       /* "jsdxDepositBank", "jsdxBankAccount", "jsdxCompan", "jsdxCompanyTel"*/};
+              /*结算对象*/
+                       /* "jsdxDepositBank", "jsdxBankAccount", "jsdxCompan", "jsdxCompanyTel"*/
+              /*新增 字段 2017-12-26 11:42:36 */
+            ,"useQuota","aiTypeCreditPeriod","aiCreditPeriod","aeTypeCreditPeriod","aeCreditPeriod","siTypeCreditPeriod","siCreditPeriod"
+            ,"seTypeCreditPeriod","seCreditPeriod","tiTypeCreditPeriod","tiCreditPeriod","teTypeCreditPeriod","teCreditPeriod"
+            ,"oiTypeCreditPeriod","oiCreditPeriod","oeTypeCreditPeriod","oeCreditPeriod","itTypeCreditPeriod","itCreditPeriod"
+            ,"ddnTypeCreditPeriod","ddnCreditPeriod","yyoxTypeCreditPeriod","yyoxCreditPeriod","IndustrialTypeCreditPeriod","IndustrialCreditPeriod"
+            };
             public static final String Basic_PartnerDeta_paramVal  [] = {"名称",    "ID","代码",  "助记码",
                      "中文全称","中文简称","英文全称","英文简称","财务代码",
                     "纳税人识别码","提醒接受者","业务范畴","合作伙伴分类","黑名单","停用","停用备注",
@@ -64,6 +71,11 @@ public class BasicProperties {
                     "国家","地址","所属州","城市","邮编","电话"/*,
                     *//*结算对象*//*
                     "开户银行","银行账号","公司地址","公司电话"*/
+            /*新增 字段 2017-12-26 11:42:36 */
+                    ,"已用额度","AI 信用期限类型","AI 信用期限"," AE 信用期限类型"," AE 信用期限","SI 信用期限类型","SI 信用期限"
+                    ,"SE 信用期限类型","SE 信用期限","TI 信用期限类型","TI 信用期限","TE 信用期限类型","TE 信用期限"
+                    ,"OI 信用期限类型","OI 信用期限","OE 信用期限类型","OE 信用期限","IT 信用期限类型","IT 信用期限"
+                    ,"DDN 信用期限类型","DDN 信用期限","YYOX 信用期限类型","YYOX 信用期限","Industrial 信用期限类型","Industrial 信用期限"
             };
 
 

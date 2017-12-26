@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 public  @Data
-@Table(name="partner_details")  class PartnerDetailsShifFile {
+@Table(name="partner_details")  class PartnerDetailsShifFile  extends  BasicData{
     @GeneratedValue(generator = "JDBC")
     @Id
     private Integer id;
