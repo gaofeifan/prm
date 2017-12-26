@@ -31,7 +31,7 @@ public class BasicProperties {
                      "wbkhCustomerClass","wbkhCreditRating","wbkhTypeCreditPeriod",
                      "wbkhInvoiceType","wbkhIsPayForAnother","wbkhPaymentTerm","wbkhPaidAmount","wbkhCreditPeriod","wbkhLineCredit","wbkhDepositBank","wbkhBankAccount","wbkhCompanyAddress","wbkhCompanyTel",
               /*互为代理*/
-                     "hwdlTaxReceipt","hwdlTaxRate",/*"hwdlCreditRating","hwdlInvoiceType","hwdlTypeCreditPeriod","hwdlIsPayForAnother","hwdlPaymentTerm","hwdlPaidAmount","hwdlCreditPeriod","hwdlLineCredit","hwdlDepositBank","hwdlBankAccount","hwdlCompanyAddress","hwdlCompanyTel",*/
+                     "hwdlTaxReceipt","hwdlTaxRate",  "hwdlOutputRate",/*"hwdlCreditRating","hwdlInvoiceType","hwdlTypeCreditPeriod","hwdlIsPayForAnother","hwdlPaymentTerm","hwdlPaidAmount","hwdlCreditPeriod","hwdlLineCredit","hwdlDepositBank","hwdlBankAccount","hwdlCompanyAddress","hwdlCompanyTel",*/
            /*海外代理*/
                    /*  "hwIsPayForAnother","hwPaymentTerm","hwPaidAmount","hwCreditRating","hwTypeCreditPeriod","hwCreditPeriod","hwLineCredit",*/
              /*干线运城*/
@@ -52,7 +52,7 @@ public class BasicProperties {
                     "客户分类","信用等级","信用期限类型",
                     "开票类型","代垫","代垫期限(天)","代垫额度(万元)","信用期限(天)","信用额度(万元)","开户银行","银行账号","公司地址","公司电话",
                     /*互为代理*/
-                    "进项税票","进项税率%",
+                    "进项税票","进项税率%","销项税率",
                /*海外代理*//*
                     "代垫","代垫期限(天)","代垫额度(万元)","信用等级*","信用期限类型*","信用期限(天)","信用额度(万元)",*/
                     /*干线运城*/
