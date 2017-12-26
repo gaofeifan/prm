@@ -48,7 +48,10 @@ public class ScheduledEmail {
         try {
         List<PartnerDetails> lastPtData = this.emailService.findPartnerDetailsLastMonthDate();
         if (null ==lastPtData){
-            System.out.println("本月无新增人员");
+
+            String total = getLastdata()+"月 本月无新增人员";
+            StringBuffer theMessage = new StringBuffer();
+            SendEmailUtils.sendEWmail(theMessage,basic_myEmailAccount ,basic_myEmailPassword,getadmin());
         }else{
             String total = getLastdata()+"月 新增Partner如下，如有问题，请联系相应Owner.";
             StringBuffer mesagesVal = getMesagesVal(lastPtData,total);
@@ -190,7 +193,7 @@ public class ScheduledEmail {
                                 }
                             }
                             //发送邮件到接受者
-                            if (null != sendEmailsDatas || sendEmailsDatas.size() != 0) {
+                            if (null != sendEmailsDatas && sendEmailsDatas.size() != 0) {
                                 // 调用接口 获取 email 发给 接收者
                                 User user = authUserService.selectUserByEmail(sendEmailsDatas.get(0).getReceiverId());
                                 try {
@@ -213,13 +216,14 @@ public class ScheduledEmail {
                                 // 调用接口 获取 接收者email
                                 userList.add(authUserService.selectUserByEmail(ids));
                             }
-                        }
+
                         try {
                             String total = " 以下提醒即将到期Partner清单接收者（Owner）无效，请注意跟进。";
                             StringBuffer mesagesVal = getExceptionMesagesVal(userList);
                             SendEmailUtils.sendEWmail(mesagesVal, basic_myEmailAccount, basic_myEmailPassword, getadmin());
                         }catch (Exception e){
                             logger.error("---即将到期Partner清单接收者（Owner）无效发送给管理者的异常信息统计邮件发送失败  ： "+e);
+                        }
                         }
                     }
                 }catch (Exception e){
@@ -252,6 +256,7 @@ public class ScheduledEmail {
                 }
             }
 
+            if(null!= emailListData && emailListData.size()!=0){
             // 获取 邮箱并发送邮件
             //发送邮件到接受者
             // 调用接口 获取 email 发给 接收者
@@ -267,6 +272,7 @@ public class ScheduledEmail {
                 failurePersonnel.add(emailListData.get(0).getReceiverId());
                 logger.error("  邮件信息获取异常请检查 exception 信息已存储稍后发送给管理员失败接受者信息   :" + e);
             }
+            }
         }
 
         // 发送失败人员信息到管理员
@@ -277,13 +283,14 @@ public class ScheduledEmail {
                 // 调用接口 获取 接收者email
                 userList.add(authUserService.selectUserByEmail(ids));
             }
-        }
+
         try {
             String total = " 以下提醒重複（Owner）无效，请注意跟进。";
             StringBuffer mesagesVal = getExceptionMesagesVal(userList);
             SendEmailUtils.sendEWmail(mesagesVal, basic_myEmailAccount, basic_myEmailPassword, getadmin());
         }catch (Exception e){
             logger.error("--- 接收者（Owner）无效发送给管理者的异常信息统计邮件发送失败  ： "+e);
+        }
         }
     }
 
