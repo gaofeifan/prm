@@ -30,27 +30,25 @@ public class BasicData {
     @Column
     @ApiModelProperty(value = " 已用额度" ,required = false)
     private BigDecimal useQuota;
-/*
 
-    */
-/**
-     * 外部客户 信用期限类型
-     *//*
+
+
+
+      // 外部客户 信用期限类型
+
 
     @Column
     @ApiModelProperty(value = " 外部客户 信用期限类型" ,required = false)
     private String wbkhTypeCreditPeriod;
 
-    */
-/**
-     * 外部客户 信用期限
-     *//*
+
+ // 外部客户 信用期限
+
 
     @Column
     @ApiModelProperty(value = "外部客户 信用期限" ,required = false)
     private BigDecimal wbkhCreditPeriod;
 
-*/
 
     /**
      * AI 客户 信用期限类型

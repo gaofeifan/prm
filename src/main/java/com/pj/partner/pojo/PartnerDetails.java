@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public @Data @Table(name="partner_details") class PartnerDetails implements Serializable {
+public @Data @Table(name="partner_details") class PartnerDetails extends BasicData implements Serializable {
     @GeneratedValue(generator = "JDBC")
     @Id
     @ApiModelProperty(value = "id" ,required = false)
