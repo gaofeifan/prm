@@ -239,5 +239,11 @@ public class BasicData {
     @ApiModelProperty(value = "Industrial 信用期限" ,required = false)
     private BigDecimal IndustrialCreditPeriod; //wbkhCreditPeriod
 
+
+    /*上传下载*/
+    @Column
+    @ApiModelProperty(value = " file_path 上传下载" ,required = false)
+    private String filePath; //wbkhCreditPeriod
+
 // --------------------结束-------------------------------------------------
 }

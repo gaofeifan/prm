@@ -3,10 +3,7 @@ package com.pj.partner.pojo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 public @Data @Table(name="partner_linkman")
@@ -86,15 +83,16 @@ class PartnerLinkman implements Serializable  {
 
     private static final long serialVersionUID = 1L;
 
-    @Column
+    @Transient
     @ApiModelProperty(value = "联系人  合作伙伴中文全称-新维护重复名称" ,required = false)
     private String newchineseName;
 
-    @Column
+
+    @Transient
     @ApiModelProperty(value = "联系人  合作伙伴中文全称-元数据被重复名称 " ,required = false)
     private String oldchineseName;
 
-    @Column
+    @Transient
     @ApiModelProperty(value = "联系人  合作伙伴中文全称-接受者ID " ,required = false)
     private Integer receiverId;
 

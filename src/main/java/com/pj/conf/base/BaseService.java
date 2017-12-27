@@ -29,7 +29,7 @@ public interface BaseService<T, ID extends Serializable> {
 	 * 
 	 * @author GFF
 	 * @date 2017年3月21日下午2:38:30
-	 * @param record
+	 * @param example
 	 * @return
 	 */
 	public List<T> selectByExample(Example example);
@@ -150,7 +150,7 @@ public interface BaseService<T, ID extends Serializable> {
 	 * 
 	 * @author GFF
 	 * @date 2017年9月19日下午3:16:20
-	 * @param example
+	 * @param record
 	 * @return
 	 */
 	public int delete(T record);

@@ -154,7 +154,7 @@ public class AspectServer {
 
     // 停用 黑名单 备注 日志切面  循环修改 切面日志
 
-    @Pointcut("execution(* com.pj.partner.service.*.PartnerDetailsServiceImpl.updateStatus.updateByPrimaryKey(..))")
+    @Pointcut("execution(* com.pj.partner.service.*.PartnerDetailsUtilServiceImpl.updateByPrimaryKey(..))")
     public void partnerDetailsUpdateStatusexecution() { }
 
 
@@ -164,7 +164,7 @@ public class AspectServer {
      */
 
     //  ---   修改 联系人
-    @Pointcut("execution(* com.pj.partner.*.*.PartnerDetailsServiceImpl.updatePartnerLinkman.updateByPrimaryKey(..))")
+    @Pointcut("execution(* com.pj.partner.*.*.PartnerLinkmanServiceImpl.updateByPrimaryKey(..))")
     public void PartnerLinkmanServiceImplUpdateList() {  }
 
     //  ---   删除 联系人
@@ -179,7 +179,7 @@ public class AspectServer {
 
 
     //  ---   修改联系地址
-    @Pointcut("execution(* com.pj.partner.*.*.PartnerDetailsServiceImpl.updatePartnerAddres.updateByPrimaryKey(..))")
+    @Pointcut("execution(* com.pj.partner.*.*.PartnerAddressServiceImpl.updateByPrimaryKey(..))")
     public void PartneraddressImplUpdateList() {  }
 
     //  ---   删除联系地址
@@ -203,13 +203,14 @@ public class AspectServer {
         List<PartnerDetails>  oldPartnerDetails = (  List<PartnerDetails> ) request.getSession().getAttribute("old_state_list");
         boolean flage = false;
 
-        Field[] oldfields=  getfieldsMethod(oldPartnerDetails);
+
         Field[] newfields=  getfieldsMethod(partnerDetails);
 
         actionData+="合作伙伴管理-停用与黑名单：";
         // 循环旧数据  判断旧数据的 id 是否存在
         for (PartnerDetails oldData : oldPartnerDetails){
-            if(partnerDetails.getId() .equals(oldData.getId())){
+            if(!partnerDetails.getId() .equals(oldData.getId())){
+                Field[] oldfields=  getfieldsMethod(oldData);
                 actionData+="中文全称"+partnerDetails.getChineseName()+" : ";
                 //判断并记录更新的信息
                 for (int i = 0 ; i <oldfields.length;i++ ) {
@@ -218,24 +219,29 @@ public class AspectServer {
                         PropertyDescriptor pd = new PropertyDescriptor(oldData.getClass().getDeclaredFields()[i].getName(), oldData.getClass());
                         Method getMethod = pd.getReadMethod();//获得get方法  
                         Object o = getMethod.invoke(oldData);//执行get方法返回一个Object
-                        PropertyDescriptor pd2 = new PropertyDescriptor(oldData.getClass().getDeclaredFields()[i].getName(), oldData.getClass());
+                        PropertyDescriptor pd2 = new PropertyDescriptor(partnerDetails.getClass().getDeclaredFields()[i].getName(), partnerDetails.getClass());
                         Method getMethod2 = pd2.getReadMethod();//获得get方法  
                         Object o2= getMethod2.invoke(partnerDetails);//执行get方法返回一个Object
+                        if(!o.equals(o2)){
                             // 判断字段名称
-                            for (int j = 0; j < BasicProperties.Basic_address_paramName.length; j++) {
-                                if (oldfields[i].getName().toString().equals(BasicProperties.Basic_address_paramName[j].toString())) {
-                                    actionData += " " + BasicProperties.Basic_address_paramVal[j];
-                                    actionData += "< " + (o.equals(1)?"是":"否") + " >（ " + (o2.equals(1)?"是":"否") + " ） ; ";
+                            for (int j = 0; j < BasicProperties.PartnerDetailsstatus_name.length; j++) {
+                                if (oldfields[i].getName().toString().equals(BasicProperties.PartnerDetailsstatus_name[j].toString())) {
+                                    actionData += " " + BasicProperties.PartnerDetailsstatus_paramVal[j];
+                                    if( oldfields[i].getName().equals("disableRemark") ){
+                                        actionData += "< " +  o  + " >（ " +  o2   + " ） ; ";
+                                    }else {
+                                        actionData += "< " + (o.equals(1)?"是":"否") + " >（ " + (o2.equals(1)?"是":"否") + " ） ; ";
+                                    }
                                     flage = true;
                                     break;
                                 }
                             }
+                        }
                     }
                 }
                 // 操作日志追加
                 addLogMethod(flage,request , actionData,args[args.length-1].toString());
             }
-            break;
         }
     }
 
@@ -322,13 +328,14 @@ public class AspectServer {
         List<PartnerAddress> oldPartneraddress = (List<PartnerAddress>) request.getSession().getAttribute("old_partnerAddress");
         boolean flage = false;
 
-        Field[] oldfields=  getfieldsMethod(oldPartneraddress);
+
         Field[] newfields=  getfieldsMethod(partneraddress);
 
         actionData+="合作伙伴管理-联系地址：";
         // 循环旧数据  判断旧数据的 id 是否存在
         for (PartnerAddress oldData : oldPartneraddress){
             if(partneraddress.getId() .equals(oldData.getId())){
+                Field[] oldfields=  getfieldsMethod(oldData);
                 //判断并记录更新的信息
                 for (int i = 0 ; i <oldfields.length;i++ ) {
                     if(checkSeralize(oldfields[i].getName())){
@@ -371,13 +378,14 @@ public class AspectServer {
         List<PartnerLinkman> oldPartnerLinkman = (List<PartnerLinkman>) request.getSession().getAttribute("old_partnerLinkman");
         boolean flage = false;
 
-        Field[] oldfields=  getfieldsMethod(oldPartnerLinkman);
+
         Field[] newfields=  getfieldsMethod(partnerLinkman);
 
         actionData+="合作伙伴管理-联系人：";
         // 循环旧数据  判断旧数据的 id 是否存在
         for (PartnerLinkman oldData : oldPartnerLinkman){
                 if(partnerLinkman.getId() .equals(oldData.getId())){
+                    Field[] oldfields=  getfieldsMethod(oldData);
                     //判断并记录更新的信息
                     for (int i = 0 ; i <oldfields.length;i++ ) {
                         if(checkSeralize(oldfields[i].getName())){
@@ -993,7 +1001,7 @@ private Field[] getfieldsMethod(Object objectdata) {
 }
 
     private boolean checkSeralize(String  name){
-        if (name.equals("getSerialVersionUID") || name.equals("serialVersionUID")) {
+        if (name.equals("getSerialVersionUID") || name.equals("serialVersionUID")    ) {
             return false;
         }else{
             return true;

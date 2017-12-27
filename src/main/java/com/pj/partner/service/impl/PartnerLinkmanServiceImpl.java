@@ -61,6 +61,8 @@ public class PartnerLinkmanServiceImpl extends AbstractBaseServiceImpl<PartnerLi
      */
     @Override
     public List<PartnerLinkman> selectListByPhone(PartnerLinkman partnerLinkman) {
-        return partnerLinkmanMapper.select(partnerLinkman );
+        PartnerLinkman partnerLinkman1 = new PartnerLinkman();
+        partnerLinkman1.setPhone(partnerLinkman.getPhone());
+        return partnerLinkmanMapper.select(partnerLinkman);
     }
 }
