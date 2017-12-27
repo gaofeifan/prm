@@ -70,7 +70,7 @@ spring:
   redis:
     host: 139.129.236.180
     password: pj@redis_oa
-
+ 
 oa:
   url: http://139.129.236.180:8080
   ssoUrl: http://139.129.236.180:8081
