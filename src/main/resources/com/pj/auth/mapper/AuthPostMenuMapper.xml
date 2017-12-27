@@ -43,5 +43,18 @@
             </otherwise>
         </choose>-->
     </select>
+    
+    <select id="findMenuOrButtonByUserId" resultMap="BaseResultMap">
+        select * from auth_menu am 
+        <where>
+           am.id in(select auth_id from user_menu where user_menu.user_id=#{userId})
+           AND am.is_menu =#{isMenu} 
+           <if test="menuId != null">
+                AND am.p_id = #{menuId}
+           </if>
+                ORDER  BY  am.id
+        </where>
+    
+    </select>
 
 </mapper>

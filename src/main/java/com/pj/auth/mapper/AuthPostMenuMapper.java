@@ -19,4 +19,7 @@ public interface AuthPostMenuMapper extends BaseMapper<AuthPostMenu> {
 
    List<AuthPostMenuVo> findMenuOrButtonByPostId(@Param("postId")Integer postId, @Param("menuId") Integer menuId, @Param("isMenu") boolean isMenu);
 
+   //根据userId查询 x.gao
+   List<AuthPostMenuVo> findMenuOrButtonByUserId(@Param("userId")String userId, @Param("menuId") Integer menuId, @Param("isMenu") boolean isMenu);
+   
 }
