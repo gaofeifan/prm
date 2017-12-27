@@ -53,7 +53,7 @@ public class UploadController {
 			String filePath = request.getSession().getServletContext().getRealPath("/upload/" + dateDir + "/");
 			try {
 				uploadFile(file.getBytes(), filePath, fileName);
-				result.put("imagePath", filePath+fileName);
+				result.put("filePath", filePath+fileName);
 				result.put("success",true);
 				result.put("msg","文件上传成功！");
 			} catch (Exception e) {
