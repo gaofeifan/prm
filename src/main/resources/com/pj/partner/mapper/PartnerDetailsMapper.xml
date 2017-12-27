@@ -78,6 +78,8 @@
         <result column="it_type_credit_period" property="itTypeCreditPeriod" jdbcType="VARCHAR" />
         <result column="it_credit_period" property="itCreditPeriod" jdbcType="DECIMAL" />
         <result column="ddn_type_credit_period" property="ddnTypeCreditPeriod" jdbcType="VARCHAR" />
+        <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+        <result column="company_name" property="companyName" jdbcType="VARCHAR" />
         <result column="ddn_credit_period" property="ddnCreditPeriod" jdbcType="DECIMAL" />
         <result column="yyox_type_credit_period" property="yyoxTypeCreditPeriod" jdbcType="VARCHAR" />
         <result column="yyox_credit_period" property="yyoxCreditPeriod" jdbcType="DECIMAL" />
