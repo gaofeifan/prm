@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public @Data @Table(name="partner_details") class PartnerDetails implements Serializable {
+public @Data @Table(name="partner_details") class PartnerDetails extends BasicData implements Serializable {
     @GeneratedValue(generator = "JDBC")
     @Id
     @ApiModelProperty(value = "id" ,required = false)
@@ -155,19 +155,6 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     @ApiModelProperty(value = "外部客户 开票类型" ,required = false)
     private String wbkhInvoiceType;
 
-    /**
-     * 外部客户 信用期限类型
-     */
-    @Column
-    @ApiModelProperty(value = " 外部客户 信用期限类型" ,required = false)
-    private String wbkhTypeCreditPeriod;
-
-    /**
-     * 外部客户 信用期限
-     */
-    @Column
-    @ApiModelProperty(value = "外部客户 信用期限" ,required = false)
-    private BigDecimal wbkhCreditPeriod;
 
     /**
      * 外部客户 信用额度
@@ -238,14 +225,6 @@ public @Data @Table(name="partner_details") class PartnerDetails implements Seri
     @Column
     @ApiModelProperty(value = "互为代理  进项税率" ,required = false)
     private BigDecimal hwdlTaxRate;
-
-    /**
-     * createBy SevenBoyLiu 2017年12月25日17:44:16
-     * 销项税率
-     */
-    @Column
-    @ApiModelProperty(value = " 销项税率" ,required = false)
-    private BigDecimal hwdlOutputRate;
 
 
     /**

@@ -339,7 +339,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     }
 
     @Override
-    public void shiftPartnerDetailsFileByIds( Integer id,String email) {
+    public boolean shiftPartnerDetailsFileByIds( Integer id,String email) {
         //  查询转移的文件
         Object o = PartnerDetailsCache.getValueByKey("details");
         List<PartnerDetailsShifFile> shifFileList = (List<PartnerDetailsShifFile>) o;
@@ -357,9 +357,21 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         shifFileList.removeAll(deleteFileList);
         //  更新转移目录的父集
         for (PartnerDetailsShifFile childFds:shifFileList) {
-            childFds.setPId(id);
-            this.partnerDetailsShifFileMapper.updateByPrimaryKey(childFds);
+
+            //校验(根据新的父id和要转移的code查找,若存在则不保存)
+            PartnerDetailsShifFile model = new PartnerDetailsShifFile();
+            model.setPId(id);
+            model.setCode(childFds.getCode());
+            PartnerDetailsShifFile exsitDetail = partnerDetailsShifFileMapper.selectOne(model);
+            if(exsitDetail != null){
+                return false;
+            }else{
+                childFds.setPId(id);
+                this.partnerDetailsShifFileMapper.updateByPrimaryKey(childFds);
+            }
+
         }
+        return true;
     }
 
     @Override
