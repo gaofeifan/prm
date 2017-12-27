@@ -1,19 +1,22 @@
 package com.pj.auth.service.impl;
 
 
-import com.pj.auth.mapper.AuthPostMenuMapper;
-import com.pj.auth.pojo.AuthMenu;
-import com.pj.auth.pojo.AuthPostMenu;
-import com.pj.auth.pojo.AuthPostMenuVo;
-import com.pj.auth.service.AuthMenuService;
-import com.pj.auth.service.AuthPostMenuService;
-import com.pj.conf.base.AbstractBaseServiceImpl;
-import com.pj.conf.base.BaseMapper;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.pj.auth.mapper.AuthPostMenuMapper;
+import com.pj.auth.mapper.UserMenuMapper;
+import com.pj.auth.pojo.AuthMenu;
+import com.pj.auth.pojo.AuthPostMenu;
+import com.pj.auth.pojo.AuthPostMenuVo;
+import com.pj.auth.pojo.UserMenu;
+import com.pj.auth.service.AuthMenuService;
+import com.pj.auth.service.AuthPostMenuService;
+import com.pj.conf.base.AbstractBaseServiceImpl;
+import com.pj.conf.base.BaseMapper;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -25,6 +28,8 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
     private AuthPostMenuMapper authPostMenuMapper;
     @Autowired
     private AuthMenuService authMenuService;
+    @Autowired
+    private UserMenuMapper userMenuMapper;
     @Override
     public BaseMapper<AuthPostMenu> getMapper() {
         return authPostMenuMapper;
@@ -87,6 +92,24 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
             apm.setPostId(postId);
             this.authPostMenuMapper.insert(apm);
         }
+    }
+
+    @Override
+    public void editPostAuthorityByuserId(String userId, Integer[] menuIds) {
+        userMenuMapper.delete(new UserMenu(userId));
+        for(Integer menuid : menuIds){
+          UserMenu userMenu = new UserMenu();
+          userMenu.setUserId(userId);
+          userMenu.setAuthId(menuid);
+          userMenuMapper.insert(userMenu);
+        }
+    }
+      
+    @Override
+    public List<AuthPostMenuVo> findMenuOrButtonByUserId(String userId, Integer menuId, boolean isMenu) {
+     
+      return authPostMenuMapper.findMenuOrButtonByUserId(userId, menuId, isMenu);
+          
     }
 
 }

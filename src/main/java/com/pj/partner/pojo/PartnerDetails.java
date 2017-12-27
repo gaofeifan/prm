@@ -381,6 +381,20 @@ public @Data @Table(name="partner_details") class PartnerDetails extends BasicDa
     @ApiModelProperty(value = "父id" ,required = false)
     private Integer pId;
 
+    /**
+     * 公司id
+     */
+    @Column
+    @ApiModelProperty(value = "公司id" ,required = false)
+    private String companyId;
+
+    /**
+     * 公司名称
+     */
+    @Column
+    @ApiModelProperty(value = "公司名称" ,required = false)
+    private String  companyName;
+
     @Transient
     @ApiModelProperty(value = "联系地址 格式  [{'id':'1','addressType':'地址类型','abbreviation':'简称','address':'地址','zipCode':'邮编'},{'id':'2','addressType':'地址类型','abbreviation':'简称','address':'地址','zipCode':'邮编'}]" ,required = false)
     private List<PartnerAddress> addressList;

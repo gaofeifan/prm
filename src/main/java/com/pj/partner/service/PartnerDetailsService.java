@@ -52,7 +52,7 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
      * @param id
      * @param email
      */
-    void shiftPartnerDetailsFileByIds( Integer id,String email);
+    boolean shiftPartnerDetailsFileByIds( Integer id,String email);
 
     /**
      *  判断是否可以删除
