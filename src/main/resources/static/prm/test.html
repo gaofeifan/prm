@@ -7,11 +7,11 @@
 </head>
 <body>
 <form action="/upload/upload" enctype="multipart/form-data" method="post" >
-上传文件1：<input type="file" name="file"><br/>
+上传文件：<input type="file" name="file"><br/>
 <input type="submit" value="提交">
 </form>
 
-
-<a href="/upload/download?filePath=E://pjspace/prm/src/main/webapp/upload/20171227/b55999a6-2684-4603-baf7-99f7c0156862_邮政小包接口.docx">下载</a>
+<a href="/upload/download?filePath=${filePath}">下载</a>
+<!--<a href="/upload/download?filePath=E://pjspace/prm/src/main/webapp/upload/20171227/b55999a6-2684-4603-baf7-99f7c0156862_邮政小包接口.docx">下载</a>-->
 </body>
 </html>
