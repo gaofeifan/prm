@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="378069d2-348c-4ecb-aa03-6f4e55cfc93f" name="Default" comment="---///冲突&#10;2017年12月27日17:36:47">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/logback/logback-boot.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/test-classes/com/pj/other/service/impl/OaTest.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="378069d2-348c-4ecb-aa03-6f4e55cfc93f" name="Default" comment="---///冲突&#10;2017年12月27日17:36:47" />
     <ignored path="prm.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -214,6 +210,17 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="prm" type="b2602c69:ProjectViewProjectNode" />
+              <item name="prm" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="prm" type="b2602c69:ProjectViewProjectNode" />
+              <item name="prm" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+              <item name="classes" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -367,7 +374,7 @@
       <workItem from="1513665150493" duration="6409000" />
       <workItem from="1513672549237" duration="19059000" />
       <workItem from="1513823390103" duration="12256000" />
-      <workItem from="1513906519863" duration="78521000" />
+      <workItem from="1513906519863" duration="78587000" />
     </task>
     <task id="LOCAL-00001" summary="---///冲突&#10;2017年12月27日17:36:47">
       <created>1514367423606</created>
@@ -380,7 +387,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="358095000" />
+    <option name="totallyTimeSpent" value="358161000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
