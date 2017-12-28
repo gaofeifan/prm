@@ -85,7 +85,9 @@
         <result column="yyox_credit_period" property="yyoxCreditPeriod" jdbcType="DECIMAL" />
         <result column="industrial_type_credit_period" property="industrialTypeCreditPeriod" jdbcType="VARCHAR" />
         <result column="industrial_credit_period" property="industrialCreditPeriod" jdbcType="DECIMAL" />
-        <result column="file_path" property="filePath" jdbcType="VARCHAR" />
+        <!--默认币种-->
+        <result column="default_currency" property="defaultCurrency" jdbcType="VARCHAR" />
+
     </resultMap>
     <resultMap id="BaseResultMap" type="com.pj.partner.pojo.PartnerDetails" >
         <result  column="id" property="id" jdbcType="INTEGER" />
@@ -98,6 +100,7 @@
         <result  column="english_abbreviation" property="englishAbbreviation" jdbcType="VARCHAR" />
         <result column="file_path" property="filePath" jdbcType="VARCHAR" />
     </resultMap>
+
 
     <select id="getParentList" resultMap="BaseResultMap">
         select id,code,dir_name,p_id FROM partner_details 	where FIND_IN_SET(id,getParentList(#{id}))

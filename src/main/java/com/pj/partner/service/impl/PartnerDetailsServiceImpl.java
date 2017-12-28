@@ -5,6 +5,7 @@ import com.pj.cache.PartnerDetailsCache;
 import com.pj.conf.base.AbstractBaseServiceImpl;
 import com.pj.conf.base.BaseMapper;
 import com.pj.conf.utils.RegExpUtils;
+import com.pj.conf.utils.ThreadEmail;
 import com.pj.partner.mapper.PartnerDetailsMapper;
 import com.pj.partner.mapper.PartnerDetailsShifFileMapper;
 import com.pj.partner.pojo.PartnerAddress;
@@ -15,6 +16,7 @@ import com.pj.partner.service.PartnerAddressService;
 import com.pj.partner.service.PartnerDetailsService;
 import com.pj.partner.service.PartnerDetailsUtilService;
 import com.pj.partner.service.PartnerLinkmanService;
+import com.pj.user.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,17 +33,21 @@ import java.util.*;
 @Service
 @Transactional
 public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDetails,Integer> implements PartnerDetailsService {
-    @Autowired
+    @Autowired(required = false)
     private PartnerDetailsMapper partnerDetailsMapper;
     @Autowired
     private PartnerDetailsUtilService partnerDetailsUtilService;
+    @Autowired(required = false)
+    private PartnerDetailsService partnerDetailsService;
 
+    @Autowired(required = false)
+    private EmailService emailService;
 
     @Autowired
     private PartnerAddressService partnerAddressService;
     @Autowired
     private PartnerLinkmanService partnerLinkmanService;
-    @Autowired
+    @Autowired(required = false)
     private PartnerDetailsShifFileMapper partnerDetailsShifFileMapper;
     @Autowired
     private AuthUserService authUserService;
@@ -51,6 +57,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     }
 
     public static final String FIELD_ID = "id";
+    public static final String PHONE = "phone";
     public static final String FIELD_DETAILS = "detailsId";
 
     @Override
@@ -128,7 +135,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
 //        this.partnerAddressService.deletePartnerAddressByDetails(record.getId(),email);
         /*更新联系人*/
         if(linkmans != null){
-            this.updatePartnerLinkman(linkmans,record.getId(),email);
+            this.updatePartnerLinkman(linkmans,record,email,request);
         }
               /*更新联系地址*/
         if(address != null){
@@ -178,7 +185,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             //  存在进行更新原数据
             if(b) {
                 //  根据id查询新增集合中的数据
-                PartnerAddress partnerAddress = get(address, pa.getId(), FIELD_ID);
+                PartnerAddress partnerAddress = get(address, pa.getId().toString(), FIELD_ID);
                 if (!pa.equals(partnerAddress)) {
                     if (partnerAddress != null) {
                         this.partnerAddressService.updateByPrimaryKey(partnerAddress, email);
@@ -209,21 +216,29 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     /**
      *  更新联系人
      * @param linkmans
+     * @param partnerDetails
+     * @param request
      */
-    private void updatePartnerLinkman(List<PartnerLinkman> linkmans , Integer detailsId,String email) {
+    private void updatePartnerLinkman(List<PartnerLinkman> linkmans, PartnerDetails partnerDetails, String email, HttpServletRequest request) {
         List<PartnerLinkman> deleteLinkman = new ArrayList<>();
+        // 存储 更新手机好的信息
+        List<PartnerLinkman> deleteLinkman2 = new ArrayList<>();
         //  查询原数据
-        List<PartnerLinkman> oPartnerLinkmen = this.partnerLinkmanService.selectPartnerLinkmansByDetailsId(detailsId);
+        List<PartnerLinkman> oPartnerLinkmen = this.partnerLinkmanService.selectPartnerLinkmansByDetailsId(partnerDetails.getId());
         for(PartnerLinkman pl : oPartnerLinkmen){
             //  判断新增的集合中是否包含原数据
             boolean b = contains(linkmans, pl.getId(), FIELD_ID);
             //  存在进行更新原数据
             if(b){
                 //  根据id查询新增集合中的数据 // 并判断是否发生变动
-                PartnerLinkman partnerLinkman = get(linkmans, pl.getId(), FIELD_ID);
+                PartnerLinkman partnerLinkman = get(linkmans, pl.getId().toString(), FIELD_ID);
                 boolean equals = pl.equals(partnerLinkman);
                 if(partnerLinkman != null  && !equals) {
                         this.partnerLinkmanService.updateByPrimaryKey(partnerLinkman, email);
+                        // 判断 手机号是否发生了改变
+                    if(!pl.getPhone().equals(partnerLinkman.getPhone())){
+                        deleteLinkman2.add(partnerLinkman);
+                    }
                 }
                     //  删除该条更新的数据
                 linkmans.remove(partnerLinkman);
@@ -231,10 +246,11 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
                 // 不存在则数据已删除保存删除的集合中
                 deleteLinkman.add(pl);
             }
+
         }
         //  新增集合中数据都为新增的
         for(PartnerLinkman pl : linkmans){
-            pl.setDetailsId(detailsId);
+            pl.setDetailsId(partnerDetails.getId());
         }
         if(linkmans.size()!=0) {
             this.partnerLinkmanService.insertList(linkmans, email);
@@ -242,6 +258,13 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         // 将新增集合中不存在的元数据进行删除
         for(PartnerLinkman pl : deleteLinkman){
             this.partnerLinkmanService.delete(pl,email);
+        }
+        // 执行 邮件方法 通知手机号重复
+        linkmans.addAll(deleteLinkman2);
+        if(linkmans.size()!=0){
+            // 校验手机号 发送邮件
+            ThreadEmail thread =  new  ThreadEmail( partnerDetailsService,   authUserService,   emailService,partnerLinkmanService);
+            thread.checkPhoneSendEmail(request,linkmans, partnerDetails ) ;
         }
     }
 
@@ -267,7 +290,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         }
         return false;
     }
-    private <T> T  get( List<T> objs, Integer detailsId,String filedName){
+    private <T> T  get( List<T> objs, String detailsId,String filedName){
         for (T obj : objs){
             Class<?> clazz = obj.getClass();
             try {
@@ -276,7 +299,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
                 Object o = field.get(obj);
                 if(o != null){
                     String str = o.toString();
-                    if(str.equals(detailsId.toString())){
+                    if(str.equals(detailsId )){
                         return obj;
                     }
                 }
@@ -521,6 +544,4 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         }
         return false;
     }
-
-
 }

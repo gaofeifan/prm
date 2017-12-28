@@ -63,6 +63,6 @@ public class PartnerLinkmanServiceImpl extends AbstractBaseServiceImpl<PartnerLi
     public List<PartnerLinkman> selectListByPhone(PartnerLinkman partnerLinkman) {
         PartnerLinkman partnerLinkman1 = new PartnerLinkman();
         partnerLinkman1.setPhone(partnerLinkman.getPhone());
-        return partnerLinkmanMapper.select(partnerLinkman);
+        return partnerLinkmanMapper.select(partnerLinkman1);
     }
 }
