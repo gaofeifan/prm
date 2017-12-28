@@ -233,8 +233,9 @@ public class ScheduledEmail {
 
 
     //  联系人电话重复提醒邮件
-    public void sendPhoneEmail(HttpServletRequest request, PartnerDetailsService partnerDetailsService) throws Exception {
-
+    public void sendPhoneEmail(HttpServletRequest request, PartnerDetailsService partnerDetailsService, AuthUserService authUserService, EmailService emailService) throws Exception {
+        this.authUserService = authUserService;
+        this.emailService = emailService;
         HashSet<Integer> partnerDetaisl = new HashSet<Integer>();  // 所有合作伙伴id集合
 
         // 获取请求中的  联系人集合
@@ -246,32 +247,34 @@ public class ScheduledEmail {
         HashSet<Integer> failurePersonnel = new HashSet<Integer>();
 
         for (Integer  detailsId  : partnerDetaisl){
-            List<PartnerLinkman> emailListData = new ArrayList<PartnerLinkman>(); // 所有待发送邮件的 人员集合 根据 接受者分类
-            for  ( PartnerLinkman parData : partnerLinkmenAl){
-                if(parData.getDetailsId().equals(detailsId)){
-                    PartnerDetails partnerDetails = partnerDetailsService.selectByPrimaryKey(detailsId);
-                    parData.setOldchineseName(partnerDetails.getChineseName());
-                    parData.setReceiverId(partnerDetails.getReceiverId());
-                    emailListData.add(parData);
+            if(null!=detailsId) {
+                List<PartnerLinkman> emailListData = new ArrayList<PartnerLinkman>(); // 所有待发送邮件的 人员集合 根据 接受者分类
+                for (PartnerLinkman parData : partnerLinkmenAl) {
+                    if (parData.getDetailsId().equals(detailsId)) {
+                        PartnerDetails partnerDetails = partnerDetailsService.selectByPrimaryKey(detailsId);
+                        parData.setOldchineseName(partnerDetails.getChineseName());
+                        parData.setReceiverId(partnerDetails.getReceiverId());
+                        emailListData.add(parData);
+                    }
                 }
-            }
 
-            if(null!= emailListData && emailListData.size()!=0){
-            // 获取 邮箱并发送邮件
-            //发送邮件到接受者
-            // 调用接口 获取 email 发给 接收者
-            User user = authUserService.selectUserByEmail(emailListData.get(0).getReceiverId());
-            try {
+                if (null != emailListData && emailListData.size() != 0) {
+                    // 获取 邮箱并发送邮件
+                    //发送邮件到接受者
+                    // 调用接口 获取 email 发给 接收者
+                    User user = this.authUserService.selectUserByEmail(emailListData.get(0).getReceiverId());
+                    try {
 
-                // 邮件正文
-                String total = "新增合作伙伴（中文全称）维护了新的联系人，与您名下的合作伙伴（中文全称）中的以下联系人重复，请核实。。";
-                StringBuffer mesagesVal =  getMesagesValPartnerLinkman(emailListData, total);
-                SendEmailUtils.sendEWmail(mesagesVal, ScheduledEmail.basic_myEmailAccount, basic_myEmailPassword, user.getEmail());
-            } catch (Exception e) {
+                        // 邮件正文
+                        String total = "新增合作伙伴（中文全称）维护了新的联系人，与您名下的合作伙伴（中文全称）中的以下联系人重复，请核实。。";
+                        StringBuffer mesagesVal = getMesagesValPartnerLinkman(emailListData, total);
+                        SendEmailUtils.sendEWmail(mesagesVal, ScheduledEmail.basic_myEmailAccount, basic_myEmailPassword, user.getEmail());
+                    } catch (Exception e) {
 
-                failurePersonnel.add(emailListData.get(0).getReceiverId());
-                logger.error("  邮件信息获取异常请检查 exception 信息已存储稍后发送给管理员失败接受者信息   :" + e);
-            }
+                        failurePersonnel.add(emailListData.get(0).getReceiverId());
+                        logger.error("  邮件信息获取异常请检查 exception 信息已存储稍后发送给管理员失败接受者信息   :" + e);
+                    }
+                }
             }
         }
 
@@ -281,7 +284,7 @@ public class ScheduledEmail {
         if (failurePersonnel.size() != 0) {
             for (Integer ids : failurePersonnel) {
                 // 调用接口 获取 接收者email
-                userList.add(authUserService.selectUserByEmail(ids));
+                userList.add(this.authUserService.selectUserByEmail(ids));
             }
 
         try {
