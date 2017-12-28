@@ -443,7 +443,7 @@ public @Data @Table(name="partner_details") class PartnerDetails extends BasicDa
         }else{
             return null;
         }
-
+        
     }
 
     public String[] getWbkhCustomerClasss() {
