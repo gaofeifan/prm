@@ -13,7 +13,6 @@ import com.pj.partner.pojo.PartnerDetailsShifFile;
 import com.pj.partner.pojo.PartnerLinkman;
 import com.pj.partner.service.PartnerAddressService;
 import com.pj.partner.service.PartnerDetailsService;
-
 import com.pj.partner.service.PartnerDetailsUtilService;
 import com.pj.partner.service.PartnerLinkmanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +33,10 @@ import java.util.*;
 public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDetails,Integer> implements PartnerDetailsService {
     @Autowired
     private PartnerDetailsMapper partnerDetailsMapper;
-
     @Autowired
     private PartnerDetailsUtilService partnerDetailsUtilService;
+
+
     @Autowired
     private PartnerAddressService partnerAddressService;
     @Autowired
@@ -137,7 +137,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
 
         this.updateStatus(record,request,email); /*   更新停用 黑名单状态*/
 
-       super.updateByPrimaryKey(record);   /*    根据主键更新*/
+        super.updateByPrimaryKey(record);   /*    根据主键更新*/
 
         deleteParentMnemonicCode(record.getId());    /* 删除所有父集的助记码*/
     }
@@ -147,18 +147,18 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
      * @param record
      * @param email
      */
-    public void updateStatus(PartnerDetails record, HttpServletRequest request, String email) {;
+    public void updateStatus(PartnerDetails record, HttpServletRequest request, String email) {
         PartnerDetails details = this.partnerDetailsMapper.selectByPrimaryKey(record.getId());
         List<PartnerDetails> list = this.partnerDetailsMapper.getChildList(details.getId());
         request.getSession().setAttribute("old_state_list",list);
         for (PartnerDetails pd : list){
-            if(!pd.getId().equals(details.getId())){
-            if((!pd.getIsBlacklist().equals(record.getIsBlacklist()) )|| (!pd.getIsDisable().equals(record.getIsDisable())) || (!pd.getDisableRemark() .equals(record.getDisableRemark()))){
-                pd.setIsBlacklist(record.getIsBlacklist());
-                pd.setIsDisable(record.getIsDisable());
-                pd.setDisableRemark(record.getDisableRemark());
-                this.partnerDetailsUtilService.updateByPrimaryKey(pd,email);
-            }
+            if(!pd.getId().equals(details.getId())) {
+                if ((!pd.getIsBlacklist().equals(record.getIsBlacklist())) || (!pd.getIsDisable().equals(record.getIsDisable())) || (!pd.getDisableRemark().equals(record.getDisableRemark()))) {
+                    pd.setIsBlacklist(record.getIsBlacklist());
+                    pd.setIsDisable(record.getIsDisable());
+                    pd.setDisableRemark(record.getDisableRemark());
+                    this.partnerDetailsUtilService.updateByPrimaryKey(pd,email);
+                }
             }
         }
     }
@@ -176,29 +176,29 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             //  判断新增的集合中是否包含原数据
             boolean b = contains(address, pa.getId(), FIELD_ID);
             //  存在进行更新原数据
-            if(b){
+            if(b) {
                 //  根据id查询新增集合中的数据
                 PartnerAddress partnerAddress = get(address, pa.getId(), FIELD_ID);
-                if(!pa.equals(partnerAddress)){
-                if(partnerAddress != null){
-                    this.partnerAddressService.updateByPrimaryKey(partnerAddress,email);
-                }
-
+                if (!pa.equals(partnerAddress)) {
+                    if (partnerAddress != null) {
+                        this.partnerAddressService.updateByPrimaryKey(partnerAddress, email);
+                    }
                 }
                 //  删除该条更新的数据
                 address.remove(partnerAddress);
-            }else{
-                // 不存在则数据已删除保存删除的集合中
-                deleteAddress.add(pa);
-            }
+
+            } else {
+                    // 不存在则数据已删除保存删除的集合中
+                    deleteAddress.add(pa);
+                }
         }
         //  新增集合中数据都为新增的
         for (PartnerAddress pa: address ) {
             pa.setId(null);
             pa.setDetailsId(id);
         }
-        if(address.size()!=0){
-        this.partnerAddressService.insertList(address,email);
+        if(address.size()!=0) {
+            this.partnerAddressService.insertList(address, email);
         }
         // 将新增集合中不存在的元数据进行删除
         for(PartnerAddress pa : deleteAddress){
@@ -220,14 +220,12 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             //  存在进行更新原数据
             if(b){
                 //  根据id查询新增集合中的数据 // 并判断是否发生变动
-
                 PartnerLinkman partnerLinkman = get(linkmans, pl.getId(), FIELD_ID);
                 boolean equals = pl.equals(partnerLinkman);
-
-                if(partnerLinkman != null  && !equals){
-                    this.partnerLinkmanService.updateByPrimaryKey(partnerLinkman,email);
+                if(partnerLinkman != null  && !equals) {
+                        this.partnerLinkmanService.updateByPrimaryKey(partnerLinkman, email);
                 }
-                //  删除该条更新的数据
+                    //  删除该条更新的数据
                 linkmans.remove(partnerLinkman);
             }else{
                 // 不存在则数据已删除保存删除的集合中
@@ -238,8 +236,8 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         for(PartnerLinkman pl : linkmans){
             pl.setDetailsId(detailsId);
         }
-        if(linkmans.size()!=0){
-            this.partnerLinkmanService.insertList(linkmans,email);
+        if(linkmans.size()!=0) {
+            this.partnerLinkmanService.insertList(linkmans, email);
         }
         // 将新增集合中不存在的元数据进行删除
         for(PartnerLinkman pl : deleteLinkman){
@@ -279,7 +277,6 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
                 if(o != null){
                     String str = o.toString();
                     if(str.equals(detailsId.toString())){
-
                         return obj;
                     }
                 }
@@ -362,7 +359,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     }
 
     @Override
-    public void shiftPartnerDetailsFileByIds( Integer id,String email) {
+    public boolean shiftPartnerDetailsFileByIds( Integer id,String email) {
         //  查询转移的文件
         Object o = PartnerDetailsCache.getValueByKey("details");
         List<PartnerDetailsShifFile> shifFileList = (List<PartnerDetailsShifFile>) o;
@@ -380,9 +377,21 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         shifFileList.removeAll(deleteFileList);
         //  更新转移目录的父集
         for (PartnerDetailsShifFile childFds:shifFileList) {
-            childFds.setPId(id);
-            this.partnerDetailsShifFileMapper.updateByPrimaryKey(childFds);
+
+            //校验(根据新的父id和要转移的code查找,若存在则不保存)
+            PartnerDetailsShifFile model = new PartnerDetailsShifFile();
+            model.setPId(id);
+            model.setCode(childFds.getCode());
+            PartnerDetailsShifFile exsitDetail = partnerDetailsShifFileMapper.selectOne(model);
+            if(exsitDetail != null){
+                return false;
+            }else{
+                childFds.setPId(id);
+                this.partnerDetailsShifFileMapper.updateByPrimaryKey(childFds);
+            }
+
         }
+        return true;
     }
 
     @Override
