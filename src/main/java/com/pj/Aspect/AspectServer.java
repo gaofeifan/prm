@@ -166,7 +166,7 @@ public class AspectServer {
      * 用户权限
      */
     //  ---   根据用户修改相关权限日志记录
-    @Pointcut("execution(* com.pj.partner.*.*.AuthPostMenuServiceImpl.editPostAuthorityByuserId(..))")
+    @Pointcut("execution(* com.pj.auth.service.impl.AuthPostMenuServiceImpl.editPostAuthorityByuserId(..))")
     public void UsereditPostAuthorityByuserIdUpdateList() {  }
 
     /**
@@ -535,36 +535,20 @@ public class AspectServer {
                 /*判断并添加父级*/
                 if(flage2){
                     oldIsmenu.add(olda);
-                    if(olda.getIsMenu()!=1){
-                        for(AuthMenu olda2 : oldAuthority){
-                            if(olda.getPId().equals(olda2.getId())){
-
-                                oldIsmenu.add(olda2);
-
-                            }
-                        }
-                    }
                 }
-
             }
             // 循环获取 菜单
             for (AuthMenu button : oldIsmenu) {
-                if (button.getIsMenu() == 0) {
-                    for(AuthMenu dat : oldIsmenu){
-                        if(button.getPId().equals(dat.getId())){
-                            actionData += dat.getName() + "-" + button.getName().split("-")[1] + " ; ";
-                            flage = true;
-                            break;
-                        }
-                    }
+                            actionData += button.getName() + " ; "  ;
+                flage = true;
+                }
+            if(oldIsmenu.size()!=0){
+                try {
+                    addAuthLogMethod(flage, request, actionData, "删除", emailsByPostId);
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
             }
-            try {
-                addAuthLogMethod(flage, request, actionData, "删除", emailsByPostId);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-
             flage = false;
 
             /*查找新权限中独有的权限*/
@@ -579,34 +563,21 @@ public class AspectServer {
                 }
                 if(flage2){
                     newIsmenu.add(news);
-                    if(news.getIsMenu()!=1){
-                        for(AuthMenu news2 : authMenuList){
-                            if(news.getPId().equals(news2.getId())){
-                                newIsmenu.add(news2);
-                                break;
-                            }
-                        }
-                    }
                 }
 
             }
-            actionData = "权限管理  ：";
+            actionData = "权限管理 - 用户：";
             // 循环获取 菜单
             for (AuthMenu button : newIsmenu) {
-                if (button.getIsMenu() == 0) {
-                    for(AuthMenu dat : newIsmenu){
-                        if(button.getPId().equals(dat.getId())){
-                            actionData += dat.getName() + "-" + button.getName().split("-")[1] + " ; ";
-                            flage = true;
-                            break;
-                        }
-                    }
-                }
+                        actionData += button.getName() + "; ";
+                flage = true;
             }
-            try {
-                addAuthLogMethod(flage, request, actionData, "新增", emailsByPostId);
-            } catch (Exception e) {
-                System.out.println(e);
+            if(newIsmenu.size()!=0){
+                try {
+                    addAuthLogMethod(flage, request, actionData, "新增", emailsByPostId);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         }
     }
@@ -626,32 +597,7 @@ public class AspectServer {
         // 获取 未删除的 权限  根基postID 去查询
         List<AuthMenu> authMenuList = authMenuService.findAuthMenuListBypostId(Integer.parseInt(args[0].toString()));
         request.getSession().setAttribute("oldAuthority",authMenuList);
-        /*获取  权限操作涉及人*/
-        // String emailsByPostId = authUserService.getEmailsByPostId(args[0].toString());
 
-      /*  if (null != authMenuList || authMenuList.size() != 0) {
-
-            // 循环获取 菜单
-            for (AuthMenu menu : authMenuList) {
-                if (menu.getIsMenu() == 1) {
-
-                    // 循环  获取按钮
-                    for (AuthMenu button : authMenuList) {
-                        if (button.getIsMenu() == 0) {
-                            if ((button.getPId() == null ? 0 : button.getPId()) == menu.getId()) {
-                                actionData += menu.getName() + "-" + button.getName().split("-")[1] + " ; ";
-                                flage = true;
-                            }
-                        }
-                    }
-                }
-            }
-            try {
-                addAuthLogMethod(flage, request, actionData, "删除", emailsByPostId);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }*/
     }
 
     //  记录新增的权限···· 记录日志
@@ -667,11 +613,9 @@ public class AspectServer {
         List<AuthMenu> authMenuList = authMenuService.findAuthMenuListBypostId(Integer.parseInt(args[0].toString()));
         // 获取 旧的 权限  根基postID 去查询
         List<AuthMenu>  oldAuthority = new ArrayList<AuthMenu>();
-        try {
-            oldAuthority = (List<AuthMenu>) request.getSession().getAttribute("oldAuthority");
-        }catch (Exception e){
 
-        }
+            oldAuthority = (List<AuthMenu>) request.getSession().getAttribute("oldAuthority");
+
 
         // 比对 新旧权限
         if(null != authMenuList && null != oldAuthority ){
@@ -691,7 +635,7 @@ public class AspectServer {
                 /*判断并添加父级*/
                 if(flage2){
                     oldIsmenu.add(olda);
-                    if(olda.getIsMenu()!=1){
+                   /* if(olda.getIsMenu()!=1){
                         for(AuthMenu olda2 : oldAuthority){
                             if(olda.getPId().equals(olda2.getId())){
 
@@ -699,13 +643,15 @@ public class AspectServer {
 
                             }
                         }
-                    }
+                    }*/
                 }
 
             }
             // 循环获取 菜单
             for (AuthMenu button : oldIsmenu) {
-                if (button.getIsMenu() == 0) {
+                actionData += button.getName() + "; " ;
+                flage = true;
+              /*  if (button.getIsMenu() == 0) {
                         for(AuthMenu dat : oldIsmenu){
                             if(button.getPId().equals(dat.getId())){
                                 actionData += dat.getName() + "-" + button.getName().split("-")[1] + " ; ";
@@ -713,13 +659,16 @@ public class AspectServer {
                                 break;
                             }
                         }
+                }*/
+            }
+            if(oldIsmenu.size()!=0){
+                try {
+                    addAuthLogMethod(flage, request, actionData, "删除", emailsByPostId);
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
             }
-            try {
-                addAuthLogMethod(flage, request, actionData, "删除", emailsByPostId);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+
 
             flage = false;
 
@@ -736,22 +685,23 @@ public class AspectServer {
                 }
                 if(flage2){
                     newIsmenu.add(news);
-                    if(news.getIsMenu()!=1){
+                    /*if(news.getIsMenu()!=1){
                         for(AuthMenu news2 : authMenuList){
                             if(news.getPId().equals(news2.getId())){
                                 newIsmenu.add(news2);
                                 break;
                             }
                         }
-                    }
+                    }*/
                 }
 
             }
-            actionData = "权限管理  ：";
+            actionData = "权限管理  岗位 ：";
             // 循环获取 菜单
             for (AuthMenu button : newIsmenu) {
-
-                if (button.getIsMenu() == 0) {
+                actionData += button.getName() + "; ";
+                flage = true;
+               /* if (button.getIsMenu() == 0) {
                     for(AuthMenu dat : newIsmenu){
                         if(button.getPId().equals(dat.getId())){
                             actionData += dat.getName() + "-" + button.getName().split("-")[1] + " ; ";
@@ -759,12 +709,14 @@ public class AspectServer {
                             break;
                         }
                     }
-                }
+                }*/
             }
-            try {
-                addAuthLogMethod(flage, request, actionData, "新增", emailsByPostId);
-            } catch (Exception e) {
-                System.out.println(e);
+            if(newIsmenu.size()!=0){
+                try {
+                    addAuthLogMethod(flage, request, actionData, "新增", emailsByPostId);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         }
     }
