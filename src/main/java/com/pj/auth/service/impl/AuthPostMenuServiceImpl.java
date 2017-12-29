@@ -113,7 +113,7 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
     public List<AuthPostMenuVo> findMenuOrButtonByUserId(String userId, Integer menuId, boolean isMenu) {
      
       return authPostMenuMapper.findMenuOrButtonByUserId(userId, menuId, isMenu);
-          
+
     }
 
 }
