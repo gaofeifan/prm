@@ -165,8 +165,8 @@ public class AspectServer {
     /**
      * 用户权限
      */
-    //  ---   根据用户修改相关权限日志记录
-    @Pointcut("execution(* com.pj.partner.*.*.AuthPostMenuServiceImpl.editPostAuthorityByuserId(..))")
+    //  ---   根据用户修改相关权限日志记录 AuthPostMenuServiceImpl
+    @Pointcut("execution(* com.pj.auth.service.impl.AuthPostMenuServiceImpl.editPostAuthorityByuserId(..))")
     public void UsereditPostAuthorityByuserIdUpdateList() {  }
 
     /**
@@ -511,9 +511,9 @@ public class AspectServer {
         boolean flage = false;
           /*获取  权限操作涉及人*/
         String emailsByPostId = authUserService.getEmailsByPostId(args[args.length-1].toString());
-        // 获取 新增的 权限  根基postID 去查询
+        // 获取 新增的 权限  根基UserID 去查询
         List<AuthMenu> authMenuList = userMenuService.selectByUserId(args[0].toString());
-        // 获取 旧的 权限  根基postID 去查询
+        // 获取 旧的 权限
         List<AuthMenu>  oldAuthority = new ArrayList<AuthMenu>();
         oldAuthority = (List<AuthMenu>) request.getSession().getAttribute("oldAuthority");
         // 比对 新旧权限
@@ -559,12 +559,13 @@ public class AspectServer {
                     }
                 }
             }
+            if(oldIsmenu.size()!=0){
             try {
                 addAuthLogMethod(flage, request, actionData, "删除", emailsByPostId);
             } catch (Exception e) {
                 System.out.println(e);
             }
-
+            }
             flage = false;
 
             /*查找新权限中独有的权限*/
@@ -588,9 +589,9 @@ public class AspectServer {
                         }
                     }
                 }
-
             }
-            actionData = "权限管理  ：";
+            if(null!= newIsmenu && newIsmenu.size()!=0){
+            actionData = "权限管理 -用户 ：";
             // 循环获取 菜单
             for (AuthMenu button : newIsmenu) {
                 if (button.getIsMenu() == 0) {
@@ -603,10 +604,11 @@ public class AspectServer {
                     }
                 }
             }
-            try {
-                addAuthLogMethod(flage, request, actionData, "新增", emailsByPostId);
-            } catch (Exception e) {
-                System.out.println(e);
+                try {
+                    addAuthLogMethod(flage, request, actionData, "新增", emailsByPostId);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         }
     }
