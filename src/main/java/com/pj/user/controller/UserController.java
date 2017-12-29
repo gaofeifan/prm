@@ -7,6 +7,7 @@ import com.pj.user.service.EmailService;
 import com.pj.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -102,5 +103,13 @@ private  UserService userservice;
         }catch (Exception e){
             return this.error(e.getMessage());
         }
+    }
+
+    @RequestMapping("/selectLevelByName")
+    @ResponseBody
+    @ApiOperation(value = "查询信用等级通过名称" , httpMethod = "GET" , response = Object.class)
+    public Object selectLevelByName(@ApiParam("name") @RequestParam(name = "name") String name){
+       UserLevel ul =  this.userservice.selectLevelByName(name);
+       return this.success(ul);
     }
 }

@@ -29,4 +29,13 @@ public interface UserService {
      *  校验是否可以修改
      */
     boolean[] checkIsEditHierarchy();
+
+    /**
+      * @Author:  GFF
+      * @Date:  10:43 2017/12/29
+      * @Param:  name
+      * @Return:
+      * @Description:  根据名称查询信用等级
+      */
+    UserLevel selectLevelByName(String name);
 }

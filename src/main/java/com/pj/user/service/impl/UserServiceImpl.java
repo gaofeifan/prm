@@ -123,4 +123,14 @@ public class UserServiceImpl implements UserService{
         }
             return flag;
     }
+
+    @Override
+    public UserLevel selectLevelByName(String name) {
+        String[] strings = name.split("-");
+        UserLevel record = new UserLevel();
+        record.setLevel(strings[0]);
+        record.setProtocolType(strings[1]);
+        List<UserLevel> levels = this.userLevelMapper.select(record);
+        return levels.size() != 0 ? levels.get(0) : null;
+    }
 }
