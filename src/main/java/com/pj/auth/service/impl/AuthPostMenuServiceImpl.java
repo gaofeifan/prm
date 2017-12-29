@@ -54,7 +54,7 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
         }
         return authPostMenuMapper.findMenuByPostId(postId,menuIds);
     }
-
+    @Override
     public List<AuthPostMenuVo> findMenuOrButtonByPostId(Integer postId, Integer menuId, boolean isMenu){
         AuthPostMenu am = new AuthPostMenu();
         am.setPostId(postId);
@@ -84,7 +84,7 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
         }
         return false;
     }
-
+    @Override
     public void editDefaultAuth(Integer postId){
         List<AuthMenu> menus = this.authMenuService.selectDefaultMenu();
         AuthPostMenu apm = null;
@@ -112,7 +112,7 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
     public List<AuthPostMenuVo> findMenuOrButtonByUserId(String userId, Integer menuId, boolean isMenu) {
      
       return authPostMenuMapper.findMenuOrButtonByUserId(userId, menuId, isMenu);
-          
+
     }
 
 }
