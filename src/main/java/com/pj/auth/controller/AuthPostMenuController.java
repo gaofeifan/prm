@@ -87,7 +87,7 @@ public class AuthPostMenuController extends BaseController{
         if(StringUtils.isBlank(userId)){
           authPostMenuService.editPostAuthority(postId,menuIds);
         }else{
-          authPostMenuService.editPostAuthorityByuserId(userId, menuIds);
+          authPostMenuService.editPostAuthorityByuserId(userId, menuIds,postId);
         }
         return this.success(null);
     }

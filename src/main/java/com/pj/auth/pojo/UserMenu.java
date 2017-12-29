@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -17,24 +16,33 @@ import lombok.Data;
 * @history:  
 * @version: v1.0    
 */
-@Data @Table(name="user_menu")
+@Data
+@Table(name = "user_menu")
 public class UserMenu {
-  
-  public UserMenu(){};
-  public  UserMenu(String userId){
-    this.userId=userId;
+
+  public UserMenu() {};
+
+  public UserMenu(String userId) {
+    this.userId = userId;
   };
-  
+
+  public UserMenu(Integer postId) {
+    this.postId = postId;
+  }
+
   @ApiModelProperty(value = "id")
   @GeneratedValue(generator = "JDBC")
   @Id
   private Integer id;
-  
-  @Column(name="user_id")
+
+  @Column(name = "user_id")
   private String userId;
-  
-  @Column(name="auth_id")
+
+  @Column(name = "auth_id")
   private Integer authId;
+
+  @Column(name = "post_id")
+  private Integer postId;
 
 }
 
