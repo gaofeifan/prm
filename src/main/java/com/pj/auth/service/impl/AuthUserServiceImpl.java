@@ -80,7 +80,7 @@ public class AuthUserServiceImpl implements AuthUserService {
         user.setPhone(phone);
         return user;
     }
-
+@Override
     public String getEmailsByPostId(String postId){
         List<User> users = this.selectUserByPostId(postId, false);
         StringBuilder sb = new StringBuilder();

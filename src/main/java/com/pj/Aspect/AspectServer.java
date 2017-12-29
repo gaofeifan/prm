@@ -3,8 +3,10 @@ package com.pj.Aspect;
 
 import com.pj.auth.pojo.AuthMenu;
 import com.pj.auth.pojo.User;
+import com.pj.auth.pojo.UserMenu;
 import com.pj.auth.service.AuthMenuService;
 import com.pj.auth.service.AuthUserService;
+import com.pj.auth.service.UserMenuService;
 import com.pj.cache.PartnerDetailsCache;
 import com.pj.partner.mapper.PartnerDetailsShifFileMapper;
 import com.pj.partner.pojo.PartnerAddress;
@@ -60,6 +62,8 @@ public class AspectServer {
     @Autowired(required = false)
     private PartnerDetailsService partnerDetailsService;
 
+    @Autowired(required = false)
+    private UserMenuService userMenuService;
 
 
     @Autowired(required = false)
@@ -158,6 +162,12 @@ public class AspectServer {
     public void partnerDetailsUpdateStatusexecution() { }
 
 
+    /**
+     * 用户权限
+     */
+    //  ---   根据用户修改相关权限日志记录
+    @Pointcut("execution(* com.pj.partner.*.*.AuthPostMenuServiceImpl.editPostAuthorityByuserId(..))")
+    public void UsereditPostAuthorityByuserIdUpdateList() {  }
 
     /**
      *   合作伙伴相关的联系人联系地址数据信息切面
@@ -482,12 +492,136 @@ public class AspectServer {
         removeAttribute("oldShifFileList",request);
 
     }
-        //  获取已删除的权限 记录日志
+
+    //  获取已删除的用户权限 记录用户权限修改日志
+    @Before("UsereditPostAuthorityByuserIdUpdateList( )")
+    public void UsereditPostAuthorityByuserIdUpdateListBefore(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        HttpServletRequest request = requestinit();
+        Object[] args = point.getArgs();
+        // 获取 未删除的 权限  根基UserID 去查询
+        List<AuthMenu> oldAuthority = userMenuService.selectByUserId(args[0].toString());
+        request.getSession().setAttribute("oldAuthority", oldAuthority);
+    }
+
+    @AfterReturning("UsereditPostAuthorityByuserIdUpdateList()")
+    public void UsereditPostAuthorityByuserIdUpdateListAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        HttpServletRequest request = requestinit();
+        Object[] args = point.getArgs();
+        String actionData = "权限管理 - 用户  ：";
+        boolean flage = false;
+          /*获取  权限操作涉及人*/
+        String emailsByPostId = authUserService.getEmailsByPostId(args[args.length-1].toString());
+        // 获取 新增的 权限  根基postID 去查询
+        List<AuthMenu> authMenuList = userMenuService.selectByUserId(args[0].toString());
+        // 获取 旧的 权限  根基postID 去查询
+        List<AuthMenu>  oldAuthority = new ArrayList<AuthMenu>();
+        oldAuthority = (List<AuthMenu>) request.getSession().getAttribute("oldAuthority");
+        // 比对 新旧权限
+        if(null != authMenuList && null != oldAuthority ){
+
+            HashSet<AuthMenu> oldIsmenu = new HashSet<AuthMenu>();
+            HashSet<AuthMenu> newIsmenu = new HashSet<AuthMenu>();
+            /*查找旧权限中独有的权限*/
+            for(AuthMenu olda : oldAuthority){
+
+                boolean  flage2 = true;
+
+                for(AuthMenu news : authMenuList){
+                    if(olda.getName().equals(news.getName())){
+                        flage2 = false;
+                        break;
+                    }
+                }
+                /*判断并添加父级*/
+                if(flage2){
+                    oldIsmenu.add(olda);
+                    if(olda.getIsMenu()!=1){
+                        for(AuthMenu olda2 : oldAuthority){
+                            if(olda.getPId().equals(olda2.getId())){
+
+                                oldIsmenu.add(olda2);
+
+                            }
+                        }
+                    }
+                }
+
+            }
+            // 循环获取 菜单
+            for (AuthMenu button : oldIsmenu) {
+                if (button.getIsMenu() == 0) {
+                    for(AuthMenu dat : oldIsmenu){
+                        if(button.getPId().equals(dat.getId())){
+                            actionData += dat.getName() + "-" + button.getName().split("-")[1] + " ; ";
+                            flage = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            try {
+                addAuthLogMethod(flage, request, actionData, "删除", emailsByPostId);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+            flage = false;
+
+            /*查找新权限中独有的权限*/
+            for(AuthMenu news : authMenuList){
+                boolean  flage2 = true;
+                for(AuthMenu olda : oldAuthority){
+
+                    if(news.getName().equals(olda.getName())){
+                        flage2 = false;
+                        break;
+                    }
+                }
+                if(flage2){
+                    newIsmenu.add(news);
+                    if(news.getIsMenu()!=1){
+                        for(AuthMenu news2 : authMenuList){
+                            if(news.getPId().equals(news2.getId())){
+                                newIsmenu.add(news2);
+                                break;
+                            }
+                        }
+                    }
+                }
+
+            }
+            actionData = "权限管理  ：";
+            // 循环获取 菜单
+            for (AuthMenu button : newIsmenu) {
+                if (button.getIsMenu() == 0) {
+                    for(AuthMenu dat : newIsmenu){
+                        if(button.getPId().equals(dat.getId())){
+                            actionData += dat.getName() + "-" + button.getName().split("-")[1] + " ; ";
+                            flage = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            try {
+                addAuthLogMethod(flage, request, actionData, "新增", emailsByPostId);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+
+
+
+
+
+    //  获取已删除的权限 记录日志
     @Before("editPostAuthorityExecution( )")
     public void editPostAuthorityPointcutBefore(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         HttpServletRequest request = requestinit();
         Object[] args = point.getArgs();
-        String actionData = "权限管理  ：";
+        String actionData = "权限管理 -岗位 ：";
         boolean flage = false;
         // 获取 未删除的 权限  根基postID 去查询
         List<AuthMenu> authMenuList = authMenuService.findAuthMenuListBypostId(Integer.parseInt(args[0].toString()));
@@ -525,11 +659,11 @@ public class AspectServer {
     public void editPostAuthorityPointcutAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         HttpServletRequest request = requestinit();
         Object[] args = point.getArgs();
-        String actionData = "权限管理  ：";
+        String actionData = "权限管理 -岗位 ：";
         boolean flage = false;
           /*获取  权限操作涉及人*/
         String emailsByPostId = authUserService.getEmailsByPostId(args[0].toString());
-        // 获取 新增的 权限  根基postID 去查询
+         // 获取 新增的 权限  根基postID 去查询
         List<AuthMenu> authMenuList = authMenuService.findAuthMenuListBypostId(Integer.parseInt(args[0].toString()));
         // 获取 旧的 权限  根基postID 去查询
         List<AuthMenu>  oldAuthority = new ArrayList<AuthMenu>();

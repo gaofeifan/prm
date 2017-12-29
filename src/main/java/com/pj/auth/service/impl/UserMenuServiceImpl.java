@@ -2,6 +2,8 @@ package com.pj.auth.service.impl;
 
 import java.util.List;
 
+import com.pj.auth.mapper.UserMenuMapper;
+import com.pj.auth.pojo.UserMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,8 @@ public class UserMenuServiceImpl implements UserMenuService {
   
   @Autowired
   private AuthMenuMapper authMenuMapper;
+  @Autowired(required = false)
+  private UserMenuMapper userMenuMapper;
 
 
   @Override
@@ -29,6 +33,11 @@ public class UserMenuServiceImpl implements UserMenuService {
     List<AuthMenu> selectByUserId = authMenuMapper.selectByUserId(userId);
     return selectByUserId;  
         
+  }
+
+  @Override
+  public List<UserMenu> select(UserMenu userMenu) {
+    return userMenuMapper.select(userMenu);
   }
 
 }
