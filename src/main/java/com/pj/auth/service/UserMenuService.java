@@ -3,7 +3,6 @@ package com.pj.auth.service;
 import java.util.List;
 
 import com.pj.auth.pojo.AuthMenu;
-import com.pj.auth.pojo.UserMenu;
 
 /**  
 * @desc: prm  通过用户查询菜单
@@ -24,12 +23,5 @@ public interface UserMenuService{
           * @return AuthMenu
    */
   List<AuthMenu> selectByUserId(String userId);
-
-  /**
-   * 根据 userid 获取 表数据集合
-   * @param userMenu
-   * @return
-   */
-    List<UserMenu> select(UserMenu userMenu);
 }
 
