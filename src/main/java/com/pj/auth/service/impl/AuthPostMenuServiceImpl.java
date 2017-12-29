@@ -69,6 +69,8 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
     public void editPostAuthority(Integer postId, Integer[] menuIds) {
 
         this.authPostMenuMapper.delete(new AuthPostMenu(postId));
+        //加一个新的逻辑，当用户没有勾选到人的时候，按部门修改时要把之前按人修改的记录给删除也就是user_menu表中跟此postId相关的数删掉.x.gao 20171229
+        userMenuMapper.delete(new UserMenu(postId));
         for(Integer id : menuIds){
             this.authPostMenuMapper.insert(new AuthPostMenu(id,postId));
         }
@@ -95,12 +97,13 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
     }
 
     @Override
-    public void editPostAuthorityByuserId(String userId, Integer[] menuIds) {
+    public void editPostAuthorityByuserId(String userId, Integer[] menuIds,Integer postId) {
         userMenuMapper.delete(new UserMenu(userId));
         for(Integer menuid : menuIds){
           UserMenu userMenu = new UserMenu();
           userMenu.setUserId(userId);
           userMenu.setAuthId(menuid);
+          userMenu.setPostId(postId);
           userMenuMapper.insert(userMenu);
         }
     }
