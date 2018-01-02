@@ -22,4 +22,7 @@ public interface AuthPostMenuMapper extends BaseMapper<AuthPostMenu> {
    //根据userId查询 x.gao
    List<AuthPostMenuVo> findMenuOrButtonByUserId(@Param("userId")String userId, @Param("menuId") Integer menuId, @Param("isMenu") boolean isMenu);
    
+   //通过userMenu的userid查询此用户的菜单权限，这个用于前台展示，多一个是否选中，同时会反回auth_menu表的全部x.gao 2018-1-2
+   List<AuthPostMenuVo> selectVOByUserId(@Param("userId") String userId);
+   
 }
