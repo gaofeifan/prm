@@ -7,7 +7,6 @@
         <result  column="is_menu" property="isMenu" jdbcType="INTEGER" />
         <result  column="href" property="href" jdbcType="VARCHAR" />
         <result  column="p_id" property="pId" jdbcType="INTEGER" />
-
     </resultMap>
             <sql id="basic_select">
               *

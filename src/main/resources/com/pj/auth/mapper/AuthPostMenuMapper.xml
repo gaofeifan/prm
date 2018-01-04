@@ -56,5 +56,17 @@
         </where>
     
     </select>
+    
+    <select id="selectVOByUserId" resultMap="BaseResultMap">
+		SELECT
+		*, CASE WHEN    IFNULL(user_menu.auth_id,0)=0 THEN 0 ELSE 1 end
+		 AS checks
+		FROM
+		    auth_menu
+		LEFT JOIN user_menu ON auth_menu.id = user_menu.auth_id
+		AND user_menu.user_id = #{userId}
+        GROUP  BY  auth_menu.id
+        order BY  auth_menu.id;
+    </select>
 
 </mapper>

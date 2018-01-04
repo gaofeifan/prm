@@ -1,6 +1,7 @@
 package com.pj.auth.mapper;
 
 import com.pj.auth.pojo.AuthMenu;
+import com.pj.auth.pojo.AuthPostMenuVo;
 import com.pj.conf.base.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -17,10 +18,4 @@ public interface AuthMenuMapper extends BaseMapper<AuthMenu> {
     
     //通过userMenu的userid查询此用户的菜单权限
     List<AuthMenu> selectByUserId(@Param("userId") String userId);
-
-    /**
-     *  查询menuid
-     * @return
-     */
-    Integer[] selectMenuIds(Integer postId);
 }

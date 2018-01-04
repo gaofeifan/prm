@@ -6,6 +6,7 @@ frontcookie();
 menuActive('credit');
 $(window).unbind("scroll");
 $(function(){
+    var flage = true;
     /*获取用户信用等级列表 */
     $.ajax({
         type:'get',
@@ -38,14 +39,15 @@ $(function(){
                 if (levels[i].protocolType.toString() == "签约在途") {
                     $("#txt3" + i + "").attr("checked", true);
                 }
-                        /*z追加是否有效单选框*/
+                // 默认额度 默认期限添加
+                $("#base_" + i + "").append('<div class="class"><input class="defaultLine must" style="width: 80%;" type="text" name="df_num"  id = "df_num"     value="' + levels[i].defaultQuota + '" onkeyup="value=value.replace(/[^\\-?\\d.]/g,\'\')" ></div>');
+                $("#base_" + i + "").append('<div class="class"><input class="defaultDeadline must" style="width: 80%;" type="text" name="df_day"  id = "df_day"    value="' + levels[i].defaultTtime + '"  onkeyup="value=value.replace(/[^\\-?\\d.]/g,\'\')"></div>');
+
+                /*z追加是否有效单选框*/
                 $("#base_" + i + "").append('<div class="valid" id="base_boolean_' + i + '"></div>');
                 $("#base_boolean_" + i + "").append('<input type="checkbox" name="type_boolean' + i + '" value="1"  style="width:16px;height:16px;"><label for="">有效</label>');
                 $("input[name=type_boolean"+i+"][value="+levels[i].effectiveness+"]").attr("checked",true) ;
 
-                // 默认额度 默认期限添加
-                $("#base_" + i + "").append('<div class="class"><input type="text" name="df_num"  id = "df_num"     value="' + levels[i].defaultQuota + '"  ></div>');
-                $("#base_" + i + "").append('<div class="class"><input type="text" name="df_day"  id = "df_day"    value="' + levels[i].defaultTtime + '"  ></div>');
 
                 /*z追加备注框*/
                 $("#base_" + i + "").append('<div class="remark" id="base_mark_' + i + '"></div>');
@@ -94,7 +96,7 @@ $(function(){
     $("#confirmClick").click(function(){
         /*定义数组*/
         var commitDate = "{ "+"//userLevelList//"+":[";
-        var flage = false;
+        var flage = true;
         /* 循环 div中的所有 input 标签 */
         $("#credit_body_datas input[type='text'],input[type='radio'], input[type='checkbox'] ,textarea").each(function(vi,obj){
 
@@ -104,20 +106,11 @@ $(function(){
                 if($(this).attr("name") =="id"){
                     commitDate+=",{"+"//id//"+":"+$(this).val()+"";
                 }else   if($(this).attr("name") =="level"){
-                    if(flage){
-                            if($(this).val()==null||$(this).val()==""){
-                                alert("默认额度 已起用 不能为空");
-                                return ;
-                            }
-                    }
                     commitDate+=","+"//level//"+":"+"//"+$(this).val()+"//";
                 } else   if($(this).attr("name") =="df_num"){
-                    if($(this).val()==null||$(this).val()==""){
-                        alert("默认期限 已起用 不能为空");
-                        return ;
-                    }
                     commitDate+=","+"//defaultQuota//"+":"+"//"+$(this).val()+"//";
                 } else   if($(this).attr("name") =="df_day"){
+
                     commitDate+=","+"//defaultTtime//"+":"+"//"+$(this).val()+"//";
                 }
             }else   if( $(this)[0].getAttribute("type")=='radio'){
@@ -130,10 +123,8 @@ $(function(){
             }else   if( $(this)[0].getAttribute("type")=='checkbox'){
                 /*判断 复选框  */
                 if($(this).is(":checked")){
-                    flage = true;
                     commitDate+=","+""+"//effectiveness//"+":"+$(this).val();
                 }else{
-                    flage = true;
                     commitDate+=","+""+"//effectiveness//"+""+":0";
                 }
             }else if($(this).is("textarea")){
@@ -143,7 +134,7 @@ $(function(){
         commitDate+="],//email//://"+$.cookie('front_useremail')+"//}";
         var commitDate2 = commitDate.replace(",", "");
         var commitDate3 = commitDate2.replace(new RegExp("//","g"), '"');
-
+if(flage){
         $.ajax({
             type:'post',
             url:'http://'+gPathUrl+'/user/levelUpdate',
@@ -158,6 +149,9 @@ $(function(){
 
             }
         });
+        } else {
+            alert("数据格式错误");
+    }
     })
 
     /*取消按钮*/
@@ -166,19 +160,28 @@ $(function(){
     })
 
 
-    /*取消按钮*/
-    $("input").blur(function(){
-
-        if(!((/^[0-9]+$/).test( $(this).val()))){
-            alert("只能填写数字 ！ 0-9");
-            $(this).css("background-color","#D6D6FF");
-            $("this").focus();
-        }else{
-            $(this).css("background-color","");
+    $("input.must").blur(function(){
+        var isChecked = $(this).parents('.bodyList').find('input[type="checkbox"]').attr('checked');
+        if(!!isChecked){
+            if($(this).val().length <=0){
+                $(this).css("background-color","#D6D6FF");
+                flage = false;
+                $(this).focus();
+            }
         }
     });
 
 });
+    /*  校验 */
+    function checkNUm(obj ) {
+
+         if(!(/^[0-9]+\.?[0-9]*$/).test(obj.value)){
+             alert("只能输入数字或小数");
+             $(this).html("");
+             $(this).focus();
+         }
+    }
+
 
 function   checkedType(obj){
 
