@@ -32,6 +32,15 @@
             </if>
         </where>
     </select>
+
+    <select id="selectMenuIds" resultType="int" parameterType="int">
+		SELECT
+            am.id
+        FROM
+        auth_menu am
+        left JOIN auth_post_menu apm ON apm.menu_id = am.id  AND apm.post_id = #{postId}
+				WHERE am.is_menu = 1  AND apm.menu_id is not NULL
+    </select>
     
     
 

@@ -413,6 +413,8 @@ public @Data @Table(name="partner_details") class PartnerDetails extends BasicDa
     private String[] scopeBusinesss;
     @Transient
     @ApiModelProperty(value = "服务类别" ,required = false)
+
+
     private String[] gxcyrClassOfServices;
     @Transient
     @ApiModelProperty(value = "客户分类" ,required = false)
@@ -443,7 +445,6 @@ public @Data @Table(name="partner_details") class PartnerDetails extends BasicDa
         }else{
             return null;
         }
-        
     }
 
     public String[] getWbkhCustomerClasss() {
