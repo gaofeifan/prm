@@ -108,8 +108,8 @@
     </resultMap>
 
 
-    <select id="getParentList" resultMap="BaseResultMap">
-        select id,code,dir_name,p_id FROM partner_details 	where FIND_IN_SET(id,getParentList(#{id}))
+    <select id="getParentList" resultMap="BaseResultMapAll">
+        select * FROM partner_details 	where FIND_IN_SET(id,getParentList(#{id}))
     </select>
     <select id="getChildList" resultMap="BaseResultMapAll">
         select *  FROM partner_details 	where FIND_IN_SET(id,getChildList(#{id}))
@@ -124,7 +124,7 @@
         FROM
             partner_details
         <where>
-          is_delete = 0
+          is_delete = 0 AND  p_id is not NULL
             <if test="isBlacklist == 1">
             AND is_blacklist = #{isBlacklist}
           </if>

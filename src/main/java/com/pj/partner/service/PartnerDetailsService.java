@@ -3,7 +3,6 @@ package com.pj.partner.service;
 import com.pj.conf.base.BaseService;
 import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.pojo.PartnerDetailsShifFile;
-import com.pj.partner.pojo.PartnerLinkman;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -18,7 +17,7 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
 
     List<PartnerDetails> selectPartnerDetailsList( );
 
-    List<PartnerDetails> selectListByQuery(String name, Integer offPartner, Integer blacklistPartner,String partnerCategory);
+    List<PartnerDetails> selectListByQuery(String name, Integer offPartner, Integer blacklistPartner, String partnerCategory);
 
     void updateByPrimaryKey(PartnerDetails partnerDetails, HttpServletRequest request, String email);
 

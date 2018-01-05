@@ -17,6 +17,7 @@ import com.pj.partner.service.PartnerDetailsService;
 import com.pj.partner.service.PartnerDetailsUtilService;
 import com.pj.partner.service.PartnerLinkmanService;
 import com.pj.user.service.EmailService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -93,7 +94,6 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         pd.setDirName(name);
         List<PartnerDetails> pds = this.partnerDetailsMapper.selectListByQuery(pd);
 //        List<PartnerDetails> pds = this.partnerDetailsMapper.selectByExample(example);
-
         return pds;
     }
 
@@ -161,9 +161,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         request.getSession().setAttribute("old_state_list",list);
         for (PartnerDetails pd : list){
             if(!pd.getId().equals(details.getId())) {
-                if ((!pd.getIsBlacklist().equals(record.getIsBlacklist()))
-                        || (!pd.getIsDisable().equals(record.getIsDisable()))
-                        || ((null!=pd.getDisableRemark()) && (!pd.getDisableRemark().equals(record.getDisableRemark())))) {
+                if ((!pd.getIsBlacklist().equals(record.getIsBlacklist())) || (!pd.getIsDisable().equals(record.getIsDisable())) || (!pd.getDisableRemark().equals(record.getDisableRemark()))) {
                     pd.setIsBlacklist(record.getIsBlacklist());
                     pd.setIsDisable(record.getIsDisable());
                     pd.setDisableRemark(record.getDisableRemark());

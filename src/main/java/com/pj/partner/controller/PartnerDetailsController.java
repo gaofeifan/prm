@@ -3,7 +3,6 @@ package com.pj.partner.controller;
 import com.pj.auth.service.AuthUserService;
 import com.pj.cache.PartnerDetailsCache;
 import com.pj.conf.base.BaseController;
-import com.pj.conf.utils.ExcelUtils;
 import com.pj.conf.utils.ThreadEmail;
 import com.pj.partner.pojo.PartnerAddress;
 import com.pj.partner.pojo.PartnerDetails;
@@ -11,21 +10,24 @@ import com.pj.partner.pojo.PartnerDetailsShifFile;
 import com.pj.partner.pojo.PartnerLinkman;
 import com.pj.partner.service.PartnerDetailsService;
 import com.pj.partner.service.PartnerLinkmanService;
+import com.pj.partner.service.impl.PartnerLinkmanServiceImpl;
 import com.pj.user.Utils.ObjectTrim;
 import com.pj.user.mapper.HierarchyMapper;
 import com.pj.user.pojo.Hierarchy;
+import com.pj.user.pojo.RequestParams;
 import com.pj.user.service.EmailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.JSONString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.text.ParseException;
 import java.util.*;
 
 @Controller
@@ -45,6 +47,8 @@ public class PartnerDetailsController extends BaseController {
     private EmailService emailService;
 
 
+    public static final String [] fields = {"mnemonicCode","chineseName","chineseAbbreviation","englishName","englishAbbreviation","headingCode"};
+    public static final String [] fieldName = {"助记码","中文名称","中文名称","英文名称","英文简称","纳税人识别码"};
 
     /**
      *  查询树桩数据
@@ -137,6 +141,7 @@ public class PartnerDetailsController extends BaseController {
                                        @ApiParam("联系地址") @RequestParam(name = "address" ,required = false) String address,
                                        @ApiParam("email") @RequestParam(name = "email" ,required = false) String email,
                                        HttpServletRequest request   ){
+
         if(linkmans != null){
             JSONArray array = JSONArray.fromString(linkmans);
             List<PartnerLinkman> list = JSONArray.toList(array, PartnerLinkman.class);
@@ -158,7 +163,6 @@ public class PartnerDetailsController extends BaseController {
     /**-
      *
      *
-     * -+
      * 获取代码长度
      * @User  GFF
      * @return
@@ -320,53 +324,6 @@ public class PartnerDetailsController extends BaseController {
             return this.success(true);
         }
         return this.success(false);
-    }
-
-
-
-    /**
-     * @Description:
-     * @author SevenBoy
-
-     * @return java.lang.Object   
-     * @throws
-     * @Date 2018/1/3
-     */
-    @ApiOperation(value = "页面导出excel" ,httpMethod = "GET", response = Object.class)
-    @RequestMapping(value = "/excel")
-    public void parTnerDetailExcel(@ApiParam("name") @RequestParam(name = "name",required = false) String name ,
-                                     @ApiParam("查看停用Partner") @RequestParam(name = "offPartner",required = false) Integer offPartner ,
-                                     @ApiParam("分类") @RequestParam(name = "partnerCategory",required = false) String partnerCategory ,
-                                     @ApiParam("查看黑名单Partner") @RequestParam(name = "blacklistPartner",required = false) Integer blacklistPartner
-   , HttpServletRequest request , HttpServletResponse response) throws ParseException {
-        List<PartnerDetails> list = this.partnerDetailsService.selectListByQuery(name,offPartner,blacklistPartner,partnerCategory);
-        // 导出excel
-            ExcelUtils excel = new ExcelUtils();
-        excel.customerOutExcel(request,response,list );
-
-    }
-
-
-    /**
-     * @Description:
-     * @author SevenBoy
-
-     * @return java.lang.Object   
-     * @throws
-     * @Date 2018/1/3
-     */
-    @ApiOperation(value = "页面导出excel---个人测试" ,httpMethod = "GET", response = Object.class)
-    @RequestMapping(value = "/exceltest")
-    public void parTnerDetailExcelTest(@ApiParam("name") @RequestParam(name = "name",required = false) String name ,
-                                   @ApiParam("查看停用Partner") @RequestParam(name = "offPartner",required = false) Integer offPartner ,
-                                   @ApiParam("分类") @RequestParam(name = "partnerCategory",required = false) String partnerCategory ,
-                                   @ApiParam("查看黑名单Partner") @RequestParam(name = "blacklistPartner",required = false) Integer blacklistPartner
-            , HttpServletRequest request , HttpServletResponse response) throws ParseException {
-        List<PartnerDetails> list = this.partnerDetailsService.selectListByQuery(name,offPartner,blacklistPartner,partnerCategory);
-        // 导出excel
-        ExcelUtils excel = new ExcelUtils();
-        excel.customerOutExcelTest(request,response,list );
-
     }
 
 

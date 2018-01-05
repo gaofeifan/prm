@@ -18,4 +18,12 @@ public interface AuthMenuMapper extends BaseMapper<AuthMenu> {
     
     //通过userMenu的userid查询此用户的菜单权限
     List<AuthMenu> selectByUserId(@Param("userId") String userId);
+
+
+    /**
+     *  根据岗位查询
+     * @param postId
+     * @return
+     */
+    Integer[] selectMenuIds(Integer postId);
 }
