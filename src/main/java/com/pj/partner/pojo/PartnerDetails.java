@@ -353,19 +353,6 @@ public @Data @Table(name="partner_details") class PartnerDetails extends BasicDa
     @ApiModelProperty(value = "创建时间" ,required = false)
     private Date createDate;
 
-    /**
-     *到期日 开始日期
-     */
-    @Column
-    @ApiModelProperty(value = "到期日開始" ,required = false)
-    private Date maturityDateBegan;
-
-    /**
-     *到期日 結束日期
-     */
-    @Column
-    @ApiModelProperty(value = "到期日结束" ,required = false)
-    private Date maturityDateEnd;
 
     /**
      * 是否删除  0否 1 是
@@ -375,7 +362,7 @@ public @Data @Table(name="partner_details") class PartnerDetails extends BasicDa
     private Integer isDelete;
 
     /**
-     * 是否删除  0否 1 是
+     * 父级id
      */
     @Column
     @ApiModelProperty(value = "父id" ,required = false)
@@ -421,6 +408,12 @@ public @Data @Table(name="partner_details") class PartnerDetails extends BasicDa
     @ApiModelProperty(value = "总长度code" ,required = false)
     private String codes;
 
+    /**
+     * 本信息第几层级
+     */
+    @Transient
+    @ApiModelProperty(value = "仅参与excel导出" ,required = false)
+    private Integer hierarchy;
     public String[] getScopeBusinesss() {
         if(null!=scopeBusiness){
             return scopeBusiness.split(",");
@@ -457,4 +450,6 @@ public @Data @Table(name="partner_details") class PartnerDetails extends BasicDa
     public Date getCreateDate() {
         return createDate;
     }
+
+
 }
