@@ -56,6 +56,7 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
         return authPostMenuMapper.findMenuByPostId(postId,menuIds);
     }
     @Override
+
     public List<AuthPostMenuVo> findMenuOrButtonByPostId(Integer postId, Integer menuId, boolean isMenu){
         AuthPostMenu am = new AuthPostMenu();
         am.setPostId(postId);
