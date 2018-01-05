@@ -174,5 +174,23 @@ public class TypeConversionUtils {
 		}
 		return (T) t;
 	}
-	
+
+	public static <T> String selectFieldValueByName(T t , String field){
+		Class<?> clazz = t.getClass();
+		try {
+			Field f = clazz.getDeclaredField(field);
+			f.setAccessible(true);
+			Object o = f.get(t);
+			if(o != null){
+				return o.toString();
+			}
+		} catch (NoSuchFieldException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+
+	}
 }

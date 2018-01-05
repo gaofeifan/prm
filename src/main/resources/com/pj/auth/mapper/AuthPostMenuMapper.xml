@@ -68,5 +68,13 @@
         GROUP  BY  auth_menu.id
         order BY  auth_menu.id;
     </select>
+    <select id="selectMenuVos" resultMap="BaseResultMap">
+          	SELECT
+            *,IF(apm.menu_id is not NULL, '1' , '0') checks
+        FROM
+        auth_menu am
+        left JOIN auth_post_menu apm ON apm.menu_id = am.id  AND apm.post_id = #{postId}
+				WHERE am.is_menu = 1
 
+    </select>
 </mapper>

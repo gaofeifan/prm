@@ -17,6 +17,7 @@ import com.pj.partner.service.PartnerDetailsService;
 import com.pj.partner.service.PartnerDetailsUtilService;
 import com.pj.partner.service.PartnerLinkmanService;
 import com.pj.user.service.EmailService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,10 +40,8 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     private PartnerDetailsUtilService partnerDetailsUtilService;
     @Autowired(required = false)
     private PartnerDetailsService partnerDetailsService;
-
     @Autowired(required = false)
     private EmailService emailService;
-
     @Autowired
     private PartnerAddressService partnerAddressService;
     @Autowired
@@ -86,17 +85,17 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         PartnerDetails pd = new PartnerDetails();
         pd.setIsDisable(offPartner);
         pd.setIsBlacklist(blacklistPartner);
-//        if(StringUtils.isNotBlank(partnerCategory)){
-//            String[] strings = partnerCategory.split(",");
+        if(StringUtils.isNotBlank(partnerCategory)){
+            String[] strings = partnerCategory.split(",");
             pd.setPartnerCategory(partnerCategory);
-//        }
+        }
         pd.setDirName(name);
         List<PartnerDetails> pds = this.partnerDetailsMapper.selectListByQuery(pd);
 //        List<PartnerDetails> pds = this.partnerDetailsMapper.selectByExample(example);
         List<PartnerDetails> data = new ArrayList<>();
         Set<PartnerDetails> details = selectSon(pds, new HashSet<PartnerDetails>(), null);
         for (PartnerDetails p:details) {
-            List<PartnerDetails> parentList = this.getParentList(p.getId());
+            List<PartnerDetails> parentList = this.partnerDetailsMapper.getParentList(p.getId());
             data.addAll(parentList);
         }
         return windowsSort(data);
@@ -116,7 +115,8 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             }
             id = p.getId();
             List<PartnerDetails> parentList = this.partnerDetailsMapper.getChildList(p.getId());
-            if(parentList.size() == 1){
+            parentList.remove(p);
+            if(parentList.size() <= 1){
                 endData.add(p);
             }
             selectSon(parentList,endData,id);

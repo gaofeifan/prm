@@ -4,6 +4,7 @@ import com.pj.auth.service.AuthUserService;
 import com.pj.cache.PartnerDetailsCache;
 import com.pj.conf.base.BaseController;
 import com.pj.conf.utils.ThreadEmail;
+import com.pj.conf.utils.TypeConversionUtils;
 import com.pj.partner.pojo.PartnerAddress;
 import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.pojo.PartnerDetailsShifFile;
@@ -47,6 +48,8 @@ public class PartnerDetailsController extends BaseController {
     private EmailService emailService;
 
 
+    public static final String [] fields = {"mnemonicCode","chineseName","chineseAbbreviation","englishName","englishAbbreviation","headingCode"};
+    public static final String [] fieldName = {"助记码","中文名称","中文名称","英文名称","英文简称","纳税人识别码"};
 
     /**
      *  查询树桩数据
@@ -152,6 +155,12 @@ public class PartnerDetailsController extends BaseController {
             JSONArray array = JSONArray.fromString(address);
             List<PartnerAddress> list = JSONArray.toList(array, PartnerAddress.class);
             partnerDetails.setAddressList(list);
+        }
+        for (int i = 0 ; i < fields.length ; i++) {
+            boolean b = this.partnerDetailsService.verifyValueRepeat(partnerDetails.getId(), fields[i], TypeConversionUtils.selectFieldValueByName(partnerDetails, fields[i]));
+            if(!b){
+                return this.error("字段重复 " + fieldName[i]);
+            }
         }
         partnerDetails = (PartnerDetails) ObjectTrim.beanAttributeValueTrim(partnerDetails);
         this.partnerDetailsService.insertSelective(partnerDetails,getRequest(),email);
