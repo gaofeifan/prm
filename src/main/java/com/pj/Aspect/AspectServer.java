@@ -232,7 +232,8 @@ public class AspectServer {
                         PropertyDescriptor pd2 = new PropertyDescriptor(partnerDetails.getClass().getDeclaredFields()[i].getName(), partnerDetails.getClass());
                         Method getMethod2 = pd2.getReadMethod();//获得get方法  
                         Object o2= getMethod2.invoke(partnerDetails);//执行get方法返回一个Object
-                        if(!o.equals(o2)){
+
+                        if(!(o==null?"":o).equals(o2==null?"":o2)){
                             // 判断字段名称
                             for (int j = 0; j < BasicProperties.PartnerDetailsstatus_name.length; j++) {
                                 if (oldfields[i].getName().toString().equals(BasicProperties.PartnerDetailsstatus_name[j].toString())) {

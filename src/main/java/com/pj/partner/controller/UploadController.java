@@ -54,6 +54,7 @@ public class UploadController {
 			try {
 				uploadFile(file.getBytes(), filePath, fileName);
 				result.put("filePath", filePath+fileName);
+				result.put("fileName", file.getOriginalFilename());
 				result.put("success",true);
 				result.put("msg","文件上传成功！");
 			} catch (Exception e) {
