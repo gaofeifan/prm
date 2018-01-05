@@ -17,4 +17,10 @@ public interface AuthMenuService extends BaseService<AuthMenu,Integer> {
      * @return
      */
     public List<AuthMenu> selectDefaultMenu();
+
+    /**
+     *  查询menuid
+     * @return
+     */
+    Integer[] selectMenuIds(Integer postId);
 }

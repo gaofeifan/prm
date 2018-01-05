@@ -102,8 +102,6 @@ public class UploadController {
 		File file=new File(filePath);
 		HttpHeaders headers = new HttpHeaders();
 		String realName = filePath.substring(filePath.lastIndexOf("_") + 1);
-
-
 		String fileName=new String(realName.getBytes("UTF-8"),"iso-8859-1");//为了解决中文名称乱码问题
 		headers.setContentDispositionFormData("attachment", fileName);
 		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
