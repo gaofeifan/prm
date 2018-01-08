@@ -161,7 +161,9 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         request.getSession().setAttribute("old_state_list",list);
         for (PartnerDetails pd : list){
             if(!pd.getId().equals(details.getId())) {
-                if ((!pd.getIsBlacklist().equals(record.getIsBlacklist())) || (!pd.getIsDisable().equals(record.getIsDisable())) || (!pd.getDisableRemark().equals(record.getDisableRemark()))) {
+                if ((!pd.getIsBlacklist().equals(record.getIsBlacklist()))
+                        || (!pd.getIsDisable().equals(record.getIsDisable()))
+                        || ((null!=pd.getDisableRemark()) && (!pd.getDisableRemark().equals(record.getDisableRemark())))) {
                     pd.setIsBlacklist(record.getIsBlacklist());
                     pd.setIsDisable(record.getIsDisable());
                     pd.setDisableRemark(record.getDisableRemark());

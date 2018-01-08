@@ -3,6 +3,7 @@ package com.pj.partner.controller;
 import com.pj.auth.service.AuthUserService;
 import com.pj.cache.PartnerDetailsCache;
 import com.pj.conf.base.BaseController;
+import com.pj.conf.utils.ExcelUtils;
 import com.pj.conf.utils.ThreadEmail;
 import com.pj.partner.pojo.PartnerAddress;
 import com.pj.partner.pojo.PartnerDetails;
@@ -28,6 +29,8 @@ import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
 import java.util.*;
 
 @Controller
@@ -325,6 +328,31 @@ public class PartnerDetailsController extends BaseController {
         }
         return this.success(false);
     }
+
+
+    /**
+     * @Description:
+     * @author SevenBoy
+
+     * @return java.lang.Object   
+     * @throws
+     * @Date 2018/1/3
+     */
+    @ApiOperation(value = "页面导出excel" ,httpMethod = "GET", response = Object.class)
+    @RequestMapping(value = "/excel")
+    public void parTnerDetailExcel(@ApiParam("name") @RequestParam(name = "name",required = false) String name ,
+                                   @ApiParam("查看停用Partner") @RequestParam(name = "offPartner",required = false) Integer offPartner ,
+                                   @ApiParam("分类") @RequestParam(name = "partnerCategory",required = false) String partnerCategory ,
+                                   @ApiParam("查看黑名单Partner") @RequestParam(name = "blacklistPartner",required = false) Integer blacklistPartner
+            , HttpServletRequest request , HttpServletResponse response) throws ParseException {
+        List<PartnerDetails> list = this.partnerDetailsService.selectListByQuery(name,offPartner,blacklistPartner,partnerCategory);
+        // 导出excel
+        ExcelUtils excel = new ExcelUtils();
+        excel.customerOutExcel(request,response,list );
+
+    }
+
+
 
 
 }
