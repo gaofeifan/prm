@@ -31,4 +31,11 @@ public interface AuthPostMenuMapper extends BaseMapper<AuthPostMenu> {
     * @return
     */
     List<AuthPostMenuVo> selectMenuVos(@Param("postId")Integer postId);
+    
+    /**
+     * 只通过userId查询
+     * @param postId
+     * @return
+     */
+     List<AuthPostMenuVo> selectByUserId(@Param("userId")String userId);
 }

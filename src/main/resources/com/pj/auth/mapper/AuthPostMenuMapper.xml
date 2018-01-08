@@ -77,4 +77,7 @@
 				WHERE am.is_menu = 1
 
     </select>
+     <select id="selectByUserId" resultMap="BaseResultMap">
+          Select * from user_menu where user_menu.user_id=#{userId}
+    </select>
 </mapper>
