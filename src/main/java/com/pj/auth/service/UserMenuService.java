@@ -35,6 +35,6 @@ public interface UserMenuService{
           * @param userId
           * @return AuthMenu
    */
-  List<AuthPostMenuVo> selectVOByUserId(String userId);
+  List<AuthPostMenuVo> selectVOByUserId(String userId,Integer postId);
 }
 

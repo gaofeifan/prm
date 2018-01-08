@@ -117,9 +117,15 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
     }
       
     @Override
-    public List<AuthPostMenuVo> findMenuOrButtonByUserId(String userId, Integer menuId, boolean isMenu) {
-     
-      return authPostMenuMapper.findMenuOrButtonByUserId(userId, menuId, isMenu);
+    public List<AuthPostMenuVo> findMenuOrButtonByUserId(String userId, Integer menuId, boolean isMenu,Integer postId) {
+      List<AuthPostMenuVo> findMenuOrButtonByUserId = null;
+      //1先去authPostMenu表中查询是不是有默认过个人权限，如果有就直接反回
+      findMenuOrButtonByUserId  =  authPostMenuMapper.findMenuOrButtonByUserId(userId, menuId, isMenu);
+      //2.如果表中没有数据通过postid查询默认权限。
+      if(findMenuOrButtonByUserId.size()==0){
+        findMenuOrButtonByUserId= authPostMenuMapper.findMenuOrButtonByPostId(postId, menuId, isMenu);
+      }
+      return findMenuOrButtonByUserId;
 
     }
 

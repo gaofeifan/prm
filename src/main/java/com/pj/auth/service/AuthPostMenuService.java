@@ -36,6 +36,6 @@ public interface AuthPostMenuService extends BaseService<AuthPostMenu,Integer> {
     //x.gao 通过用户更新 20171227
     void editPostAuthorityByuserId(String userId, Integer[] menuIds,Integer postId);
     //x.gao 20171227
-    List<AuthPostMenuVo> findMenuOrButtonByUserId(String userId, Integer menuId, boolean isMenu);
+    List<AuthPostMenuVo> findMenuOrButtonByUserId(String userId, Integer menuId, boolean isMenu,Integer postId);
 
 }

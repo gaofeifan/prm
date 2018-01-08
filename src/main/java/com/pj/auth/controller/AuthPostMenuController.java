@@ -73,7 +73,7 @@ public class AuthPostMenuController extends BaseController{
         if(selectByUserId.size()==0){
           authPostMenus = this.authPostMenuService.findMenuOrButtonByPostId(user.getPostid(),menuId,isMenu);
         }else{
-          authPostMenus =  authPostMenuService.findMenuOrButtonByUserId(user.getId().toString(), menuId, isMenu);
+          authPostMenus =  authPostMenuService.findMenuOrButtonByUserId(user.getId().toString(), menuId, isMenu,user.getPostid());
         }
         return this.successJsonp(authPostMenus);
     }
@@ -118,7 +118,7 @@ public class AuthPostMenuController extends BaseController{
   @ResponseBody
   public Object findMenuByUserId(@ApiParam(value = "用户id") @RequestParam(name = "userId") String userId,
       @ApiParam("岗位id") @RequestParam(name = "postId",required=false) Integer postId) {
-    List<AuthPostMenuVo> selectVOByUserId = userMenuService.selectVOByUserId(userId);
+    List<AuthPostMenuVo> selectVOByUserId = userMenuService.selectVOByUserId(userId,postId);
     //List<AuthMenu> selectByUserId = userMenuService.selectByUserId(userId);
     return this.successJsonp(selectVOByUserId);
   }
