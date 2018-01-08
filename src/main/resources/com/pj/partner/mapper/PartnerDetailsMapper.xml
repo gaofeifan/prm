@@ -78,11 +78,22 @@
         <result column="it_type_credit_period" property="itTypeCreditPeriod" jdbcType="VARCHAR" />
         <result column="it_credit_period" property="itCreditPeriod" jdbcType="DECIMAL" />
         <result column="ddn_type_credit_period" property="ddnTypeCreditPeriod" jdbcType="VARCHAR" />
+        <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+        <result column="company_name" property="companyName" jdbcType="VARCHAR" />
         <result column="ddn_credit_period" property="ddnCreditPeriod" jdbcType="DECIMAL" />
         <result column="yyox_type_credit_period" property="yyoxTypeCreditPeriod" jdbcType="VARCHAR" />
         <result column="yyox_credit_period" property="yyoxCreditPeriod" jdbcType="DECIMAL" />
         <result column="industrial_type_credit_period" property="industrialTypeCreditPeriod" jdbcType="VARCHAR" />
         <result column="industrial_credit_period" property="industrialCreditPeriod" jdbcType="DECIMAL" />
+        <!--默认币种-->
+        <result column="default_currency" property="defaultCurrency" jdbcType="VARCHAR" />
+        <!--利润中心名称-->
+        <result column="profits_center_name" property="profitsCenterName" jdbcType="VARCHAR" />
+        <!--利润中心id-->
+        <result column="profits_center_id" property="profitsCenterId" jdbcType="INTEGER" />
+        <!--上传下载文件名-->
+        <result column="file_name" property="fileName" jdbcType="INTEGER" />
+
     </resultMap>
     <resultMap id="BaseResultMap" type="com.pj.partner.pojo.PartnerDetails" >
         <result  column="id" property="id" jdbcType="INTEGER" />
@@ -93,13 +104,14 @@
         <result  column="chinese_abbreviation" property="chineseAbbreviation" jdbcType="VARCHAR" />
         <result  column="english_name" property="englishName" jdbcType="VARCHAR" />
         <result  column="english_abbreviation" property="englishAbbreviation" jdbcType="VARCHAR" />
-
+        <result column="file_path" property="filePath" jdbcType="VARCHAR" />
     </resultMap>
 
-    <select id="getParentList" resultMap="BaseResultMap">
-        select id,code,dir_name,p_id FROM partner_details 	where FIND_IN_SET(id,getParentList(#{id}))
+
+    <select id="getParentList" resultMap="BaseResultMapAll">
+        select * FROM partner_details 	where FIND_IN_SET(id,getParentList(#{id}))
     </select>
-    <select id="getChildList" resultType="com.pj.partner.pojo.PartnerDetails">
+    <select id="getChildList" resultMap="BaseResultMapAll">
         select *  FROM partner_details 	where FIND_IN_SET(id,getChildList(#{id}))
     </select>
     <select id="selectDetailsMaxCode" resultType="int">
@@ -112,7 +124,7 @@
         FROM
             partner_details
         <where>
-          is_delete = 0
+          is_delete = 0 AND  p_id is not NULL
             <if test="isBlacklist == 1">
             AND is_blacklist = #{isBlacklist}
           </if>

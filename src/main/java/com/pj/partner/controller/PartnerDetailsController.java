@@ -1,5 +1,6 @@
 package com.pj.partner.controller;
 
+import com.pj.auth.service.AuthUserService;
 import com.pj.cache.PartnerDetailsCache;
 import com.pj.conf.base.BaseController;
 import com.pj.conf.utils.ThreadEmail;
@@ -14,6 +15,7 @@ import com.pj.user.Utils.ObjectTrim;
 import com.pj.user.mapper.HierarchyMapper;
 import com.pj.user.pojo.Hierarchy;
 import com.pj.user.pojo.RequestParams;
+import com.pj.user.service.EmailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -26,10 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @Api(value = "合作伙伴")
@@ -38,10 +37,18 @@ public class PartnerDetailsController extends BaseController {
 
     @Autowired
     private PartnerDetailsService partnerDetailsService;
-    @Autowired
+    @Autowired(required = false)
     private HierarchyMapper hierarchyMapper;
   @Autowired
     private PartnerLinkmanService partnerLinkmanService;
+    @Autowired
+    private AuthUserService authUserService;
+    @Autowired
+    private EmailService emailService;
+
+
+    public static final String [] fields = {"mnemonicCode","chineseName","chineseAbbreviation","englishName","englishAbbreviation","headingCode"};
+    public static final String [] fieldName = {"助记码","中文名称","中文名称","英文名称","英文简称","纳税人识别码"};
 
     /**
      *  查询树桩数据
@@ -108,9 +115,6 @@ public class PartnerDetailsController extends BaseController {
             JSONArray array = JSONArray.fromString(linkmans);
             List<PartnerLinkman> list = JSONArray.toList(array, PartnerLinkman.class);
             partnerDetails.setLinkmansList(list);
-            // 校验手机号 发送邮件
-            checkPhoneSendEmail(request,list, partnerDetails.getChineseName());
-
         }
 
         if(address != null){
@@ -139,12 +143,12 @@ public class PartnerDetailsController extends BaseController {
                                        HttpServletRequest request   ){
 
         if(linkmans != null){
-
             JSONArray array = JSONArray.fromString(linkmans);
             List<PartnerLinkman> list = JSONArray.toList(array, PartnerLinkman.class);
             partnerDetails.setLinkmansList(list);
             // 校验手机号 发送邮件
-            checkPhoneSendEmail(request,list, partnerDetails.getChineseName());
+            ThreadEmail thread =  new  ThreadEmail( partnerDetailsService ,authUserService, emailService,partnerLinkmanService);
+            thread.checkPhoneSendEmail(request,list, partnerDetails);
         }
         if(address != null){
             JSONArray array = JSONArray.fromString(address);
@@ -323,31 +327,4 @@ public class PartnerDetailsController extends BaseController {
     }
 
 
-    /**
-     *  createBY   sevenBoyLiu
-     *  验证 是否存在重复联系人 并发送邮件到提醒接受者
-     */
-    private void checkPhoneSendEmail(HttpServletRequest requseet,List<PartnerLinkman> partnerLinkmanList,String chinesName){
-        List<PartnerLinkman> partnerLinkmenAl = new ArrayList<PartnerLinkman>();
-        if(null!=partnerLinkmanList  && partnerLinkmanList.size()!=0){
-            for (PartnerLinkman parList : partnerLinkmanList){        // 循环联系人检测 是否存在重复联系人电话
-                List<PartnerLinkman> partnerLinkmen = this.partnerLinkmanService.selectListByPhone(parList);
-                // 循环集合排除本身信息
-                if(null!=parList.getId()){
-                        for (PartnerLinkman par:partnerLinkmen){
-                                if(par.getId().equals(parList.getId())){
-                                    // 新旧合作伙伴中文名去全称 赋值
-                                    par.setNewchineseName(chinesName);
-                                    partnerLinkmen.remove(par);
-                                }
-                        }
-                }
-                partnerLinkmenAl.addAll(partnerLinkmen);  // 存储所有
-            }
-        }
-            // 线程执行获取所有 提醒接受者信息 然后发送邮件
-        requseet.getSession().setAttribute("partnerLinkmenAl",partnerLinkmenAl);
-        ThreadEmail threadEmail = new ThreadEmail(requseet);
-        threadEmail.start();
-    }
 }

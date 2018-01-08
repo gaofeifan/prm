@@ -39,4 +39,9 @@ public class AuthMenuServiceImpl  extends AbstractBaseServiceImpl<AuthMenu,Integ
         return list;
 
     }
+
+    @Override
+    public Integer[] selectMenuIds(Integer postId) {
+        return this.authMenuMapper.selectMenuIds(postId);
+    }
 }

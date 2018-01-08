@@ -353,19 +353,6 @@ public @Data @Table(name="partner_details") class PartnerDetails extends BasicDa
     @ApiModelProperty(value = "创建时间" ,required = false)
     private Date createDate;
 
-    /**
-     *到期日 开始日期
-     */
-    @Column
-    @ApiModelProperty(value = "到期日開始" ,required = false)
-    private Date maturityDateBegan;
-
-    /**
-     *到期日 結束日期
-     */
-    @Column
-    @ApiModelProperty(value = "到期日结束" ,required = false)
-    private Date maturityDateEnd;
 
     /**
      * 是否删除  0否 1 是
@@ -375,11 +362,25 @@ public @Data @Table(name="partner_details") class PartnerDetails extends BasicDa
     private Integer isDelete;
 
     /**
-     * 是否删除  0否 1 是
+     * 父级id
      */
     @Column
     @ApiModelProperty(value = "父id" ,required = false)
     private Integer pId;
+
+    /**
+     * 公司id
+     */
+    @Column
+    @ApiModelProperty(value = "公司id" ,required = false)
+    private String companyId;
+
+    /**
+     * 公司名称
+     */
+    @Column
+    @ApiModelProperty(value = "公司名称" ,required = false)
+    private String  companyName;
 
     @Transient
     @ApiModelProperty(value = "联系地址 格式  [{'id':'1','addressType':'地址类型','abbreviation':'简称','address':'地址','zipCode':'邮编'},{'id':'2','addressType':'地址类型','abbreviation':'简称','address':'地址','zipCode':'邮编'}]" ,required = false)
@@ -399,6 +400,8 @@ public @Data @Table(name="partner_details") class PartnerDetails extends BasicDa
     private String[] scopeBusinesss;
     @Transient
     @ApiModelProperty(value = "服务类别" ,required = false)
+
+
     private String[] gxcyrClassOfServices;
     @Transient
     @ApiModelProperty(value = "客户分类" ,required = false)
@@ -407,6 +410,12 @@ public @Data @Table(name="partner_details") class PartnerDetails extends BasicDa
     @ApiModelProperty(value = "总长度code" ,required = false)
     private String codes;
 
+    /**
+     * 本信息第几层级
+     */
+    @Transient
+    @ApiModelProperty(value = "仅参与excel导出" ,required = false)
+    private Integer hierarchy;
     public String[] getScopeBusinesss() {
         if(null!=scopeBusiness){
             return scopeBusiness.split(",");
@@ -429,7 +438,6 @@ public @Data @Table(name="partner_details") class PartnerDetails extends BasicDa
         }else{
             return null;
         }
-
     }
 
     public String[] getWbkhCustomerClasss() {
@@ -443,4 +451,6 @@ public @Data @Table(name="partner_details") class PartnerDetails extends BasicDa
     public Date getCreateDate() {
         return createDate;
     }
+
+
 }

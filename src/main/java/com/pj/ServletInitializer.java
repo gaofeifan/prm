@@ -15,15 +15,13 @@ return builder.sources(Application.class);
  *  @since		1.8
  */
 public class ServletInitializer //extends SpringBootServletInitializer
-
 {
 /*
+
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(Application.class);
 	}
 */
-
-
 }
 

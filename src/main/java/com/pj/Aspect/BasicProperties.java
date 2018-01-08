@@ -1,4 +1,5 @@
 package com.pj.Aspect;
+
 /**
  * Created by SenevBoy on 2017/11/10.
  */
@@ -50,7 +51,8 @@ public class BasicProperties {
             ,"useQuota","aiTypeCreditPeriod","aiCreditPeriod","aeTypeCreditPeriod","aeCreditPeriod","siTypeCreditPeriod","siCreditPeriod"
             ,"seTypeCreditPeriod","seCreditPeriod","tiTypeCreditPeriod","tiCreditPeriod","teTypeCreditPeriod","teCreditPeriod"
             ,"oiTypeCreditPeriod","oiCreditPeriod","oeTypeCreditPeriod","oeCreditPeriod","itTypeCreditPeriod","itCreditPeriod"
-            ,"ddnTypeCreditPeriod","ddnCreditPeriod","yyoxTypeCreditPeriod","yyoxCreditPeriod","IndustrialTypeCreditPeriod","IndustrialCreditPeriod"
+            ,"ddnTypeCreditPeriod","ddnCreditPeriod","yyoxTypeCreditPeriod","yyoxCreditPeriod","IndustrialTypeCreditPeriod","IndustrialCreditPeriod",
+            "profitsCenterName","profitsCenterId"
             };
             public static final String Basic_PartnerDeta_paramVal  [] = {"名称",    "ID","代码",  "助记码",
                      "中文全称","中文简称","英文全称","英文简称","财务代码",
@@ -63,7 +65,7 @@ public class BasicProperties {
                /*海外代理*//*
                     "代垫","代垫期限(天)","代垫额度(万元)","信用等级*","信用期限类型*","信用期限(天)","信用额度(万元)",*/
                     /*干线运城*/
-                    "服务类别",/*"进项税票","进项税率%",
+            "服务类别",/*"进项税票","进项税率%",
                     "服务类别","进项税票","进项税率%",
                     "服务类别","进项税票","进项税率%",*/
                     /*收发货人*/
@@ -75,7 +77,8 @@ public class BasicProperties {
                     ,"已用额度","AI 信用期限类型","AI 信用期限"," AE 信用期限类型"," AE 信用期限","SI 信用期限类型","SI 信用期限"
                     ,"SE 信用期限类型","SE 信用期限","TI 信用期限类型","TI 信用期限","TE 信用期限类型","TE 信用期限"
                     ,"OI 信用期限类型","OI 信用期限","OE 信用期限类型","OE 信用期限","IT 信用期限类型","IT 信用期限"
-                    ,"DDN 信用期限类型","DDN 信用期限","YYOX 信用期限类型","YYOX 信用期限","Industrial 信用期限类型","Industrial 信用期限"
+                    ,"DDN 信用期限类型","DDN 信用期限","YYOX 信用期限类型","YYOX 信用期限","Industrial 信用期限类型","Industrial 信用期限",
+                    "利润中心名称","利润中心ID"
             };
 
 
@@ -102,10 +105,7 @@ public class BasicProperties {
 
     public static final  String  total_basic_data =   " 以下提醒接收者（Owner）无效，请注意跟进。";
 
+    // 导出excel 数组列
+    public static final String[] excelData = { "合作伙伴中文名","停用","黑名单","外部客户","互为代理","海外代理","干线承运","不可控","延伸服务","收发货人","结算对象"};
 
-
-    public static void main(String[] args) {
-        System.out.println(Basic_PartnerDeta_paramName.length);
-        System.out.println(Basic_PartnerDeta_paramVal.length);
-    }
 }

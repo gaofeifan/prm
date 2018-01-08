@@ -43,5 +43,38 @@
             </otherwise>
         </choose>-->
     </select>
+    
+    <select id="findMenuOrButtonByUserId" resultMap="BaseResultMap">
+        select * from auth_menu am 
+        <where>
+           am.id in(select auth_id from user_menu where user_menu.user_id=#{userId})
+           AND am.is_menu =#{isMenu} 
+           <if test="menuId != null">
+                AND am.p_id = #{menuId}
+           </if>
+                ORDER  BY  am.id
+        </where>
+    
+    </select>
+    
+    <select id="selectVOByUserId" resultMap="BaseResultMap">
+		SELECT
+		*, CASE WHEN    IFNULL(user_menu.auth_id,0)=0 THEN 0 ELSE 1 end
+		 AS checks
+		FROM
+		    auth_menu
+		LEFT JOIN user_menu ON auth_menu.id = user_menu.auth_id
+		AND user_menu.user_id = #{userId}
+        GROUP  BY  auth_menu.id
+        order BY  auth_menu.id;
+    </select>
+    <select id="selectMenuVos" resultMap="BaseResultMap">
+          	SELECT
+            *,IF(apm.menu_id is not NULL, '1' , '0') checks
+        FROM
+        auth_menu am
+        left JOIN auth_post_menu apm ON apm.menu_id = am.id  AND apm.post_id = #{postId}
+				WHERE am.is_menu = 1
 
+    </select>
 </mapper>

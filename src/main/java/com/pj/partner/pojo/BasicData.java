@@ -1,10 +1,12 @@
 package com.pj.partner.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.Column;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /***
  * @ClassName: BasicData
@@ -238,6 +240,57 @@ public class BasicData {
     @Column
     @ApiModelProperty(value = "Industrial 信用期限" ,required = false)
     private BigDecimal IndustrialCreditPeriod; //wbkhCreditPeriod
+
+
+    /*上传下载*/
+    @Column
+    @ApiModelProperty(value = " file_path 上传下载" ,required = false)
+    private String filePath; //wbkhCreditPeriod
+
+
+
+    /*上传下载文件名*/
+    @Column
+    @ApiModelProperty(value = " file_name 上传下载文件名" ,required = false)
+    private String fileName; //
+
+
+    /*默认币种*/
+    @Column
+    @ApiModelProperty(value = " default_currency 默认币种" ,required = false)
+    private String defaultCurrency; //wbkhCreditPeriod
+
+
+    /*利润中心名称*/
+    @Column
+    @ApiModelProperty(value = " profits_center_name  利润中心名称" ,required = false)
+    private String profitsCenterName; //
+
+    /*利润中心 id */
+    @Column
+    @ApiModelProperty(value = " profits_center_id 利润中心ID" ,required = false)
+    private String profitsCenterId; //
+
+
+
+    /**
+     *到期日 开始日期 协议有效期
+     */
+    @Column
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8" )
+    @ApiModelProperty(value = "到期日開始" ,required = false)
+    private Date maturityDateBegan;
+
+    /**
+     *到期日 結束日期 协议有效期
+     */
+    @Column
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8" )
+    @ApiModelProperty(value = "到期日结束" ,required = false)
+    private Date maturityDateEnd;
+
+
+
 
 // --------------------结束-------------------------------------------------
 }

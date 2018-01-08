@@ -7,7 +7,6 @@
         <result  column="is_menu" property="isMenu" jdbcType="INTEGER" />
         <result  column="href" property="href" jdbcType="VARCHAR" />
         <result  column="p_id" property="pId" jdbcType="INTEGER" />
-
     </resultMap>
             <sql id="basic_select">
               *
@@ -24,5 +23,24 @@
          or
                 id  in (select   p_id  from  auth_menu where id  in (select  menu_id from auth_post_menu where post_id =  #{postId,jdbcType=INTEGER}) )
     </select>
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        select * from auth_menu 
+        <where>
+            <if test="userId !=null">
+                id in (select auth_id from user_menu where user_menu.user_id=#{userId})
+            </if>
+        </where>
+    </select>
+
+    <select id="selectMenuIds" resultType="int" parameterType="int">
+		SELECT
+            am.id
+        FROM
+        auth_menu am
+        left JOIN auth_post_menu apm ON apm.menu_id = am.id  AND apm.post_id = #{postId}
+				WHERE am.is_menu = 1  AND apm.menu_id is not NULL
+    </select>
+    
+    
 
 </mapper>

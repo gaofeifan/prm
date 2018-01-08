@@ -20,6 +20,7 @@ public class OaProperties {
 	@Getter
 	private String url;
 
+
 	@Value("${oa.adminId}")
 	@Getter
 	private Integer adminId;
@@ -35,8 +36,7 @@ public class OaProperties {
 
 	private String findUserById = "/oa/user/find.do";
 
-	private String selectUserByUsername = ""
-			+ "/oa/user/selectUserByUsername.do";
+	private String selectUserByUsername = "/oa/user/selectUserByUsername.do";
 
 	private String selectUserByPostId = "/oa/user/selectUserByPostId.do";
 

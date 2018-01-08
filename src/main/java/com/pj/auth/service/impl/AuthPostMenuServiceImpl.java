@@ -1,19 +1,22 @@
 package com.pj.auth.service.impl;
 
 
-import com.pj.auth.mapper.AuthPostMenuMapper;
-import com.pj.auth.pojo.AuthMenu;
-import com.pj.auth.pojo.AuthPostMenu;
-import com.pj.auth.pojo.AuthPostMenuVo;
-import com.pj.auth.service.AuthMenuService;
-import com.pj.auth.service.AuthPostMenuService;
-import com.pj.conf.base.AbstractBaseServiceImpl;
-import com.pj.conf.base.BaseMapper;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.pj.auth.mapper.AuthPostMenuMapper;
+import com.pj.auth.mapper.UserMenuMapper;
+import com.pj.auth.pojo.AuthMenu;
+import com.pj.auth.pojo.AuthPostMenu;
+import com.pj.auth.pojo.AuthPostMenuVo;
+import com.pj.auth.pojo.UserMenu;
+import com.pj.auth.service.AuthMenuService;
+import com.pj.auth.service.AuthPostMenuService;
+import com.pj.conf.base.AbstractBaseServiceImpl;
+import com.pj.conf.base.BaseMapper;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -25,6 +28,8 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
     private AuthPostMenuMapper authPostMenuMapper;
     @Autowired
     private AuthMenuService authMenuService;
+    @Autowired
+    private UserMenuMapper userMenuMapper;
     @Override
     public BaseMapper<AuthPostMenu> getMapper() {
         return authPostMenuMapper;
@@ -35,12 +40,19 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
         AuthPostMenu record = new AuthPostMenu();
         record.setPostId(postId);
         List<AuthPostMenu> menus = this.authPostMenuMapper.select(record);
-        List<AuthPostMenuVo> menu = authPostMenuMapper.findMenuByPostId(postId, null);
+        List<AuthPostMenuVo> menuVos = this.authPostMenuMapper.selectMenuVos(postId);
+        Integer [] menuIds = this.authMenuService.selectMenuIds(postId);
+        List<AuthPostMenuVo> menu = authPostMenuMapper.findMenuByPostId(postId, menuIds);
         if(menus.size() != 0){
-            return menu;
+            menuVos.addAll(menu);
+            return menuVos;
         }
         editDefaultAuth(postId);
-        return authPostMenuMapper.findMenuByPostId(postId, null);
+        menu.clear();
+        menu = authPostMenuMapper.findMenuByPostId(postId, menuIds);
+        menuVos.addAll(menu);
+        return menuVos;
+
     }
     @Override
     public List<AuthPostMenuVo> findButtonByPostIdAndMenuIds(Integer postId, Integer[] menuIds) {
@@ -49,6 +61,7 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
         }
         return authPostMenuMapper.findMenuByPostId(postId,menuIds);
     }
+    @Override
 
     public List<AuthPostMenuVo> findMenuOrButtonByPostId(Integer postId, Integer menuId, boolean isMenu){
         AuthPostMenu am = new AuthPostMenu();
@@ -64,6 +77,8 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
     public void editPostAuthority(Integer postId, Integer[] menuIds) {
 
         this.authPostMenuMapper.delete(new AuthPostMenu(postId));
+        //加一个新的逻辑，当用户没有勾选到人的时候，按部门修改时要把之前按人修改的记录给删除也就是user_menu表中跟此postId相关的数删掉.x.gao 20171229
+        userMenuMapper.delete(new UserMenu(postId));
         for(Integer id : menuIds){
             this.authPostMenuMapper.insert(new AuthPostMenu(id,postId));
         }
@@ -77,7 +92,7 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
         }
         return false;
     }
-
+    @Override
     public void editDefaultAuth(Integer postId){
         List<AuthMenu> menus = this.authMenuService.selectDefaultMenu();
         AuthPostMenu apm = null;
@@ -87,6 +102,25 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
             apm.setPostId(postId);
             this.authPostMenuMapper.insert(apm);
         }
+    }
+
+    @Override
+    public void editPostAuthorityByuserId(String userId, Integer[] menuIds,Integer postId) {
+        userMenuMapper.delete(new UserMenu(userId));
+        for(Integer menuid : menuIds){
+          UserMenu userMenu = new UserMenu();
+          userMenu.setUserId(userId);
+          userMenu.setAuthId(menuid);
+          userMenu.setPostId(postId);
+          userMenuMapper.insert(userMenu);
+        }
+    }
+      
+    @Override
+    public List<AuthPostMenuVo> findMenuOrButtonByUserId(String userId, Integer menuId, boolean isMenu) {
+     
+      return authPostMenuMapper.findMenuOrButtonByUserId(userId, menuId, isMenu);
+
     }
 
 }

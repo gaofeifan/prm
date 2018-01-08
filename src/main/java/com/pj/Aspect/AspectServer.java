@@ -3,8 +3,10 @@ package com.pj.Aspect;
 
 import com.pj.auth.pojo.AuthMenu;
 import com.pj.auth.pojo.User;
+import com.pj.auth.pojo.UserMenu;
 import com.pj.auth.service.AuthMenuService;
 import com.pj.auth.service.AuthUserService;
+import com.pj.auth.service.UserMenuService;
 import com.pj.cache.PartnerDetailsCache;
 import com.pj.partner.mapper.PartnerDetailsShifFileMapper;
 import com.pj.partner.pojo.PartnerAddress;
@@ -60,6 +62,8 @@ public class AspectServer {
     @Autowired(required = false)
     private PartnerDetailsService partnerDetailsService;
 
+    @Autowired(required = false)
+    private UserMenuService userMenuService;
 
 
     @Autowired(required = false)
@@ -154,17 +158,23 @@ public class AspectServer {
 
     // 停用 黑名单 备注 日志切面  循环修改 切面日志
 
-    @Pointcut("execution(* com.pj.partner.service.*.PartnerDetailsServiceImpl.updateStatus.updateByPrimaryKey(..))")
+    @Pointcut("execution(* com.pj.partner.service.*.PartnerDetailsUtilServiceImpl.updateByPrimaryKey(..))")
     public void partnerDetailsUpdateStatusexecution() { }
 
 
+    /**
+     * 用户权限
+     */
+    //  ---   根据用户修改相关权限日志记录
+    @Pointcut("execution(* com.pj.auth.service.impl.AuthPostMenuServiceImpl.editPostAuthorityByuserId(..))")
+    public void UsereditPostAuthorityByuserIdUpdateList() {  }
 
     /**
      *   合作伙伴相关的联系人联系地址数据信息切面
      */
 
     //  ---   修改 联系人
-    @Pointcut("execution(* com.pj.partner.*.*.PartnerDetailsServiceImpl.updatePartnerLinkman.updateByPrimaryKey(..))")
+    @Pointcut("execution(* com.pj.partner.*.*.PartnerLinkmanServiceImpl.updateByPrimaryKey(..))")
     public void PartnerLinkmanServiceImplUpdateList() {  }
 
     //  ---   删除 联系人
@@ -179,7 +189,7 @@ public class AspectServer {
 
 
     //  ---   修改联系地址
-    @Pointcut("execution(* com.pj.partner.*.*.PartnerDetailsServiceImpl.updatePartnerAddres.updateByPrimaryKey(..))")
+    @Pointcut("execution(* com.pj.partner.*.*.PartnerAddressServiceImpl.updateByPrimaryKey(..))")
     public void PartneraddressImplUpdateList() {  }
 
     //  ---   删除联系地址
@@ -203,13 +213,14 @@ public class AspectServer {
         List<PartnerDetails>  oldPartnerDetails = (  List<PartnerDetails> ) request.getSession().getAttribute("old_state_list");
         boolean flage = false;
 
-        Field[] oldfields=  getfieldsMethod(oldPartnerDetails);
+
         Field[] newfields=  getfieldsMethod(partnerDetails);
 
         actionData+="合作伙伴管理-停用与黑名单：";
         // 循环旧数据  判断旧数据的 id 是否存在
         for (PartnerDetails oldData : oldPartnerDetails){
-            if(partnerDetails.getId() .equals(oldData.getId())){
+            if(!partnerDetails.getId() .equals(oldData.getId())){
+                Field[] oldfields=  getfieldsMethod(oldData);
                 actionData+="中文全称"+partnerDetails.getChineseName()+" : ";
                 //判断并记录更新的信息
                 for (int i = 0 ; i <oldfields.length;i++ ) {
@@ -218,24 +229,30 @@ public class AspectServer {
                         PropertyDescriptor pd = new PropertyDescriptor(oldData.getClass().getDeclaredFields()[i].getName(), oldData.getClass());
                         Method getMethod = pd.getReadMethod();//获得get方法  
                         Object o = getMethod.invoke(oldData);//执行get方法返回一个Object
-                        PropertyDescriptor pd2 = new PropertyDescriptor(oldData.getClass().getDeclaredFields()[i].getName(), oldData.getClass());
+                        PropertyDescriptor pd2 = new PropertyDescriptor(partnerDetails.getClass().getDeclaredFields()[i].getName(), partnerDetails.getClass());
                         Method getMethod2 = pd2.getReadMethod();//获得get方法  
                         Object o2= getMethod2.invoke(partnerDetails);//执行get方法返回一个Object
+
+                        if(!(o==null?"":o).equals(o2==null?"":o2)){
                             // 判断字段名称
-                            for (int j = 0; j < BasicProperties.Basic_address_paramName.length; j++) {
-                                if (oldfields[i].getName().toString().equals(BasicProperties.Basic_address_paramName[j].toString())) {
-                                    actionData += " " + BasicProperties.Basic_address_paramVal[j];
-                                    actionData += "< " + (o.equals(1)?"是":"否") + " >（ " + (o2.equals(1)?"是":"否") + " ） ; ";
+                            for (int j = 0; j < BasicProperties.PartnerDetailsstatus_name.length; j++) {
+                                if (oldfields[i].getName().toString().equals(BasicProperties.PartnerDetailsstatus_name[j].toString())) {
+                                    actionData += " " + BasicProperties.PartnerDetailsstatus_paramVal[j];
+                                    if( oldfields[i].getName().equals("disableRemark") ){
+                                        actionData += "< " +  o  + " >（ " +  o2   + " ） ; ";
+                                    }else {
+                                        actionData += "< " + (o.equals(1)?"是":"否") + " >（ " + (o2.equals(1)?"是":"否") + " ） ; ";
+                                    }
                                     flage = true;
                                     break;
                                 }
                             }
+                        }
                     }
                 }
                 // 操作日志追加
                 addLogMethod(flage,request , actionData,args[args.length-1].toString());
             }
-            break;
         }
     }
 
@@ -322,13 +339,14 @@ public class AspectServer {
         List<PartnerAddress> oldPartneraddress = (List<PartnerAddress>) request.getSession().getAttribute("old_partnerAddress");
         boolean flage = false;
 
-        Field[] oldfields=  getfieldsMethod(oldPartneraddress);
+
         Field[] newfields=  getfieldsMethod(partneraddress);
 
         actionData+="合作伙伴管理-联系地址：";
         // 循环旧数据  判断旧数据的 id 是否存在
         for (PartnerAddress oldData : oldPartneraddress){
             if(partneraddress.getId() .equals(oldData.getId())){
+                Field[] oldfields=  getfieldsMethod(oldData);
                 //判断并记录更新的信息
                 for (int i = 0 ; i <oldfields.length;i++ ) {
                     if(checkSeralize(oldfields[i].getName())){
@@ -371,13 +389,14 @@ public class AspectServer {
         List<PartnerLinkman> oldPartnerLinkman = (List<PartnerLinkman>) request.getSession().getAttribute("old_partnerLinkman");
         boolean flage = false;
 
-        Field[] oldfields=  getfieldsMethod(oldPartnerLinkman);
+
         Field[] newfields=  getfieldsMethod(partnerLinkman);
 
         actionData+="合作伙伴管理-联系人：";
         // 循环旧数据  判断旧数据的 id 是否存在
         for (PartnerLinkman oldData : oldPartnerLinkman){
                 if(partnerLinkman.getId() .equals(oldData.getId())){
+                    Field[] oldfields=  getfieldsMethod(oldData);
                     //判断并记录更新的信息
                     for (int i = 0 ; i <oldfields.length;i++ ) {
                         if(checkSeralize(oldfields[i].getName())){
@@ -474,42 +493,112 @@ public class AspectServer {
         removeAttribute("oldShifFileList",request);
 
     }
-        //  获取已删除的权限 记录日志
+
+    //  获取已删除的用户权限 记录用户权限修改日志
+    @Before("UsereditPostAuthorityByuserIdUpdateList( )")
+    public void UsereditPostAuthorityByuserIdUpdateListBefore(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        HttpServletRequest request = requestinit();
+        Object[] args = point.getArgs();
+        // 获取 未删除的 权限  根基UserID 去查询
+        List<AuthMenu> oldAuthority = userMenuService.selectByUserId(args[0].toString());
+        request.getSession().setAttribute("oldAuthority", oldAuthority);
+    }
+
+    @AfterReturning("UsereditPostAuthorityByuserIdUpdateList()")
+    public void UsereditPostAuthorityByuserIdUpdateListAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
+        HttpServletRequest request = requestinit();
+        Object[] args = point.getArgs();
+        String actionData = "权限管理 - 用户  ：";
+        boolean flage = false;
+          /*获取  权限操作涉及人*/
+        String emailsByPostId = authUserService.getEmailsByPostId(args[args.length-1].toString());
+        // 获取 新增的 权限  根基postID 去查询
+        List<AuthMenu> authMenuList = userMenuService.selectByUserId(args[0].toString());
+        // 获取 旧的 权限  根基postID 去查询
+        List<AuthMenu>  oldAuthority = new ArrayList<AuthMenu>();
+        oldAuthority = (List<AuthMenu>) request.getSession().getAttribute("oldAuthority");
+        // 比对 新旧权限
+        if(null != authMenuList && null != oldAuthority ){
+
+            HashSet<AuthMenu> oldIsmenu = new HashSet<AuthMenu>();
+            HashSet<AuthMenu> newIsmenu = new HashSet<AuthMenu>();
+            /*查找旧权限中独有的权限*/
+            for(AuthMenu olda : oldAuthority){
+
+                boolean  flage2 = true;
+
+                for(AuthMenu news : authMenuList){
+                    if(olda.getName().equals(news.getName())){
+                        flage2 = false;
+                        break;
+                    }
+                }
+                /*判断并添加父级*/
+                if(flage2){
+                    oldIsmenu.add(olda);
+                }
+            }
+            // 循环获取 菜单
+            for (AuthMenu button : oldIsmenu) {
+                            actionData += button.getName() + " ; "  ;
+                flage = true;
+                }
+            if(oldIsmenu.size()!=0){
+                try {
+                    addAuthLogMethod(flage, request, actionData, "删除", emailsByPostId);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+            flage = false;
+
+            /*查找新权限中独有的权限*/
+            for(AuthMenu news : authMenuList){
+                boolean  flage2 = true;
+                for(AuthMenu olda : oldAuthority){
+
+                    if(news.getName().equals(olda.getName())){
+                        flage2 = false;
+                        break;
+                    }
+                }
+                if(flage2){
+                    newIsmenu.add(news);
+                }
+
+            }
+            actionData = "权限管理 - 用户：";
+            // 循环获取 菜单
+            for (AuthMenu button : newIsmenu) {
+                        actionData += button.getName() + "; ";
+                flage = true;
+            }
+            if(newIsmenu.size()!=0){
+                try {
+                    addAuthLogMethod(flage, request, actionData, "新增", emailsByPostId);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+    //  获取已删除的权限 记录日志
     @Before("editPostAuthorityExecution( )")
     public void editPostAuthorityPointcutBefore(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         HttpServletRequest request = requestinit();
         Object[] args = point.getArgs();
-        String actionData = "权限管理  ：";
+        String actionData = "权限管理 -岗位 ：";
         boolean flage = false;
         // 获取 未删除的 权限  根基postID 去查询
         List<AuthMenu> authMenuList = authMenuService.findAuthMenuListBypostId(Integer.parseInt(args[0].toString()));
         request.getSession().setAttribute("oldAuthority",authMenuList);
-        /*获取  权限操作涉及人*/
-        // String emailsByPostId = authUserService.getEmailsByPostId(args[0].toString());
 
-      /*  if (null != authMenuList || authMenuList.size() != 0) {
-
-            // 循环获取 菜单
-            for (AuthMenu menu : authMenuList) {
-                if (menu.getIsMenu() == 1) {
-
-                    // 循环  获取按钮
-                    for (AuthMenu button : authMenuList) {
-                        if (button.getIsMenu() == 0) {
-                            if ((button.getPId() == null ? 0 : button.getPId()) == menu.getId()) {
-                                actionData += menu.getName() + "-" + button.getName().split("-")[1] + " ; ";
-                                flage = true;
-                            }
-                        }
-                    }
-                }
-            }
-            try {
-                addAuthLogMethod(flage, request, actionData, "删除", emailsByPostId);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }*/
     }
 
     //  记录新增的权限···· 记录日志
@@ -517,19 +606,17 @@ public class AspectServer {
     public void editPostAuthorityPointcutAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         HttpServletRequest request = requestinit();
         Object[] args = point.getArgs();
-        String actionData = "权限管理  ：";
+        String actionData = "权限管理 -岗位 ：";
         boolean flage = false;
           /*获取  权限操作涉及人*/
         String emailsByPostId = authUserService.getEmailsByPostId(args[0].toString());
-        // 获取 新增的 权限  根基postID 去查询
+         // 获取 新增的 权限  根基postID 去查询
         List<AuthMenu> authMenuList = authMenuService.findAuthMenuListBypostId(Integer.parseInt(args[0].toString()));
         // 获取 旧的 权限  根基postID 去查询
         List<AuthMenu>  oldAuthority = new ArrayList<AuthMenu>();
-        try {
-            oldAuthority = (List<AuthMenu>) request.getSession().getAttribute("oldAuthority");
-        }catch (Exception e){
 
-        }
+            oldAuthority = (List<AuthMenu>) request.getSession().getAttribute("oldAuthority");
+
 
         // 比对 新旧权限
         if(null != authMenuList && null != oldAuthority ){
@@ -549,7 +636,7 @@ public class AspectServer {
                 /*判断并添加父级*/
                 if(flage2){
                     oldIsmenu.add(olda);
-                    if(olda.getIsMenu()!=1){
+                   /* if(olda.getIsMenu()!=1){
                         for(AuthMenu olda2 : oldAuthority){
                             if(olda.getPId().equals(olda2.getId())){
 
@@ -557,13 +644,15 @@ public class AspectServer {
 
                             }
                         }
-                    }
+                    }*/
                 }
 
             }
             // 循环获取 菜单
             for (AuthMenu button : oldIsmenu) {
-                if (button.getIsMenu() == 0) {
+                actionData += button.getName() + "; " ;
+                flage = true;
+              /*  if (button.getIsMenu() == 0) {
                         for(AuthMenu dat : oldIsmenu){
                             if(button.getPId().equals(dat.getId())){
                                 actionData += dat.getName() + "-" + button.getName().split("-")[1] + " ; ";
@@ -571,13 +660,16 @@ public class AspectServer {
                                 break;
                             }
                         }
+                }*/
+            }
+            if(oldIsmenu.size()!=0){
+                try {
+                    addAuthLogMethod(flage, request, actionData, "删除", emailsByPostId);
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
             }
-            try {
-                addAuthLogMethod(flage, request, actionData, "删除", emailsByPostId);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+
 
             flage = false;
 
@@ -594,22 +686,23 @@ public class AspectServer {
                 }
                 if(flage2){
                     newIsmenu.add(news);
-                    if(news.getIsMenu()!=1){
+                    /*if(news.getIsMenu()!=1){
                         for(AuthMenu news2 : authMenuList){
                             if(news.getPId().equals(news2.getId())){
                                 newIsmenu.add(news2);
                                 break;
                             }
                         }
-                    }
+                    }*/
                 }
 
             }
-            actionData = "权限管理  ：";
+            actionData = "权限管理  岗位 ：";
             // 循环获取 菜单
             for (AuthMenu button : newIsmenu) {
-
-                if (button.getIsMenu() == 0) {
+                actionData += button.getName() + "; ";
+                flage = true;
+               /* if (button.getIsMenu() == 0) {
                     for(AuthMenu dat : newIsmenu){
                         if(button.getPId().equals(dat.getId())){
                             actionData += dat.getName() + "-" + button.getName().split("-")[1] + " ; ";
@@ -617,12 +710,14 @@ public class AspectServer {
                             break;
                         }
                     }
-                }
+                }*/
             }
-            try {
-                addAuthLogMethod(flage, request, actionData, "新增", emailsByPostId);
-            } catch (Exception e) {
-                System.out.println(e);
+            if(newIsmenu.size()!=0){
+                try {
+                    addAuthLogMethod(flage, request, actionData, "新增", emailsByPostId);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         }
     }
@@ -993,7 +1088,7 @@ private Field[] getfieldsMethod(Object objectdata) {
 }
 
     private boolean checkSeralize(String  name){
-        if (name.equals("getSerialVersionUID") || name.equals("serialVersionUID")) {
+        if (name.equals("getSerialVersionUID") || name.equals("serialVersionUID")    ) {
             return false;
         }else{
             return true;

@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 public @Data @Table(name="partner_address" )
+
 class PartnerAddress implements Serializable {
 
     @GeneratedValue(generator = "JDBC")
