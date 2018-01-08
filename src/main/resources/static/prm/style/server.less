@@ -1,9 +1,69 @@
-#business{
+#server{
   .content{
     padding: 20px 20px 50px;
     background-color: #fff;
-    table{
-      width: 100%;
+    .thead-outer{
+      border-top: 1px solid #dddddd;
+      border-bottom: 1px solid #dddddd;
+      padding-bottom: 10px;
+      .thead-core{
+        padding: 15px 0;
+        border-bottom: 1px solid #dddddd;
+        .thead-content{
+          div{
+            float: left;
+            text-align: center;
+            color:#333;
+          }
+          .no{
+            width: 10%;
+          }
+          .code{
+             width: 10%;
+           }
+          .business{
+            width: 10%;
+          }
+          .description{
+            width: 30%;
+            text-align: left;
+            text-indent: 120px;
+          }
+        }
+      }
+    }
+    .body-box{
+      .bodyList{
+        padding: 15px 0;
+        border-bottom: 1px solid #dddddd;
+        div{
+          float: left;
+          text-align: center;
+          color:#666;
+        }
+        .no{
+          width: 10%;
+        }
+        .code{
+          width: 10%;
+        }
+        .business{
+          width: 10%;
+        }
+        .description{
+          width: 30%;
+          text-align: left;
+          text-indent: 100px;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1600px) {
+  #business{
+    font-size: 14px;
+    .content .body-box .bodyList {
+      padding: 15px 0;
     }
   }
 }

@@ -87,15 +87,43 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         PartnerDetails pd = new PartnerDetails();
         pd.setIsDisable(offPartner);
         pd.setIsBlacklist(blacklistPartner);
-//        if(StringUtils.isNotBlank(partnerCategory)){
-//            String[] strings = partnerCategory.split(",");
-            pd.setPartnerCategory(partnerCategory);
-//        }
+        if(StringUtils.isNotBlank(partnerCategory)){
+            String[] strings = partnerCategory.split(",");
+            pd.setPartnerCategorys(strings);
+        }
         pd.setDirName(name);
-        List<PartnerDetails> pds = this.partnerDetailsMapper.selectListByQuery(pd);
-//        List<PartnerDetails> pds = this.partnerDetailsMapper.selectByExample(example);
-        return pds;
+            List<PartnerDetails> pds = this.partnerDetailsMapper.selectListByQuery(pd);
+            //        List<PartnerDetails> pds = this.partnerDetailsMapper.selectByExample(example);
+            List<PartnerDetails> data = new ArrayList<>();
+            Set<PartnerDetails> details = selectSon(pds, new HashSet<PartnerDetails>(), null);
+            for (PartnerDetails p:details) {
+                List<PartnerDetails> parentList = this.partnerDetailsMapper.getParentList(p.getId());
+                data.addAll(parentList);
+            }
+            return windowsSort(data);
     }
+        /**
+         *  获取查询最末级的数据
+         * @param pds
+         * @param endData
+         * @param id
+         * @return
+         */
+        public Set<PartnerDetails> selectSon(List<PartnerDetails> pds , Set<PartnerDetails> endData ,Integer id){
+            for (PartnerDetails p: pds) {
+                if(p.getId().equals(id)){
+                    continue;
+                }
+                id = p.getId();
+                List<PartnerDetails> parentList = this.partnerDetailsMapper.getChildList(p.getId());
+                parentList.remove(p);
+                if(parentList.size() <= 1){
+                    endData.add(p);
+                }
+                selectSon(parentList,endData,id);
+            }
+            return endData;
+        }
 
     @Override
     public PartnerDetails selectByPrimaryKey(Integer key) {

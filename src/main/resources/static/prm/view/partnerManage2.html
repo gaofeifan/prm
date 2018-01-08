@@ -12,12 +12,12 @@
                 <div class="fl"><input type="checkbox" name="sort" data-orderNo="干线承运人"><label for="">干线承运人</label></div>
                 <div class="fl"><input type="checkbox" name="sort" data-orderNo="不可控供应商"><label for="">不可控供应商</label></div>
                 <div class="fl"><input type="checkbox" name="sort" data-orderNo="延伸服务供应商"><label for="">延伸服务供应商</label></div>
-                <div class="fl"><input type="checkbox" name="sort" data-orderNo="收发货人"><label for="">收发货人</label></div>
+                <!--<div class="fl"><input type="checkbox" name="sort" data-orderNo="收发货人"><label for="">收发货人</label></div>-->
                 <div class="fl"><input type="checkbox" name="sort" data-orderNo="结算对象"><label for="">结算对象</label></div>
             </div>
             <div>
                 <input id="mainPoint" type="text"><label id="query" class="searchBtn" for="">查询</label>
-                <a id="toggle" class="clickLink" href="javascript:void(0);">显示/隐藏查询结果</a>
+                <a id="queryAll" class="clickLink" href="javascript:void(0);">返回列表</a>
                 <a id="queryStop" class="clickLink" href="javascript:void(0);">查看停用Partner</a>
                 <a id="queryBlack" class="clickLink" href="javascript:void(0);">查看黑名单Partner</a>
             </div>
@@ -27,8 +27,10 @@
                 <a id="collapseAllBtn" href="javascript:void(0);">全部收起</a>
                 <a id="scrollTop" href="javascript:void(0);">到顶部</a>
                 <a id="scrollBottom" href="javascript:void(0);">到底部</a>
+                <a id="export" href="">导出</a>
             </div>
-            <div style="margin-right: 80px;" class="handle-right fr">
+            <div style="margin-right: 60px;" class="fr"><span>统计：</span><em id="numTol">0</em><span>条</span></div>
+            <div style="margin-right: 60px;" class="handle-right fr">
                 <a class="new" href="javascript:void(0);">新增合作伙伴</a>
                 <a class="alter" href="javascript:void(0);">修改</a>
                 <a id="transferBtn" href="javascript:void(0);">转移</a>
@@ -40,7 +42,7 @@
                 <div class="thead-core">
                     <div class="fl Th" style="line-height: 50px;margin-left: 20px;width: 140px;">合作伙伴目录名称</div>
                     <div  style='margin-right: 10px;' class="fr Th version"><span>结算对象</span></div>
-                    <div class="fr Th version"><span>收发货人</span></div>
+                   <!-- <div class="fr Th version"><span>收发货人</span></div>-->
                     <div class="fr Th version"><span>延伸服务</span></div>
                     <div class="fr Th version"><span>不可控</span></div>
                     <div class="fr Th version"><span>干线承运</span></div>
@@ -56,14 +58,14 @@
            <div id="tree_box">
                <ul  class="ztree"  id="tree"></ul>
            </div>
-           <div id="screen">
+           <!--<div id="screen">
                <h3>检索结果</h3>
                <div>
                    <div id="selected">
 
                    </div>
                </div>
-           </div>
+           </div>-->
        </div>
         <div id="transfer" class="clearfix">
             <h3>转移</h3>
@@ -93,7 +95,7 @@
             <div style="margin-top: 20px;" class="content clearfix">
                 <form style="padding: 0 1%;" id="checkForm" class="clearfix">
                     <input id="pId" name="pId" class="hiddenInput" type="text">
-                    <h4>基础信息</h4>
+                    <h4  style="margin-bottom: 10px;margin-top:0;padding-top: 0;">基础信息</h4>
                     <div class="baseInfo">
                         <div class="clearfix">
                             <div class="fl flDiv">
@@ -136,24 +138,36 @@
                                 <label for="">财务代码</label>
                                 <input id="financingCode" name="financingCode" type="text" readonly>
                             </div>
-                            <div style="position: relative;height: 30px;" class="fr frDiv">
-
+                            <div class="fr frDiv">
+                                <label for="">默认币种</label>
+                                <input id="currency" type="text" readonly>
+                            </div>
+                        </div>
+                        <div id="addTo" class="clearfix">
+                            <div style="position: relative;height: 30px;" class="fl div1">
                                 <label style="width: 70px;margin-right:0;" for="">提醒接受者</label>
-                                <input id="dutyInput" type="text" value="" readonly><span class="warning dutyOfficer-waring"></span>
+                                <input id="dutyInput" type="text" autocomplete="off" value="" readonly><span class="warning dutyOfficer-waring"></span>
                                 <ul class="userNameLi">
 
                                 </ul>
-                                <input style="position: relative;top:-10px;" class="hiddenInput" id="receiverId" name="receiverId" type="text">
+                                <input style="position: relative;top:-10px;" class="hiddenInput" id="receiverId" name="receiverId" type="text" required>
                                 <input style="position: relative;top:-30px;" class="hiddenInput" id="receiverName" name="receiverName" type="text">
                             </div>
-                        </div>
-                        <div class="status clearfix">
-                            <input id="isBlacklist" type="checkbox" disabled><label for="">黑名单</label>
-                            <!--隐藏黑名单-->
-                            <input class="hiddenInput" name="isBlacklist" type="text" value="0">
-                            <input id="isDisable" type="checkbox" disabled><label for="">停用</label>
-                            <input class="hiddenInput" name="isDisable" type="text" value="0">
-                            <span class="mark disableMark">*</span><label for="">停用备注</label><input id="disableRemark" name="disableRemark" class="reason" type="text" readonly>
+                            <div class="fl div2">
+                                <label for="">利润中心</label>
+                                <select name="" id="profitCenter" disabled>
+                                </select>
+                            </div>
+                            <div class="fl div3">
+                                <label for="">协议有效期</label>
+                                <input id="startDate" type="text" readonly> <span>至</span> <input id="endDate" type="text" readonly>
+                            </div>
+                            <div class="fl div4">
+                                <span class="mark">*</span>
+                                <input style="border:none;width:auto;padding-left:0;" id="fileName" type="text" readonly>
+                                <input style="border:none;width:0;padding-left:0;" id="filePath" name="filePath" type="text">
+                                <a id="download" style="" href="">下载</a>
+                            </div>
                         </div>
                     </div>
                     <div>
@@ -195,15 +209,18 @@
                         <div style="padding-left: 16px;">
                             <div class="thead-outer">
                                 <div class="thead-core">
-                                    <div class="no"><span>序号</span></div>
-                                    <div class="name"><span>姓名</span></div>
-                                    <div style="width:8%;" class="obligation"><span>职责</span></div>
+                                    <div class="no2"><span>序号</span></div>
+                                    <div class="name"><span class="mark">*</span><span>姓名</span></div>
+                                    <div class="obligation"><span class="mark">*</span><span>职责</span></div>
                                     <div class="demp"><span>部门</span></div>
-                                    <div style="width: 8%;" class="duty"><span>职务</span></div>
+                                    <div class="duty"><span>职务</span></div>
                                     <div class="tel"><span>固话</span></div>
-                                    <div class="phone"><span>手机</span></div>
-                                    <div style="width:16%;" class="email"><span>邮件</span></div>
-                                    <div style="width:28%;" class="address2"><span>地址</span></div>
+                                    <div class="phone"><span class="mark">*</span><span>手机</span></div>
+                                    <div class="email"><span class="mark">*</span><span>邮件</span></div>
+                                    <div class="qq"><span>QQ</span></div>
+                                    <div class="weixin"><span>微信</span></div>
+                                    <div class="address2"><span>地址</span></div>
+                                    <div class="operation"><span>操作</span></div>
                                 </div>
                             </div>
                             <div class="contactList listBoxStyle">
@@ -216,19 +233,19 @@
                     <div class=" businessScope">
                         <div>
                             <label for="">业务范畴</label>
-                            <div class="businessCheckbox">
-                                <input type="checkbox" value="AI" disabled><label for="">AI</label>
-                                <input type="checkbox" value="AE" disabled><label for="">AE</label>
-                                <input type="checkbox" value="SI" disabled><label for="">SI</label>
-                                <input type="checkbox" value="SE" disabled><label for="">SE</label>
-                                <input type="checkbox" value="TI" disabled><label for="">TI</label>
-                                <input type="checkbox" value="TE" disabled><label for="">TE</label>
-                                <input type="checkbox" value="OI" disabled><label for="">OI</label>
-                                <input type="checkbox" value="OE" disabled><label for="">OE</label>
-                                <input type="checkbox" value="IT" disabled><label for="">IT</label>
-                                <input type="checkbox" value="DDN" disabled><label for="">DDN</label>
-                                <input type="checkbox" value="YYOX" disabled><label for="">YYOX</label>
-                                <input type="checkbox" value="Industrial" disabled><label for="">Industrial</label>
+                            <div class="businessCheckbox clearfix">
+                                <div class="fl"><input type="checkbox" value="AI" disabled><label for="">AI</label><span class="hoverSpan">空运进口Air Import</span></div>
+                                <div class="fl"><input type="checkbox" value="AE" disabled><label for="">AE</label><span class="hoverSpan">空运出口Air Export</span></div>
+                                <div class="fl"><input type="checkbox" value="SI" disabled><label for="">SI</label><span class="hoverSpan">海运进口Sea Import</span></div>
+                                <div class="fl"><input type="checkbox" value="SE" disabled><label for="">SE</label><span class="hoverSpan">海运出口Sea Export</span></div>
+                                <div class="fl"><input type="checkbox" value="TI" disabled><label for="">TI</label><span class="hoverSpan">铁路进口Train Import</span></div>
+                                <div class="fl"><input type="checkbox" value="TE" disabled><label for="">TE</label><span class="hoverSpan">铁路出口Train Export</span></div>
+                                <div class="fl"><input type="checkbox" value="OI" disabled><label for="">OI</label><span class="hoverSpan">陆运进口Overland Import</span></div>
+                                <div class="fl"><input type="checkbox" value="OE" disabled><label for="">OE</label><span class="hoverSpan">陆运出口Overland Export</span></div>
+                                <div class="fl"><input type="checkbox" value="IT" disabled><label for="">IT</label><span class="hoverSpan">国内运输Internal Transportation</span></div>
+                                <div class="fl"><input type="checkbox" value="DDN" disabled><label for="">DDN</label><span class="hoverSpan">达达牛</span></div>
+                                <div class="fl"><input type="checkbox" value="YYOX" disabled><label for="">YYOX</label><span class="hoverSpan">邮客</span></div>
+                                <div class="fl"><input type="checkbox" value="Industrial" disabled><label for="">Industrial</label><span class="hoverSpan">钢贸</span></div>
                             </div>
                             <input id="scopeBusiness" style="width:0;height: 0;opacity: 0;" name="scopeBusiness" type="text">
                         </div>
@@ -243,205 +260,570 @@
                                 <input type="checkbox" value="干线承运人" disabled><label for="">干线承运人</label>
                                 <input type="checkbox" value="不可控供应商" disabled><label for="">不可控供应商</label>
                                 <input type="checkbox" value="延伸服务供应商" disabled><label for="">延伸服务供应商</label>
-                                <input type="checkbox" value="收发货人" disabled><label for="">收发货人</label>
+                               <!-- <input type="checkbox" value="收发货人" disabled><label for="">收发货人</label>-->
                                 <input type="checkbox" value="结算对象" disabled><label for="">结算对象</label>
                             </div>
                             <!--隐藏的合作伙伴分类-->
                             <input id="partnerCategory" class="hiddenInput" type="text" name="partnerCategory" required>
                         </div>
                     </div>
-                    <h4>分类详细信息</h4>
-                    <div class="wbkhStyle clearfix">
-                        <h5>外部客户</h5>
-                        <div class="fl fl1">
-                            <div class="topLayer">
-                                <div><h6>客户分类</h6></div>
-                                <div id="customerClass">
-                                    <input class="customerClass" type="checkbox" value="直客" disabled><label for="">直客</label>
-                                    <input class="customerClass" type="checkbox" value="关键客户" disabled><label for="">关键客户</label>
-                                    <input class="customerClass" type="checkbox" value="代理" disabled><label for="">代理</label>
-                                    <input class="customerClass" type="checkbox" value="海外客户" disabled><label for="">海外客户</label>
-                                </div>
-                                <input class="hiddenInput" id="wbkhCustomerClass" type="text" name="wbkhCustomerClass">
-                            </div>
-                            <div class="bottomLayer">
-                                <input class="wbkhIsPayForAnother" type="checkbox" disabled><h6>代垫</h6>
-                                <input class="hiddenInput" name="wbkhIsPayForAnother"  type="text" value="0" readonly>
-                                <div>
-                                    <label style="margin-bottom: 5px;" for="">代垫期限（天）</label><input class="daiDian wbkhPaymentTerm" type="text" readonly>
-                                    <label for="">代垫额度（万元）</label><input class="daiDian wbkhPaidAmount" type="text" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="fl fl2">
-                            <div><label for="">信用等级</label>
-                                <input class="wbkhCreditRating" type="text" readonly>
-                            </div>
-                            <div><label for="">信用期限类型</label>
-                                <select name="wbkhTypeCreditPeriod" class="wbkhTypeCreditPeriod" disabled>
-                                    <option value="业务日期">业务日期</option>
-                                    <option value="账单日期">账单日期</option>
-                                    <option value="发票日期">发票日期</option>
-                                </select>
-                            </div>
-                            <div><label for="">信用期限（天）</label>
-                                <input name="wbkhCreditPeriod" class="wbkhCreditPeriod" type="text" readonly>
-                            </div>
-                            <div><label for="">信用额度(万元)</label>
-                                <input name="wbkhLineCredit" class="wbkhLineCredit" type="text" readonly>
-                            </div>
-                        </div>
-                        <div class="fl fl3">
-                            <div style="margin-bottom: 15px">
-                                <h6>开票类型</h6>
-                                <select class="wbkhInvoiceType" name="wbkhInvoiceType" disabled>
-                                    <option value="增值税普票">增值税普票</option>
-                                    <option value="增值税专票">增值税专票</option>
-                                    <option value="DebitNote">DebitNote</option>
-                                </select>
-                            </div>
-                            <div class="invoiceTypeTitle"><span>增值税普票</span></div>
-                            <div class="bankInfo clearfix">
-                                <div class="fl3Div">
-                                    <label for="">开户银行</label><input name="wbkhDepositBank" class="wbkhDepositBank bank" type="text" readonly>
-                                    <span class="mark sbmMark">*</span><label for="">纳税人识别码</label><input name="headingCode" class="Taxpayers headingCode" type="text" readonly>
-                                </div>
-                                <div class="fl3Div">
-                                    <label for="">银行账号</label><input name="wbkhBankAccount" class="bankNo wbkhBankAccount" type="text" readonly>
-                                    <label for="">公司电话</label><input name="wbkhCompanyTel" class="tel wbkhCompanyTel" type="text" readonly>
-                                </div>
-                                <div class="fl3Div">
-                                    <label for="">公司地址</label><input name="wbkhCompanyAddress" class="comAddress wbkhCompanyAddress" type="text" readonly>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="status clearfix">
+                        <input id="isBlacklist" type="checkbox" disabled><label for="">黑名单</label>
+                        <!--隐藏黑名单-->
+                        <input class="hiddenInput" name="isBlacklist" type="text" value="0">
+                        <input id="isDisable" type="checkbox" disabled><label for="">停用</label>
+                        <input class="hiddenInput" name="isDisable" type="text" value="0">
+                        <label for="">停用备注</label><input id="disableRemark" name="disableRemark" class="reason" type="text" readonly>
                     </div>
-                    <div class="wbkhStyle clearfix">
-                        <h5>互为代理</h5>
-                        <div class="fl fl1">
-                            <div class="topLayer">
-                                <div><label class="income" >进项税票*</label>
-                                    <select style="height: 30px;width: 43%;" name="hwdlTaxReceipt" class="hwdlTaxReceipt" disabled>
+                    <h4>分类详细信息</h4>
+                    <!--外部客户 start-->
+                    <div class="lump wbkhStyle clearfix" id="externalClient">
+                        <h5>外部客户</h5>
+                        <div id="externalClientBox" class="clearfix hidden">
+                            <div class="fl fl1">
+                                <div class="topLayer">
+                                    <div><h6>客户分类</h6></div>
+                                    <div id="customerClass" class="customerClassBox">
+                                        <input class="customerClass" type="checkbox" disabled value="直客"><label for="">直客</label>
+                                        <input class="customerClass" type="checkbox" disabled value="关键客户"><label for="">关键客户</label>
+                                        <input class="customerClass" type="checkbox" disabled value="代理"><label for="">代理</label>
+                                        <input class="customerClass" type="checkbox" disabled value="海外客户"><label for="">海外客户</label>
+                                    </div>
+                                    <input class="hiddenInput must" id="wbkhCustomerClass" type="text" name="wbkhCustomerClass">
+                                </div>
+                                <div class="bottomLayer">
+                                    <input class="wbkhIsPayForAnother" type="checkbox" disabled><h6>代垫</h6>
+                                    <input id="wbkhIsPayForAnother" class="hiddenInput" name="wbkhIsPayForAnother"  type="text" value="0">
+                                    <div>
+                                        <div><label style="margin-bottom: 5px;" for="">代垫期限（天）</label><input name="wbkhPaymentTerm" class="daiDian wbkhPaymentTerm must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
+                                        <div><label for="">代垫额度（万元）</label><input name="wbkhPaidAmount" class="daiDian wbkhPaidAmount must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fl fl2">
+                                <div><label for="">信用等级</label>
+                                    <select class="wbkhCreditRating wbkhCreditRating1 must"  name="wbkhCreditRating" disabled>
+
+                                    </select>
+                                </div>
+                                <div><label for="">信用额度(万元)</label>
+                                    <input name="wbkhLineCredit" class="wbkhLineCredit quality must" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
+                                </div>
+                                <div><label for="">已用额度(万元)</label>
+                                    <input name="" class="quality must" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
+                                </div>
+                            </div>
+                            <div class="fl fl3">
+                                <div style="margin-bottom: 15px">
+                                    <h6>开票类型</h6>
+                                    <select class="wbkhInvoiceType wbkhInvoiceType1 must" name="wbkhInvoiceType" disabled>
                                         <option value="增值税普票">增值税普票</option>
                                         <option value="增值税专票">增值税专票</option>
-                                        <option value="Invoice">Invoice</option>
+                                        <option value="DebitNote">DebitNote</option>
                                         <option value="其他">其他</option>
                                     </select>
                                 </div>
-                                <div style="margin-top: 10px">
-                                    <label class="income"  for="">进项税率%：</label>
-                                    <input class="hwdlTaxRate" name="hwdlTaxRate" style="width: 40%;" type="text" readonly>
+                                <div class="invoiceTypeTitle"><span>增值税普票</span></div>
+                                <div class="bankInfo bankInfo1 clearfix">
+                                    <div class="fl3Div">
+                                        <label for="">开户银行</label><input name="wbkhDepositBank" class="wbkhDepositBank bank" type="text" readonly>
+                                        <label for="">纳税人识别码</label><input name="headingCode" class="Taxpayers Taxpayers1 headingCode must" type="text" readonly>
+                                    </div>
+                                    <div class="fl3Div">
+                                        <label for="">银行账号</label><input name="wbkhBankAccount" class="bankNo wbkhBankAccount" type="text" readonly>
+                                        <label for="">公司电话</label><input name="wbkhCompanyTel" class="tel wbkhCompanyTel" type="text" readonly>
+                                    </div>
+                                    <div class="fl3Div">
+                                        <label for="">公司地址</label><input name="wbkhCompanyAddress" class="comAddress wbkhCompanyAddress" type="text" readonly>
+                                        <label for="">销项税率</label><input name="" class="outputRate" type="text" readonly>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="bottomLayer">
-                                <input class="wbkhIsPayForAnother" type="checkbox" disabled><h6>代垫</h6>
-                                <div>
-                                    <label style="margin-bottom: 5px;" for="">代垫期限（天）</label><input class="daiDian wbkhPaymentTerm" type="text" readonly>
-                                    <label for="">代垫额度（万元）</label><input class="daiDian wbkhPaidAmount" type="text" readonly>
+                            <div class="businessBox">
+                                <div class="AI businessItem fl">
+                                    <p>AI</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="fl fl2">
-                            <div><label for="">信用等级</label>
-                                <!--<select class="wbkhCreditRating" disabled>
-                                    <option value="A-协议保函">A-协议保函</option>
-                                    <option value="B-协议保函">B-协议保函</option>
-                                    <option value="C-付款买单">C-付款买单</option>
-                                </select>-->
-                                <input class="wbkhCreditRating" type="text" readonly>
-                            </div>
-                            <div><label for="">信用期限类型</label>
-                                <select class="wbkhTypeCreditPeriod" disabled>
-                                    <option value="业务日期">业务日期</option>
-                                    <option value="账单日期">账单日期</option>
-                                    <option value="发票日期">发票日期</option>
-                                </select>
-                            </div>
-                            <div><label for="">信用期限（天）</label>
-                                <input class="wbkhCreditPeriod" type="text" readonly>
-                            </div>
-                            <div><label for="">信用额度(万元)</label>
-                                <input class="wbkhLineCredit" type="text" readonly>
-                            </div>
-                        </div>
-                        <div class="fl fl3">
-                            <div style="margin-bottom: 15px">
-                                <h6>开票类型</h6>
-                                <select class="wbkhInvoiceType" disabled>
-                                    <option value="增值税普票">增值税普票</option>
-                                    <option value="增值税专票">增值税专票</option>
-                                    <option value="DebitNote">DebitNote</option>
-                                </select>
-                            </div>
-                            <div class="invoiceTypeTitle"><span>增值税普票</span></div>
-                            <div class="bankInfo clearfix">
-                                <div class="fl3Div">
-                                    <label for="">开户银行</label><input class="wbkhDepositBank bank"  type="text" readonly>
-                                    <span class="sbmMark mark">*</span><label for="">纳税人识别码</label><input class="Taxpayers headingCode" type="text" readonly>
+                                <div class="AE businessItem fl">
+                                    <p>AE</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
                                 </div>
-                                <div class="fl3Div">
-                                    <label for="">银行账号</label><input  class="bankNo wbkhBankAccount" type="text" readonly>
-                                    <label for="">公司电话</label><input class="tel wbkhCompanyTel" type="text" readonly>
+                                <div class="SI businessItem fl">
+                                    <p>SI</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
                                 </div>
-                                <div class="fl3Div">
-                                    <label for="">公司地址</label><input class="comAddress wbkhCompanyAddress" type="text" readonly>
+                                <div class="SE businessItem fl">
+                                    <p>SE</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="TI businessItem fl">
+                                    <p>TI</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="TE businessItem fl">
+                                    <p>TE</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="OI businessItem fl">
+                                    <p>OI</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="OE businessItem fl">
+                                    <p>OE</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="IT businessItem fl">
+                                    <p>IT</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="DDN businessItem fl">
+                                    <p>DDN</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="YYOX businessItem fl">
+                                    <p>YYOX</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="Industrial businessItem fl">
+                                    <p>Industrial</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="wbkhStyle clearfix">
+                    <!--外部客户 end-->
+
+                    <!--互为代理 start-->
+                    <div class="lump wbkhStyle clearfix" id="eachAgent">
+                        <h5>互为代理</h5>
+                        <div id="eachAgentBox" class="hidden clearfix">
+                            <div class="fl fl1">
+                                <div class="topLayer">
+                                    <div><label class="income" >进项税票*</label>
+                                        <select style="height: 30px;width: 43%;" name="hwdlTaxReceipt" class="hwdlTaxReceipt must" disabled>
+                                            <option value="增值税普票">增值税普票</option>
+                                            <option value="增值税专票">增值税专票</option>
+                                            <option value="Invoice">Invoice</option>
+                                            <option value="其他">其他</option>
+                                        </select>
+                                    </div>
+                                    <div style="margin-top: 10px">
+                                        <label class="income"  for="">进项税率%：</label>
+                                        <input class="hwdlTaxRate hwdlTaxRate2 must" name="hwdlTaxRate" style="width: 40%;" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" readonly>
+                                    </div>
+                                </div>
+                                <div class="bottomLayer">
+                                    <input class="wbkhIsPayForAnother" type="checkbox" disabled><h6>代垫</h6>
+                                    <div>
+                                        <div><label style="margin-bottom: 5px;" for="">代垫期限（天）</label><input class="must daiDian wbkhPaymentTerm" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
+                                        <div><label for="">代垫额度（万元）</label><input class="must daiDian wbkhPaidAmount" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fl fl2">
+                                <div><label for="">信用等级</label>
+                                    <select class="wbkhCreditRating wbkhCreditRating2 must" disabled>
+
+                                    </select>
+                                </div>
+                                <div><label for="">信用额度(万元)</label>
+                                    <input name="wbkhLineCredit2" class="wbkhLineCredit must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled>
+                                </div>
+                                <div><label for="">已用额度(万元)</label>
+                                    <input name="" class="quality must" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
+                                </div>
+                            </div>
+                            <div class="fl fl3">
+                                <div style="margin-bottom: 15px">
+                                    <h6>开票类型</h6>
+                                    <select class="wbkhInvoiceType wbkhInvoiceType2 must" disabled>
+                                        <option value="增值税普票">增值税普票</option>
+                                        <option value="增值税专票">增值税专票</option>
+                                        <option value="DebitNote">DebitNote</option>
+                                        <option value="其他">其他</option>
+                                    </select>
+                                </div>
+                                <div class="invoiceTypeTitle"><span>增值税普票</span></div>
+                                <div class="bankInfo bankInfo2 clearfix">
+                                    <div class="fl3Div">
+                                        <label for="">开户银行</label><input class="wbkhDepositBank bank"  type="text" readonly>
+                                        <label for="">纳税人识别码</label><input class="Taxpayers Taxpayers2 headingCode must" type="text" readonly>
+                                    </div>
+                                    <div class="fl3Div">
+                                        <label for="">银行账号</label><input  class="bankNo wbkhBankAccount" type="text" readonly>
+                                        <label for="">公司电话</label><input class="tel wbkhCompanyTel" type="text" readonly>
+                                    </div>
+                                    <div class="fl3Div">
+                                        <label for="">公司地址</label><input class="comAddress wbkhCompanyAddress" type="text" readonly>
+                                        <label for="">销项税率</label><input name="" class="outputRate" type="text" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="businessBox">
+                                <div class="AI businessItem fl">
+                                    <p>AI</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="AE businessItem fl">
+                                    <p>AE</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="SI businessItem fl">
+                                    <p>SI</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="SE businessItem fl">
+                                    <p>SE</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="TI businessItem fl">
+                                    <p>TI</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="TE businessItem fl">
+                                    <p>TE</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="OI businessItem fl">
+                                    <p>OI</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="OE businessItem fl">
+                                    <p>OE</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="IT businessItem fl">
+                                    <p>IT</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="DDN businessItem fl">
+                                    <p>DDN</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="YYOX businessItem fl">
+                                    <p>YYOX</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="Industrial businessItem fl">
+                                    <p>Industrial</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--互为代理 end-->
+
+                    <!--海外代理 start-->
+                    <div class="lump wbkhStyle clearfix" id="overseasAgency">
                         <h5>海外代理</h5>
-                        <div class="fl fl1">
-                            <div class="bottomLayer">
-                                <input class="wbkhIsPayForAnother"  type="checkbox" disabled><h6>代垫</h6>
-                                <div>
-                                    <label style="margin-bottom: 5px;" for="">代垫期限（天）</label><input class="daiDian wbkhPaymentTerm" type="text" readonly>
-                                    <label for="">代垫额度（万元）</label><input class="daiDian wbkhPaidAmount" type="text" readonly>
+                        <div id="overseasAgencyBox" class="clearfix hidden">
+                            <div class="clearfix">
+                                <div class="fl fl1">
+                                    <div class="bottomLayer">
+                                        <input class="wbkhIsPayForAnother"  type="checkbox" disabled><h6>代垫</h6>
+                                        <div>
+                                            <div><label style="margin-bottom: 5px;" for="">代垫期限（天）</label><input class="daiDian wbkhPaymentTerm must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
+                                            <div><label for="">代垫额度（万元）</label><input class="daiDian wbkhPaidAmount must" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fl fl2">
+                                    <div><label for="">信用等级</label>
+                                        <select class="wbkhCreditRating wbkhCreditRating3 must">
+
+                                        </select>
+                                    </div>
+                                    <div><label for="">信用额度(万元)</label>
+                                        <input class="wbkhLineCredit must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled>
+                                    </div>
+                                    <div><label for="">已用额度(万元)</label>
+                                        <input name="" class="quality must" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="businessBox">
+                                <div class="AI businessItem fl">
+                                    <p>AI</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="AE businessItem fl">
+                                    <p>AE</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="SI businessItem fl">
+                                    <p>SI</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="SE businessItem fl">
+                                    <p>SE</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="TI businessItem fl">
+                                    <p>TI</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="TE businessItem fl">
+                                    <p>TE</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="OI businessItem fl">
+                                    <p>OI</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="OE businessItem fl">
+                                    <p>OE</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="IT businessItem fl">
+                                    <p>IT</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="DDN businessItem fl">
+                                    <p>DDN</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="YYOX businessItem fl">
+                                    <p>YYOX</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                </div>
+                                <div class="Industrial businessItem fl">
+                                    <p>Industrial</p>
+                                    <div ><label for="">信用期限类型</label><select>
+                                        <option value="">业务日期</option>
+                                        <option value="">账单日期</option>
+                                        <option value="">发票日期</option>
+                                    </select>
+                                    </div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="fl fl2">
-                            <div><label for="">信用等级</label>
-                                <!--<select class="wbkhCreditRating" disabled>
-                                    <option value="A-协议保函">A-协议保函</option>
-                                    <option value="B-协议保函">B-协议保函</option>
-                                    <option value="C-付款买单">C-付款买单</option>
-                                </select>-->
-                                <input class="wbkhCreditRating" type="text" readonly>
-                            </div>
-                            <div><label for="">信用期限类型</label>
-                                <select class="wbkhTypeCreditPeriod" disabled>
-                                    <option value="业务日期">业务日期</option>
-                                    <option value="账单日期">账单日期</option>
-                                    <option value="发票日期">发票日期</option>
-                                </select>
-                            </div>
-                            <div><label for="">信用期限（天）</label>
-                                <input class="wbkhCreditPeriod" type="text" readonly>
-                            </div>
-                            <div><label for="">信用额度(万元)</label>
-                                <input class="wbkhLineCredit" type="text" readonly>
-                            </div>
-                        </div>
                     </div>
-                    <div class="wbkhStyle clearfix">
+                    <!--海外代理 end-->
+
+                    <!--干线承运人 start-->
+                    <div class="lump wbkhStyle clearfix" id="trunkCarrier">
                         <h5>干线承运人</h5>
-                        <div style="padding:10px 20px 20px;border: 1px solid #dddddd;width:96%;">
+                        <div id="trunkCarrierBox" class="clearfix hidden" style="padding:10px 20px 20px;border: 1px solid #dddddd;width:96%;">
                             <h6>服务类别</h6>
                             <input class="hiddenInput" id="gxcyrClassOfService" name="gxcyrClassOfService" type="text">
                             <div class="gxcyrClassOfServiceBox classOfServiceBox" style="margin: 10px;">
-                                <input class="classOfSer1" type="checkbox" value="干线运输" disabled><label style="width: auto;margin-right: 2%;" for="">干线运输</label>
-                                <input class="classOfSer2" type="checkbox" value="支线运输" disabled><label style="width: auto;margin-right: 2%;" for="">支线运输</label>
-                                <input class="classOfSer3" type="checkbox" value="操作服务" disabled><label style="width: auto;margin-right: 2%;" for="">操作服务</label>
-                                <input class="classOfSer4" type="checkbox" value="包装服务" disabled><label style="width: auto;margin-right: 2%;" for="">包装服务</label>
-                                <input class="classOfSer5" type="checkbox" value="仓储服务" disabled><label style="width: auto;margin-right: 2%;" for="">仓储服务</label>
-                                <input class="classOfSer6" type="checkbox" value="邮资快递" disabled><label style="width: auto;margin-right: 2%;" for="">邮资快递</label>
-                                <input class="classOfSer7" type="checkbox" value="政府检验" disabled><label style="width: auto;margin-right: 2%;" for="">政府检验</label>
-                                <input class="classOfSer8" type="checkbox" value="数据交换" disabled><label style="width: auto;margin-right: 2%;" for="">数据交换</label>
+                                <input class="classOfSer1" type="checkbox" value="干线运输" checked disabled><label style="width: auto;margin-right: 2%;" for="">干线运输</label>
                             </div>
+                            <input class="hiddenInput service1 must" name="classOfServiceBox1" type="text">
                             <div class="topLayer">
                                 <div><label class="income" >进项税票*</label>
-                                    <select style="height: 30px;width:200px;" class="hwdlTaxReceipt" disabled>
+                                    <select style="height: 30px;width:200px;" class="hwdlTaxReceipt must" disabled>
                                         <option value="增值税普票">增值税普票</option>
                                         <option value="增值税专票">增值税专票</option>
                                         <option value="Invoice">Invoice</option>
@@ -450,26 +832,28 @@
                                 </div>
                                 <div style="margin-top: 5px">
                                     <label class="income"  for="">进项税率%：</label>
-                                    <input class="hwdlTaxRate" style="width: 188px;" type="text" readonly>
+                                    <input class="hwdlTaxRate must" style="width: 188px;" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" readonly>
                                 </div>
                             </div>
                         </div>
-                        <div></div>
                     </div>
-                    <div class="wbkhStyle clearfix">
+                    <!--干线承运人 end-->
+
+                    <!--不可控供应商 start-->
+                    <div class="lump wbkhStyle clearfix" id="uncontrollableSupplier">
                         <h5>不可控供应商</h5>
-                        <div style="padding:10px 20px 20px;border: 1px solid #dddddd;width:96%;">
+                        <div id="uncontrollableSupplierBox" class="clearfix hidden" style="padding:10px 20px 20px;border: 1px solid #dddddd;width:96%;">
                             <h6>服务类别</h6>
-                            <div class="gxcyrClassOfServiceBox" style="margin: 10px;">
-                                <input class="classOfSer1" type="checkbox" value="干线运输" disabled><label style="width: auto;margin-right: 2%;" for="">干线运输</label>
-                                <input class="classOfSer2" type="checkbox" value="支线运输" disabled><label style="width: auto;margin-right: 2%;" for="">支线运输</label>
-                                <input class="classOfSer3" type="checkbox" value="操作服务" disabled><label style="width: auto;margin-right: 2%;" for="">操作服务</label>
-                                <input class="classOfSer4" type="checkbox" value="包装服务" disabled><label style="width: auto;margin-right: 2%;" for="">包装服务</label>
-                                <input class="classOfSer5" type="checkbox" value="仓储服务" disabled><label style="width: auto;margin-right: 2%;" for="">仓储服务</label>
-                                <input class="classOfSer6" type="checkbox" value="邮资快递" disabled><label style="width: auto;margin-right: 2%;" for="">邮资快递</label>
-                                <input class="classOfSer7" type="checkbox" value="政府检验" disabled><label style="width: auto;margin-right: 2%;" for="">政府检验</label>
-                                <input class="classOfSer8" type="checkbox" value="数据交换" disabled><label style="width: auto;margin-right: 2%;" for="">数据交换</label>
+                            <div class="gxcyrClassOfServiceBox classOfServiceBox" style="margin: 10px;">
+                                <input class="classOfSer2" type="checkbox" value="支线运输"><label style="width: auto;margin-right: 2%;" for="">支线运输</label>
+                                <input class="classOfSer3" type="checkbox" value="操作服务"><label style="width: auto;margin-right: 2%;" for="">操作服务</label>
+                                <input class="classOfSer4" type="checkbox" value="包装服务"><label style="width: auto;margin-right: 2%;" for="">包装服务</label>
+                                <input class="classOfSer5" type="checkbox" value="仓储服务"><label style="width: auto;margin-right: 2%;" for="">仓储服务</label>
+                                <input class="classOfSer6" type="checkbox" value="邮资快递"><label style="width: auto;margin-right: 2%;" for="">邮资快递</label>
+                                <input class="classOfSer7" type="checkbox" value="政府检验"><label style="width: auto;margin-right: 2%;" for="">政府检验</label>
+                                <input class="classOfSer8" type="checkbox" value="数据交换"><label style="width: auto;margin-right: 2%;" for="">数据交换</label>
                             </div>
+                            <input class="hiddenInput service2 must" name="classOfServiceBox2" type="text">
                             <div class="topLayer">
                                 <div><label class="income" >进项税票*</label>
                                     <select style="height: 30px;width:200px;" class="hwdlTaxReceipt" disabled>
@@ -481,29 +865,31 @@
                                 </div>
                                 <div style="margin-top: 5px">
                                     <label class="income"  for="">进项税率%：</label>
-                                    <input class="hwdlTaxRate" style="width: 188px;" type="text" readonly>
+                                    <input class="hwdlTaxRate must" style="width: 188px;" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" readonly>
                                 </div>
                             </div>
                         </div>
-                        <div></div>
                     </div>
-                    <div class="wbkhStyle clearfix">
+                    <!--不可控供应商 end-->
+
+                    <!--延伸服务供应商 start-->
+                    <div class="lump wbkhStyle clearfix" id="extendServiceProviders">
                         <h5>延伸服务供应商</h5>
-                        <div style="padding:10px 20px 20px;border: 1px solid #dddddd;width:96%;">
+                        <div id="extendServiceProvidersBox" class="clearfix hidden" style="padding:10px 20px 20px;border: 1px solid #dddddd;width:96%;">
                             <h6>服务类别</h6>
-                            <div class="gxcyrClassOfServiceBox" style="margin: 10px;">
-                                <input class="classOfSer1" type="checkbox" value="干线运输" disabled><label style="width: auto;margin-right: 2%;" for="">干线运输</label>
-                                <input class="classOfSer2" type="checkbox" value="支线运输" disabled><label style="width: auto;margin-right: 2%;" for="">支线运输</label>
-                                <input class="classOfSer3" type="checkbox" value="操作服务" disabled><label style="width: auto;margin-right: 2%;" for="">操作服务</label>
-                                <input class="classOfSer4" type="checkbox" value="包装服务" disabled><label style="width: auto;margin-right: 2%;" for="">包装服务</label>
-                                <input class="classOfSer5" type="checkbox" value="仓储服务" disabled><label style="width: auto;margin-right: 2%;" for="">仓储服务</label>
-                                <input class="classOfSer6" type="checkbox" value="邮资快递" disabled><label style="width: auto;margin-right: 2%;" for="">邮资快递</label>
-                                <input class="classOfSer7" type="checkbox" value="政府检验" disabled><label style="width: auto;margin-right: 2%;" for="">政府检验</label>
-                                <input class="classOfSer8" type="checkbox" value="数据交换" disabled><label style="width: auto;margin-right: 2%;" for="">数据交换</label>
+                            <div class="gxcyrClassOfServiceBox classOfServiceBox" style="margin: 10px;">
+                                <input class="classOfSer2" type="checkbox" value="支线运输"><label style="width: auto;margin-right: 2%;" for="">支线运输</label>
+                                <input class="classOfSer3" type="checkbox" value="操作服务"><label style="width: auto;margin-right: 2%;" for="">操作服务</label>
+                                <input class="classOfSer4" type="checkbox" value="包装服务"><label style="width: auto;margin-right: 2%;" for="">包装服务</label>
+                                <input class="classOfSer5" type="checkbox" value="仓储服务"><label style="width: auto;margin-right: 2%;" for="">仓储服务</label>
+                                <input class="classOfSer6" type="checkbox" value="邮资快递"><label style="width: auto;margin-right: 2%;" for="">邮资快递</label>
+                                <input class="classOfSer7" type="checkbox" value="政府检验"><label style="width: auto;margin-right: 2%;" for="">政府检验</label>
+                                <input class="classOfSer8" type="checkbox" value="数据交换"><label style="width: auto;margin-right: 2%;" for="">数据交换</label>
                             </div>
+                            <input class="hiddenInput service3 must" name="classOfServiceBox3" type="text">
                             <div class="topLayer">
                                 <div><label class="income" >进项税票*</label>
-                                    <select style="height: 30px;width: 200px;" class="hwdlTaxReceipt" disabled>
+                                    <select style="height: 30px;width: 200px;" class="hwdlTaxReceipt must" disabled>
                                         <option value="增值税普票">增值税普票</option>
                                         <option value="增值税专票">增值税专票</option>
                                         <option value="Invoice">Invoice</option>
@@ -512,66 +898,74 @@
                                 </div>
                                 <div style="margin-top: 5px">
                                     <label class="income"  for="">进项税率%：</label>
-                                    <input class="hwdlTaxRate" style="width: 188px;" type="text" readonly>
+                                    <input class="hwdlTaxRate must" style="width: 188px;" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" readonly>
                                 </div>
-                            </div>
-                        </div>
-                        <div></div>
-                    </div>
-                    <div class="wbkhStyle clearfix">
-                        <h5>收发货人</h5>
-                        <div class="consignee clearfix">
-                            <div>
-                                <input class="hiddenInput" type="text" name="sfhrIsConsignee" value="0">
-                                <input id="sfhrIsConsignee" type="checkbox" disabled><label for="">收货人</label>
-                            </div>
-                            <div class="consigneeInfo consigneeInput">
-                                <div style="margin-bottom: 10px;" class="clearfix consigneeInfoBox">
-                                    <div class="fl"><label for="">国家</label><input id="sfhrConsigneeNation" name="sfhrConsigneeNation" type="text" readonly></div>
-                                    <div class="fl"><label for="">所属州</label><input name="sfhrConsigneeContinent" type="text" readonly></div>
-                                    <div class="fl"><label for="">城市</label><input name="sfhrConsigneeCity" type="text" readonly></div>
-                                    <div class="fl"><label for="">邮编</label><input name="sfhrConsigneeZipCode" type="text" readonly></div>
-                                    <div class="fl"><label for="">电话</label><input name="sfhrConsigneePhone" type="text" readonly></div>
-                                </div>
-                                <div><label for="">地址</label><input style="width: 60%;" name="sfhrConsigneeAddress" type="text" readonly></div>
-                            </div>
-                        </div>
-                        <div style="margin: 10px 0;">
-                            <input class="hiddenInput" name="sfhrIsConsigneesAddress" type="text" value="0">
-                            <input id="sfhrIsConsigneesAddress"  type="checkbox" disabled><label style="width:auto;" for="">与收货人地址相同</label></div>
-                        <div class="consignee clearfix">
-                            <div class="">
-                                <input class="hiddenInput" name="sfhrIsShipper" type="text" value="0">
-                                <input  id="sfhrIsShipper" type="checkbox" disabled><label for="">发货人</label>
-                            </div>
-                            <div class="consigneeInfo shipperInput">
-                                <div  style="margin-bottom: 10px;" class="clearfix consigneeInfoBox">
-                                    <div class="fl"><label for="">国家</label><input name="sfhrShipperNation" type="text" value="" readonly></div>
-                                    <div class="fl"><label for="">所属州</label><input name="sfhrShipperContinent" type="text" readonly></div>
-                                    <div class="fl"><label for="">城市</label><input name="sfhrShipperCity" type="text" readonly></div>
-                                    <div class="fl"><label for="">邮编</label><input name="sfhrShipperZipCode" type="text" readonly></div>
-                                    <div class="fl"><label for="">电话</label><input name="sfhrShipperPhone" type="text" readonly></div>
-                                </div>
-                                <div><label for="">地址</label><input style="width: 60%;" name="sfhrShipperAddress" type="text" value="" readonly></div>
                             </div>
                         </div>
                     </div>
-                    <div class="wbkhStyle clearfix">
+                    <!--延伸服务供应商 start-->
+
+                    <!--收发货人 start-->
+                    <!-- <div class="lump wbkhStyle clearfix" id="consigneeAndConsigner">
+                         <h5>收发货人</h5>
+                         <div id="consigneeAndConsignerBox" class="clearfix hidden">
+                             <div class="consignee clearfix">
+                                 <div>
+                                     <input class="hiddenInput" type="text" name="sfhrIsConsignee" value="0">
+                                     <input id="sfhrIsConsignee" type="checkbox"><label for="">收货人</label>
+                                 </div>
+                                 <div class="consigneeInfo consigneeInput">
+                                     <div style="margin-bottom: 10px;" class="clearfix consigneeInfoBox">
+                                         <div class="fl"><label for="">国家</label><input id="sfhrConsigneeNation" name="sfhrConsigneeNation" type="text" disabled></div>
+                                         <div class="fl"><label for="">所属州</label><input name="sfhrConsigneeContinent" type="text" disabled></div>
+                                         <div class="fl"><label for="">城市</label><input name="sfhrConsigneeCity" type="text" disabled></div>
+                                         <div class="fl"><label for="">邮编</label><input name="sfhrConsigneeZipCode" type="text" disabled></div>
+                                         <div class="fl"><label for="">电话</label><input name="sfhrConsigneePhone" type="text" disabled></div>
+                                     </div>
+                                     <div><label for="">地址</label><input style="width: 60%;" name="sfhrConsigneeAddress" type="text" disabled></div>
+                                 </div>
+                             </div>
+                             <div style="margin: 10px 0;">
+                                 <input class="hiddenInput" name="sfhrIsConsigneesAddress" type="text" value="0">
+                                 <input id="sfhrIsConsigneesAddress"  type="checkbox"><label style="width:auto;" for="">与收货人地址相同</label></div>
+                             <div class="consignee clearfix">
+                                 <div class="">
+                                     <input class="hiddenInput" name="sfhrIsShipper" type="text" value="0">
+                                     <input  id="sfhrIsShipper" type="checkbox"><label for="">发货人</label>
+                                 </div>
+                                 <div class="consigneeInfo shipperInput">
+                                     <div style="margin-bottom: 10px;" class="clearfix consigneeInfoBox">
+                                         <div class="fl"><label for="">国家</label><input name="sfhrShipperNation" type="text" value="" disabled></div>
+                                         <div class="fl"><label for="">所属州</label><input name="sfhrShipperContinent" type="text" disabled></div>
+                                         <div class="fl"><label for="">城市</label><input name="sfhrShipperCity" type="text" disabled></div>
+                                         <div class="fl"><label for="">邮编</label><input name="sfhrShipperZipCode" type="text" disabled></div>
+                                         <div class="fl"><label for="">电话</label><input name="sfhrShipperPhone" type="text" disabled></div>
+                                     </div>
+                                     <div><label for="">地址</label><input style="width: 60%;" name="sfhrShipperAddress" type="text" disabled></div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>-->
+                    <!--收发货人 end-->
+
+                    <!--结算对象 start-->
+                    <div id="settlementObject" class="wbkhStyle lump clearfix">
                         <h5>结算对象</h5>
-                        <div class="fl fl3">
+                        <div id="settlementObjectBox" class="clearfix hidden fl fl3">
                             <div style="margin-bottom: 15px">
                                 <h6>开票类型</h6>
-                                <select class="wbkhInvoiceType" disabled>
+                                <select class="wbkhInvoiceType wbkhInvoiceType3 must" disabled>
                                     <option value="增值税普票">增值税普票</option>
                                     <option value="增值税专票">增值税专票</option>
                                     <option value="DebitNote">DebitNote</option>
+                                    <option value="其他">其他</option>
                                 </select>
                             </div>
                             <div class="invoiceTypeTitle"><span>增值税普票</span></div>
-                            <div class="bankInfo clearfix">
+                            <div class="bankInfo bankInfo3 clearfix">
                                 <div class="fl3Div">
                                     <label for="">开户银行</label><input class="wbkhDepositBank bank"  type="text" readonly>
-                                    <span class="sbmMark mark">*</span><label for="">纳税人识别码</label><input class="Taxpayers headingCode" type="text" readonly>
+                                    <label for="">纳税人识别码</label><input class="Taxpayers Taxpayers3 headingCode must" type="text" readonly>
                                 </div>
                                 <div class="fl3Div">
                                     <label for="">银行账号</label><input class="bankNo wbkhBankAccount" type="text" readonly>
@@ -579,12 +973,13 @@
                                 </div>
                                 <div class="fl3Div">
                                     <label for="">公司地址</label><input class="comAddress wbkhCompanyAddress" type="text" readonly>
+                                    <label for="">销项税率</label><input name="" class="outputRate" type="text" readonly>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!--结算对象 end-->
                     <div style="width: 120px;margin-left: -60px;" class="buttonBox">
-                       <!-- <button class="fl" id="savePartner" type="submit">保存</button>-->
                         <button id="close" class="fl" type="button">关闭</button>
                     </div>
                 </form>

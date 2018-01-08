@@ -87,12 +87,6 @@
         <result column="industrial_credit_period" property="industrialCreditPeriod" jdbcType="DECIMAL" />
         <!--默认币种-->
         <result column="default_currency" property="defaultCurrency" jdbcType="VARCHAR" />
-        <!--利润中心名称-->
-        <result column="profits_center_name" property="profitsCenterName" jdbcType="VARCHAR" />
-        <!--利润中心id-->
-        <result column="profits_center_id" property="profitsCenterId" jdbcType="INTEGER" />
-        <!--上传下载文件名-->
-        <result column="file_name" property="fileName" jdbcType="INTEGER" />
 
     </resultMap>
     <resultMap id="BaseResultMap" type="com.pj.partner.pojo.PartnerDetails" >

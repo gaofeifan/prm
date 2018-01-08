@@ -10,6 +10,7 @@
 @import "power.less";
 @import "log.less";
 @import "partnerNew.less";
+@import "internalCustomer.less";
 html,body{
   height: 100%;
   background-color: @boardColor;
@@ -126,6 +127,7 @@ html,body{
             margin-top: 15px;
             color: #666;
             padding-left: 25px;
+            font-size: 16px;
           }
         }
         .business{
@@ -385,4 +387,15 @@ input.date_in{
 }
 .hidden{
   display: none;
+}
+
+@media screen and (max-width: 1600px) {
+  #wrapper #main{
+    padding-left: 180px;
+  }
+  #wrapper{
+    #left{
+      width: 180px;
+    }
+  }
 }

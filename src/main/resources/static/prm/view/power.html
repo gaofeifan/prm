@@ -41,7 +41,7 @@
             <h4>从指定岗位复制权限</h4>
             <div class="powerCopy clearfix">
                 <div>
-                    <label for="">公司查询</label>
+                    <label for="">公司</label>
                     <select name="" id="companyTo">
                         <option value="">请选择公司</option>
                     </select>
@@ -56,6 +56,12 @@
                     <label for="">岗位</label>
                     <select name="" id="postTo">
                         <option value="">请选择岗位</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="">员工</label>
+                    <select name="" id="staffTo">
+                        <option value="">请选择员工</option>
                     </select>
                 </div>
             </div>
@@ -91,6 +97,7 @@
 </script>
 <script id="staffTemplate" type="text/x-dot-template">
     {{~it:value:index}}
-    <p>{{= value.username}}</p>
+    <!--<p>{{= value.username}}</p>-->
+    <p><input class="staffIn" staff-id="{{= value.id}}" name="staff" type="radio"><label for="">{{= value.username}}</label></p>
     {{~}}
 </script>

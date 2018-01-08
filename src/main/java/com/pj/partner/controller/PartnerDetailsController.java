@@ -5,6 +5,7 @@ import com.pj.cache.PartnerDetailsCache;
 import com.pj.conf.base.BaseController;
 import com.pj.conf.utils.ExcelUtils;
 import com.pj.conf.utils.ThreadEmail;
+import com.pj.conf.utils.TypeConversionUtils;
 import com.pj.partner.pojo.PartnerAddress;
 import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.pojo.PartnerDetailsShifFile;
@@ -21,12 +22,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +40,7 @@ public class PartnerDetailsController extends BaseController {
     private PartnerDetailsService partnerDetailsService;
     @Autowired(required = false)
     private HierarchyMapper hierarchyMapper;
-  @Autowired
+    @Autowired
     private PartnerLinkmanService partnerLinkmanService;
     @Autowired
     private AuthUserService authUserService;
@@ -57,7 +55,6 @@ public class PartnerDetailsController extends BaseController {
      *  查询树桩数据
      * @user  GFF
      * @param name
-     * \
      * @param offPartner
      * @param blacklistPartner
      * @return
@@ -158,12 +155,18 @@ public class PartnerDetailsController extends BaseController {
             List<PartnerAddress> list = JSONArray.toList(array, PartnerAddress.class);
             partnerDetails.setAddressList(list);
         }
+        for (int i = 0 ; i < fields.length ; i++) {
+            boolean b = this.partnerDetailsService.verifyValueRepeat(partnerDetails.getId(), fields[i], TypeConversionUtils.selectFieldValueByName(partnerDetails, fields[i]));
+            if (!b) {
+                return this.error("字段重复 " + fieldName[i]);
+            }
+        }
         partnerDetails = (PartnerDetails) ObjectTrim.beanAttributeValueTrim(partnerDetails);
         this.partnerDetailsService.insertSelective(partnerDetails,getRequest(),email);
         return this.success();
     }
 
-    /**-
+    /**
      *
      *
      * 获取代码长度
