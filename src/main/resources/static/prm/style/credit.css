@@ -26,11 +26,17 @@
 #credit .content .thead-outer .thead-core .thead-content .protocolType {
   width: 26%;
 }
+#credit .content .thead-outer .thead-core .thead-content .defaultLine {
+  width: 10%;
+}
+#credit .content .thead-outer .thead-core .thead-content .defaultDeadline {
+  width: 10%;
+}
 #credit .content .thead-outer .thead-core .thead-content .valid {
   width: 10%;
 }
 #credit .content .thead-outer .thead-core .thead-content .remark {
-  width: 30%;
+  width: 20%;
 }
 #credit .content .body-box .bodyList {
   padding: 10px 0;
@@ -50,11 +56,17 @@
 #credit .content .body-box .bodyList .protocolType {
   width: 26%;
 }
+#credit .content .body-box .bodyList .defaultLine {
+  width: 10%;
+}
+#credit .content .body-box .bodyList .defaultDeadline {
+  width: 10%;
+}
 #credit .content .body-box .bodyList .valid {
   width: 10%;
 }
 #credit .content .body-box .bodyList .remark {
-  width: 30%;
+  width: 20%;
 }
 #credit .content #editBtn {
   display: none;
