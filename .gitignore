@@ -1,5 +1,6 @@
 target/
 .idea/
+.factorypath
 ### Example user template template
 ### Example user template
 
@@ -9,4 +10,3 @@ target/
 out
 gen
 .settings/*
-.factorypath
