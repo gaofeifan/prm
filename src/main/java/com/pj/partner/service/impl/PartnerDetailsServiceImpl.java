@@ -88,10 +88,12 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         pd.setIsDisable(offPartner);
         pd.setIsBlacklist(blacklistPartner);
         if(StringUtils.isNotBlank(partnerCategory)){
-            String[] strings = partnerCategory.split(",");
-            pd.setPartnerCategorys(strings);
+//            String[] strings = partnerCategory.split(",");
+            pd.setPartnerCategory(partnerCategory);
         }
-        pd.setDirName(name);
+        if(StringUtils.isNoneBlank(name)){
+        	pd.setDirName(name);
+        }
             List<PartnerDetails> pds = this.partnerDetailsMapper.selectListByQuery(pd);
             //        List<PartnerDetails> pds = this.partnerDetailsMapper.selectByExample(example);
             List<PartnerDetails> data = new ArrayList<>();

@@ -125,10 +125,10 @@
           <if test="isDisable == 1">
             AND is_disable = #{isDisable}
           </if>
-          <if test="partnerCategorys">
+          <if test="partnerCategorys != null">
             AND
-            <foreach  collection="partnerCategorys" item="partnerCategory" open="(" close=")" separator="OR">
-                partner_category LIKE CONCAT('%',#{partnerCategory},'%')
+            <foreach  collection="partnerCategorys" item="pc" open="(" close=")" separator="OR">
+                partner_category LIKE CONCAT('%',#{pc},'%')
             </foreach>
           </if>
 
