@@ -1,0 +1,11 @@
+liyang@medilink.com.cn
+
+
+f49633
+ed6e56
+wbkhIsPayForAnother
+checkRepeat('chineseName',that,'中文全称')
+checkRepeat('chineseAbbreviation',that,'中文简称')
+checkRepeat('englishName',that,'英文全称')
+ checkRepeat('englishAbbreviation',that,'英文简称')
+checkRepeat('headingCode',that,'纳税人识别码')
