@@ -511,7 +511,8 @@ public class AspectServer {
         String actionData = "权限管理 - 用户  ：";
         boolean flage = false;
           /*获取  权限操作涉及人*/
-        String emailsByPostId = authUserService.getEmailsByPostId(args[args.length-1].toString());
+//        User user = authUserService.selectUserUserId(args[0].toString());
+        User user = new User() ; // authUserService.selectUserUserId(args[0].toString());
         // 获取 新增的 权限  根基postID 去查询
         List<AuthMenu> authMenuList = userMenuService.selectByUserId(args[0].toString());
         // 获取 旧的 权限  根基postID 去查询
@@ -545,7 +546,7 @@ public class AspectServer {
                 }
             if(oldIsmenu.size()!=0){
                 try {
-                    addAuthLogMethod(flage, request, actionData, "删除", emailsByPostId);
+                    addAuthLogMethod(flage, request, actionData, "删除", user.getUsername());
                 } catch (Exception e) {
                     System.out.println(e);
                 }
@@ -575,7 +576,7 @@ public class AspectServer {
             }
             if(newIsmenu.size()!=0){
                 try {
-                    addAuthLogMethod(flage, request, actionData, "新增", emailsByPostId);
+                    addAuthLogMethod(flage, request, actionData, "新增",  user.getUsername());
                 } catch (Exception e) {
                     System.out.println(e);
                 }
@@ -589,7 +590,7 @@ public class AspectServer {
 
 
     //  获取已删除的权限 记录日志
-    @Before("editPostAuthorityExecution( )")
+ /*   @Before("editPostAuthorityExecution( )")
     public void editPostAuthorityPointcutBefore(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         HttpServletRequest request = requestinit();
         Object[] args = point.getArgs();
@@ -599,16 +600,16 @@ public class AspectServer {
         List<AuthMenu> authMenuList = authMenuService.findAuthMenuListBypostId(Integer.parseInt(args[0].toString()));
         request.getSession().setAttribute("oldAuthority",authMenuList);
 
-    }
+    }*/
 
     //  记录新增的权限···· 记录日志
-    @AfterReturning("editPostAuthorityExecution()")
+  /*  @AfterReturning("editPostAuthorityExecution()")
     public void editPostAuthorityPointcutAfter(JoinPoint point) throws NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         HttpServletRequest request = requestinit();
         Object[] args = point.getArgs();
         String actionData = "权限管理 -岗位 ：";
         boolean flage = false;
-          /*获取  权限操作涉及人*/
+          *//*获取  权限操作涉及人*//*
         String emailsByPostId = authUserService.getEmailsByPostId(args[0].toString());
          // 获取 新增的 权限  根基postID 去查询
         List<AuthMenu> authMenuList = authMenuService.findAuthMenuListBypostId(Integer.parseInt(args[0].toString()));
@@ -623,7 +624,7 @@ public class AspectServer {
 
             HashSet<AuthMenu> oldIsmenu = new HashSet<AuthMenu>();
             HashSet<AuthMenu> newIsmenu = new HashSet<AuthMenu>();
-            /*查找旧权限中独有的权限*/
+            *//*查找旧权限中独有的权限*//*
             for(AuthMenu olda : oldAuthority){
                  boolean  flage2 = true;
 
@@ -633,10 +634,10 @@ public class AspectServer {
                         break;
                     }
                 }
-                /*判断并添加父级*/
+                *//*判断并添加父级*//*
                 if(flage2){
                     oldIsmenu.add(olda);
-                   /* if(olda.getIsMenu()!=1){
+                   *//* if(olda.getIsMenu()!=1){
                         for(AuthMenu olda2 : oldAuthority){
                             if(olda.getPId().equals(olda2.getId())){
 
@@ -644,7 +645,7 @@ public class AspectServer {
 
                             }
                         }
-                    }*/
+                    }*//*
                 }
 
             }
@@ -652,7 +653,7 @@ public class AspectServer {
             for (AuthMenu button : oldIsmenu) {
                 actionData += button.getName() + "; " ;
                 flage = true;
-              /*  if (button.getIsMenu() == 0) {
+              *//*  if (button.getIsMenu() == 0) {
                         for(AuthMenu dat : oldIsmenu){
                             if(button.getPId().equals(dat.getId())){
                                 actionData += dat.getName() + "-" + button.getName().split("-")[1] + " ; ";
@@ -660,7 +661,7 @@ public class AspectServer {
                                 break;
                             }
                         }
-                }*/
+                }*//*
             }
             if(oldIsmenu.size()!=0){
                 try {
@@ -673,7 +674,7 @@ public class AspectServer {
 
             flage = false;
 
-            /*查找新权限中独有的权限*/
+            *//*查找新权限中独有的权限*//*
             for(AuthMenu news : authMenuList){
                 boolean  flage2 = true;
 
@@ -686,14 +687,14 @@ public class AspectServer {
                 }
                 if(flage2){
                     newIsmenu.add(news);
-                    /*if(news.getIsMenu()!=1){
+                    *//*if(news.getIsMenu()!=1){
                         for(AuthMenu news2 : authMenuList){
                             if(news.getPId().equals(news2.getId())){
                                 newIsmenu.add(news2);
                                 break;
                             }
                         }
-                    }*/
+                    }*//*
                 }
 
             }
@@ -702,7 +703,7 @@ public class AspectServer {
             for (AuthMenu button : newIsmenu) {
                 actionData += button.getName() + "; ";
                 flage = true;
-               /* if (button.getIsMenu() == 0) {
+               *//* if (button.getIsMenu() == 0) {
                     for(AuthMenu dat : newIsmenu){
                         if(button.getPId().equals(dat.getId())){
                             actionData += dat.getName() + "-" + button.getName().split("-")[1] + " ; ";
@@ -710,7 +711,7 @@ public class AspectServer {
                             break;
                         }
                     }
-                }*/
+                }*//*
             }
             if(newIsmenu.size()!=0){
                 try {
@@ -720,7 +721,7 @@ public class AspectServer {
                 }
             }
         }
-    }
+    }*/
 
     // 新增  合伙人信息
     @AfterReturning("PartnerDetailsServiceImplInsertSelective()")
