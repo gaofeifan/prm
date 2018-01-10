@@ -106,6 +106,6 @@ public class BasicProperties {
     public static final  String  total_basic_data =   " 以下提醒接收者（Owner）无效，请注意跟进。";
 
     // 导出excel 数组列
-    public static final String[] excelData = { "合作伙伴中文名","停用","黑名单","外部客户","互为代理","海外代理","干线承运","不可控","延伸服务","收发货人","结算对象"};
+    public static final String[] excelData = { "ID","合作伙伴中文名","停用","黑名单","外部客户","互为代理","海外代理","干线承运","不可控","延伸服务","收发货人","结算对象"};
 
 }

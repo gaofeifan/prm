@@ -1,3 +1,4 @@
+
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver 
@@ -15,8 +16,8 @@ spring:
     
   profiles:
     active: dev
-
-
+  jpa:
+    show-sql: true
 
 
 logging:
@@ -56,10 +57,11 @@ spring:
     username: root
     password: root
     url: jdbc:mysql://10.0.0.18:3306/prm
-  
   redis:
     host: 10.0.0.18
     password: redis
+  jpa:
+    show-sql: true
 
 ---
 spring:
@@ -72,7 +74,8 @@ spring:
   redis:
     host: 139.129.236.180
     password: pj@redis_oa
-
+  jpa:
+      show-sql: true
 
 oa:
   url: http://139.129.236.180:8080

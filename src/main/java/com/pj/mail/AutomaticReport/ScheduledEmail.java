@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 /**
@@ -35,6 +37,9 @@ public class ScheduledEmail {
 
     @Autowired
     private AuthUserService authUserService;
+
+    @Resource
+    private PartnerDetailsService partnerDetailsService;
 
     //7.1     月新增Partner清单 每月一日，把上月所有新增的Partner，触发邮件列表给Admin；
 
@@ -198,7 +203,7 @@ public class ScheduledEmail {
                                 User user = authUserService.selectUserByEmail(sendEmailsDatas.get(0).getReceiverId());
                                 try {
                                     // 邮件正文
-                                    String total = "以下即将到期清单，请注意跟进。";
+                                    String total = "以下为合作伙伴即将到期清单，请注意跟进。";
                                     StringBuffer mesagesVal = getMesagesValExpiry(sendEmailsDatas, total);
                                     SendEmailUtils.sendEWmail(mesagesVal, basic_myEmailAccount, basic_myEmailPassword, user.getEmail());
                                 } catch (Exception e) {
@@ -266,7 +271,7 @@ public class ScheduledEmail {
                     try {
 
                         // 邮件正文
-                        String total = "新增合作伙伴（中文全称）维护了新的联系人，与您名下的合作伙伴（中文全称）中的以下联系人重复，请核实。。";
+                        String total = "新增合作伙伴维护了新的联系人，与您名下的原合作伙伴中的以下联系人重复，请核实。。";
                         StringBuffer mesagesVal = getMesagesValPartnerLinkman(emailListData, total);
                         SendEmailUtils.sendEWmail(mesagesVal, ScheduledEmail.basic_myEmailAccount, basic_myEmailPassword, user.getEmail());
                     } catch (Exception e) {
@@ -314,14 +319,19 @@ public class ScheduledEmail {
         theMessage.append("<h2><font >"+total+"</font></h2>");
         theMessage.append("<hr>");
         theMessage.append("<table  border='1'>");
-        theMessage.append("<tr><td>序号</td><td>联系人名称</td><td>新合作伙伴中文全称</td><td>新合作伙伴中文全称</td><td>职责</td><td>部门</td><td>职务</td><td>固话</td>" +
-                "<td>手机</td><td>邮件</td><td>微信</td><td>QQ</td><td>地址</td></tr>");
+        theMessage.append("<tr><td>序号</td><td>新合作伙伴中文全称</td><td>原合作伙伴中文全称</td>" +
+                "<td>联系人名称</td><td>职责</td><td>部门</td>" +
+                "<td>职务</td><td>固话</td><td>手机</td>" +
+                "<td>邮件</td><td>微信</td><td>QQ</td>" +
+                "<td>地址</td></tr>");
         if(null!=PartnerDetailsList){
             Integer i   = 1;
             for (PartnerLinkman partnerDetails : PartnerDetailsList){
-                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetails.getNewchineseName() +"</td><td>"+partnerDetails.getOldchineseName() +"</td><td>"+ (partnerDetails.getObligation()==null?"":partnerDetails.getObligation()) +"</td><td>"+(partnerDetails.getDemp()==null?"":partnerDetails.getDemp()) +"</td><td>"+(partnerDetails.getFixPhone()==null?"":partnerDetails.getFixPhone()) +"</td>" +
-                        "<td>"+ (partnerDetails.getPhone()==null?"":partnerDetails.getPhone()) +"</td><td>"+(partnerDetails.getEmail()==null?"":partnerDetails.getEmail())+"</td><td>"+(partnerDetails.getWeChat()==null?"":partnerDetails.getWeChat())+"</td><td>"+(partnerDetails.getQq()==null?"":partnerDetails.getQq()) +"</td>" +
-                        "<td>"+(partnerDetails.getAddress()==null?"":partnerDetails.getAddress())+"</td></tr>");
+                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetails.getNewchineseName() +"</td><td>"+partnerDetails.getOldchineseName() +"</td>" +
+                        "<td>"+(partnerDetails.getName()==null?"":partnerDetails.getName()) +"</td><td>"+(partnerDetails.getObligation()==null?"":partnerDetails.getObligation()) +"</td><td>"+ (partnerDetails.getDemp()==null?"":partnerDetails.getDemp()) +"</td>" +
+                        "<td>"+(partnerDetails.getDuty()==null?"":partnerDetails.getDuty())+"</td><td>"+(partnerDetails.getFixPhone()==null?"":partnerDetails.getFixPhone())+"</td><td>"+(partnerDetails.getPhone()==null?"":partnerDetails.getPhone()) +"</td>" +
+                        "<td>"+ (partnerDetails.getEmail()==null?"":partnerDetails.getEmail()) +"</td><td>"+(partnerDetails.getWeChat()==null?"":partnerDetails.getWeChat())+"</td><td>"+ (partnerDetails.getQq()==null?"":partnerDetails.getQq()) +"</td>" +
+                        "<td>"+ (partnerDetails.getEmail()==null?"":partnerDetails.getEmail()) +"</td></tr>");
             }
         }
         theMessage.append("</table>");
@@ -341,8 +351,10 @@ public class ScheduledEmail {
         if(null!=PartnerDetailsList){
             Integer i   = 1;
             for (PartnerDetails partnerDetails : PartnerDetailsList){
-                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetails.getCode() +"</td><td>"+partnerDetails.getMnemonicCode() +"</td><td>"+partnerDetails.getChineseName() +"</td><td>"+partnerDetails.getChineseAbbreviation() +"</td><td>"+partnerDetails.getEnglishName() +"</td>" +
-                        "<td>"+partnerDetails.getEnglishAbbreviation() +"</td><td>"+partnerDetails.getReceiverName() +"</td><td>"+partnerDetails.getScopeBusiness() +"</td><td>"+partnerDetails.getPartnerCategory() +"</td></tr>");
+                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetailsService.getParentCodeList(partnerDetails.getId())+"</td><td>"+(partnerDetails.getMnemonicCode() ==null?"":partnerDetails.getMnemonicCode() )+"</td><td>"+(partnerDetails.getChineseName() ==null?"":partnerDetails.getChineseName() )+"</td>" +
+                        "<td>"+(partnerDetails.getChineseAbbreviation() ==null?"":partnerDetails.getChineseAbbreviation() )+"</td><td>"+(partnerDetails.getEnglishName() ==null?"":partnerDetails.getEnglishName() )+"</td>" +
+                        "<td>"+(partnerDetails.getEnglishAbbreviation() ==null?"":partnerDetails.getEnglishAbbreviation() )+"</td><td>"+(partnerDetails.getReceiverName() ==null?"":partnerDetails.getReceiverName() )+"</td><td>"+(partnerDetails.getScopeBusiness() ==null?"":partnerDetails.getScopeBusiness() )+"</td>" +
+                        "<td>"+(partnerDetails.getPartnerCategory() ==null?"":partnerDetails.getPartnerCategory() )+"</td></tr>");
             }
         }
         theMessage.append("</table>");
@@ -355,6 +367,7 @@ public class ScheduledEmail {
     public StringBuffer getMesagesValExpiry(List<PartnerDetails> PartnerDetailsList,String total){
         StringBuffer theMessage = new StringBuffer();
 
+        DateFormat date = new SimpleDateFormat("yy-MM-dd");
         theMessage.append("<h2><font >"+total+"</font></h2>");
         theMessage.append("<hr>");
         theMessage.append("<table  border='1'>");
@@ -363,9 +376,10 @@ public class ScheduledEmail {
         if(null!=PartnerDetailsList){
             Integer i   = 1;
             for (PartnerDetails partnerDetails : PartnerDetailsList){
-                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetails.getCode() +"</td><td>"+partnerDetails.getMnemonicCode() +"</td><td>"+partnerDetails.getChineseName() +"</td><td>"+partnerDetails.getChineseAbbreviation() +"</td><td>"+partnerDetails.getEnglishName() +"</td>" +
-                        "<td>"+partnerDetails.getEnglishAbbreviation() +"</td><td>"+partnerDetails.getReceiverName() +"</td><td>"+partnerDetails.getScopeBusiness() +"</td><td>"+partnerDetails.getPartnerCategory() +"</td>" +
-                        "<td>"+partnerDetails.getMaturityDateBegan() +"</td><td>"+partnerDetails.getMaturityDateEnd() +"</td></tr>");
+                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetailsService.getParentCodeList(partnerDetails.getId()) +"</td><td>"+(partnerDetails.getMnemonicCode()==null?"":partnerDetails.getMnemonicCode()) +"</td>" +
+                        "<td>"+(partnerDetails.getChineseName()==null?"":partnerDetails.getChineseName()) +"</td><td>"+(partnerDetails.getChineseAbbreviation() ==null?"":partnerDetails.getChineseAbbreviation() )+"</td><td>"+(partnerDetails.getEnglishName()==null?"":partnerDetails.getEnglishName()) +"</td>" +
+                        "<td>"+(partnerDetails.getEnglishAbbreviation()==null?"":partnerDetails.getEnglishAbbreviation()) +"</td><td>"+(partnerDetails.getReceiverName()==null?"":partnerDetails.getReceiverName()) +"</td><td>"+(partnerDetails.getScopeBusiness()==null?"":partnerDetails.getScopeBusiness()) +"</td><td>"+(partnerDetails.getPartnerCategory() ==null?"":partnerDetails.getPartnerCategory() )+"</td>" +
+                        "<td>"+(partnerDetails.getMaturityDateBegan()==null?"":date.format(partnerDetails.getMaturityDateBegan())) +"</td><td>"+(partnerDetails.getMaturityDateEnd()==null?"":date.format(partnerDetails.getMaturityDateEnd())) +"</td></tr>");
             }
         }
         theMessage.append("</table>");
