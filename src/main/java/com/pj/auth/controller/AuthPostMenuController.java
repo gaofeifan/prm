@@ -65,7 +65,7 @@ public class AuthPostMenuController extends BaseController{
                                            @ApiParam(value = "是否是菜单 1是（默认） 0 否",required = false) @RequestParam(name="isMenu",required = false) boolean isMenu
                                            ){
 //        User user = this.getSessionUser();
-        User user = this.userService.selectUserByEmail(email);
+        User user = this.userService.selectPersonByEmail(email);
         //新加一个逻辑，通过userId查询中间表user_menu来判断这个用户是不是有自定义菜单权限，如果有，就读取自定义权限，没有的话还走原来的Post权限; x.gao 20171227
         List<AuthMenu> selectByUserId = userMenuService.selectByUserId(user.getId().toString());
         List<AuthPostMenuVo> authPostMenus = null;
@@ -97,7 +97,7 @@ public class AuthPostMenuController extends BaseController{
     @ResponseBody
     public Object getLoginUserDetails(@ApiParam(value = "登录人邮箱") @RequestParam(name="email") String email, HttpServletRequest request){
         System.out.println(request.getSession().getId().toString());
-        User user = userService.selectUserByEmail(email);
+        User user = userService.selectPersonByEmail(email);
         Object obj = getRequest().getSession().getAttribute(TAG);
         if(obj == null){
             getRequest().setAttribute(TAG,user);

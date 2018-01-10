@@ -89,7 +89,7 @@ public @Data @Table(name="partner_details") class PartnerDetails extends BasicDa
      */
     @Column
     @ApiModelProperty(value = "接受者id" ,required = false)
-    private Integer receiverId;
+    private String receiverId;
 
     /**
      * 接受者名称

@@ -103,7 +103,7 @@ public class ScheduledEmail {
                     }
                     try {
                         // 调用接口 获取 email 发给 接收者
-                        User user = authUserService.selectUserByEmail(PartnerDetailsList.get(0).getReceiverId());
+                        User user = authUserService.selectPersonById(PartnerDetailsList.get(0).getReceiverId());
                         // 邮件正文
                       //  checkDuplicates2.add(PartnerDetailsList.get(0).getReceiverId());
                         if(PartnerDetailsList.size()!=0){
