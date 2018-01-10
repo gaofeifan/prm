@@ -130,10 +130,10 @@ public class ExcelUtils {
            //    row.createCell(i+1).setCellValue();
 
                   /* 黑名单 */
-                row.createCell(i+2).setCellValue(listData.get(j).getIsBlacklist());
+                row.createCell(i+1).setCellValue(listData.get(j).getIsBlacklist());
 
                   /* 停用 */
-                row.createCell(i+3).setCellValue(listData.get(j).getIsDisable());
+                row.createCell(i+2).setCellValue(listData.get(j).getIsDisable());
 
 
                   /* 附属功能 */
@@ -142,28 +142,28 @@ public class ExcelUtils {
                       for (int k = 0 ; k < partnerCategorys.length ; k++){
 
                           if(partnerCategorys[k].equals("外部客户")){
-                           row.createCell(4).setCellValue(partnerCategorys[k]);
+                           row.createCell(3).setCellValue(partnerCategorys[k]);
 
                           } else if(partnerCategorys[k].equals("互为代理")){
-                               row.createCell(5).setCellValue(partnerCategorys[k]);
+                               row.createCell(4).setCellValue(partnerCategorys[k]);
 
                           } else if(partnerCategorys[k].equals("海外代理")){
-                              row.createCell(6).setCellValue(partnerCategorys[k]);
+                              row.createCell(5).setCellValue(partnerCategorys[k]);
 
                           } else if(partnerCategorys[k].equals("干线承运")){
-                             row.createCell(7).setCellValue(partnerCategorys[k]);
+                             row.createCell(6).setCellValue(partnerCategorys[k]);
 
                           } else if(partnerCategorys[k].equals("不可控")){
-                              row.createCell(8).setCellValue(partnerCategorys[k]);
+                              row.createCell(7).setCellValue(partnerCategorys[k]);
 
                           } else if(partnerCategorys[k].equals("延伸服务")){
-                             row.createCell(9).setCellValue(partnerCategorys[k]);
+                             row.createCell(8).setCellValue(partnerCategorys[k]);
 
                           } else if(partnerCategorys[k].equals("收发货人")){
-                          row.createCell(10).setCellValue(partnerCategorys[k]);
+                          row.createCell(9).setCellValue(partnerCategorys[k]);
 
                           } else if(partnerCategorys[k].equals("结算对象")){
-                          row.createCell(11).setCellValue(partnerCategorys[k]);
+                          row.createCell(10).setCellValue(partnerCategorys[k]);
                           }
                       }
                   }
