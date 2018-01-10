@@ -351,7 +351,7 @@ public class PartnerDetailsController extends BaseController {
         List<PartnerDetails> list = this.partnerDetailsService.selectListByQuery(name,offPartner,blacklistPartner,partnerCategory);
         // 导出excel
         ExcelUtils excel = new ExcelUtils();
-        excel.customerOutExcel(request,response,list );
+        excel.customerOutExcel(request,response,list ,partnerDetailsService);
 
     }
 

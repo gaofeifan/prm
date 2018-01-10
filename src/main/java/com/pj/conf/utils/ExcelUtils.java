@@ -5,6 +5,8 @@ import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.service.PartnerDetailsService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
@@ -22,12 +24,12 @@ import java.util.List;
  * @author SenevBoy
  * @date 2018/1/3 16:42   
  **/
+@Component
 public class ExcelUtils {
 
-    @Resource
-    private PartnerDetailsService partnerDetailsService;
 
-    public   void customerOutExcel(HttpServletRequest request, HttpServletResponse response,     List<PartnerDetails> listData     ) throws ParseException {
+
+    public   void customerOutExcel(HttpServletRequest request, HttpServletResponse response, List<PartnerDetails> listData, PartnerDetailsService partnerDetailsService) throws ParseException {
         // --->创建了一个excel文件
         String excelname ="合作伙伴.xls";
         // --->创建了一个excel文件
@@ -50,7 +52,7 @@ public class ExcelUtils {
         int line = 5;
         // 设置行宽
         // 第一个参数代表列id(从0开始),第2个参数代表宽度值
-        sheet.setColumnWidth(0, 800);
+        sheet.setColumnWidth(0, 9000);
         sheet.setColumnWidth(1, 13000);
         sheet.setVerticallyCenter(true);
         HSSFRow line0 = sheet.createRow(0);
@@ -124,10 +126,15 @@ public class ExcelUtils {
         for (int j = 0 ; j <listData.size(); j++){
             HSSFRow row = sheet.createRow(j + 1);
             /*h获取所有父级code*/
-            Object[] parentCodeList = partnerDetailsService.getParentCodeList(listData.get(j).getId());
+            Integer id = listData.get(j).getId();
 
+            Object[] parentCodeList =  partnerDetailsService.getParentCodeList(id);
+            StringBuffer codes = new StringBuffer();
+            for(int q=0;q<parentCodeList.length;q++){
+                codes.append(parentCodeList[q]);
+            }
             HSSFCell cell = row.createCell(i);
-            cell.setCellValue( parentCodeList.toString());
+            cell.setCellValue(String.valueOf(codes));
             style1.setAlignment(XSSFCellStyle.ALIGN_LEFT);
             cell.setCellStyle(style1);
            /* name ="";
@@ -144,11 +151,13 @@ public class ExcelUtils {
            //    row.createCell(i+1).setCellValue();
 
                   /* 黑名单 */
-                row.createCell(i+2).setCellValue(listData.get(j).getIsBlacklist()==0?"":listData.get(j).getIsBlacklist().toString());
-
-                  /* 停用 */
-                row.createCell(i+3).setCellValue(listData.get(j).getIsDisable()==0?"":listData.get(j).getIsDisable().toString());
-
+                  if(listData.get(j).getIsBlacklist()==1){
+                      row.createCell(i+2).setCellValue(listData.get(j).getIsBlacklist() );
+                  }
+            /* 停用 */
+            if(listData.get(j).getIsDisable()==1){
+                row.createCell(i+3).setCellValue( listData.get(j).getIsDisable() );
+            }
 
                   /* 附属功能 */
                   if(null  != listData.get(j).getPartnerCategorys() ){
@@ -177,7 +186,7 @@ public class ExcelUtils {
                           row.createCell(10).setCellValue(1);
 
                           } */else if(partnerCategorys[k].equals("结算对象")){
-                          row.createCell(11).setCellValue(1);
+                          row.createCell(10).setCellValue(1);
                           }
                       }
                   }
