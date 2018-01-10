@@ -49,7 +49,7 @@ public class AuthUserServiceImpl implements AuthUserService {
         user.setPostname(postname);
         user.setUsername(username);
         user.setEmail(email);
-        user.setId(Integer.valueOf(id));
+        user.setId(id);
         return user;
     }
 
@@ -112,7 +112,7 @@ public class AuthUserServiceImpl implements AuthUserService {
             user = new User();
             Object id = map.get("id");
             if (id != null) {
-                user.setId(Integer.decode(id.toString()));
+                user.setId(id.toString());
             }
             Object postid = map.get("postid");
             if (postid != null) {
