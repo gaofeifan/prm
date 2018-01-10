@@ -3,11 +3,6 @@ package com.pj.auth.pojo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 /**
  * Created by Administrator on 2017/11/8.
  */
@@ -19,7 +14,7 @@ class AuthPostMenuVo {
     private Integer menuId;
 
     @ApiModelProperty(value = "岗位id")
-    private Integer postId;
+    private String postId;
 
     @ApiModelProperty(value = "id")
     private Integer id;
