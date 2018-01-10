@@ -3,9 +3,10 @@
  */
 var oaPathUrl = '10.0.0.18:8083';
 var ssoPathUrl = '10.0.0.18:8085';
-//var gPathUrl = '192.168.4.213:8083';//非凡
-//var gPathUrl = '10.0.0.105:8083';//测试环境
- var gPathUrl = '192.168.4.168:8083';//自哲的url
+var easPathUrl = '10.0.0.105:8085';
+// var gPathUrl = '192.168.4.213:8083';//非凡
+var gPathUrl = '10.0.0.105:8083';//测试环境
+// var gPathUrl = '192.168.4.168:8083';//自哲的url
 // var gPathUrl = '192.168.4.224:8083';//高翔的url
 
 

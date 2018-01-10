@@ -13,7 +13,7 @@ $(function(){
 var internalCustomerObj = {
     queryCom:function(){
         $.ajax({
-            url: 'http://192.168.4.213:8082/base/frameWork/selectCompanyByQuery',
+            url: 'http://' + easPathUrl + '/base/frameWork/selectCompanyByQuery',
             type: 'get',
             success: function (resp) {
                 var str = '';

@@ -31,10 +31,10 @@
             </div>
             <div style="margin-right: 60px;" class="fr"><span>统计：</span><em id="numTol">0</em><span>条</span></div>
             <div style="margin-right: 60px;" class="handle-right fr">
-                <a class="new" href="javascript:void(0);">新增合作伙伴</a>
-                <a class="alter" href="javascript:void(0);">修改</a>
-                <a id="transferBtn" href="javascript:void(0);">转移</a>
-                <a id="delete" href="javascript:void(0);">删除</a>
+                <a class="new" href="javascript:void(0);"><i class="addIcon pIcon"></i>新增合作伙伴</a>
+                <a class="alter" href="javascript:void(0);"><i class="efitIcon pIcon"></i>修改</a>
+                <a id="transferBtn" href="javascript:void(0);"><i class="transferIcon pIcon"></i>转移</a>
+                <a id="delete" href="javascript:void(0);"><i class="deleteIcon pIcon"></i>删除</a>
             </div>
         </div>
         <div class="treeHome">
@@ -169,6 +169,14 @@
                                 <a id="download" style="" href="">下载</a>
                             </div>
                         </div>
+                        <div class="status clearfix">
+                            <input id="isBlacklist" type="checkbox" disabled><label for="">黑名单</label>
+                            <!--隐藏黑名单-->
+                            <input class="hiddenInput" name="isBlacklist" type="text" value="0">
+                            <input id="isDisable" type="checkbox" disabled><label for="">停用</label>
+                            <input class="hiddenInput" name="isDisable" type="text" value="0">
+                            <label for="">停用备注</label><input id="disableRemark" name="disableRemark" class="reason" type="text" readonly>
+                        </div>
                     </div>
                     <div>
                         <div>
@@ -218,7 +226,7 @@
                                     <div class="phone"><span class="mark">*</span><span>手机</span></div>
                                     <div class="email"><span class="mark">*</span><span>邮件</span></div>
                                     <div class="qq"><span>QQ</span></div>
-                                    <div class="weixin"><span>微信</span></div>
+                                    <div class="weChat"><span>微信</span></div>
                                     <div class="address2"><span>地址</span></div>
                                     <div class="operation"><span>操作</span></div>
                                 </div>
@@ -267,14 +275,6 @@
                             <input id="partnerCategory" class="hiddenInput" type="text" name="partnerCategory" required>
                         </div>
                     </div>
-                    <div class="status clearfix">
-                        <input id="isBlacklist" type="checkbox" disabled><label for="">黑名单</label>
-                        <!--隐藏黑名单-->
-                        <input class="hiddenInput" name="isBlacklist" type="text" value="0">
-                        <input id="isDisable" type="checkbox" disabled><label for="">停用</label>
-                        <input class="hiddenInput" name="isDisable" type="text" value="0">
-                        <label for="">停用备注</label><input id="disableRemark" name="disableRemark" class="reason" type="text" readonly>
-                    </div>
                     <h4>分类详细信息</h4>
                     <!--外部客户 start-->
                     <div class="lump wbkhStyle clearfix" id="externalClient">
@@ -310,7 +310,7 @@
                                     <input name="wbkhLineCredit" class="wbkhLineCredit quality must" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
                                 </div>
                                 <div><label for="">已用额度(万元)</label>
-                                    <input name="" class="quality must" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
+                                    <input name="useQuota" class="quality must useQuota" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
                                 </div>
                             </div>
                             <div class="fl fl3">
@@ -348,7 +348,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="AE businessItem fl">
                                     <p>AE</p>
@@ -358,7 +358,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="SI businessItem fl">
                                     <p>SI</p>
@@ -368,7 +368,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="SE businessItem fl">
                                     <p>SE</p>
@@ -378,7 +378,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="TI businessItem fl">
                                     <p>TI</p>
@@ -388,7 +388,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="TE businessItem fl">
                                     <p>TE</p>
@@ -398,7 +398,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="OI businessItem fl">
                                     <p>OI</p>
@@ -408,7 +408,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="OE businessItem fl">
                                     <p>OE</p>
@@ -418,7 +418,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="IT businessItem fl">
                                     <p>IT</p>
@@ -428,7 +428,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="DDN businessItem fl">
                                     <p>DDN</p>
@@ -438,7 +438,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="YYOX businessItem fl">
                                     <p>YYOX</p>
@@ -448,7 +448,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="Industrial businessItem fl">
                                     <p>Industrial</p>
@@ -458,7 +458,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                             </div>
                         </div>
@@ -502,7 +502,7 @@
                                     <input name="wbkhLineCredit2" class="wbkhLineCredit must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled>
                                 </div>
                                 <div><label for="">已用额度(万元)</label>
-                                    <input name="" class="quality must" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
+                                    <input name="useQuota" class="quality must useQuota" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
                                 </div>
                             </div>
                             <div class="fl fl3">
@@ -540,7 +540,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="AE businessItem fl">
                                     <p>AE</p>
@@ -550,7 +550,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="SI businessItem fl">
                                     <p>SI</p>
@@ -560,7 +560,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="SE businessItem fl">
                                     <p>SE</p>
@@ -570,7 +570,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="TI businessItem fl">
                                     <p>TI</p>
@@ -580,7 +580,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="TE businessItem fl">
                                     <p>TE</p>
@@ -590,7 +590,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="OI businessItem fl">
                                     <p>OI</p>
@@ -600,7 +600,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="OE businessItem fl">
                                     <p>OE</p>
@@ -610,7 +610,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="IT businessItem fl">
                                     <p>IT</p>
@@ -620,7 +620,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="DDN businessItem fl">
                                     <p>DDN</p>
@@ -630,7 +630,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="YYOX businessItem fl">
                                     <p>YYOX</p>
@@ -640,7 +640,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="Industrial businessItem fl">
                                     <p>Industrial</p>
@@ -650,7 +650,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                             </div>
                         </div>
@@ -681,7 +681,7 @@
                                         <input class="wbkhLineCredit must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled>
                                     </div>
                                     <div><label for="">已用额度(万元)</label>
-                                        <input name="" class="quality must" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
+                                        <input name="useQuota" class="quality must useQuota" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -694,7 +694,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="AE businessItem fl">
                                     <p>AE</p>
@@ -704,7 +704,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly ></div>
                                 </div>
                                 <div class="SI businessItem fl">
                                     <p>SI</p>
@@ -714,7 +714,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="SE businessItem fl">
                                     <p>SE</p>
@@ -724,7 +724,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="TI businessItem fl">
                                     <p>TI</p>
@@ -734,7 +734,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="TE businessItem fl">
                                     <p>TE</p>
@@ -744,7 +744,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="OI businessItem fl">
                                     <p>OI</p>
@@ -754,7 +754,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="OE businessItem fl">
                                     <p>OE</p>
@@ -764,7 +764,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="IT businessItem fl">
                                     <p>IT</p>
@@ -774,7 +774,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="DDN businessItem fl">
                                     <p>DDN</p>
@@ -784,7 +784,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="YYOX businessItem fl">
                                     <p>YYOX</p>
@@ -794,7 +794,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                                 <div class="Industrial businessItem fl">
                                     <p>Industrial</p>
@@ -804,7 +804,7 @@
                                         <option value="">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text"></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
                                 </div>
                             </div>
                         </div>
@@ -845,13 +845,13 @@
                         <div id="uncontrollableSupplierBox" class="clearfix hidden" style="padding:10px 20px 20px;border: 1px solid #dddddd;width:96%;">
                             <h6>服务类别</h6>
                             <div class="gxcyrClassOfServiceBox classOfServiceBox" style="margin: 10px;">
-                                <input class="classOfSer2" type="checkbox" value="支线运输"><label style="width: auto;margin-right: 2%;" for="">支线运输</label>
-                                <input class="classOfSer3" type="checkbox" value="操作服务"><label style="width: auto;margin-right: 2%;" for="">操作服务</label>
-                                <input class="classOfSer4" type="checkbox" value="包装服务"><label style="width: auto;margin-right: 2%;" for="">包装服务</label>
-                                <input class="classOfSer5" type="checkbox" value="仓储服务"><label style="width: auto;margin-right: 2%;" for="">仓储服务</label>
-                                <input class="classOfSer6" type="checkbox" value="邮资快递"><label style="width: auto;margin-right: 2%;" for="">邮资快递</label>
-                                <input class="classOfSer7" type="checkbox" value="政府检验"><label style="width: auto;margin-right: 2%;" for="">政府检验</label>
-                                <input class="classOfSer8" type="checkbox" value="数据交换"><label style="width: auto;margin-right: 2%;" for="">数据交换</label>
+                                <input class="classOfSer2" type="checkbox" value="支线运输" disabled><label style="width: auto;margin-right: 2%;" for="">支线运输</label>
+                                <input class="classOfSer3" type="checkbox" value="操作服务" disabled><label style="width: auto;margin-right: 2%;" for="">操作服务</label>
+                                <input class="classOfSer4" type="checkbox" value="包装服务" disabled><label style="width: auto;margin-right: 2%;" for="">包装服务</label>
+                                <input class="classOfSer5" type="checkbox" value="仓储服务" disabled><label style="width: auto;margin-right: 2%;" for="">仓储服务</label>
+                                <input class="classOfSer6" type="checkbox" value="邮资快递" disabled><label style="width: auto;margin-right: 2%;" for="">邮资快递</label>
+                                <input class="classOfSer7" type="checkbox" value="政府检验" disabled><label style="width: auto;margin-right: 2%;" for="">政府检验</label>
+                                <input class="classOfSer8" type="checkbox" value="数据交换" disabled><label style="width: auto;margin-right: 2%;" for="">数据交换</label>
                             </div>
                             <input class="hiddenInput service2 must" name="classOfServiceBox2" type="text">
                             <div class="topLayer">
@@ -878,13 +878,13 @@
                         <div id="extendServiceProvidersBox" class="clearfix hidden" style="padding:10px 20px 20px;border: 1px solid #dddddd;width:96%;">
                             <h6>服务类别</h6>
                             <div class="gxcyrClassOfServiceBox classOfServiceBox" style="margin: 10px;">
-                                <input class="classOfSer2" type="checkbox" value="支线运输"><label style="width: auto;margin-right: 2%;" for="">支线运输</label>
-                                <input class="classOfSer3" type="checkbox" value="操作服务"><label style="width: auto;margin-right: 2%;" for="">操作服务</label>
-                                <input class="classOfSer4" type="checkbox" value="包装服务"><label style="width: auto;margin-right: 2%;" for="">包装服务</label>
-                                <input class="classOfSer5" type="checkbox" value="仓储服务"><label style="width: auto;margin-right: 2%;" for="">仓储服务</label>
-                                <input class="classOfSer6" type="checkbox" value="邮资快递"><label style="width: auto;margin-right: 2%;" for="">邮资快递</label>
-                                <input class="classOfSer7" type="checkbox" value="政府检验"><label style="width: auto;margin-right: 2%;" for="">政府检验</label>
-                                <input class="classOfSer8" type="checkbox" value="数据交换"><label style="width: auto;margin-right: 2%;" for="">数据交换</label>
+                                <input class="classOfSer2" type="checkbox" value="支线运输" disabled><label style="width: auto;margin-right: 2%;" for="">支线运输</label>
+                                <input class="classOfSer3" type="checkbox" value="操作服务" disabled><label style="width: auto;margin-right: 2%;" for="">操作服务</label>
+                                <input class="classOfSer4" type="checkbox" value="包装服务" disabled><label style="width: auto;margin-right: 2%;" for="">包装服务</label>
+                                <input class="classOfSer5" type="checkbox" value="仓储服务" disabled><label style="width: auto;margin-right: 2%;" for="">仓储服务</label>
+                                <input class="classOfSer6" type="checkbox" value="邮资快递" disabled><label style="width: auto;margin-right: 2%;" for="">邮资快递</label>
+                                <input class="classOfSer7" type="checkbox" value="政府检验" disabled><label style="width: auto;margin-right: 2%;" for="">政府检验</label>
+                                <input class="classOfSer8" type="checkbox" value="数据交换" disabled><label style="width: auto;margin-right: 2%;" for="">数据交换</label>
                             </div>
                             <input class="hiddenInput service3 must" name="classOfServiceBox3" type="text">
                             <div class="topLayer">
