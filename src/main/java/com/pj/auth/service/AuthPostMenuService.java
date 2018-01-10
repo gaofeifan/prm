@@ -17,25 +17,25 @@ public interface AuthPostMenuService extends BaseService<AuthPostMenu,Integer> {
      * @param postId
      * @return
      */
-    List<AuthPostMenuVo> findMenuByPostId(Integer postId);
+    List<AuthPostMenuVo> findMenuByPostId(String postId);
 
-    List<AuthPostMenuVo> findMenuOrButtonByPostId(Integer postId, Integer menuId, boolean isMenu);
+    List<AuthPostMenuVo> findMenuOrButtonByPostId(String postId, Integer menuId, boolean isMenu);
 
-    List<AuthPostMenuVo> findButtonByPostIdAndMenuIds(Integer postId, Integer[] menuIds);
+    List<AuthPostMenuVo> findButtonByPostIdAndMenuIds(String postId, Integer[] menuIds);
 
-    void editPostAuthority(Integer postId, Integer[] menuIds);
+    void editPostAuthority(String postId, Integer[] menuIds);
 
-    boolean findOperatingAuthorizationByPostIdAndByButton(Integer postId , Integer button);
+    boolean findOperatingAuthorizationByPostIdAndByButton(String postId , Integer button);
 
     /**
      *  设置默认权限
      * @param postId
      */
-    public void editDefaultAuth(Integer postId);
+    public void editDefaultAuth(String postId);
     
     //x.gao 通过用户更新 20171227
-    void editPostAuthorityByuserId(String userId, Integer[] menuIds,Integer postId);
+    void editPostAuthorityByuserId(String userId, Integer[] menuIds,String postId);
     //x.gao 20171227
-    List<AuthPostMenuVo> findMenuOrButtonByUserId(String userId, Integer menuId, boolean isMenu,Integer postId);
+    List<AuthPostMenuVo> findMenuOrButtonByUserId(String userId, Integer menuId, boolean isMenu,String postId);
 
 }

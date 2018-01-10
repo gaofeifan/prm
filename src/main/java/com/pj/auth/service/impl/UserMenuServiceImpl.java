@@ -36,7 +36,7 @@ public class UserMenuServiceImpl implements UserMenuService {
 
       
   @Override
-  public List<AuthPostMenuVo> selectVOByUserId(String userId,Integer postId) {
+  public List<AuthPostMenuVo> selectVOByUserId(String userId,String postId) {
     List<AuthPostMenuVo> apmv=null;
     List<AuthPostMenuVo> selectByUserId = authPostMenuMapper.selectByUserId(userId);
     if(selectByUserId.size()==0){

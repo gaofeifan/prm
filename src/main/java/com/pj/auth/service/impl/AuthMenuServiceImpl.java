@@ -28,7 +28,7 @@ public class AuthMenuServiceImpl  extends AbstractBaseServiceImpl<AuthMenu,Integ
 
     // 支持  aop切面获取 权限信息 2017年11月17日10:08:27
     @Override
-    public List<AuthMenu> findAuthMenuListBypostId(int postId) {
+    public List<AuthMenu> findAuthMenuListBypostId(String postId) {
         return authMenuMapper.findAuthMenuListBypostId(postId);
     }
 
@@ -41,7 +41,7 @@ public class AuthMenuServiceImpl  extends AbstractBaseServiceImpl<AuthMenu,Integ
     }
 
     @Override
-    public Integer[] selectMenuIds(Integer postId) {
+    public Integer[] selectMenuIds(String postId) {
         return this.authMenuMapper.selectMenuIds(postId);
     }
 }

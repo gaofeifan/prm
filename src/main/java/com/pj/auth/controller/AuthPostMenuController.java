@@ -42,7 +42,7 @@ public class AuthPostMenuController extends BaseController{
     @ApiOperation(value = "根据岗位id查询菜单" ,httpMethod = "GET", response = Object.class)
     @RequestMapping(value = "/findMenuByPostId")
     @ResponseBody
-    public Object findMenuByPostId(@ApiParam("岗位id") @RequestParam(name="postId") Integer postId){
+    public Object findMenuByPostId(@ApiParam("岗位id") @RequestParam(name="postId") String postId){
         List<AuthPostMenuVo> menuVo = authPostMenuService.findMenuByPostId(postId);
         return this.success(menuVo);
     }
@@ -51,7 +51,7 @@ public class AuthPostMenuController extends BaseController{
     @RequestMapping(value = "/findButtonByMenuIds")
     @ResponseBody
     public Object findButtonByMenuIds(
-            @ApiParam("岗位id") @RequestParam(name="postId") Integer postId,
+            @ApiParam("岗位id") @RequestParam(name="postId") String postId,
             @ApiParam("菜单ids") @RequestParam(name="menuIds") Integer[] menuIds){
         List<AuthPostMenuVo> authPostMenus = this.authPostMenuService.findButtonByPostIdAndMenuIds(postId,menuIds);
         return this.success(authPostMenus);
@@ -71,16 +71,16 @@ public class AuthPostMenuController extends BaseController{
         List<AuthPostMenuVo> authPostMenus = null;
         //size==0还是原来的
         if(selectByUserId.size()==0){
-          authPostMenus = this.authPostMenuService.findMenuOrButtonByPostId(user.getPostid(),menuId,isMenu);
+          authPostMenus = this.authPostMenuService.findMenuOrButtonByPostId(user.getPositionId(),menuId,isMenu);
         }else{
-          authPostMenus =  authPostMenuService.findMenuOrButtonByUserId(user.getId().toString(), menuId, isMenu,user.getPostid());
+          authPostMenus =  authPostMenuService.findMenuOrButtonByUserId(user.getId().toString(), menuId, isMenu,user.getPositionId());
         }
         return this.successJsonp(authPostMenus);
     }
     @ApiOperation(value = "设置岗位权限" ,httpMethod = "POST", response = Object.class)
     @RequestMapping(value = "/editPostAuthority")
     @ResponseBody
-    public Object editPostAuthority(@ApiParam("岗位id") @RequestParam(name="postId") Integer postId,
+    public Object editPostAuthority(@ApiParam("岗位id") @RequestParam(name="postId") String postId,
                                            @ApiParam(value = "菜单ids") @RequestParam(name="menuIds") Integer[] menuIds,
                                            @ApiParam(value="用户id")@RequestParam(name="userId",required=false) String userId){
         //增加一个通过用户id更新的方法，当不传userId的时候还是按以前的来，传了userId要按userId更新此用户的菜单权限x.gao 20171227
@@ -117,7 +117,7 @@ public class AuthPostMenuController extends BaseController{
   @RequestMapping(value = "/findMenuByUserId")
   @ResponseBody
   public Object findMenuByUserId(@ApiParam(value = "用户id") @RequestParam(name = "userId") String userId,
-      @ApiParam("岗位id") @RequestParam(name = "postId",required=false) Integer postId) {
+      @ApiParam("岗位id") @RequestParam(name = "postId",required=false) String postId) {
     List<AuthPostMenuVo> selectVOByUserId = userMenuService.selectVOByUserId(userId,postId);
     //List<AuthMenu> selectByUserId = userMenuService.selectByUserId(userId);
     return this.successJsonp(selectVOByUserId);
