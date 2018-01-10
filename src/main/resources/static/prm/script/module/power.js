@@ -91,9 +91,8 @@ $(function(){
         var checkedStaff = $('input:radio[name="staff"]:checked').attr('staff-id');
         if(!!checkedPost && !!checkedStaff){
             power.queryPowerByStaff(checkedPost,checkedStaff);
-        }else{
-            $('.nemuList').empty();
-            $('.btnList').empty();
+        }else if(!!checkedPost && !checkedStaff){
+            power.queryPower(checkedPost);
         }
         $('#companyTo').empty().append('<option value="">请选择公司</option>');
         $('#dempTo').empty().append('<option value="">请选择部门</option>');

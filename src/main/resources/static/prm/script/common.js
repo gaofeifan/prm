@@ -123,14 +123,19 @@ function qualityRating(){
                     optionStr = optionStr + '<option value="'+value.level+'-'+value.protocolType+'">'+value.level+'-'+value.protocolType+'</option>';
                 }
             });
-            $('.wbkhCreditRating').append(optionStr);
+           $('.wbkhCreditRating').append(optionStr);
+            /*
             if(data.data[0].protocolType =='协议/保函'){
                 $('.wbkhCreditPeriod').attr('disabled',false);
                 $('.wbkhLineCredit').attr('disabled',false);
                 $('.wbkhIsPayForAnother').attr('disabled',false);
             }else if(data.data[0].protocolType =='签约在途 '){
                 $('.wbkhIsPayForAnother').attr('disabled',false);
-            }
+            }else{
+                $('.wbkhLineCredit').attr('disabled',true);
+                $('.aiCreditPeriod ').attr('disabled',true);
+                $('.businessItem input').attr('disabled',true);
+            }*/
         }
     });
 }
@@ -168,4 +173,26 @@ function remove(arr,item){
             return arr.splice(index,1)
         }
     }
+}
+
+function getInternalCustomer(dom) {
+    $.ajax({
+        type: 'get',
+        async:false,
+        url: 'http://192.168.4.213:8082/base/frameWork/selectCompanyByQuery',
+        success: function (data) {
+            if(data.code ==200) {
+                var str ;
+                $.each(data.data, function (index, value) {
+                    var option =$('<option value="'+value.id+'" >'+value.name+'</option>');
+                    $(dom).append(option);
+                });
+            }else{
+                alert("资源路径出错");
+            }
+        },
+        error: function () {
+            alert('获取数据失败');
+        }
+    });
 }

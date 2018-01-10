@@ -14,10 +14,21 @@ $(function(){
         $('#pId').val(partnerId);
     }
     var parentsCode = '';
+    //服务类别
+    var gxcyrClassOfServiceArr = [];
+    var wbkhInvoiceType ='';
+    var partnerCategorys = [];
     /*控制代码填写区域*/
     if(isNaN(partnerId)){
         codes.prop('disabled','disabled');
         $('.code1').prop('disabled',false);
+        $('.useQuota').val(0);//已用额度(万元)
+        /*加载公司*/
+        getComList('#profitCenter');
+        $('#profitCenter').val('');
+        /*加载信用等级*/
+        qualityRating();
+        $('.wbkhCreditRating').val('');
     }else{
         $.ajax({
             url: 'http://' + gPathUrl + '/partner/details/getParentCodeList',
@@ -43,11 +54,7 @@ $(function(){
         getComList('#profitCenter');
         /*加载信用等级*/
         qualityRating();
-
         /*回显各个字段的值*/
-        //服务类别
-        var gxcyrClassOfServiceArr = [];
-        var wbkhInvoiceType ='';
         $.ajax({
             url: 'http://'+gPathUrl+'/partner/details/selectPartnerDetailsById',
             type: 'get',
@@ -116,7 +123,6 @@ $(function(){
                     });
                 });
                 gxcyrClassOfServiceArr = data.data.gxcyrClassOfServices;
-                console.log(typeof data.data.gxcyrClassOfServices)
                 if(data.data.partnerCategorys.indexOf('干线承运人') > -1){
                     $('.classOfSer1').attr('checked',true);
                     if(gxcyrClassOfServiceArr.indexOf('干线运输') <=-1){
@@ -157,6 +163,7 @@ $(function(){
                 $('.wbkhTypeCreditPeriod').val(data.data.wbkhTypeCreditPeriod);//信用期限类型
                 $('.wbkhCreditPeriod').val(data.data.wbkhCreditPeriod);//信用期限（天）
                 $('.wbkhLineCredit').val(data.data.wbkhLineCredit);//信用额度(万元)
+                $('.useQuota').val(data.data.useQuota||0);//已用额度(万元)
                 $('.wbkhInvoiceType').val(data.data.wbkhInvoiceType);//开票类型
                 $('.invoiceTypeTitle').text(data.data.wbkhInvoiceType);//开票类型Title
                 wbkhInvoiceType = data.data.wbkhInvoiceType;//开票类型变量
@@ -170,6 +177,7 @@ $(function(){
                 $('.hwdlTaxRate ').val(data.data.hwdlTaxRate);//进项税率%
                 $('#gxcyrClassOfService').val(gxcyrClassOfServiceArr);//服务类别
                 $('.service1').val(gxcyrClassOfServiceArr);//服务类别
+                remove(gxcyrClassOfServiceArr,'干线运输');
                 $('.service2').val(gxcyrClassOfServiceArr);//服务类别
                 $('.service3').val(gxcyrClassOfServiceArr);//服务类别
                 $.each(data.data.gxcyrClassOfServices,function(index,value){
@@ -220,6 +228,74 @@ $(function(){
             }
         });
     }
+    /*滚动*/
+    $('#navigationBar').on('click','.status-div',function(){
+        var thisIndex = parseInt($(this).index());
+        var _top = parseInt($('#newForm .lump').eq(thisIndex).offset().top);
+        $("body,html").animate({scrollTop:(_top-200)},500);
+    });
+    var _top0 =0;
+    var _top1 =0;
+    var _top2 =0;
+    var _top3 =0;
+    var _top4 =0;
+    var _top5 =0;
+    var _top6 =0;
+    var _top7 =0;
+    var _top8 =0;
+    var _top9 =0;
+    var _top10 =0;
+    var _top11 =0;
+    var lumpLength = 0;
+    $(window).scroll(function() {
+        lumpLength = $('#newForm .lump').length;
+        if(lumpLength > 0){
+            _top0 = parseInt($('#newForm .lump').eq(0).offset().top)-200;
+            _top1 = parseInt($('#newForm .lump').eq(1).offset().top)-200;
+            _top2 = parseInt($('#newForm .lump').eq(2).offset().top)-200;
+            _top3 = parseInt($('#newForm .lump').eq(3).offset().top)-200;
+            _top4 = parseInt($('#newForm .lump').eq(4).offset().top)-200;
+            _top5 = parseInt($('#newForm .lump').eq(5).offset().top)-200;
+            _top6 = parseInt($('#newForm .lump').eq(6).offset().top)-200;
+            _top7 = parseInt($('#newForm .lump').eq(7).offset().top)-200;
+            _top8 = parseInt($('#newForm .lump').eq(8).offset().top)-200;
+            _top9 = parseInt($('#newForm .lump').eq(9).offset().top)-200;
+            _top10 = parseInt($('#newForm .lump').eq(10).offset().top)-200;
+            _top11 = parseInt($('#newForm .lump').eq(11).offset().top)-200;
+            var htmlScrollTop = parseInt($(document).scrollTop());
+            if(htmlScrollTop>0){
+                $('#specialNav').css('top','0');
+            }else{
+                $('#specialNav').css('top','60px');
+            }
+            if(0 < htmlScrollTop && htmlScrollTop < _top1){ //基础表单
+                StatusOn(1,13);
+            }else if(_top1 <= htmlScrollTop && htmlScrollTop<_top2){//联系人资料
+                StatusOn(2,13);
+            }else if(_top2 <= htmlScrollTop && htmlScrollTop<_top3){//联系人资料
+                StatusOn(3,13);
+            }else if(_top3 <= htmlScrollTop && htmlScrollTop < _top4){//业务范畴
+                StatusOn(4,13);
+            }else if(_top4 <= htmlScrollTop && htmlScrollTop<_top5){//合作伙伴分类
+                StatusOn(5,13);
+            }else if(_top5 <= htmlScrollTop && htmlScrollTop<_top6){//外部客户
+                StatusOn(6,13);
+            }else if(_top6 <= htmlScrollTop && htmlScrollTop<_top7){//互为代理
+                StatusOn(7,13);
+            }else if(_top7 <= htmlScrollTop && htmlScrollTop<_top8){//海外代理
+                StatusOn(8,13);
+            }else if(_top8 <= htmlScrollTop && htmlScrollTop<_top9){//干线承运人
+                StatusOn(9,13);
+            }else if(_top9 <= htmlScrollTop && htmlScrollTop<_top10){//不可控供应商
+                StatusOn(10,13);
+            }else if(_top10 <= htmlScrollTop && htmlScrollTop<_top11){//延伸服务供应商
+                StatusOn(11,13);
+            }else if((_top11) <= htmlScrollTop){//收发货人
+                StatusOn(12,13);
+            }
+        }
+    });
+
     //光标移开，校验代码字段的填写
     codes.blur(function(){
         var that = this;
@@ -352,58 +428,6 @@ $(function(){
     });
     /*flow*/
     StatusOn(1,13);
-    /*滚动*/
-    $('#navigationBar').on('click','.status-div',function(){
-        var thisIndex = parseInt($(this).index());
-        var _top = parseInt($('#newForm .lump').eq(thisIndex).offset().top);
-        $("body,html").animate({scrollTop:(_top-288)},500);
-    });
-    var _top0 = parseInt($('#newForm .lump').eq(0).offset().top)-288;
-    var _top1 = parseInt($('#newForm .lump').eq(1).offset().top)-288;
-    var _top2 = parseInt($('#newForm .lump').eq(2).offset().top)-288;
-    var _top3 = parseInt($('#newForm .lump').eq(3).offset().top)-288;
-    var _top4 = parseInt($('#newForm .lump').eq(4).offset().top)-288;
-    var _top5 = parseInt($('#newForm .lump').eq(5).offset().top)-288;
-    var _top6 = parseInt($('#newForm .lump').eq(6).offset().top)-288;
-    var _top7 = parseInt($('#newForm .lump').eq(7).offset().top)-288;
-    var _top8 = parseInt($('#newForm .lump').eq(8).offset().top)-288;
-    var _top9 = parseInt($('#newForm .lump').eq(9).offset().top)-288;
-    var _top10 = parseInt($('#newForm .lump').eq(10).offset().top)-288;
-    var _top11 = parseInt($('#newForm .lump').eq(11).offset().top)-288;
-    $(window).scroll(function() {
-        var htmlScrollTop = parseInt($(document).scrollTop())+50;
-        if(htmlScrollTop-50 >0){
-            $('#specialNav').css('top','0');
-        }else{
-            $('#specialNav').css('top','60px');
-        }
-        if(0 < htmlScrollTop && htmlScrollTop < _top1){ //基础表单
-            StatusOn(1,13);
-        }else if(_top1 <= htmlScrollTop && htmlScrollTop<_top2){//联系人资料
-            StatusOn(2,13);
-        }else if(_top2 <= htmlScrollTop && htmlScrollTop<_top3){//联系人资料
-            StatusOn(3,13);
-        }else if(_top3 <= htmlScrollTop && htmlScrollTop < _top4){//业务范畴
-            StatusOn(4,13);
-        }else if(_top4 <= htmlScrollTop && htmlScrollTop<_top5){//合作伙伴分类
-            StatusOn(5,13);
-        }else if(_top5 <= htmlScrollTop && htmlScrollTop<_top6){//外部客户
-            StatusOn(6,13);
-        }else if(_top6 <= htmlScrollTop && htmlScrollTop<_top7){//互为代理
-            StatusOn(7,13);
-        }else if(_top7 <= htmlScrollTop && htmlScrollTop<_top8){//海外代理
-            StatusOn(8,13);
-        }else if(_top8 <= htmlScrollTop && htmlScrollTop<_top9){//干线承运人
-            StatusOn(9,13);
-        }else if(_top9 <= htmlScrollTop && htmlScrollTop<_top10){//不可控供应商
-            StatusOn(10,13);
-        }else if(_top10 <= htmlScrollTop && htmlScrollTop<_top11){//延伸服务供应商
-            StatusOn(11,13);
-        }else if((_top11) <= htmlScrollTop){//收发货人
-            StatusOn(12,13);
-        }
-    });
-
 
     /*分类详细信息校验*/
     /*外部客户*/
@@ -607,12 +631,11 @@ $(function(){
             trunkCarrierMark.css('color','#ed6e56');
             trunkCarrierMust.prop('required',true);
             $('.classOfSer1').attr('checked',true);
-            console.log(typeof gxcyrClassOfServiceArr)
+            $('.service2').val(gxcyrClassOfServiceArr.join(','));
+            $('.service3').val(gxcyrClassOfServiceArr.join(','));
             gxcyrClassOfServiceArr.push('干线运输');
             $('#gxcyrClassOfService').val(gxcyrClassOfServiceArr.join(','));
             $('.service1').val(gxcyrClassOfServiceArr.join(','));
-            $('.service2').val(gxcyrClassOfServiceArr.join(','));
-            $('.service3').val(gxcyrClassOfServiceArr.join(','));
         }else{//取消勾选
             $('#trunkCarrierBox').slideUp();
             trunkCarrierMark.css('color','#fff');
@@ -647,6 +670,7 @@ $(function(){
         });
         $('#gxcyrClassOfService').val(gxcyrClassOfServiceArr.join(','));
         $('.service1').val(gxcyrClassOfServiceArr.join(','));
+        remove(gxcyrClassOfServiceArr,'干线运输');
         $('.service2').val(gxcyrClassOfServiceArr.join(','));
         $('.service3').val(gxcyrClassOfServiceArr.join(','));
     });
@@ -798,14 +822,14 @@ $(function(){
             $('.wbkhCreditPeriod').attr('disabled',false);
             $('.wbkhLineCredit').attr('disabled',false);
             $('.wbkhIsPayForAnother').attr('disabled',false);
-            $('.businessBox select').attr('disabled',false);
+           /* $('.businessBox select').attr('disabled',false);*/
             $('.businessBox input').attr('disabled',false);
             $('.businessBox input.must').attr('required',true)
         }else if(selectVal=='签约在途'){
             $('.wbkhCreditPeriod').val('').attr('disabled',true);
             $('.wbkhLineCredit').val('').attr('disabled',true);
             $('.wbkhIsPayForAnother').attr('disabled',false);
-            $('.businessBox select').val('').attr('disabled',true);
+           /* $('.businessBox select').val('').attr('disabled',true);*/
             $('.businessBox input').val('').attr('disabled',true)
             $('.businessBox input.must').attr('required',false)
         }else{
@@ -816,6 +840,7 @@ $(function(){
             $('input[name="wbkhIsPayForAnother"]').val('0');
             $('.daiDian ').val('').attr('disabled',true);
             $('.businessBox input.must').attr('required',false)
+            $('.businessBox input').val('').attr('disabled',true);
         }
         getDefault($(this).val());
     });
@@ -996,7 +1021,7 @@ $(function(){
     });
     /*删除地址*/
     $('.addressList ').on('click','.delAdd',function(){
-        var delListId = $(this).parents('.list').find('.no span').text();
+        var delListId = $(this).parents('.list').attr('data-listId');
         mm.removeObjWithArr(addressList,delListId);
         addressObj.getAddressList();
     });
@@ -1071,7 +1096,7 @@ $(function(){
             <div class="phone"><input  style="width: 88%;" type="text"></div>\
             <div class="email"><input  style="width: 88%;" type="text"></div>\
             <div class="qq"><input  style="width: 84%;" type="text"></div>\
-            <div class="weixin"><input  style="width: 84%;" type="text"></div>\
+            <div class="weChat"><input  style="width: 84%;" type="text"></div>\
             <div class="address2"><input  style="width: 88%;" type="text"></div>\
             <div class="operation"><a class="confirmAdd" href="javascript:void(0);">确定</a> <a class="cancelAdd redColor" href="javascript:void(0);">取消</a></div>\
             </div>');
@@ -1126,7 +1151,7 @@ $(function(){
                             newConObj.phone = addLinkmanPhone;
                             newConObj.email = addLinkmanEmail;
                             newConObj.qq = addingCon.find('.qq input').val();
-                            newConObj.weixin = addingCon.find('.weixin input').val();
+                            newConObj.weChat = addingCon.find('.weChat input').val();
                             newConObj.address = addingCon.find('.address2 input').val();
                             contactsList.push(newConObj);
                             contactsObj.getContactsList();
@@ -1145,7 +1170,7 @@ $(function(){
                         newConObj.phone = addLinkmanPhone;
                         newConObj.email = addLinkmanEmail;
                         newConObj.qq = addingCon.find('.qq input').val();
-                        newConObj.weixin = addingCon.find('.weixin input').val();
+                        newConObj.weChat = addingCon.find('.weChat input').val();
                         newConObj.address = addingCon.find('.address2 input').val();
                         contactsList.push(newConObj);
                         contactsObj.getContactsList();
@@ -1159,9 +1184,7 @@ $(function(){
     });
     /*删除联系人*/
     $('.contactList ').on('click','.delAdd',function(){
-        var delListId = $(this).parents('.list').find('.no2 span').text();
-        console.log(delListId)
-        console.log(contactsList)
+        var delListId = $(this).parents('.list').attr('data-listId');
         mm.removeObjWithArr(contactsList,delListId);
         contactsObj.getContactsList();
     });
@@ -1178,7 +1201,7 @@ $(function(){
         var editContactPhone = thisList.find('.phone span').text();
         var editContactEmail = thisList.find('.email span').text();
         var editContactQq = thisList.find('.qq span').text();
-        var editContactWeixin = thisList.find('.weixin span').text();
+        var editContactweChat = thisList.find('.weChat span').text();
         var editContactAddress = thisList.find('.address2 span').text();
         thisList.after('' +
             '<div data-ListId="'+editId+'" class="editingCon clearfix">\
@@ -1191,7 +1214,7 @@ $(function(){
             <div class="phone"><input  style="width: 88%;" type="text" value="'+editContactPhone+'"></div>\
             <div class="email"><input  style="width: 88%;" type="text" value="'+editContactEmail+'"></div>\
             <div class="qq"><input  style="width: 84%;" type="text" value="'+editContactQq+'"></div>\
-            <div class="weixin"><input  style="width: 84%;" type="text" value="'+editContactWeixin+'"></div>\
+            <div class="weChat"><input  style="width: 84%;" type="text" value="'+editContactweChat+'"></div>\
             <div class="address2"><input  style="width: 88%;" type="text" value="'+editContactAddress+'"></div>\
             <div class="operation"><a class="confirmEdit" href="javascript:void(0);">确定</a> <a class="cancelEdit redColor" href="javascript:void(0);">取消</a></div>\
             </div>');
@@ -1249,7 +1272,7 @@ $(function(){
                             EditConObj.phone = editLinkmanPhone;
                             EditConObj.email = editLinkmanEmail;
                             EditConObj.qq = EditingCon.find('.qq input').val();
-                            EditConObj.weixin = EditingCon.find('.weixin input').val();
+                            EditConObj.weChat = EditingCon.find('.weChat input').val();
                             EditConObj.address = EditingCon.find('.address2 input').val();
                             mm.removeObjWithArr(contactsList,EditConObj.id);
                             contactsList.push(EditConObj);
@@ -1269,7 +1292,7 @@ $(function(){
                         EditConObj.phone = editLinkmanPhone;
                         EditConObj.email = editLinkmanEmail;
                         EditConObj.qq = EditingCon.find('.qq input').val();
-                        EditConObj.weixin = EditingCon.find('.weixin input').val();
+                        EditConObj.weChat = EditingCon.find('.weChat input').val();
                         EditConObj.address = EditingCon.find('.address2 input').val();
                         mm.removeObjWithArr(contactsList,EditConObj.id);
                         contactsList.push(EditConObj);
@@ -1556,6 +1579,9 @@ $(function(){
     });
     /*表单提交*/
     $('#newForm').submit(function(){
+        if ($('#savePartner').hasClass('disabled')){
+            return false;
+        }
         $('#linkmans').val(JSON.stringify(contactsList));
         $('#address').val(JSON.stringify(addressList));
         //判断地址和联系人必须维护一个
@@ -1579,7 +1605,6 @@ $(function(){
             return false;
         }
         $(this).ajaxSubmit(options);
-       /* ('#savePartner').attr('disabled',true);//阻止重复点击多次提交*/
         return false;//阻止表单提交
     });
     /*文件上传*/
@@ -1621,8 +1646,8 @@ var contactsObj = {
                 <div style="min-height:20px;word-wrap:break-word" class="tel"><span>'+value.fixPhone+'</span></div>\
                 <div style="min-height:20px;word-wrap:break-word" class="phone"><span>'+value.phone+'</span></div>\
                 <div style="min-height:20px;word-wrap:break-word" class="email"><span>'+value.email+'</span></div>\
-                <div style="min-height:20px;word-wrap:break-word" class="qq"><span>'+value.email+'</span></div>\
-                <div style="min-height:20px;word-wrap:break-word" class="weixin"><span>'+value.email+'</span></div>\
+                <div style="min-height:20px;word-wrap:break-word" class="qq"><span>'+value.qq+'</span></div>\
+                <div style="min-height:20px;word-wrap:break-word" class="weChat"><span>'+value.weChat+'</span></div>\
                 <div style="min-height:20px;word-wrap:break-word" class="address2"><span>'+value.address+'</span></div>\
                 <div style="min-height:20px;word-wrap:break-word" class="operation"><a class="editAdd" href="javascript:void(0);">修改</a> <a class="delAdd redColor" href="javascript:void(0);">删除</a></div>\
                 </div>';
@@ -1639,9 +1664,12 @@ var  options ={
     data:{
         email:$.cookie('front_useremail')
     },
+    beforeSend:function(){
+        $('#savePartner').addClass('disabled');
+    },
     success:function(data) {
         if(data.code == '200'){
-            alert('保存成功！');
+            alert(data.msg);
             $(window).unbind("scroll");
             location.hash = vipspa.stringify('partnerManage');
         }else if(data.code == '400'){
@@ -1650,7 +1678,7 @@ var  options ={
     },error:function() {
             alert('保存失败，请重试！')
     },complete:function() {
-       /* $('#savePartner').removeAttr('disabled');*/
+       $('#savePartner').removeClass('disabled');
     }
 };
 /**

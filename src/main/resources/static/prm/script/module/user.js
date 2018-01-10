@@ -66,12 +66,12 @@ function InitData(pageIndex) {
                 var tr = ' <div class="bodyList clearfix">\
                         <div class="loginId">'+value.ssoId+'</div>\
                         <div class="name">'+value.username+'</div>\
-                        <div class="number">'+value.filenumber+'</div>\
-                        <div class="company">'+value.username+'</div>\
-                        <div class="department">'+value.username+'</div>\
-                        <div class="post">'+value.username+'</div>\
-                        <div class="phone">'+value.username+'</div>\
-                        <div class="email">'+value.username+'</div>\
+                        <div class="number">'+(value.filenumber||'')+'</div>\
+                        <div class="company">'+(value.companyname||'')+'</div>\
+                        <div class="department">'+(value.dempname||'')+'</div>\
+                        <div class="post">'+(value.postname||'')+'</div>\
+                        <div class="phone">'+(value.phone||'')+'</div>\
+                        <div class="email">'+(value.companyEmail||'')+'</div>\
                     </div>';
                 $(tr).appendTo('.body-box');
             });

@@ -402,6 +402,27 @@
 #partnerManage .content .handleBar a {
   color: #ed6e56;
 }
+#partnerManage .content .pIcon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: 4px;
+  margin-right: 2px;
+  background-image: url(../image/sprite.png);
+}
+#partnerManage .content .addIcon {
+  background-position: -124px 2px;
+}
+#partnerManage .content .efitIcon {
+  background-position: -124px -26px;
+}
+#partnerManage .content .transferIcon {
+  background-position: -124px -60px;
+}
+#partnerManage .content .deleteIcon {
+  background-position: -124px -94px;
+}
 #partnerManage .treeHome .thead-outer {
   height: 50px;
   color: #333;
@@ -1040,7 +1061,7 @@
 }
 #partnerNew .content {
   color: #666;
-  padding-bottom: 360px;
+  padding-bottom: 700px;
   margin-top: 170px;
 }
 #partnerNew .content h4 {
@@ -1198,7 +1219,7 @@
 #partnerNew .content .thead-outer .thead-core .qq {
   width: 7%;
 }
-#partnerNew .content .thead-outer .thead-core .weixin {
+#partnerNew .content .thead-outer .thead-core .weChat {
   width: 7%;
 }
 #partnerNew .content .thead-outer .thead-core .address2 {
@@ -1263,7 +1284,7 @@
 #partnerNew .content .listBoxStyle .list .qq {
   width: 7%;
 }
-#partnerNew .content .listBoxStyle .list .weixin {
+#partnerNew .content .listBoxStyle .list .weChat {
   width: 7%;
 }
 #partnerNew .content .listBoxStyle .list .address2 {
@@ -1396,10 +1417,10 @@
 #partnerNew .content .listBoxStyle .editingCon .qq {
   width: 7%;
 }
-#partnerNew .content .listBoxStyle .addingAdd .weixin,
-#partnerNew .content .listBoxStyle .editingAdd .weixin,
-#partnerNew .content .listBoxStyle .addingCon .weixin,
-#partnerNew .content .listBoxStyle .editingCon .weixin {
+#partnerNew .content .listBoxStyle .addingAdd .weChat,
+#partnerNew .content .listBoxStyle .editingAdd .weChat,
+#partnerNew .content .listBoxStyle .addingCon .weChat,
+#partnerNew .content .listBoxStyle .editingCon .weChat {
   width: 7%;
 }
 #partnerNew .content .listBoxStyle .addingAdd .address2,
@@ -2176,10 +2197,10 @@ body {
 #wrapper #left ul li .credit.active::before {
   background-position: -37px -62px;
 }
-#wrapper #left ul li .hierarchy::before {
+#wrapper #left ul li .internalCustomer::before {
   background-position: 0 -98px;
 }
-#wrapper #left ul li .hierarchy.active::before {
+#wrapper #left ul li .internalCustomer.active::before {
   background-position: -37px -98px;
 }
 #wrapper #left ul li .partnerClassify::before {
@@ -2390,5 +2411,11 @@ input.date_in {
   }
   #wrapper #left {
     width: 180px;
+  }
+  #wrapper #header .logo {
+    width: 179px;
+  }
+  .right .right_content {
+    padding: 20px 15px;
   }
 }

@@ -6,7 +6,7 @@ html,body{
 }
 .window_boundingBox{
     position:fixed;
-    border:1px solid #000;
+    border:1px solid #666;
     box-shadow: 0 0 12px rgba(0,0,0,.5);
     background: #fff;
     z-index: 9999;

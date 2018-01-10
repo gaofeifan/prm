@@ -1,12 +1,12 @@
 package com.pj.auth.mapper;
 
-import com.pj.auth.pojo.AuthMenu;
-import com.pj.auth.pojo.AuthPostMenuVo;
-import com.pj.conf.base.BaseMapper;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import com.pj.auth.pojo.AuthMenu;
+import com.pj.conf.base.BaseMapper;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -21,7 +21,7 @@ public interface AuthMenuMapper extends BaseMapper<AuthMenu> {
 
 
     /**
-     *  根据岗位查询
+     * 根据岗位查询
      * @param postId
      * @return
      */

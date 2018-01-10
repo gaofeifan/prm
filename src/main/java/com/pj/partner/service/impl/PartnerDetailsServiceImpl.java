@@ -95,6 +95,10 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         	pd.setDirName(name);
         }
             List<PartnerDetails> pds = this.partnerDetailsMapper.selectListByQuery(pd);
+            
+            if(StringUtils.isBlank(name) && StringUtils.isBlank(partnerCategory) && offPartner == 0 && blacklistPartner == 0){
+            	return selectPartnerDetailsList();
+            }
             //        List<PartnerDetails> pds = this.partnerDetailsMapper.selectByExample(example);
             List<PartnerDetails> data = new ArrayList<>();
             Set<PartnerDetails> details = selectSon(pds, new HashSet<PartnerDetails>(), null);

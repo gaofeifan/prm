@@ -1,5 +1,6 @@
 package com.pj.mail.AutomaticReport;
 import com.alibaba.dubbo.common.logger.Logger;
+
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.pj.auth.pojo.User;
 import com.pj.mail.util.SendEmailUtils;
@@ -9,7 +10,6 @@ import com.pj.partner.service.PartnerDetailsService;
 import com.pj.user.service.EmailService;
 import com.pj.auth.service.AuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;

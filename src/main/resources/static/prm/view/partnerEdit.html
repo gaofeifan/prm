@@ -223,11 +223,19 @@
                     </div>
                     <div class="fl div4">
                         <span class="mark">*</span>
-                        <input style="border:none;width:auto;padding-left:0;" name="fileName" id="fileName" class="" type="text" required>
                         <input class="hidden" id="filePath" name="filePath" type="text">
                         <input style="width: 60px;padding-left: 0; font-size: 12px;" id="upload" type="button" value="上传附件">
+                        <input style="border:none;width:auto;padding-left:0;" name="fileName" id="fileName" class="" type="text" required>
                         <a id="download" style="font-size: 12px;" href="">下载</a>
                     </div>
+                </div>
+                <div class="status clearfix">
+                    <input id="isBlacklist" type="checkbox"><label for="isBlacklist">黑名单</label>
+                    <!--隐藏黑名单-->
+                    <input id="blackList" class="hiddenInput" name="isBlacklist" type="text" value="0">
+                    <input id="isDisable" type="checkbox"><label for="isDisable">停用</label>
+                    <input id="disable" class="hiddenInput" name="isDisable" type="text" value="0">
+                    <span class="mark disableMark">*</span><label for="disableRemark">停用备注</label><input id="disableRemark" name="disableRemark" class="reason" type="text">
                 </div>
             </div>
             <div class="lump">
@@ -279,7 +287,7 @@
                             <div class="phone"><span class="mark">*</span><span>手机</span></div>
                             <div class="email"><span class="mark">*</span><span>邮件</span></div>
                             <div class="qq"><span>QQ</span></div>
-                            <div class="weixin"><span>微信</span></div>
+                            <div class="weChat"><span>微信</span></div>
                             <div class="address2"><span>地址</span></div>
                             <div class="operation"><span>操作</span></div>
                         </div>
@@ -330,14 +338,6 @@
                 </div>
             </div>
             <!--合作伙伴分类 end-->
-            <div class="status clearfix">
-                <input id="isBlacklist" type="checkbox"><label for="isBlacklist">黑名单</label>
-                <!--隐藏黑名单-->
-                <input id="blackList" class="hiddenInput" name="isBlacklist" type="text" value="0">
-                <input id="isDisable" type="checkbox"><label for="isDisable">停用</label>
-                <input id="disable" class="hiddenInput" name="isDisable" type="text" value="0">
-                <span class="mark disableMark">*</span><label for="disableRemark">停用备注</label><input id="disableRemark" name="disableRemark" class="reason" type="text">
-            </div>
             <h4>分类详细信息</h4>
             <!--外部客户 start-->
             <div class="lump wbkhStyle clearfix" id="externalClient">
@@ -373,7 +373,7 @@
                             <input name="wbkhLineCredit" class="wbkhLineCredit quality must" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
                         </div>
                         <div><span class="mark">*</span><label for="">已用额度(万元)</label>
-                            <input name="" class="quality must" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
+                            <input name="useQuota" class="quality must useQuota" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
                         </div>
                     </div>
                     <div class="fl fl3">
@@ -565,7 +565,7 @@
                             <input name="wbkhLineCredit2" class="wbkhLineCredit must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled>
                         </div>
                         <div><span class="mark">*</span><label for="">已用额度(万元)</label>
-                            <input name="" class="quality must" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
+                            <input name="useQuota" class="quality must useQuota" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
                         </div>
                     </div>
                     <div class="fl fl3">
@@ -744,7 +744,7 @@
                                 <input class="wbkhLineCredit must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled>
                             </div>
                             <div><span class="mark">*</span><label for="">已用额度(万元)</label>
-                                <input name="" class="quality must" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
+                                <input name="useQuota" class="quality must useQuota" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" type="text" disabled>
                             </div>
                         </div>
                     </div>

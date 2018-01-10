@@ -411,7 +411,7 @@ var contactsObj = {
                 <div style="min-height:20px;word-wrap:break-word" class="phone"><span>'+value.phone+'</span></div>\
                 <div style="min-height:20px;word-wrap:break-word" class="email"><span>'+value.email+'</span></div>\
                 <div style="min-height:20px;word-wrap:break-word" class="qq"><span>'+value.email+'</span></div>\
-                <div style="min-height:20px;word-wrap:break-word" class="weixin"><span>'+value.email+'</span></div>\
+                <div style="min-height:20px;word-wrap:break-word" class="weChat"><span>'+value.email+'</span></div>\
                 <div style="min-height:20px;word-wrap:break-word" class="address2"><span>'+value.address+'</span></div>\
                 <div style="min-height:20px;word-wrap:break-word" class="operation"></div>\
                 </div>';
@@ -556,6 +556,7 @@ var seePartner = {
                 $('.wbkhTypeCreditPeriod').val(data.data.wbkhTypeCreditPeriod);//信用期限类型
                 $('.wbkhCreditPeriod').val(data.data.wbkhCreditPeriod);//信用期限（天）
                 $('.wbkhLineCredit').val(data.data.wbkhLineCredit);//信用额度(万元)
+                $('.useQuota').val(data.data.useQuota||0);//已用额度(万元)
                 $('.wbkhInvoiceType').val(data.data.wbkhInvoiceType);//开票类型
                 $('.invoiceTypeTitle').text(data.data.wbkhInvoiceType);//开票类型Title
                 $('.wbkhDepositBank ').val(data.data.wbkhDepositBank);//开户银行
