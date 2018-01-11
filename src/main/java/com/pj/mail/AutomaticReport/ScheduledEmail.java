@@ -82,8 +82,8 @@ public class ScheduledEmail {
         List<PartnerDetails>  PartnerDetailsSigningInTransit = this.emailService.findPartnerDetailsGsigningInTransit();
         Integer lastReceiverID =0;
         if(null!=PartnerDetailsSigningInTransit && PartnerDetailsSigningInTransit.size()!=0){
-            Set<Integer> checkDuplicates = new HashSet<Integer>();
-            Set<Integer> checkDuplicates2 = new HashSet<Integer>();
+            Set<String> checkDuplicates = new HashSet<String>();
+            Set<String> checkDuplicates2 = new HashSet<String>();
             // 获取 hash集合 去除重复接受者 id
             for (PartnerDetails partnerDetails : PartnerDetailsSigningInTransit){
                 checkDuplicates.add(partnerDetails.getReceiverId());
@@ -92,7 +92,7 @@ public class ScheduledEmail {
             try {
             if(checkDuplicates.size()!=0){
                 List<PartnerDetails> PartnerDetailsList2 = new ArrayList<PartnerDetails>();      //   /*大于30 天的 集合*/
-                for (Integer it : checkDuplicates){
+                for (String it : checkDuplicates){
                     List<PartnerDetails> PartnerDetailsList = new ArrayList<PartnerDetails>();              //  /*大于15 天的集合*/
                     // 循环list集合
                     for (PartnerDetails partnerDetails : PartnerDetailsSigningInTransit){
@@ -138,9 +138,9 @@ public class ScheduledEmail {
                 // 发送给接受者邮件失败后整体发送给 管理者
                 List<User> userList = new ArrayList<>();
                 if(checkDuplicates2.size()!=0){
-                    for (Integer ids : checkDuplicates2){
+                    for (String ids : checkDuplicates2){
                         // 调用接口 获取 接收者email
-                        userList.add( authUserService.selectUserByEmail(ids));
+                        userList.add( authUserService.selectPersonById(ids));
                     }
                         try {
 
@@ -181,15 +181,15 @@ public class ScheduledEmail {
                     if(null!=IsAboutToExpireData || IsAboutToExpireData.size()!=0) {
                         // 发送邮件
                         //整理提醒接受者
-                        HashSet<Integer> receiverIds = new HashSet<Integer>();
+                        HashSet<String> receiverIds = new HashSet<String>();
                         for (PartnerDetails datasList : IsAboutToExpireData) {
                             receiverIds.add(datasList.getReceiverId());
                         }
 
                         // 存储失败接受者人员信息
-                        HashSet<Integer> failurePersonnel = new HashSet<Integer>();
+                        HashSet<String> failurePersonnel = new HashSet<String>();
                         // 遍历 接受者 并发送邮件
-                        for (Integer receiverId : receiverIds) {
+                        for (String receiverId : receiverIds) {
 
                             List<PartnerDetails> sendEmailsDatas = new ArrayList<PartnerDetails>();
                             for (PartnerDetails datasList : IsAboutToExpireData) {
@@ -200,7 +200,7 @@ public class ScheduledEmail {
                             //发送邮件到接受者
                             if (null != sendEmailsDatas && sendEmailsDatas.size() != 0) {
                                 // 调用接口 获取 email 发给 接收者
-                                User user = authUserService.selectUserByEmail(sendEmailsDatas.get(0).getReceiverId());
+                                User user = authUserService.selectPersonById(sendEmailsDatas.get(0).getReceiverId());
                                 try {
                                     // 邮件正文
                                     String total = "以下为合作伙伴即将到期清单，请注意跟进。";
@@ -217,9 +217,9 @@ public class ScheduledEmail {
                         // 发送给接受者邮件失败后整体发送给 管理者
                         List<User> userList = new ArrayList<>();
                         if (failurePersonnel.size() != 0) {
-                            for (Integer ids : failurePersonnel) {
+                            for (String ids : failurePersonnel) {
                                 // 调用接口 获取 接收者email
-                                userList.add(authUserService.selectUserByEmail(ids));
+                                userList.add(authUserService.selectPersonById(ids));
                             }
 
                         try {
@@ -249,8 +249,8 @@ public class ScheduledEmail {
             partnerDetaisl.add(parData.getDetailsId());
         }
         // 存储失败接受者人员信息
-        HashSet<Integer> failurePersonnel = new HashSet<Integer>();
-        HashSet<Integer> emailListData = new HashSet<>(); // 所有待发送邮件的 人员集合 根据 提醒接受者分类
+        HashSet<String> failurePersonnel = new HashSet<String>();
+        HashSet<String> emailListData = new HashSet<String>(); // 所有待发送邮件的 人员集合 根据 提醒接受者分类
         for (Integer  detailsId  : partnerDetaisl) {
             if (null != detailsId) {
                 for (PartnerLinkman parData : partnerLinkmenAl) {
@@ -264,7 +264,7 @@ public class ScheduledEmail {
             }
         }
 
-                for(Integer emailDateId :emailListData ){
+                for(String emailDateId :emailListData ){
             List<PartnerLinkman> parList = new ArrayList<PartnerLinkman>();
                     for (PartnerLinkman parData : partnerLinkmenAl) {
                         if(parData.getReceiverId().equals(emailDateId)){
@@ -274,7 +274,7 @@ public class ScheduledEmail {
                     // 获取 邮箱并发送邮件
                     //发送邮件到接受者
                     // 调用接口 获取 email 发给 接收者
-                    User user = this.authUserService.selectUserByEmail(emailDateId);
+                    User user = this.authUserService.selectPersonById(emailDateId);
                     try {
                         // 邮件正文
                         String total = "新增合作伙伴维护了新的联系人，与您名下的原合作伙伴中的以下联系人重复，请核实。。";
@@ -293,9 +293,9 @@ public class ScheduledEmail {
         // 发送给接受者邮件失败后整体发送给 管理者
         List<User> userList = new ArrayList<>();
         if (failurePersonnel.size() != 0) {
-            for (Integer ids : failurePersonnel) {
+            for (String ids : failurePersonnel) {
                 // 调用接口 获取 接收者email
-                userList.add(this.authUserService.selectUserByEmail(ids));
+                userList.add(this.authUserService.selectPersonById(ids));
             }
 
         try {
@@ -402,7 +402,7 @@ public class ScheduledEmail {
         Integer i   = 1;
         if(null!=user){
             for (User use : user){
-                theMessage.append("<tr><td>"+ i++ +"</td><td>"+use.getUsername() +"</td><td>"+use.getCompanyname() +"</td><td>"+use.getDempname() +"</td><td>"+use.getPostname() +"</td><td>"+use.getPhone() +"</td><td>"+use.getEmail() +"</td></tr>");
+                theMessage.append("<tr><td>"+ i++ +"</td><td>"+use.getName() +"</td><td>"+use.getCompanyName() +"</td><td>"+use.getDeptName() +"</td><td>"+use.getPositionName() +"</td><td>"+use.getPhone() +"</td><td>"+use.getEmail() +"</td></tr>");
             }
         }
         theMessage.append("</table>");

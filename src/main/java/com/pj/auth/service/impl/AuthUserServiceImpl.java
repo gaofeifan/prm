@@ -50,6 +50,7 @@ public class AuthUserServiceImpl implements AuthUserService {
 		return null;
 	}
 
+
 	/*
 	 * public String selectEmailsByPostId(String postId) { List<User> users =
 	 * this.selectUserByPostId(postId, false); StringBuilder sb = new
@@ -96,6 +97,12 @@ public class AuthUserServiceImpl implements AuthUserService {
 		return users;
 	}
 
+
+	@Override
+	public User selectAdminUserById() {
+
+		return null;
+	}
 	/*
 	 * public List<User> selectUserByPostId(String postIds, boolean isDefault) {
 	 * if (!isDefault && StringUtils.isBlank(postIds)) { return null; }
@@ -193,5 +200,6 @@ public class AuthUserServiceImpl implements AuthUserService {
 	 * VerifyUtils.objectToString(map.get("email")); User user = new User();
 	 * user.setUsername(username); user.setEmail(email); return user; }
 	 */
+
 
 }
