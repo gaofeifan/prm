@@ -1,4 +1,3 @@
-
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver 
@@ -16,8 +15,8 @@ spring:
     
   profiles:
     active: dev
-  jpa:
-    show-sql: true
+
+
 
 
 logging:
@@ -45,9 +44,9 @@ mybatis:
 server:
   port: 8083
  
-oa : 
+eams : 
   adminId: 8732
-  url: http://10.0.0.18:8083
+  url: http://10.0.0.105:8082
   ssoUrl: http://10.0.0.18:8085
     
 ---
@@ -57,11 +56,10 @@ spring:
     username: root
     password: root
     url: jdbc:mysql://10.0.0.18:3306/prm
+  
   redis:
     host: 10.0.0.18
     password: redis
-  jpa:
-    show-sql: true
 
 ---
 spring:
@@ -74,10 +72,9 @@ spring:
   redis:
     host: 139.129.236.180
     password: pj@redis_oa
-  jpa:
-      show-sql: true
 
-oa:
+
+eams:
   url: http://139.129.236.180:8080
   ssoUrl: http://139.129.236.180:8081
 

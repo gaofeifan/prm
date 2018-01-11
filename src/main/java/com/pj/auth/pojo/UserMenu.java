@@ -22,14 +22,6 @@ public class UserMenu {
 
   public UserMenu() {};
 
-  public UserMenu(String userId) {
-    this.userId = userId;
-  };
-
-  public UserMenu(Integer postId) {
-    this.postId = postId;
-  }
-
   @ApiModelProperty(value = "id")
   @GeneratedValue(generator = "JDBC")
   @Id
@@ -42,7 +34,7 @@ public class UserMenu {
   private Integer authId;
 
   @Column(name = "post_id")
-  private Integer postId;
+  private String postId;
 
 }
 

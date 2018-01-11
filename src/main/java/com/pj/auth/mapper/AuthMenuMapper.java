@@ -14,7 +14,7 @@ import com.pj.conf.base.BaseMapper;
 @Mapper
 public interface AuthMenuMapper extends BaseMapper<AuthMenu> {
 
-    List<AuthMenu> findAuthMenuListBypostId(@Param("postId") int postId); // 支持  aop切面获取 权限信息 2017年11月17日10:08:27
+    List<AuthMenu> findAuthMenuListBypostId(@Param("postId") String postId); // 支持  aop切面获取 权限信息 2017年11月17日10:08:27
     
     //通过userMenu的userid查询此用户的菜单权限
     List<AuthMenu> selectByUserId(@Param("userId") String userId);
@@ -25,5 +25,5 @@ public interface AuthMenuMapper extends BaseMapper<AuthMenu> {
      * @param postId
      * @return
      */
-    Integer[] selectMenuIds(Integer postId);
+    Integer[] selectMenuIds(String postId);
 }

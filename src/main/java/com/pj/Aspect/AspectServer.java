@@ -546,7 +546,7 @@ public class AspectServer {
                 }
             if(oldIsmenu.size()!=0){
                 try {
-                    addAuthLogMethod(flage, request, actionData, "删除", user.getUsername());
+                    addAuthLogMethod(flage, request, actionData, "删除", user.getName());
                 } catch (Exception e) {
                     System.out.println(e);
                 }
@@ -576,7 +576,7 @@ public class AspectServer {
             }
             if(newIsmenu.size()!=0){
                 try {
-                    addAuthLogMethod(flage, request, actionData, "新增",  user.getUsername());
+                    addAuthLogMethod(flage, request, actionData, "新增",  user.getName());
                 } catch (Exception e) {
                     System.out.println(e);
                 }
@@ -1065,10 +1065,10 @@ public class AspectServer {
             operation.setCreateDate(new Date());
             operation.setAction(actionData);
             operation.setUserId(user.getEmail());
-            operation.setUserName(user.getUsername());
-            operation.setDepartment(user.getDempname());
-            operation.setCompany(user.getCompanyname());
-            operation.setJobs(user.getPostname());
+            operation.setUserName(user.getName());
+            operation.setDepartment(user.getDeptName());
+            operation.setCompany(user.getCompanyName());
+            operation.setJobs(user.getPositionName());
             // 追加日志记录
             aspectServer.logService.addOperationlLog(operation);
         }
@@ -1104,7 +1104,7 @@ private Field[] getfieldsMethod(Object objectdata) {
     /*获取用户信息*/
 
     private User findUserDateByemail(String email){
-        return authUserService.selectUserByEmail(email);
+        return authUserService.selectPersonByEmail(email);
     }
 
     /*信用等级是否有效文案展示*/

@@ -15,11 +15,11 @@ public
 class AuthPostMenu {
     public AuthPostMenu() { }
 
-    public AuthPostMenu(Integer postId) {
+    public AuthPostMenu(String postId) {
         this.postId = postId;
     }
 
-    public AuthPostMenu(Integer menuId, Integer postId) {
+    public AuthPostMenu(Integer menuId, String postId) {
         this.menuId = menuId;
         this.postId = postId;
     }
@@ -30,5 +30,5 @@ class AuthPostMenu {
 
     @Column()
     @ApiModelProperty(value = "岗位id")
-    private Integer postId;
+    private String postId;
 }

@@ -7,7 +7,7 @@
         <result  column="is_menu" property="isMenu" jdbcType="INTEGER" />
         <result  column="href" property="href" jdbcType="VARCHAR" />
         <result  column="p_id" property="pId" jdbcType="INTEGER" />
-        <result  column="post_id" property="postId" jdbcType="INTEGER" />
+        <result  column="post_id" property="postId" jdbcType="VARCHAR" />
         <result  column="menu_id" property="menuId" jdbcType="INTEGER" />
         <result  column="checks" property="checks" jdbcType="INTEGER" />
     </resultMap>
