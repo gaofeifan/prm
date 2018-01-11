@@ -163,7 +163,7 @@
                                 <input id="startDate" type="text" readonly> <span>至</span> <input id="endDate" type="text" readonly>
                             </div>
                             <div class="fl div4">
-                                <span class="mark">*</span>
+                                
                                 <input style="border:none;width:auto;padding-left:0;" id="fileName" type="text" readonly>
                                 <input style="border:none;width:0;padding-left:0;" id="filePath" name="filePath" type="text">
                                 <a id="download" style="" href="">下载</a>
@@ -218,13 +218,13 @@
                             <div class="thead-outer">
                                 <div class="thead-core">
                                     <div class="no2"><span>序号</span></div>
-                                    <div class="name"><span class="mark">*</span><span>姓名</span></div>
-                                    <div class="obligation"><span class="mark">*</span><span>职责</span></div>
+                                    <div class="name"><span>姓名</span></div>
+                                    <div class="obligation"><span>职责</span></div>
                                     <div class="demp"><span>部门</span></div>
                                     <div class="duty"><span>职务</span></div>
                                     <div class="tel"><span>固话</span></div>
-                                    <div class="phone"><span class="mark">*</span><span>手机</span></div>
-                                    <div class="email"><span class="mark">*</span><span>邮件</span></div>
+                                    <div class="phone"><span>手机</span></div>
+                                    <div class="email"><span>邮件</span></div>
                                     <div class="qq"><span>QQ</span></div>
                                     <div class="weChat"><span>微信</span></div>
                                     <div class="address2"><span>地址</span></div>
@@ -339,126 +339,126 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="businessBox">
+                            <div class="businessBox clearfix">
                                 <div class="AI businessItem fl">
                                     <p>AI</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="aiTypeCreditPeriod" class="aiTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="aiCreditPeriod" class="aiCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="AE businessItem fl">
                                     <p>AE</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="aeTypeCreditPeriod" class="aeTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="aeCreditPeriod" class="aeCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="SI businessItem fl">
                                     <p>SI</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="siTypeCreditPeriod" class="siTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="siCreditPeriod" class="siCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="SE businessItem fl">
                                     <p>SE</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="seTypeCreditPeriod" class="seTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="seCreditPeriod" class="seCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="TI businessItem fl">
                                     <p>TI</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="tiTypeCreditPeriod" class="tiTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="tiCreditPeriod" class="tiCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="TE businessItem fl">
                                     <p>TE</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="teTypeCreditPeriod" class="teTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="teCreditPeriod" class="teCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="OI businessItem fl">
                                     <p>OI</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="oiTypeCreditPeriod" class="oiTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="oiCreditPeriod" class="oiCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="OE businessItem fl">
                                     <p>OE</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="oeTypeCreditPeriod" class="oeTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="oeCreditPeriod" class="oeCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="IT businessItem fl">
                                     <p>IT</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="itTypeCreditPeriod" class="itTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="itCreditPeriod" class="itCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="DDN businessItem fl">
                                     <p>DDN</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="ddnTypeCreditPeriod" class="ddnTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="ddnCreditPeriod" class="ddnCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="YYOX businessItem fl">
                                     <p>YYOX</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="yyoxTypeCreditPeriod" class="yyoxTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="yyoxCreditPeriod" class="yyoxCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="Industrial businessItem fl">
                                     <p>Industrial</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="IndustrialTypeCreditPeriod" class="IndustrialTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="IndustrialCreditPeriod" class="IndustrialCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                             </div>
                         </div>
@@ -531,126 +531,126 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="businessBox">
+                            <div class="businessBox clearfix">
                                 <div class="AI businessItem fl">
                                     <p>AI</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="aiTypeCreditPeriod" class="aiTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="aiCreditPeriod" class="aiCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="AE businessItem fl">
                                     <p>AE</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="aeTypeCreditPeriod" class="aeTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="aeCreditPeriod" class="aeCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="SI businessItem fl">
                                     <p>SI</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="siTypeCreditPeriod" class="siTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="siCreditPeriod" class="siCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="SE businessItem fl">
                                     <p>SE</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="seTypeCreditPeriod" class="seTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="seCreditPeriod" class="seCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="TI businessItem fl">
                                     <p>TI</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="tiTypeCreditPeriod" class="tiTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="tiCreditPeriod" class="tiCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="TE businessItem fl">
                                     <p>TE</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="teTypeCreditPeriod" class="teTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="teCreditPeriod" class="teCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="OI businessItem fl">
                                     <p>OI</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="oiTypeCreditPeriod" class="oiTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="oiCreditPeriod" class="oiCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="OE businessItem fl">
                                     <p>OE</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="oeTypeCreditPeriod" class="oeTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="oeCreditPeriod" class="oeCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="IT businessItem fl">
                                     <p>IT</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="itTypeCreditPeriod" class="itTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="itCreditPeriod" class="itCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="DDN businessItem fl">
                                     <p>DDN</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="ddnTypeCreditPeriod" class="ddnTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="ddnCreditPeriod" class="ddnCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="YYOX businessItem fl">
                                     <p>YYOX</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="yyoxTypeCreditPeriod" class="yyoxTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="yyoxCreditPeriod" class="yyoxCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="Industrial businessItem fl">
                                     <p>Industrial</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="IndustrialTypeCreditPeriod" class="IndustrialTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="IndustrialCreditPeriod" class="IndustrialCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                             </div>
                         </div>
@@ -685,126 +685,126 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="businessBox">
+                            <div class="businessBox clearfix">
                                 <div class="AI businessItem fl">
                                     <p>AI</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="aiTypeCreditPeriod" class="aiTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="aiCreditPeriod" class="aiCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="AE businessItem fl">
                                     <p>AE</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="aeTypeCreditPeriod" class="aeTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly ></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="aeCreditPeriod" class="aeCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="SI businessItem fl">
                                     <p>SI</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="siTypeCreditPeriod" class="siTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="siCreditPeriod" class="siCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="SE businessItem fl">
                                     <p>SE</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="seTypeCreditPeriod" class="seTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="seCreditPeriod" class="seCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="TI businessItem fl">
                                     <p>TI</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="tiTypeCreditPeriod" class="tiTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="tiCreditPeriod" class="tiCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="TE businessItem fl">
                                     <p>TE</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="teTypeCreditPeriod" class="teTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="teCreditPeriod" class="teCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="OI businessItem fl">
                                     <p>OI</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="oiTypeCreditPeriod" class="oiTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="oiCreditPeriod" class="oiCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="OE businessItem fl">
                                     <p>OE</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="oeTypeCreditPeriod" class="oeTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="oeCreditPeriod" class="oeCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="IT businessItem fl">
                                     <p>IT</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="itTypeCreditPeriod" class="itTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="itCreditPeriod" class="itCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="DDN businessItem fl">
                                     <p>DDN</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="ddnTypeCreditPeriod" class="ddnTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="ddnCreditPeriod" class="ddnCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="YYOX businessItem fl">
                                     <p>YYOX</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="yyoxTypeCreditPeriod" class="yyoxTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="yyoxCreditPeriod" class="yyoxCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                                 <div class="Industrial businessItem fl">
                                     <p>Industrial</p>
-                                    <div ><label for="">信用期限类型</label><select>
-                                        <option value="">业务日期</option>
-                                        <option value="">账单日期</option>
-                                        <option value="">发票日期</option>
+                                    <div><label for="">信用期限类型</label><select name="IndustrialTypeCreditPeriod" class="IndustrialTypeCreditPeriod">
+                                        <option value="业务日期">业务日期</option>
+                                        <option value="账单日期">账单日期</option>
+                                        <option value="发票日期">发票日期</option>
                                     </select>
                                     </div>
-                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input type="text" readonly></div>
+                                    <div style=" margin-top: 5px;"><label for="">信用期限(天)</label><input name="IndustrialCreditPeriod" class="IndustrialCreditPeriod must" type="text" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" disabled></div>
                                 </div>
                             </div>
                         </div>

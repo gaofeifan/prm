@@ -104,15 +104,15 @@ var power = {
     queryPost:function(){ //根据公司和部门查询岗位
         $.ajax({
             type: "get",
-            url: 'http://'+oaPathUrl+'/oa/post/list.do', //请求的处理数据
+            url: 'http://'+eamsPathUrl+'/base/position/selectPositionByQuery', //请求的处理数据
             dataType:'json',
             data: {
                 companyId:$('#company').val(),
-                dempId:$('#demp').val()
+                deptId:$('#demp').val()
             },
             success:function(data){
                 var arrText = doT.template($("#postTemplate").text());
-                $('.postList').html(arrText(data.data.posts));
+                $('.postList').html(arrText(data.data));
             },
             error:function(data){
 
@@ -122,10 +122,11 @@ var power = {
     queryStaff:function(id){//根据岗位查询用户
         $.ajax({
             type: "get",
-            url: 'http://'+oaPathUrl+'/oa/user/selectUserByPostId.do', //请求的处理数据
+            // url: 'http://'+oaPathUrl+'/oa/user/selectUserByPostId.do', //请求的处理数据
+            url: 'http://'+eamsPathUrl+'/base/person/selectPersonByQuery', //请求的处理数据
             dataType:'json',
             data: {
-                postIds:id
+                positionId:id
             },
             success:function(data){
                 var arrText = doT.template($("#staffTemplate").text());
@@ -139,14 +140,15 @@ var power = {
     queryStaffSelect:function(id){//根据岗位查询用户
         $.ajax({
             type: "get",
-            url: 'http://'+oaPathUrl+'/oa/user/selectUserByPostId.do', //请求的处理数据
+            // url: 'http://'+oaPathUrl+'/oa/user/selectUserByPostId.do', //请求的处理数据
+            url: 'http://'+eamsPathUrl+'/base/person/selectPersonByQuery', //请求的处理数据
             dataType:'json',
             data: {
-                postIds:id
+                positionId:id
             },
             success:function(data){
                 $.each(data.data, function (index, value) {
-                    var option =$('<option value="'+value.id+'" >'+value.username+'</option>');
+                    var option =$('<option value="'+value.id+'" >'+value.name+'</option>');
                     $('#staffTo').append(option);
                 });
             },

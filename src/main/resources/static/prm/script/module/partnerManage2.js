@@ -410,8 +410,8 @@ var contactsObj = {
                 <div style="min-height:20px;word-wrap:break-word" class="tel"><span>'+value.fixPhone+'</span></div>\
                 <div style="min-height:20px;word-wrap:break-word" class="phone"><span>'+value.phone+'</span></div>\
                 <div style="min-height:20px;word-wrap:break-word" class="email"><span>'+value.email+'</span></div>\
-                <div style="min-height:20px;word-wrap:break-word" class="qq"><span>'+value.email+'</span></div>\
-                <div style="min-height:20px;word-wrap:break-word" class="weChat"><span>'+value.email+'</span></div>\
+                <div style="min-height:20px;word-wrap:break-word" class="qq"><span>'+value.qq+'</span></div>\
+                <div style="min-height:20px;word-wrap:break-word" class="weChat"><span>'+value.weChat+'</span></div>\
                 <div style="min-height:20px;word-wrap:break-word" class="address2"><span>'+value.address+'</span></div>\
                 <div style="min-height:20px;word-wrap:break-word" class="operation"></div>\
                 </div>';
@@ -567,6 +567,30 @@ var seePartner = {
                 $('.hwdlTaxReceipt ').val(data.data.hwdlTaxReceipt);//进项税票
                 $('.outputRate').val(data.data.hwdlOutputRate);//销项税票
                 $('.hwdlTaxRate ').val(data.data.hwdlTaxRate);//进项税率%
+                $('.aiTypeCreditPeriod').val(data.data.aiTypeCreditPeriod);//AI
+                $('.aiCreditPeriod').val(data.data.aiCreditPeriod);
+                $('.aeTypeCreditPeriod').val(data.data.aeTypeCreditPeriod);//AE
+                $('.aeCreditPeriod').val(data.data.aeCreditPeriod);
+                $('.siTypeCreditPeriod').val(data.data.siTypeCreditPeriod);//SI
+                $('.siCreditPeriod').val(data.data.siCreditPeriod);
+                $('.seTypeCreditPeriod').val(data.data.seTypeCreditPeriod);//SE
+                $('.seCreditPeriod').val(data.data.seCreditPeriod);
+                $('.tiTypeCreditPeriod').val(data.data.tiTypeCreditPeriod);//TI
+                $('.tiCreditPeriod').val(data.data.tiCreditPeriod);
+                $('.teTypeCreditPeriod').val(data.data.teTypeCreditPeriod);//TE
+                $('.teCreditPeriod').val(data.data.teCreditPeriod);
+                $('.oiTypeCreditPeriod').val(data.data.oiTypeCreditPeriod);//OI
+                $('.oiCreditPeriod').val(data.data.oiCreditPeriod);
+                $('.oeTypeCreditPeriod').val(data.data.oeTypeCreditPeriod);//OE
+                $('.oeCreditPeriod').val(data.data.oeCreditPeriod);
+                $('.itTypeCreditPeriod').val(data.data.itTypeCreditPeriod);//IT
+                $('.itCreditPeriod').val(data.data.itCreditPeriod);
+                $('.ddnTypeCreditPeriod').val(data.data.ddnTypeCreditPeriod);//DDN
+                $('.ddnCreditPeriod').val(data.data.ddnCreditPeriod);
+                $('.yyoxTypeCreditPeriod').val(data.data.yyoxTypeCreditPeriod);//YYOX
+                $('.yyoxCreditPeriod').val(data.data.yyoxCreditPeriod);
+                $('.IndustrialTypeCreditPeriod').val(data.data.industrialTypeCreditPeriod);//Industrial
+                $('.IndustrialCreditPeriod').val(data.data.industrialCreditPeriod);
                 $('#gxcyrClassOfService').val(data.data.gxcyrClassOfService);//服务类别
                 $.each(data.data.gxcyrClassOfServices,function(index,value){
                     $('.gxcyrClassOfServiceBox').find("input:checkbox").each(function(i,n) {

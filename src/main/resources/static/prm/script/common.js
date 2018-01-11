@@ -1,12 +1,35 @@
 
 /**
  * Created by Administrator on 2017/9/13.
- *///异步  加载公司下拉框
+ */
+//同步  加载公司下拉框
 function getComList(dom) {
     $.ajax({
         type: 'get',
         async:false,
-        url: 'http://'+oaPathUrl+'/oa/company/list.do',
+        url: 'http://'+eamsPathUrl+'/base/frameWork/selectCompanyByQuery',
+        success: function (data) {
+            if(data.code ==200) {
+                var str ;
+                $.each(data.data, function (index, value) {
+                    var option =$('<option value="'+value.id+'" >'+value.name+'</option>');
+                    $(dom).append(option);
+                });
+            }else{
+                alert("资源路径出错");
+            }
+        },
+        error: function () {
+            alert('获取数据失败');
+        }
+    });
+}
+//同步  加载利润中心
+function selectLastCompanyList(dom) {
+    $.ajax({
+        type: 'get',
+        async:false,
+        url: 'http://'+eamsPathUrl+'/base/frameWork/selectLastCompanyList',
         success: function (data) {
             if(data.code ==200) {
                 var str ;
@@ -28,12 +51,12 @@ function getDempByCom(dempDom,companyId){
     $(dempDom).empty().append('<option value="">请选择部门</option>');
     $.ajax({
         type: 'get',
-        url: 'http://'+oaPathUrl+'/oa/demp/findDemps.do',
+        url: 'http://'+eamsPathUrl+'/base/frameWork/selectDeptByQuery',
         data:{
             companyId:companyId
         },
         success: function (data) {
-            $.each(data.data.demps, function (index, value) {
+            $.each(data.data, function (index, value) {
                 var option =$('<option value="'+value.id+'" >'+value.name+'</option>');
                 $(dempDom).append(option);
             });
@@ -53,13 +76,13 @@ function getPostByComAndDemp(dempDom,companyId,dempId){
     $(dempDom).empty().append('<option value="">请选择岗位</option>');
     $.ajax({
         type: 'get',
-        url: 'http://'+oaPathUrl+'/oa/post/list.do',
+        url: 'http://'+eamsPathUrl+'/base/position/selectPositionByQuery',
         data: {
             companyId:companyId,
-            dempId:dempId
+            deptId:dempId
         },
         success: function (data) {
-            $.each(data.data.posts, function (index, value) {
+            $.each(data.data, function (index, value) {
                 var option =$('<option value="'+value.id+'" >'+value.name+'</option>');
                 $(dempDom).append(option);
             });
@@ -147,6 +170,7 @@ function qualityRating(){
 function getDefault(val){
     $.ajax({
         type: 'get',
+        async:false,
         url: 'http://' + gPathUrl + '/user/selectLevelByName',
         dataType: 'json',
         data:{

@@ -30,6 +30,10 @@ $(function(){
     $('#afterLogout').click(function(){
         allObj.afterLogout()
     });
+    /*关闭alert报错提示*/
+    $('#alertClose').click(function(){
+        $('.alertShow').stop().hide();
+    })
 });
 var allObj = {
     beforeLogout:function(){

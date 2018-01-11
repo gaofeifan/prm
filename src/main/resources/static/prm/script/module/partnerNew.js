@@ -23,8 +23,8 @@ $(function(){
         codes.prop('disabled','disabled');
         $('.code1').prop('disabled',false);
         $('.useQuota').val(0);//已用额度(万元)
-        /*加载公司*/
-        getComList('#profitCenter');
+        /*加载利润中心*/
+        selectLastCompanyList('#profitCenter');
         $('#profitCenter').val('');
         /*加载信用等级*/
         qualityRating();
@@ -50,8 +50,8 @@ $(function(){
                 }
             }
         })
-        /*加载公司*/
-        getComList('#profitCenter');
+        /*加载利润中心*/
+        selectLastCompanyList('#profitCenter');
         /*加载信用等级*/
         qualityRating();
         /*回显各个字段的值*/
@@ -175,6 +175,32 @@ $(function(){
                 $('.hwdlTaxReceipt ').val(data.data.hwdlTaxReceipt);//进项税票
                 $('.outputRate').val(data.data.hwdlOutputRate);//销项税票
                 $('.hwdlTaxRate ').val(data.data.hwdlTaxRate);//进项税率%
+                $('.aiTypeCreditPeriod').val(data.data.aiTypeCreditPeriod);//AI
+                $('.aiCreditPeriod').val(data.data.aiCreditPeriod);
+                $('.aeTypeCreditPeriod').val(data.data.aeTypeCreditPeriod);//AE
+                $('.aeCreditPeriod').val(data.data.aeCreditPeriod);
+                $('.siTypeCreditPeriod').val(data.data.siTypeCreditPeriod);//SI
+                $('.siCreditPeriod').val(data.data.siCreditPeriod);
+                $('.seTypeCreditPeriod').val(data.data.seTypeCreditPeriod);//SE
+                $('.seCreditPeriod').val(data.data.seCreditPeriod);
+                $('.tiTypeCreditPeriod').val(data.data.tiTypeCreditPeriod);//TI
+                $('.tiCreditPeriod').val(data.data.tiCreditPeriod);
+                $('.teTypeCreditPeriod').val(data.data.teTypeCreditPeriod);//TE
+                $('.teCreditPeriod').val(data.data.teCreditPeriod);
+                $('.oiTypeCreditPeriod').val(data.data.oiTypeCreditPeriod);//OI
+                $('.oiCreditPeriod').val(data.data.oiCreditPeriod);
+                $('.oeTypeCreditPeriod').val(data.data.oeTypeCreditPeriod);//OE
+                $('.oeCreditPeriod').val(data.data.oeCreditPeriod);
+                $('.itTypeCreditPeriod').val(data.data.itTypeCreditPeriod);//IT
+                $('.itCreditPeriod').val(data.data.itCreditPeriod);
+                $('.ddnTypeCreditPeriod').val(data.data.ddnTypeCreditPeriod);//DDN
+                $('.ddnCreditPeriod').val(data.data.ddnCreditPeriod);
+                $('.yyoxTypeCreditPeriod').val(data.data.yyoxTypeCreditPeriod);//YYOX
+                $('.yyoxCreditPeriod').val(data.data.yyoxCreditPeriod);
+                $('.IndustrialTypeCreditPeriod').val(data.data.industrialTypeCreditPeriod);//Industrial
+                $('.IndustrialCreditPeriod').val(data.data.industrialCreditPeriod);
+
+
                 $('#gxcyrClassOfService').val(gxcyrClassOfServiceArr);//服务类别
                 $('.service1').val(gxcyrClassOfServiceArr);//服务类别
                 remove(gxcyrClassOfServiceArr,'干线运输');
@@ -295,70 +321,63 @@ $(function(){
             }
         }
     });
-
     //光标移开，校验代码字段的填写
     codes.blur(function(){
         var that = this;
         if($(this).val().length > 0){
             if(parseInt($(that).val().length) != 3){
-                alert('代码必须3位！');
-                $(that).val('');
+                $('#alertWords').text('代码必须3位');
+                $('.alertShow').show().delay(3000).hide(300,function(){
+                    $('#alertWords').text('')
+                });
+                $(that).focus();
                 return false;
             }
-           /* $.ajax({
-                url: 'http://' + gPathUrl + '/partner/details/getCodeLength',
-                type: 'get',
-                success: function (data) {
-                    if(data.code == 200){
-                        if(parseInt($(that).val().length) != parseInt(data.data[nn])){
-                            alert('代码必须'+data.data[nn]+'位');
-                            $(that).val('');
-                            return false;
-                        }
-                    }
-                }
-            })*/
         }
     });
-    /*校验中文名称*/
+    /*/!*校验中文名称*!/
     $('#chineseName').blur(function(){
         var that = this;
         if($(this).val().length >0){
             checkRepeat('chineseName',that,'中文全称')
         }
     });
-    /*校验中文简称*/
+    /!*校验中文简称*!/
     $('#chineseAbbreviation').blur(function(){
         var that = this;
         if($(this).val().length >0){
             checkRepeat('chineseAbbreviation',that,'中文简称')
         }
     });
-    /*校验英文名称*/
+    /!*校验英文名称*!/
     $('#englishName').blur(function(){
         var that = this;
         if($(this).val().length >0){
             checkRepeat('englishName',that,'英文全称')
         }
     });
-    /*校验英文简称*/
+    /!*校验英文简称*!/
     $('#englishAbbreviation').blur(function(){
         var that = this;
         if($(this).val().length >0){
             checkRepeat('englishAbbreviation',that,'英文简称')
         }
-    });
-    /*校验纳税人识别码*/
+    });*/
+    /*/!*校验纳税人识别码*!/
     $('.headingCode').blur(function(){
         var that = this;
         if($(this).val().length >0){
             checkRepeat('headingCode',that,'纳税人识别码')
         }
-    });
+    });*/
     /*默认币种*/
     $('#currency').blur(function(){
         if(parseInt($(this).val().length) != 3){
-            alert('默认币种为三位大写字母！');
+            $('#alertWords').text('默认币种为三位大写字母！');
+            $('.alertShow').show().delay(3000).hide(300,function(){
+                $('#alertWords').text('')
+            });
+            $(this).focus();
         }
     });
 
@@ -369,20 +388,20 @@ $(function(){
         if ( inputVal.length >0) {
             $('.userNameLi').empty();
             $.ajax({
-                url: 'http://' + oaPathUrl + '/oa/user/list.do',
+                url: 'http://' + eamsPathUrl + '/base/person/selectPersonByQuery',
                 type: 'get',
                 data: {
-                    username: inputVal
+                    name: inputVal
                 },
                 success: function (data) {
-                    if(data.data.pagination.list.length >=1){
+                    if(data.data.length >=1){
                         $('.userNameLi').show();
                         $('.warning').text('');
-                        $.each(data.data.pagination.list,function(index,value){
-                            var str = ' <li data-Id = '+value.id+' class="nameList" comId-data="'+value.companyid+'"><span class="staffName">'+value.username+'</span><span>'+(value.companyname||"")+'</span><span>'+(value.dempname||'')+'</span><span>'+(value.postname||'')+'</span></li>'
+                        $.each(data.data,function(index,value){
+                            var str = ' <li data-Id = '+value.id+' class="nameList" comId-data="'+value.companyId+'"><span class="staffName">'+value.name+'</span><span>'+(value.companyName||"")+'</span><span>'+(value.deptName||'')+'</span><span>'+(value.positionName||'')+'</span></li>'
                             $(str).appendTo('.userNameLi');
                         });
-                    }else if(data.data.pagination.list.length <1){
+                    }else if(data.data <1){
                         $('.userNameLi').hide();
                         $('.warning').text('');
                         $('.dutyOfficer-waring').text('该责任人不存在');
@@ -1697,8 +1716,11 @@ function  checkRepeat(name,that,worlds){
         success: function (data) {
             if(data.code == 200){
                 if(!data.data){
-                    alert(''+worlds+'不允许重复！');
-                    /*$(that).focus();*/
+                    $('#alertWords').text(''+worlds+'不允许重复！');
+                    $('.alertShow').show().delay(3000).hide(300,function(){
+                        $('#alertWords').text('')
+                    });
+                    $(that).focus();
                     return false;
                 }
             }
