@@ -200,7 +200,7 @@ public class ScheduledEmail {
                             //发送邮件到接受者
                             if (null != sendEmailsDatas && sendEmailsDatas.size() != 0) {
                                 // 调用接口 获取 email 发给 接收者
-                                User user = authUserService.selectUserByEmail(sendEmailsDatas.get(0).getReceiverId());
+                                User user = authUserService.selectPersonById(sendEmailsDatas.get(0).getReceiverId());
                                 try {
                                     // 邮件正文
                                     String total = "以下为合作伙伴即将到期清单，请注意跟进。";
