@@ -1,5 +1,20 @@
 package com.pj.partner.controller;
 
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.pj.auth.service.AuthUserService;
 import com.pj.cache.PartnerDetailsCache;
 import com.pj.conf.base.BaseController;
@@ -12,24 +27,14 @@ import com.pj.partner.pojo.PartnerDetailsShifFile;
 import com.pj.partner.pojo.PartnerLinkman;
 import com.pj.partner.service.PartnerDetailsService;
 import com.pj.partner.service.PartnerLinkmanService;
-import com.pj.partner.service.impl.PartnerLinkmanServiceImpl;
 import com.pj.user.Utils.ObjectTrim;
 import com.pj.user.mapper.HierarchyMapper;
 import com.pj.user.pojo.Hierarchy;
-import com.pj.user.pojo.RequestParams;
 import com.pj.user.service.EmailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import net.sf.json.JSONArray;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.text.ParseException;
-import java.util.*;
 
 @Controller
 @Api(value = "合作伙伴")
@@ -48,8 +53,9 @@ public class PartnerDetailsController extends BaseController {
     private EmailService emailService;
 
 
-    public static final String [] fields = {"mnemonicCode","chineseName","chineseAbbreviation","englishName","englishAbbreviation","headingCode"};
-    public static final String [] fieldName = {"助记码","中文名称","中文名称","英文名称","英文简称","纳税人识别码"};
+    public static final String [] fields = {"mnemonicCode","chineseName","chineseAbbreviation","englishName","englishAbbreviation","headingCode","code"};
+    public static final String [] fieldName = {"助记码","中文名称","中文简称","英文名称","英文简称","纳税人识别码","代码"};
+    public static final String [] fieldIndex = {"0","1","2","3","4","5","6"};
 
     /**
      *  查询树桩数据
@@ -111,9 +117,19 @@ public class PartnerDetailsController extends BaseController {
                                            @ApiParam("email") @RequestParam(name = "email" ,required = false) String email ,
                                            HttpServletRequest request
     ){
+    	
+	  for (int i = 0 ; i < fields.length ; i++) {
+          boolean b = this.partnerDetailsService.verifyValueRepeat(partnerDetails.getId(), fields[i], TypeConversionUtils.selectFieldValueByName(partnerDetails, fields[i]));
+          if (!b) {
+              return this.error(fieldIndex[i]);
+          }
+      }
         if(linkmans != null){
             JSONArray array = JSONArray.fromString(linkmans);
             List<PartnerLinkman> list = JSONArray.toList(array, PartnerLinkman.class);
+            for (PartnerLinkman partnerLinkman : list) {
+            	partnerLinkman.setDetailsId(partnerDetails.getId());
+			}
             partnerDetails.setLinkmansList(list);
         }
 
@@ -156,7 +172,7 @@ public class PartnerDetailsController extends BaseController {
         for (int i = 0 ; i < fields.length ; i++) {
             boolean b = this.partnerDetailsService.verifyValueRepeat(partnerDetails.getId(), fields[i], TypeConversionUtils.selectFieldValueByName(partnerDetails, fields[i]));
             if (!b) {
-                return this.error("字段重复 " + fieldName[i]);
+                return this.error(fieldIndex[i]);
             }
         }
         partnerDetails = (PartnerDetails) ObjectTrim.beanAttributeValueTrim(partnerDetails);
@@ -208,6 +224,7 @@ public class PartnerDetailsController extends BaseController {
         boolean flag = this.partnerDetailsService.verifyValueRepeat(id,fieldName,fieldValue);
         return this.success(flag);
     }
+    
 
     /**
      * 根据主键删除合作伙伴
@@ -219,7 +236,6 @@ public class PartnerDetailsController extends BaseController {
     @ResponseBody
     public Object deletePartnerDetailsById(
             @ApiParam("id") @RequestParam(name = "id") Integer id,
-
             @ApiParam("email") @RequestParam(name = "email") String email){
         this.partnerDetailsService.deletePartnerDetailsById(id,email);
         return this.success();
@@ -370,7 +386,6 @@ public class PartnerDetailsController extends BaseController {
         // 导出excel
         ExcelUtils excel = new ExcelUtils();
         excel.customerOutExcel(request,response,list ,partnerDetailsService);
-
     }
 
 

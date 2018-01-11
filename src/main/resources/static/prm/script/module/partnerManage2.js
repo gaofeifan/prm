@@ -541,16 +541,18 @@ var seePartner = {
                 $('.wbkhPaymentTerm').val(data.data.wbkhPaymentTerm);//代垫期限（天）
                 $('.wbkhPaidAmount').val(data.data.wbkhPaidAmount);//代垫额度（万元）
                 $('.wbkhCreditRating').val(data.data.wbkhCreditRating);//信用等级
-                if(data.data.wbkhCreditRating.slice(2,7) == '协议/保函'){
-                    $('.wbkhCreditPeriod').attr('disabled',false);
-                    $('.wbkhLineCredit').attr('disabled',false);
-                    $('.wbkhIsPayForAnother').attr('disabled',false);
-                    $('.businessBox').find('select,input').attr('disabled',false);
-                }else if(data.data.wbkhCreditRating.slice(2,7) == '签约在途'){
-                    $('.wbkhIsPayForAnother').attr('disabled',false);
-                    $('.businessBox').find('select,input').attr('disabled',true);
-                }else{
-                    $('.businessBox').find('select,input').attr('disabled',true);
+                if(!!data.data.wbkhCreditRating){
+                    if(data.data.wbkhCreditRating.slice(2,7) == '协议/保函'){
+                        $('.wbkhCreditPeriod').attr('disabled',false);
+                        $('.wbkhLineCredit').attr('disabled',false);
+                        $('.wbkhIsPayForAnother').attr('disabled',false);
+                        $('.businessBox').find('select,input').attr('disabled',false);
+                    }else if(data.data.wbkhCreditRating.slice(2,7) == '签约在途'){
+                        $('.wbkhIsPayForAnother').attr('disabled',false);
+                        $('.businessBox').find('select,input').attr('disabled',true);
+                    }else{
+                        $('.businessBox').find('select,input').attr('disabled',true);
+                    }
                 }
                 getDefault(data.data.wbkhCreditRating);//加载默认额度和默认期限
                 $('.wbkhTypeCreditPeriod').val(data.data.wbkhTypeCreditPeriod);//信用期限类型

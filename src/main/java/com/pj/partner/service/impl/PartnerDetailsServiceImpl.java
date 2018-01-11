@@ -383,7 +383,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     @Override
     public boolean verifyValueRepeat(Integer id, String fieldName, String fieldValue) {
         try {
-            boolean b = verifyfeildIsExist(fieldName);
+        boolean b = verifyfeildIsExist(fieldName);
         } catch (NoSuchFieldException e) {
             throw new RuntimeException("the field is not exist");
         }
@@ -393,6 +393,10 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         criteria.andCondition(fieldName+"=",fieldValue).andCondition("is_delete = 0");
         if(id != null){
             criteria.andCondition("id != ",id);
+            if(fieldName.equals("code")){
+            	PartnerDetails key = this.selectByPrimaryKey(id);
+            	criteria.andCondition("p_id =",key.getPId());
+            }
         }
         List<PartnerDetails> pds =super.selectByExample(example);
 
@@ -403,6 +407,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
 
     }
 
+   
     private boolean verifyfeildIsExist(String fieldName) throws NoSuchFieldException {
             Field field =  PartnerDetails.class.getDeclaredField(fieldName);
             return true;
