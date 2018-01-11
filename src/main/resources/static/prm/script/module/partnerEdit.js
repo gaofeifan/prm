@@ -111,17 +111,18 @@ $(function(){
             $('.wbkhPaymentTerm').val(data.data.wbkhPaymentTerm);//代垫期限（天）
             $('.wbkhPaidAmount').val(data.data.wbkhPaidAmount);//代垫额度（万元）
             $('.wbkhCreditRating').val(data.data.wbkhCreditRating);//信用等级
-            if(data.data.wbkhCreditRating.slice(2,7) == '协议/保函'){
-                $('.wbkhCreditPeriod').attr('disabled',false);
-                $('.wbkhLineCredit').attr('disabled',false);
-                $('.wbkhIsPayForAnother').attr('disabled',false);
-                $('.businessBox').find('select,input').attr('disabled',false);
-                getDefault(data.data.wbkhCreditRating);//加载默认额度和默认期限
-            }else if(data.data.wbkhCreditRating.slice(2,7) == '签约在途'){
-                $('.wbkhIsPayForAnother').attr('disabled',false);
-                $('.businessBox').find('select,input').attr('disabled',true);
-            }else{
-                $('.businessBox').find('select,input').attr('disabled',true);
+            if(!!data.data.wbkhCreditRating){
+                if(data.data.wbkhCreditRating.slice(2,7) == '协议/保函'){
+                    $('.wbkhCreditPeriod').attr('disabled',false);
+                    $('.wbkhLineCredit').attr('disabled',false);
+                    $('.wbkhIsPayForAnother').attr('disabled',false);
+                    $('.businessBox').find('select,input').attr('disabled',false);
+                }else if(data.data.wbkhCreditRating.slice(2,7) == '签约在途'){
+                    $('.wbkhIsPayForAnother').attr('disabled',false);
+                    $('.businessBox').find('select,input').attr('disabled',true);
+                }else{
+                    $('.businessBox').find('select,input').attr('disabled',true);
+                }
             }
             $('.wbkhTypeCreditPeriod').val(data.data.wbkhTypeCreditPeriod);//信用期限类型
             $('.wbkhCreditPeriod').val(data.data.wbkhCreditPeriod);//信用期限（天）
@@ -346,8 +347,11 @@ $(function(){
         var that = this;
         if($(this).val().length > 0){
             if(parseInt($(that).val().length) != 3){
-                alert('代码必须3位！');
-                $(that).val('');
+                $('#alertWords').text('代码必须3位');
+                $('.alertShow').show().delay(3000).hide(300,function(){
+                    $('#alertWords').text('')
+                });
+                $(that).focus();
                 return false;
             }
         }
@@ -355,7 +359,11 @@ $(function(){
     /*默认币种*/
     $('#currency').blur(function(){
         if(parseInt($(this).val().length) != 3){
-            alert('默认币种为三位大写字母！');
+            $('#alertWords').text('默认币种为三位大写字母！');
+            $('.alertShow').show().delay(3000).hide(300,function(){
+                $('#alertWords').text('');
+            });
+            $(this).focus();
         }
     });
     /*提醒接受者逻辑*/
@@ -1121,7 +1129,11 @@ $(function(){
             return false;
         }
         if(!isEmail(addLinkmanEmail)){
-            alert('邮箱格式不正确！');
+            $('#alertWords').text('邮箱格式不正确!');
+            $('.alertShow').show().delay(3000).hide(300,function(){
+                $('#alertWords').text('');
+                $('.email input').focus();
+            });
             return false;
         }
         /*校验联系人是否存在*/
@@ -1242,7 +1254,11 @@ $(function(){
             return false;
         }
         if(!isEmail(editLinkmanEmail)){
-            alert('邮箱格式不正确！');
+            $('#alertWords').text('邮箱格式不正确!');
+            $('.alertShow').show().delay(3000).hide(300,function(){
+                $('#alertWords').text('');
+                $('.email input').focus();
+            });
             return false;
         }
         EditConObj.id = EditingCon.attr('data-listId');
@@ -1568,7 +1584,13 @@ $(function(){
         $('#address').val(JSON.stringify(addressList));
         //判断地址和联系人必须维护一个
         if(addressList.length <=0){
-            alert('必须维护一个注册地址！');
+            $('#alertWords').text('必须维护一个注册地址');
+            $('.alertShow').show().delay(3000).hide(300,function(){
+                $('#alertWords').text('');
+                $('html,body').animate({
+                    scrollTop: parseInt($('#contactAddress').offset().top)-200
+                },300);
+            });
             return false;
         }else{
             var hasFlag = false;
@@ -1578,12 +1600,24 @@ $(function(){
                 }
             });
             if(!hasFlag){
-                alert('必须维护一个注册地址');
+                $('#alertWords').text('必须维护一个注册地址');
+                $('.alertShow').show().delay(3000).hide(300,function(){
+                    $('#alertWords').text('');
+                    $('html,body').animate({
+                        scrollTop: parseInt($('#contactAddress').offset().top)-200
+                    },300);
+                });
                 return false;
             }
         }
         if(contactsList.length <=0){
-            alert('必须维护一个联系人！');
+            $('#alertWords').text('必须维护一个联系人!');
+            $('.alertShow').show().delay(3000).hide(300,function(){
+                $('#alertWords').text('');
+                $('html,body').animate({
+                    scrollTop: parseInt($('#contactInformation').offset().top)-200
+                },300);
+            });
             return false;
         }
         $(this).ajaxSubmit(options);
@@ -1674,6 +1708,63 @@ var  options ={
             alert('保存成功！');
             $(window).unbind("scroll");
             location.hash = vipspa.stringify('partnerManage')
+        } else if(data.code == '400'){
+            var errorCode = parseInt(data.data);
+            if(errorCode == 0){
+                $('#alertWords').text('助记码不能重复！');
+                $('.alertShow').show().delay(3000).hide(300,function(){
+                    $('#alertWords').text('');
+                    $('html,body').animate({
+                        scrollTop: parseInt($('#mnemonicCode').offset().top)-200
+                    },300);
+                    $('#mnemonicCode').focus();
+                });
+            }else if(errorCode == 1){
+                $('#alertWords').text('中文全称不能重复！');
+                $('.alertShow').show().delay(3000).hide(300,function(){
+                    $('#alertWords').text('');
+                    $('html,body').animate({
+                        scrollTop: parseInt($('#chineseName').offset().top)-200
+                    },300);
+                    $('#chineseName').focus();
+                });
+            }else if(errorCode == 2){
+                $('#alertWords').text('中文简称不能重复！');
+                $('.alertShow').show().delay(3000).hide(300,function(){
+                    $('#alertWords').text('');
+                    $('html,body').animate({
+                        scrollTop: parseInt($('#chineseAbbreviation').offset().top)-200
+                    },300);
+                    $('#chineseAbbreviation').focus();
+                });
+            }else if(errorCode == 3){
+                $('#alertWords').text('英文全称不能重复！');
+                $('.alertShow').show().delay(3000).hide(300,function(){
+                    $('#alertWords').text('');
+                    $('html,body').animate({
+                        scrollTop: parseInt($('#englishName').offset().top)-200
+                    },300);
+                    $('#englishName').focus();
+                });
+            }else if(errorCode == 4){
+                $('#alertWords').text('英文简称不能重复！');
+                $('.alertShow').show().delay(3000).hide(300,function(){
+                    $('#alertWords').text('');
+                    $('html,body').animate({
+                        scrollTop: parseInt($('#englishAbbreviation').offset().top)-200
+                    },300);
+                    $('#englishAbbreviation').focus();
+                });
+            }else if(errorCode == 5){
+                $('#alertWords').text('纳税人识别码不能重复！');
+                $('.alertShow').show().delay(3000).hide(300,function(){
+                    $('#alertWords').text('');
+                    $('html,body').animate({
+                        scrollTop: parseInt($('.Taxpayers').offset().top)-200
+                    },300);
+                    $('.Taxpayers').focus();
+                });
+            }
         }
     },error:function() {
 
@@ -1681,47 +1772,3 @@ var  options ={
         $('#savePartner').removeClass('disabled');
     }
 };
-/**
- * 校验名称字段重复
- * @param that
- * @param name
- */
-function  checkRepeat(name,that,words,id){
-    $.ajax({
-        url: 'http://' + gPathUrl + '/partner/details/verifyValueRepeat',
-        type: 'get',
-        data:{
-            fieldName:name,
-            fieldValue:$(that).val(),
-            id:id
-        },
-        success: function (data) {
-            if(data.code == 200){
-                if(!data.data){
-                    alert(''+words+'不允许重复！');
-                    $(that).val('');
-                    return false;
-                }
-            }
-        }
-    })
-}
-/*文件上传函数*/
-function uploadFile(){
-    var options = {
-        url : 'http://'+gPathUrl+'/upload/upload',
-        type : "post",
-        success : function(data) {
-            if(data.success){
-                alert(data.msg);
-                $('#fileName').css('width','auto').val(data.fileName);
-                $('#filePath').css('width','auto').val(data.filePath);
-            }else{
-                alert(data.msg);
-            }
-        },error:function(data){
-        }
-    };
-    $("#uploadForm").ajaxSubmit(options); // jquery.form.js提交
-    return false;
-}

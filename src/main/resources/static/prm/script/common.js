@@ -220,3 +220,50 @@ function getInternalCustomer(dom) {
         }
     });
 }
+/**
+ * 校验名称字段重复
+ * @param that
+ * @param name
+ */
+function  checkRepeat(name,that,words,id){
+    $.ajax({
+        url: 'http://' + gPathUrl + '/partner/details/verifyValueRepeat',
+        type: 'get',
+        data:{
+            fieldName:name,
+            fieldValue:$(that).val(),
+            id:id
+        },
+        success: function (data) {
+            if(data.code == 200){
+                if(!data.data){
+                    $('#alertWords').text(''+worlds+'不允许重复！');
+                    $('.alertShow').show().delay(3000).hide(300,function(){
+                        $('#alertWords').text('')
+                    });
+                    $(that).focus();
+                    return false;
+                }
+            }
+        }
+    })
+}
+/*文件上传函数*/
+function uploadFile(){
+    var options = {
+        url : 'http://'+gPathUrl+'/upload/upload',
+        type : "post",
+        success : function(data) {
+            if(data.success){
+                alert(data.msg);
+                $('#fileName').css('width','auto').val(data.fileName);
+                $('#filePath').css('width','auto').val(data.filePath);
+            }else{
+                alert(data.msg);
+            }
+        },error:function(data){
+        }
+    };
+    $("#uploadForm").ajaxSubmit(options); // jquery.form.js提交
+    return false;
+}
