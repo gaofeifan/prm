@@ -25,9 +25,9 @@ public class AuthUserServiceImpl implements AuthUserService {
 
 	@Autowired
 	private EamsProperties easProperties;
-	
+
 	Map<String, Object> map = null;
-	
+
 	@Override
 	public User selectPersonByEmail(String email) {
 		map = new HashMap<>();
@@ -49,7 +49,6 @@ public class AuthUserServiceImpl implements AuthUserService {
 		}
 		return null;
 	}
-
 
 	/*
 	 * public String selectEmailsByPostId(String postId) { List<User> users =
@@ -97,11 +96,18 @@ public class AuthUserServiceImpl implements AuthUserService {
 		return users;
 	}
 
-
 	@Override
 	public User selectAdminUserById() {
-
-		return null;
+		Map<String, Object> map = new HashMap<>();
+		map.put("id", 8732);
+		JSONObject object = HttpClienUtils.doGet(easProperties.getSsoUrl_selectAdmin(), map);
+		map = JSON.parseObject(object.toString());
+		String username = VerifyUtils.objectToString(map.get("username"));
+		String email = VerifyUtils.objectToString(map.get("email"));
+		User user = new User();
+		user.setName(username);
+		user.setEmail(email);
+		return user;
 	}
 	/*
 	 * public List<User> selectUserByPostId(String postIds, boolean isDefault) {
@@ -200,6 +206,5 @@ public class AuthUserServiceImpl implements AuthUserService {
 	 * VerifyUtils.objectToString(map.get("email")); User user = new User();
 	 * user.setUsername(username); user.setEmail(email); return user; }
 	 */
-
 
 }
