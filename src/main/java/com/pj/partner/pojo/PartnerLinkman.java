@@ -94,6 +94,6 @@ class PartnerLinkman implements Serializable  {
 
     @Transient
     @ApiModelProperty(value = "联系人  合作伙伴中文全称-接受者ID " ,required = false)
-    private Integer receiverId;
+    private String receiverId;
 
 }

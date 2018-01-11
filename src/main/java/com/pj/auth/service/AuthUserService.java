@@ -31,5 +31,5 @@ public interface AuthUserService {
 
     public User selectAdminUserById();
 */
-
+	public User selectAdminUserById();
 }
