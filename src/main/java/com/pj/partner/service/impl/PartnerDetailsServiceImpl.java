@@ -358,7 +358,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     @Override
     public void insertSelective(PartnerDetails partnerDetails, HttpServletRequest request, String email) {
         partnerDetails.setCreateDate(new Date());
-        super.insertSelective(partnerDetails);
+            super.insertSelective(partnerDetails);
         List<PartnerLinkman> linkmans = partnerDetails.getLinkmansList();
         List<PartnerAddress> address = partnerDetails.getAddressList();
         request.getSession().setAttribute("new_partnerAddress",address);
