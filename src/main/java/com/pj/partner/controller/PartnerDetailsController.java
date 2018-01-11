@@ -333,6 +333,17 @@ public class PartnerDetailsController extends BaseController {
     @ResponseBody
     public Object selectIsChild(@RequestBody PartnerLinkman partnerLinkman){
         List<PartnerLinkman> partnerLinkmen = this.partnerLinkmanService.selectListByPhone(partnerLinkman);
+        // 如果没有修改手机号则删除此条信息
+        if(null!=partnerLinkman && partnerLinkmen.size()!=0){
+            for(PartnerLinkman parlik:partnerLinkmen){
+                if(parlik.getId().equals(partnerLinkman.getId())  ){
+                    partnerLinkmen.remove(partnerLinkman);
+                }
+            }
+            if(partnerLinkmen.remove(partnerLinkman)){
+
+            }
+        }
         if(null!=partnerLinkmen && partnerLinkmen.size()!=0 ){
             return this.success(true);
         }
