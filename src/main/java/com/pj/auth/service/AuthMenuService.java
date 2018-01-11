@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface AuthMenuService extends BaseService<AuthMenu,Integer> {
 
-    List<AuthMenu> findAuthMenuListBypostId(int postId);   // 支持  aop切面获取 权限信息 2017年11月17日10:08:27
+    List<AuthMenu> findAuthMenuListBypostId(String postId);   // 支持  aop切面获取 权限信息 2017年11月17日10:08:27
 
     /**
      *  查询默认权限
@@ -22,5 +22,5 @@ public interface AuthMenuService extends BaseService<AuthMenu,Integer> {
      *  查询menuid
      * @return
      */
-    Integer[] selectMenuIds(Integer postId);
+    Integer[] selectMenuIds(String postId);
 }

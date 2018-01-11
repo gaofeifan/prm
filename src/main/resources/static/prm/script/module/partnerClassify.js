@@ -4,9 +4,9 @@
 /**
  * Created by Administrator on 2017/9/12.
  */
+$(window).off("scroll");
 frontcookie();
 menuActive('partnerClassify');
-$(window).unbind("scroll");
 $(function(){
 
 });

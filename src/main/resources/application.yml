@@ -44,9 +44,9 @@ mybatis:
 server:
   port: 8083
  
-oa : 
+eams : 
   adminId: 8732
-  url: http://10.0.0.18:8083
+  url: http://10.0.0.105:8080
   ssoUrl: http://10.0.0.18:8085
     
 ---
@@ -74,7 +74,7 @@ spring:
     password: pj@redis_oa
 
 
-oa:
+eams:
   url: http://139.129.236.180:8080
   ssoUrl: http://139.129.236.180:8081
 

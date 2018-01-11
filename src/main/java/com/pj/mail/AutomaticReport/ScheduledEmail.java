@@ -1,20 +1,28 @@
 package com.pj.mail.AutomaticReport;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.pj.auth.pojo.User;
+import com.pj.auth.service.AuthUserService;
 import com.pj.mail.util.SendEmailUtils;
 import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.pojo.PartnerLinkman;
 import com.pj.partner.service.PartnerDetailsService;
 import com.pj.user.service.EmailService;
-import com.pj.auth.service.AuthUserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
-
-import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
-import java.util.*;
 /**
  * Created by SenevBoy on 2017/11/15.
  */
@@ -35,6 +43,9 @@ public class ScheduledEmail {
 
     @Autowired
     private AuthUserService authUserService;
+
+    @Resource
+    private PartnerDetailsService partnerDetailsService;
 
     //7.1     月新增Partner清单 每月一日，把上月所有新增的Partner，触发邮件列表给Admin；
 
@@ -77,8 +88,8 @@ public class ScheduledEmail {
         List<PartnerDetails>  PartnerDetailsSigningInTransit = this.emailService.findPartnerDetailsGsigningInTransit();
         Integer lastReceiverID =0;
         if(null!=PartnerDetailsSigningInTransit && PartnerDetailsSigningInTransit.size()!=0){
-            Set<Integer> checkDuplicates = new HashSet<Integer>();
-            Set<Integer> checkDuplicates2 = new HashSet<Integer>();
+            Set<String> checkDuplicates = new HashSet<String>();
+            Set<String> checkDuplicates2 = new HashSet<String>();
             // 获取 hash集合 去除重复接受者 id
             for (PartnerDetails partnerDetails : PartnerDetailsSigningInTransit){
                 checkDuplicates.add(partnerDetails.getReceiverId());
@@ -87,7 +98,7 @@ public class ScheduledEmail {
             try {
             if(checkDuplicates.size()!=0){
                 List<PartnerDetails> PartnerDetailsList2 = new ArrayList<PartnerDetails>();      //   /*大于30 天的 集合*/
-                for (Integer it : checkDuplicates){
+                for (String it : checkDuplicates){
                     List<PartnerDetails> PartnerDetailsList = new ArrayList<PartnerDetails>();              //  /*大于15 天的集合*/
                     // 循环list集合
                     for (PartnerDetails partnerDetails : PartnerDetailsSigningInTransit){
@@ -103,7 +114,7 @@ public class ScheduledEmail {
                     }
                     try {
                         // 调用接口 获取 email 发给 接收者
-                        User user = authUserService.selectUserByEmail(PartnerDetailsList.get(0).getReceiverId());
+                        User user = authUserService.selectPersonById(PartnerDetailsList.get(0).getReceiverId());
                         // 邮件正文
                       //  checkDuplicates2.add(PartnerDetailsList.get(0).getReceiverId());
                         if(PartnerDetailsList.size()!=0){
@@ -133,9 +144,9 @@ public class ScheduledEmail {
                 // 发送给接受者邮件失败后整体发送给 管理者
                 List<User> userList = new ArrayList<>();
                 if(checkDuplicates2.size()!=0){
-                    for (Integer ids : checkDuplicates2){
+                    for (String ids : checkDuplicates2){
                         // 调用接口 获取 接收者email
-                        userList.add( authUserService.selectUserByEmail(ids));
+                        userList.add( authUserService.selectPersonById(ids));
                     }
                         try {
 
@@ -176,15 +187,15 @@ public class ScheduledEmail {
                     if(null!=IsAboutToExpireData || IsAboutToExpireData.size()!=0) {
                         // 发送邮件
                         //整理提醒接受者
-                        HashSet<Integer> receiverIds = new HashSet<Integer>();
+                        HashSet<String> receiverIds = new HashSet<String>();
                         for (PartnerDetails datasList : IsAboutToExpireData) {
                             receiverIds.add(datasList.getReceiverId());
                         }
 
                         // 存储失败接受者人员信息
-                        HashSet<Integer> failurePersonnel = new HashSet<Integer>();
+                        HashSet<String> failurePersonnel = new HashSet<String>();
                         // 遍历 接受者 并发送邮件
-                        for (Integer receiverId : receiverIds) {
+                        for (String receiverId : receiverIds) {
 
                             List<PartnerDetails> sendEmailsDatas = new ArrayList<PartnerDetails>();
                             for (PartnerDetails datasList : IsAboutToExpireData) {
@@ -195,10 +206,10 @@ public class ScheduledEmail {
                             //发送邮件到接受者
                             if (null != sendEmailsDatas && sendEmailsDatas.size() != 0) {
                                 // 调用接口 获取 email 发给 接收者
-                                User user = authUserService.selectUserByEmail(sendEmailsDatas.get(0).getReceiverId());
+                                User user = authUserService.selectPersonById(sendEmailsDatas.get(0).getReceiverId());
                                 try {
                                     // 邮件正文
-                                    String total = "以下即将到期清单，请注意跟进。";
+                                    String total = "以下为合作伙伴即将到期清单，请注意跟进。";
                                     StringBuffer mesagesVal = getMesagesValExpiry(sendEmailsDatas, total);
                                     SendEmailUtils.sendEWmail(mesagesVal, basic_myEmailAccount, basic_myEmailPassword, user.getEmail());
                                 } catch (Exception e) {
@@ -212,9 +223,9 @@ public class ScheduledEmail {
                         // 发送给接受者邮件失败后整体发送给 管理者
                         List<User> userList = new ArrayList<>();
                         if (failurePersonnel.size() != 0) {
-                            for (Integer ids : failurePersonnel) {
+                            for (String ids : failurePersonnel) {
                                 // 调用接口 获取 接收者email
-                                userList.add(authUserService.selectUserByEmail(ids));
+                                userList.add(authUserService.selectPersonById(ids));
                             }
 
                         try {
@@ -244,47 +255,53 @@ public class ScheduledEmail {
             partnerDetaisl.add(parData.getDetailsId());
         }
         // 存储失败接受者人员信息
-        HashSet<Integer> failurePersonnel = new HashSet<Integer>();
-
-        for (Integer  detailsId  : partnerDetaisl){
-            if(null!=detailsId) {
-                List<PartnerLinkman> emailListData = new ArrayList<PartnerLinkman>(); // 所有待发送邮件的 人员集合 根据 接受者分类
+        HashSet<String> failurePersonnel = new HashSet<String>();
+        HashSet<String> emailListData = new HashSet<String>(); // 所有待发送邮件的 人员集合 根据 提醒接受者分类
+        for (Integer  detailsId  : partnerDetaisl) {
+            if (null != detailsId) {
                 for (PartnerLinkman parData : partnerLinkmenAl) {
                     if (parData.getDetailsId().equals(detailsId)) {
                         PartnerDetails partnerDetails = partnerDetailsService.selectByPrimaryKey(detailsId);
                         parData.setOldchineseName(partnerDetails.getChineseName());
                         parData.setReceiverId(partnerDetails.getReceiverId());
-                        emailListData.add(parData);
-                    }
-                }
-
-                if (null != emailListData && emailListData.size() != 0) {
-                    // 获取 邮箱并发送邮件
-                    //发送邮件到接受者
-                    // 调用接口 获取 email 发给 接收者
-                    User user = this.authUserService.selectUserByEmail(emailListData.get(0).getReceiverId());
-                    try {
-
-                        // 邮件正文
-                        String total = "新增合作伙伴（中文全称）维护了新的联系人，与您名下的合作伙伴（中文全称）中的以下联系人重复，请核实。。";
-                        StringBuffer mesagesVal = getMesagesValPartnerLinkman(emailListData, total);
-                        SendEmailUtils.sendEWmail(mesagesVal, ScheduledEmail.basic_myEmailAccount, basic_myEmailPassword, user.getEmail());
-                    } catch (Exception e) {
-
-                        failurePersonnel.add(emailListData.get(0).getReceiverId());
-                        logger.error("  邮件信息获取异常请检查 exception 信息已存储稍后发送给管理员失败接受者信息   :" + e);
+                        emailListData.add(partnerDetails.getReceiverId());
                     }
                 }
             }
         }
 
+                for(String emailDateId :emailListData ){
+            List<PartnerLinkman> parList = new ArrayList<PartnerLinkman>();
+                    for (PartnerLinkman parData : partnerLinkmenAl) {
+                        if(parData.getReceiverId().equals(emailDateId)){
+                            parList.add(parData);
+                        }
+                    }
+                    // 获取 邮箱并发送邮件
+                    //发送邮件到接受者
+                    // 调用接口 获取 email 发给 接收者
+                    User user = this.authUserService.selectPersonById(emailDateId);
+                    try {
+                        // 邮件正文
+                        String total = "新增合作伙伴维护了新的联系人，与您名下的原合作伙伴中的以下联系人重复，请核实。。";
+                        StringBuffer mesagesVal = getMesagesValPartnerLinkman(parList, total);
+                        SendEmailUtils.sendEWmail(mesagesVal, ScheduledEmail.basic_myEmailAccount, basic_myEmailPassword, user.getEmail());
+                    } catch (Exception e) {
+
+                        failurePersonnel.add(emailDateId);
+                        logger.error("  邮件信息获取异常请检查 exception 信息已存储稍后发送给管理员失败接受者信息   :" + e);
+                    }
+
+                }
+
+
         // 发送失败人员信息到管理员
         // 发送给接受者邮件失败后整体发送给 管理者
         List<User> userList = new ArrayList<>();
         if (failurePersonnel.size() != 0) {
-            for (Integer ids : failurePersonnel) {
+            for (String ids : failurePersonnel) {
                 // 调用接口 获取 接收者email
-                userList.add(this.authUserService.selectUserByEmail(ids));
+                userList.add(this.authUserService.selectPersonById(ids));
             }
 
         try {
@@ -314,14 +331,19 @@ public class ScheduledEmail {
         theMessage.append("<h2><font >"+total+"</font></h2>");
         theMessage.append("<hr>");
         theMessage.append("<table  border='1'>");
-        theMessage.append("<tr><td>序号</td><td>联系人名称</td><td>新合作伙伴中文全称</td><td>新合作伙伴中文全称</td><td>职责</td><td>部门</td><td>职务</td><td>固话</td>" +
-                "<td>手机</td><td>邮件</td><td>微信</td><td>QQ</td><td>地址</td></tr>");
+        theMessage.append("<tr><td>序号</td><td>新合作伙伴中文全称</td><td>原合作伙伴中文全称</td>" +
+                "<td>联系人名称</td><td>职责</td><td>部门</td>" +
+                "<td>职务</td><td>固话</td><td>手机</td>" +
+                "<td>邮件</td><td>微信</td><td>QQ</td>" +
+                "<td>地址</td></tr>");
         if(null!=PartnerDetailsList){
             Integer i   = 1;
             for (PartnerLinkman partnerDetails : PartnerDetailsList){
-                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetails.getNewchineseName() +"</td><td>"+partnerDetails.getOldchineseName() +"</td><td>"+ (partnerDetails.getObligation()==null?"":partnerDetails.getObligation()) +"</td><td>"+(partnerDetails.getDemp()==null?"":partnerDetails.getDemp()) +"</td><td>"+(partnerDetails.getFixPhone()==null?"":partnerDetails.getFixPhone()) +"</td>" +
-                        "<td>"+ (partnerDetails.getPhone()==null?"":partnerDetails.getPhone()) +"</td><td>"+(partnerDetails.getEmail()==null?"":partnerDetails.getEmail())+"</td><td>"+(partnerDetails.getWeChat()==null?"":partnerDetails.getWeChat())+"</td><td>"+(partnerDetails.getQq()==null?"":partnerDetails.getQq()) +"</td>" +
-                        "<td>"+(partnerDetails.getAddress()==null?"":partnerDetails.getAddress())+"</td></tr>");
+                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetails.getNewchineseName() +"</td><td>"+partnerDetails.getOldchineseName() +"</td>" +
+                        "<td>"+(partnerDetails.getName()==null?"":partnerDetails.getName()) +"</td><td>"+(partnerDetails.getObligation()==null?"":partnerDetails.getObligation()) +"</td><td>"+ (partnerDetails.getDemp()==null?"":partnerDetails.getDemp()) +"</td>" +
+                        "<td>"+(partnerDetails.getDuty()==null?"":partnerDetails.getDuty())+"</td><td>"+(partnerDetails.getFixPhone()==null?"":partnerDetails.getFixPhone())+"</td><td>"+(partnerDetails.getPhone()==null?"":partnerDetails.getPhone()) +"</td>" +
+                        "<td>"+ (partnerDetails.getEmail()==null?"":partnerDetails.getEmail()) +"</td><td>"+(partnerDetails.getWeChat()==null?"":partnerDetails.getWeChat())+"</td><td>"+ (partnerDetails.getQq()==null?"":partnerDetails.getQq()) +"</td>" +
+                        "<td>"+ (partnerDetails.getAddress()==null?"":partnerDetails.getAddress()) +"</td></tr>");
             }
         }
         theMessage.append("</table>");
@@ -341,8 +363,10 @@ public class ScheduledEmail {
         if(null!=PartnerDetailsList){
             Integer i   = 1;
             for (PartnerDetails partnerDetails : PartnerDetailsList){
-                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetails.getCode() +"</td><td>"+partnerDetails.getMnemonicCode() +"</td><td>"+partnerDetails.getChineseName() +"</td><td>"+partnerDetails.getChineseAbbreviation() +"</td><td>"+partnerDetails.getEnglishName() +"</td>" +
-                        "<td>"+partnerDetails.getEnglishAbbreviation() +"</td><td>"+partnerDetails.getReceiverName() +"</td><td>"+partnerDetails.getScopeBusiness() +"</td><td>"+partnerDetails.getPartnerCategory() +"</td></tr>");
+                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetailsService.getParentCodeList(partnerDetails.getId())+"</td><td>"+(partnerDetails.getMnemonicCode() ==null?"":partnerDetails.getMnemonicCode() )+"</td><td>"+(partnerDetails.getChineseName() ==null?"":partnerDetails.getChineseName() )+"</td>" +
+                        "<td>"+(partnerDetails.getChineseAbbreviation() ==null?"":partnerDetails.getChineseAbbreviation() )+"</td><td>"+(partnerDetails.getEnglishName() ==null?"":partnerDetails.getEnglishName() )+"</td>" +
+                        "<td>"+(partnerDetails.getEnglishAbbreviation() ==null?"":partnerDetails.getEnglishAbbreviation() )+"</td><td>"+(partnerDetails.getReceiverName() ==null?"":partnerDetails.getReceiverName() )+"</td><td>"+(partnerDetails.getScopeBusiness() ==null?"":partnerDetails.getScopeBusiness() )+"</td>" +
+                        "<td>"+(partnerDetails.getPartnerCategory() ==null?"":partnerDetails.getPartnerCategory() )+"</td></tr>");
             }
         }
         theMessage.append("</table>");
@@ -355,6 +379,7 @@ public class ScheduledEmail {
     public StringBuffer getMesagesValExpiry(List<PartnerDetails> PartnerDetailsList,String total){
         StringBuffer theMessage = new StringBuffer();
 
+        DateFormat date = new SimpleDateFormat("yy-MM-dd");
         theMessage.append("<h2><font >"+total+"</font></h2>");
         theMessage.append("<hr>");
         theMessage.append("<table  border='1'>");
@@ -363,9 +388,10 @@ public class ScheduledEmail {
         if(null!=PartnerDetailsList){
             Integer i   = 1;
             for (PartnerDetails partnerDetails : PartnerDetailsList){
-                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetails.getCode() +"</td><td>"+partnerDetails.getMnemonicCode() +"</td><td>"+partnerDetails.getChineseName() +"</td><td>"+partnerDetails.getChineseAbbreviation() +"</td><td>"+partnerDetails.getEnglishName() +"</td>" +
-                        "<td>"+partnerDetails.getEnglishAbbreviation() +"</td><td>"+partnerDetails.getReceiverName() +"</td><td>"+partnerDetails.getScopeBusiness() +"</td><td>"+partnerDetails.getPartnerCategory() +"</td>" +
-                        "<td>"+partnerDetails.getMaturityDateBegan() +"</td><td>"+partnerDetails.getMaturityDateEnd() +"</td></tr>");
+                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetailsService.getParentCodeList(partnerDetails.getId()) +"</td><td>"+(partnerDetails.getMnemonicCode()==null?"":partnerDetails.getMnemonicCode()) +"</td>" +
+                        "<td>"+(partnerDetails.getChineseName()==null?"":partnerDetails.getChineseName()) +"</td><td>"+(partnerDetails.getChineseAbbreviation() ==null?"":partnerDetails.getChineseAbbreviation() )+"</td><td>"+(partnerDetails.getEnglishName()==null?"":partnerDetails.getEnglishName()) +"</td>" +
+                        "<td>"+(partnerDetails.getEnglishAbbreviation()==null?"":partnerDetails.getEnglishAbbreviation()) +"</td><td>"+(partnerDetails.getReceiverName()==null?"":partnerDetails.getReceiverName()) +"</td><td>"+(partnerDetails.getScopeBusiness()==null?"":partnerDetails.getScopeBusiness()) +"</td><td>"+(partnerDetails.getPartnerCategory() ==null?"":partnerDetails.getPartnerCategory() )+"</td>" +
+                        "<td>"+(partnerDetails.getMaturityDateBegan()==null?"":date.format(partnerDetails.getMaturityDateBegan())) +"</td><td>"+(partnerDetails.getMaturityDateEnd()==null?"":date.format(partnerDetails.getMaturityDateEnd())) +"</td></tr>");
             }
         }
         theMessage.append("</table>");
@@ -382,7 +408,7 @@ public class ScheduledEmail {
         Integer i   = 1;
         if(null!=user){
             for (User use : user){
-                theMessage.append("<tr><td>"+ i++ +"</td><td>"+use.getUsername() +"</td><td>"+use.getCompanyname() +"</td><td>"+use.getDempname() +"</td><td>"+use.getPostname() +"</td><td>"+use.getPhone() +"</td><td>"+use.getEmail() +"</td></tr>");
+                theMessage.append("<tr><td>"+ i++ +"</td><td>"+use.getName() +"</td><td>"+use.getCompanyName() +"</td><td>"+use.getDeptName() +"</td><td>"+use.getPositionName() +"</td><td>"+use.getPhone() +"</td><td>"+use.getEmail() +"</td></tr>");
             }
         }
         theMessage.append("</table>");

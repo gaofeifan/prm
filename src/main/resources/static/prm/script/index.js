@@ -30,6 +30,10 @@ $(function(){
     $('#afterLogout').click(function(){
         allObj.afterLogout()
     });
+    /*关闭alert报错提示*/
+    $('#alertClose').click(function(){
+        $('.alertShow').stop().hide();
+    })
 });
 var allObj = {
     beforeLogout:function(){
@@ -151,11 +155,37 @@ function StatusOn(i,num){
                 statusDivs[j].children[1].classList.add("active");
             }
         }
-        var nowStatus = statusDivs[i-1].children;
-        nowStatus[1].classList.add("on");
+        if(!!statusDivs[i-1]){
+            var nowStatus = statusDivs[i-1].children;
+            nowStatus[1].classList.add("on");
+        }
         statusDivs[i-1].classList.add("on");
         /*if(i<num){
          statusDivs[i].classList.add("next");
          }*/
     }
+}
+/**
+ * 邮箱的正则
+ * @param str
+ * @returns {boolean}
+ */
+function isEmail(str){
+    var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+    return reg.test(str);
+}
+
+function getTop(){
+    _top0 = parseInt($('#newForm .lump').eq(0).offset().top)-288;
+    _top1 = parseInt($('#newForm .lump').eq(1).offset().top)-288;
+    _top2 = parseInt($('#newForm .lump').eq(2).offset().top)-288;
+    _top3 = parseInt($('#newForm .lump').eq(3).offset().top)-288;
+    _top4 = parseInt($('#newForm .lump').eq(4).offset().top)-288;
+    _top5 = parseInt($('#newForm .lump').eq(5).offset().top)-288;
+    _top6 = parseInt($('#newForm .lump').eq(6).offset().top)-288;
+    _top7 = parseInt($('#newForm .lump').eq(7).offset().top)-288;
+    _top8 = parseInt($('#newForm .lump').eq(8).offset().top)-288;
+    _top9 = parseInt($('#newForm .lump').eq(9).offset().top)-288;
+    _top10 = parseInt($('#newForm .lump').eq(10).offset().top)-288;
+    _top11 = parseInt($('#newForm .lump').eq(11).offset().top)-288;
 }

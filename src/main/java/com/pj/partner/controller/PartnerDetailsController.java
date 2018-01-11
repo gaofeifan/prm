@@ -3,7 +3,9 @@ package com.pj.partner.controller;
 import com.pj.auth.service.AuthUserService;
 import com.pj.cache.PartnerDetailsCache;
 import com.pj.conf.base.BaseController;
+import com.pj.conf.utils.ExcelUtils;
 import com.pj.conf.utils.ThreadEmail;
+import com.pj.conf.utils.TypeConversionUtils;
 import com.pj.partner.pojo.PartnerAddress;
 import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.pojo.PartnerDetailsShifFile;
@@ -20,14 +22,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
 import java.util.*;
 
 @Controller
@@ -39,7 +40,7 @@ public class PartnerDetailsController extends BaseController {
     private PartnerDetailsService partnerDetailsService;
     @Autowired(required = false)
     private HierarchyMapper hierarchyMapper;
-  @Autowired
+    @Autowired
     private PartnerLinkmanService partnerLinkmanService;
     @Autowired
     private AuthUserService authUserService;
@@ -54,7 +55,6 @@ public class PartnerDetailsController extends BaseController {
      *  查询树桩数据
      * @user  GFF
      * @param name
-     * \
      * @param offPartner
      * @param blacklistPartner
      * @return
@@ -141,26 +141,39 @@ public class PartnerDetailsController extends BaseController {
                                        @ApiParam("联系地址") @RequestParam(name = "address" ,required = false) String address,
                                        @ApiParam("email") @RequestParam(name = "email" ,required = false) String email,
                                        HttpServletRequest request   ){
-
+        List<PartnerLinkman> linkmanlist = new ArrayList<PartnerLinkman>();
         if(linkmans != null){
             JSONArray array = JSONArray.fromString(linkmans);
-            List<PartnerLinkman> list = JSONArray.toList(array, PartnerLinkman.class);
-            partnerDetails.setLinkmansList(list);
-            // 校验手机号 发送邮件
-            ThreadEmail thread =  new  ThreadEmail( partnerDetailsService ,authUserService, emailService,partnerLinkmanService);
-            thread.checkPhoneSendEmail(request,list, partnerDetails);
+            linkmanlist = JSONArray.toList(array, PartnerLinkman.class);
+            partnerDetails.setLinkmansList(linkmanlist);
+
         }
         if(address != null){
             JSONArray array = JSONArray.fromString(address);
             List<PartnerAddress> list = JSONArray.toList(array, PartnerAddress.class);
             partnerDetails.setAddressList(list);
         }
+        for (int i = 0 ; i < fields.length ; i++) {
+            boolean b = this.partnerDetailsService.verifyValueRepeat(partnerDetails.getId(), fields[i], TypeConversionUtils.selectFieldValueByName(partnerDetails, fields[i]));
+            if (!b) {
+                return this.error("字段重复 " + fieldName[i]);
+            }
+        }
         partnerDetails = (PartnerDetails) ObjectTrim.beanAttributeValueTrim(partnerDetails);
-        this.partnerDetailsService.insertSelective(partnerDetails,getRequest(),email);
-        return this.success();
+        try {
+            this.partnerDetailsService.insertSelective(partnerDetails,getRequest(),email);
+            // 校验手机号 发送邮件
+            ThreadEmail thread =  new  ThreadEmail( partnerDetailsService ,authUserService, emailService,partnerLinkmanService);
+            thread.checkPhoneSendEmail(request,linkmanlist, partnerDetails);
+            return this.success();
+        }catch (Exception e){
+            return this.error();
+        }
+
+
     }
 
-    /**-
+    /**
      *
      *
      * 获取代码长度
@@ -320,11 +333,47 @@ public class PartnerDetailsController extends BaseController {
     @ResponseBody
     public Object selectIsChild(@RequestBody PartnerLinkman partnerLinkman){
         List<PartnerLinkman> partnerLinkmen = this.partnerLinkmanService.selectListByPhone(partnerLinkman);
+        // 如果没有修改手机号则删除此条信息
+        if(null!=partnerLinkman && partnerLinkmen.size()!=0){
+            for(PartnerLinkman parlik:partnerLinkmen){
+                if(parlik.getId().equals(partnerLinkman.getId())  ){
+                    partnerLinkmen.remove(partnerLinkman);
+                }
+            }
+            if(partnerLinkmen.remove(partnerLinkman)){
+
+            }
+        }
         if(null!=partnerLinkmen && partnerLinkmen.size()!=0 ){
             return this.success(true);
         }
         return this.success(false);
     }
+
+
+    /**
+     * @Description:
+     * @author SevenBoy
+
+     * @return java.lang.Object   
+     * @throws
+     * @Date 2018/1/3
+     */
+    @ApiOperation(value = "页面导出excel" ,httpMethod = "GET", response = Object.class)
+    @RequestMapping(value = "/excel")
+    public void parTnerDetailExcel(@ApiParam("name") @RequestParam(name = "name",required = false) String name ,
+                                   @ApiParam("查看停用Partner") @RequestParam(name = "offPartner",required = false) Integer offPartner ,
+                                   @ApiParam("分类") @RequestParam(name = "partnerCategory",required = false) String partnerCategory ,
+                                   @ApiParam("查看黑名单Partner") @RequestParam(name = "blacklistPartner",required = false) Integer blacklistPartner
+            , HttpServletRequest request , HttpServletResponse response) throws ParseException {
+        List<PartnerDetails> list = this.partnerDetailsService.selectListByQuery(name,offPartner,blacklistPartner,partnerCategory);
+        // 导出excel
+        ExcelUtils excel = new ExcelUtils();
+        excel.customerOutExcel(request,response,list ,partnerDetailsService);
+
+    }
+
+
 
 
 }

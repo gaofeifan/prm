@@ -1,7 +1,63 @@
-#business .content {
+#server .content {
   padding: 20px 20px 50px;
   background-color: #fff;
 }
-#business .content table {
-  width: 100%;
+#server .content .thead-outer {
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 10px;
+}
+#server .content .thead-outer .thead-core {
+  padding: 15px 0;
+  border-bottom: 1px solid #dddddd;
+}
+#server .content .thead-outer .thead-core .thead-content div {
+  float: left;
+  text-align: center;
+  color: #333;
+}
+#server .content .thead-outer .thead-core .thead-content .no {
+  width: 10%;
+}
+#server .content .thead-outer .thead-core .thead-content .code {
+  width: 10%;
+}
+#server .content .thead-outer .thead-core .thead-content .business {
+  width: 10%;
+}
+#server .content .thead-outer .thead-core .thead-content .description {
+  width: 30%;
+  text-align: left;
+  text-indent: 120px;
+}
+#server .content .body-box .bodyList {
+  padding: 15px 0;
+  border-bottom: 1px solid #dddddd;
+}
+#server .content .body-box .bodyList div {
+  float: left;
+  text-align: center;
+  color: #666;
+}
+#server .content .body-box .bodyList .no {
+  width: 10%;
+}
+#server .content .body-box .bodyList .code {
+  width: 10%;
+}
+#server .content .body-box .bodyList .business {
+  width: 10%;
+}
+#server .content .body-box .bodyList .description {
+  width: 30%;
+  text-align: left;
+  text-indent: 100px;
+}
+@media screen and (max-width: 1600px) {
+  #business {
+    font-size: 14px;
+  }
+  #business .content .body-box .bodyList {
+    padding: 15px 0;
+  }
 }

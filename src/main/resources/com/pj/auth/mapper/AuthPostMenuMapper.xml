@@ -7,7 +7,7 @@
         <result  column="is_menu" property="isMenu" jdbcType="INTEGER" />
         <result  column="href" property="href" jdbcType="VARCHAR" />
         <result  column="p_id" property="pId" jdbcType="INTEGER" />
-        <result  column="post_id" property="postId" jdbcType="INTEGER" />
+        <result  column="post_id" property="postId" jdbcType="VARCHAR" />
         <result  column="menu_id" property="menuId" jdbcType="INTEGER" />
         <result  column="checks" property="checks" jdbcType="INTEGER" />
     </resultMap>
@@ -76,5 +76,8 @@
         left JOIN auth_post_menu apm ON apm.menu_id = am.id  AND apm.post_id = #{postId}
 				WHERE am.is_menu = 1
 
+    </select>
+     <select id="selectByUserId" resultMap="BaseResultMap">
+          Select * from user_menu where user_menu.user_id=#{userId}
     </select>
 </mapper>

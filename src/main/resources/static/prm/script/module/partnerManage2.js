@@ -1,8 +1,8 @@
 /**
  * Created by Administrator on 2017/9/12.
  */
-frontcookie();
 $(window).unbind("scroll");
+frontcookie();
 $(function(){
     menuActive('partnerManage');
     /*控制 新增 编辑 修改 删除 按钮*/
@@ -75,6 +75,7 @@ $(function(){
             },
             success: function (data) {
                 if(data.code == 200) {
+                    $('#numTol').text(data.data.length);
                     var zNodes = data.data;
                     $.fn.zTree.init($("#tree"), setting, zNodes);
                 }else{
@@ -86,10 +87,11 @@ $(function(){
             }
         });
     }
-
+    var checkedOrderNoList = [];
     var partnerObj = {
         query:function(isStop,isBlack){
-            var checkedOrderNoList = [];
+            $('#tree').empty();
+            checkedOrderNoList = [];
             $('.sortBox').find("input:checkbox").each(function(i,n) {
                 if ($(n).prop('checked') === true) {
                     if (typeof $(n).attr("data-orderNo") != "undefined") {
@@ -108,38 +110,66 @@ $(function(){
                     blacklistPartner:isBlack
                 },
                 success: function (data) {
-                    $('#screen').show();
+                    $('#numTol').text(data.data.length);
                     if(data.code == '200'){
                         if(data.data.length >0){
-                            var arrText = doT.template($("#selectTemplate").text());
-                            $('#selected').html(arrText(data));
+                            var zNodes = data.data;
+                            $.fn.zTree.init($("#tree"), setting, zNodes);
                         }
                     }
                 },
                 error: function (msg) {
-
+                    alert('报错了！');
                 }
             });
-        }
+        },
+    export:function(isStop,isBlack){
+        checkedOrderNoList = [];
+        $('.sortBox').find("input:checkbox").each(function(i,n) {
+            if ($(n).prop('checked') === true) {
+                if (typeof $(n).attr("data-orderNo") != "undefined") {
+                    checkedOrderNoList.push($(n).attr('data-orderNo'));
+                }
+            }
+        });
+        var mainPoint = $('#mainPoint').val();
+        var checkedOrderNoListStr = checkedOrderNoList.join(',');
+        console.log(isStop)
+        console.log(isBlack)
+        $('#export').attr('href','http://'+gPathUrl+'/partner/details/excel?name='+mainPoint+'&offPartner='+isStop+'&partnerCategory='+checkedOrderNoListStr+'&blacklistPartner='+isBlack);
+      }
     };
+    var isStop = 0;
+    var isBlack = 0;
     //关键字和分类查询
     $('#query').click(function(){
         $('#selected').empty();
-        partnerObj.query();
+        isStop = 0;
+        isBlack = 0;
+        partnerObj.query(isStop,isBlack);
+    });
+    $('#queryAll').click(function(){
+        $('.sortBox').find("input:checkbox").prop('checked',false);
+        $('#mainPoint').val('');
+        isStop = 0;
+        isBlack = 0;
+        getDocList();
     });
     //查询停用
     $('#queryStop').click(function(){
         $('#selected').empty();
-        partnerObj.query(1,0);
+        isStop = 1;
+        partnerObj.query(isStop,0);
     });
     //黑名单
     $('#queryBlack').click(function(){
         $('#selected').empty();
-        partnerObj.query(0,1);
+        isBlack = 1;
+        partnerObj.query(0,isBlack);
     });
-    //显示隐藏
-    $('#toggle').click(function(){
-        $('#screen').toggle();
+    /*导出*/
+    $('#export').click(function(){
+        partnerObj.export(isStop,isBlack);
     });
     //全部收起
     $("#collapseAllBtn").on("click",function(){
@@ -297,7 +327,11 @@ $(function(){
                 },
                 success: function (data) {
                     if(data.code == 200){
-                        $('#tr-cancel').trigger('click');
+                        if(data.status){
+                            $('#tr-cancel').trigger('click');
+                        }else{
+                            alert(data.msg)
+                        }
                     }else{
                         alert('您所选择的目录/文件中已有被转移项 请刷新页面获取最新的信息!')
                     }
@@ -368,15 +402,18 @@ var contactsObj = {
         $('.contactList').empty();
         $.each(contactsList,function(index,value){
             var str= '<div data-listId="'+value.id+'" class="list clearfix">\
-                <div class="no"><span>'+(index+1)+'</span></div>\
-                <div class="name"><span>'+value.name+'</span></div>\
-                <div style="width:8%;" class="obligation"><span>'+value.obligation+'</span></div>\
-                <div class="demp"><span>'+value.demp+'</span></div>\
-                <div style="width: 8%;" class="duty"><span>'+value.duty+'</span></div>\
-                <div class="tel"><span>'+value.fixPhone+'</span></div>\
-                <div class="phone"><span>'+value.phone+'</span></div>\
-                <div style="width:16%;" class="email"><span>'+value.email+'</span></div>\
-                <div style="width:28%;" class="address2"><span>'+value.address+'</span></div>\
+                <div style="min-height:20px;word-wrap:break-word" class="no2"><span>'+(index+1)+'</span></div>\
+                <div style="min-height:20px;word-wrap:break-word" class="name"><span>'+value.name+'</span></div>\
+                <div style="min-height:20px;word-wrap:break-word" class="obligation"><span>'+value.obligation+'</span></div>\
+                <div style="min-height:20px;word-wrap:break-word" class="demp"><span>'+value.demp+'</span></div>\
+                <div style="min-height:20px;word-wrap:break-word" class="duty"><span>'+value.duty+'</span></div>\
+                <div style="min-height:20px;word-wrap:break-word" class="tel"><span>'+value.fixPhone+'</span></div>\
+                <div style="min-height:20px;word-wrap:break-word" class="phone"><span>'+value.phone+'</span></div>\
+                <div style="min-height:20px;word-wrap:break-word" class="email"><span>'+value.email+'</span></div>\
+                <div style="min-height:20px;word-wrap:break-word" class="qq"><span>'+value.qq+'</span></div>\
+                <div style="min-height:20px;word-wrap:break-word" class="weChat"><span>'+value.weChat+'</span></div>\
+                <div style="min-height:20px;word-wrap:break-word" class="address2"><span>'+value.address+'</span></div>\
+                <div style="min-height:20px;word-wrap:break-word" class="operation"></div>\
                 </div>';
             $('.contactList').append(str);
         });
@@ -408,6 +445,10 @@ function zTreeOnClick(event, treeId, treeNode) {
         .removeAttr('selected');
     $('#infoWall').show();
     $('body').scrollTop(0);
+    /*加载公司*/
+    getComList('#profitCenter');
+    /*加载信用等级*/
+    qualityRating();
     /*回显各个字段的值*/
     seePartner.show(treeNode.id);
 }
@@ -431,16 +472,22 @@ var seePartner = {
                         $('input[name="code"]').val(resp.data.join(''));//代码
                     }
                 });
-                console.log(data);
                 $('#mnemonicCode').val(data.data.mnemonicCode);//助记码
                 $('#chineseName').val(data.data.chineseName);//中文全称
                 $('#chineseAbbreviation').val(data.data.chineseAbbreviation);//中文简称
                 $('#englishName').val(data.data.englishName);//英文全称
                 $('#englishAbbreviation').val(data.data.englishAbbreviation);//英文简称
                 $('#financingCode').val(data.data.financingCode);//财务代码
+                $('#currency').val(data.data.defaultCurrency);//默认币种
                 $('#dutyInput').val(data.data.receiverName);//提醒接受者
                 $('#receiverId').val(data.data.receiverId);//提醒接受者ID
                 $('#receiverName').val(data.data.receiverName);//提醒接受者
+                $('#profitCenter').val(data.data.profitsCenterId);//利润中心
+                $('#startDate').val(data.data.maturityDateBegan);//开始时间
+                $('#endDate').val(data.data.maturityDateEnd);//结束时间
+                $('#filePath').val(data.data.filePath);//文件
+                $('#fileName').val(data.data.fileName);//文件
+                $('#download').attr('href','http://'+gPathUrl+'/upload/download?filePath='+data.data.filePath);//文件下载
                 //黑名单
                 $('#blackList').val(data.data.isBlacklist);
                 if(data.data.isBlacklist == 1){
@@ -463,6 +510,7 @@ var seePartner = {
                     $('.businessCheckbox').find("input:checkbox").each(function(i,n) {
                         if(value == $(n).val()){
                             $(n).attr('checked',true);
+                            $('.'+value).fadeIn();
                         }
                     });
                 });
@@ -493,9 +541,22 @@ var seePartner = {
                 $('.wbkhPaymentTerm').val(data.data.wbkhPaymentTerm);//代垫期限（天）
                 $('.wbkhPaidAmount').val(data.data.wbkhPaidAmount);//代垫额度（万元）
                 $('.wbkhCreditRating').val(data.data.wbkhCreditRating);//信用等级
+                if(data.data.wbkhCreditRating.slice(2,7) == '协议/保函'){
+                    $('.wbkhCreditPeriod').attr('disabled',false);
+                    $('.wbkhLineCredit').attr('disabled',false);
+                    $('.wbkhIsPayForAnother').attr('disabled',false);
+                    $('.businessBox').find('select,input').attr('disabled',false);
+                }else if(data.data.wbkhCreditRating.slice(2,7) == '签约在途'){
+                    $('.wbkhIsPayForAnother').attr('disabled',false);
+                    $('.businessBox').find('select,input').attr('disabled',true);
+                }else{
+                    $('.businessBox').find('select,input').attr('disabled',true);
+                }
+                getDefault(data.data.wbkhCreditRating);//加载默认额度和默认期限
                 $('.wbkhTypeCreditPeriod').val(data.data.wbkhTypeCreditPeriod);//信用期限类型
                 $('.wbkhCreditPeriod').val(data.data.wbkhCreditPeriod);//信用期限（天）
                 $('.wbkhLineCredit').val(data.data.wbkhLineCredit);//信用额度(万元)
+                $('.useQuota').val(data.data.useQuota||0);//已用额度(万元)
                 $('.wbkhInvoiceType').val(data.data.wbkhInvoiceType);//开票类型
                 $('.invoiceTypeTitle').text(data.data.wbkhInvoiceType);//开票类型Title
                 $('.wbkhDepositBank ').val(data.data.wbkhDepositBank);//开户银行
@@ -504,7 +565,32 @@ var seePartner = {
                 $('.wbkhCompanyTel ').val(data.data.wbkhCompanyTel);//公司电话
                 $('.wbkhCompanyAddress ').val(data.data.wbkhCompanyAddress);//公司地址
                 $('.hwdlTaxReceipt ').val(data.data.hwdlTaxReceipt);//进项税票
+                $('.outputRate').val(data.data.hwdlOutputRate);//销项税票
                 $('.hwdlTaxRate ').val(data.data.hwdlTaxRate);//进项税率%
+                $('.aiTypeCreditPeriod').val(data.data.aiTypeCreditPeriod);//AI
+                $('.aiCreditPeriod').val(data.data.aiCreditPeriod);
+                $('.aeTypeCreditPeriod').val(data.data.aeTypeCreditPeriod);//AE
+                $('.aeCreditPeriod').val(data.data.aeCreditPeriod);
+                $('.siTypeCreditPeriod').val(data.data.siTypeCreditPeriod);//SI
+                $('.siCreditPeriod').val(data.data.siCreditPeriod);
+                $('.seTypeCreditPeriod').val(data.data.seTypeCreditPeriod);//SE
+                $('.seCreditPeriod').val(data.data.seCreditPeriod);
+                $('.tiTypeCreditPeriod').val(data.data.tiTypeCreditPeriod);//TI
+                $('.tiCreditPeriod').val(data.data.tiCreditPeriod);
+                $('.teTypeCreditPeriod').val(data.data.teTypeCreditPeriod);//TE
+                $('.teCreditPeriod').val(data.data.teCreditPeriod);
+                $('.oiTypeCreditPeriod').val(data.data.oiTypeCreditPeriod);//OI
+                $('.oiCreditPeriod').val(data.data.oiCreditPeriod);
+                $('.oeTypeCreditPeriod').val(data.data.oeTypeCreditPeriod);//OE
+                $('.oeCreditPeriod').val(data.data.oeCreditPeriod);
+                $('.itTypeCreditPeriod').val(data.data.itTypeCreditPeriod);//IT
+                $('.itCreditPeriod').val(data.data.itCreditPeriod);
+                $('.ddnTypeCreditPeriod').val(data.data.ddnTypeCreditPeriod);//DDN
+                $('.ddnCreditPeriod').val(data.data.ddnCreditPeriod);
+                $('.yyoxTypeCreditPeriod').val(data.data.yyoxTypeCreditPeriod);//YYOX
+                $('.yyoxCreditPeriod').val(data.data.yyoxCreditPeriod);
+                $('.IndustrialTypeCreditPeriod').val(data.data.industrialTypeCreditPeriod);//Industrial
+                $('.IndustrialCreditPeriod').val(data.data.industrialCreditPeriod);
                 $('#gxcyrClassOfService').val(data.data.gxcyrClassOfService);//服务类别
                 $.each(data.data.gxcyrClassOfServices,function(index,value){
                     $('.gxcyrClassOfServiceBox').find("input:checkbox").each(function(i,n) {
@@ -551,10 +637,38 @@ var seePartner = {
                 $('input[name="sfhrShipperAddress"]').val(data.data.sfhrShipperAddress)//发货人地址
                 addressObj.getAddressList();
                 contactsObj.getContactsList();
+                //外部客户
+                if(data.data.partnerCategorys.indexOf('外部客户')>=0){
+                    $('#externalClientBox').slideDown();
+                }
+                //互为代理
+                if(data.data.partnerCategorys.indexOf('互为代理')>=0){
+                    $('#eachAgentBox').slideDown();
+                }
+                //海外代理
+                if(data.data.partnerCategorys.indexOf('海外代理')>=0){
+                    $('#overseasAgencyBox').slideDown();
+                }
+                //干线承运人
+                if(data.data.partnerCategorys.indexOf('干线承运人')>=0){
+                    $('#trunkCarrierBox').slideDown();
+                }
+                //不可控供应商
+                if(data.data.partnerCategorys.indexOf('不可控供应商')>=0){
+                    $('#uncontrollableSupplierBox').slideDown();
+                }
+                //延伸服务供应商
+                if(data.data.partnerCategorys.indexOf('延伸服务供应商')>=0){
+                    $('#extendServiceProvidersBox').slideDown();
+                }
+                //结算对象
+                if(data.data.partnerCategorys.indexOf('结算对象')>=0){
+                    $('#settlementObjectBox').slideDown();
+                }
             }
         });
     }
-}
+};
 /*
  转移选中的文件是都可以删除
  */
@@ -620,7 +734,7 @@ function addDiyDom(treeId, treeNode) {
             aIco.css('background-position','-242px -168px');
             if ($("#diyBtn_"+treeNode.id).length>0) return;
             var editStr = "<div style='margin-right: 26px;' class='info info0' id='diyBtn_space_" +treeNode.id+ "'><i class='"+isCheck('结算对象',treeNode.partnerCategorys) +"'></i></div>" +
-                "<div class='info info1' id='diyBtn_space_" +treeNode.id+ "' ><i class='"+isCheck('收发货人',treeNode.partnerCategorys) +"'></i></div>" +
+                /*"<div class='info info1' id='diyBtn_space_" +treeNode.id+ "' ><i class='"+isCheck('收发货人',treeNode.partnerCategorys) +"'></i></div>" +*/
                 "<div class='info info2' id='diyBtn_space_" +treeNode.id+ "' ><i class='"+isCheck('延伸服务供应商',treeNode.partnerCategorys) +"'></i></div>" +
                 "<div class='info info3' id='diyBtn_space_" +treeNode.id+ "' ><i class='"+isCheck('不可控供应商',treeNode.partnerCategorys) +"'></i></div>" +
                 "<div class='info info4' id='diyBtn_space_" +treeNode.id+ "' ><i class='"+isCheck('干线承运人',treeNode.partnerCategorys) +"'></i></div>" +
@@ -635,7 +749,7 @@ function addDiyDom(treeId, treeNode) {
             aIco.css('background-position','-242px -168px');
             if ($("#diyBtn_"+treeNode.id).length>0) return;
             var editStr1 = "<div style='margin-right: 26px;' class='info info0' id='diyBtn_space_" +treeNode.id+ "'><i class='"+isCheck('结算对象',treeNode.partnerCategorys) +"'></i></div>" +
-                "<div class='info info1' id='diyBtn_space_" +treeNode.id+ "' ><i class='"+isCheck('收发货人',treeNode.partnerCategorys) +"'></i></div>" +
+                /*"<div class='info info1' id='diyBtn_space_" +treeNode.id+ "' ><i class='"+isCheck('收发货人',treeNode.partnerCategorys) +"'></i></div>" +*/
                 "<div class='info info2' id='diyBtn_space_" +treeNode.id+ "' ><i class='"+isCheck('延伸服务供应商',treeNode.partnerCategorys) +"'></i></div>" +
                 "<div class='info info3' id='diyBtn_space_" +treeNode.id+ "' ><i class='"+isCheck('不可控供应商',treeNode.partnerCategorys) +"'></i></div>" +
                 "<div class='info info4' id='diyBtn_space_" +treeNode.id+ "' ><i class='"+isCheck('干线承运人',treeNode.partnerCategorys) +"'></i></div>" +
@@ -649,7 +763,7 @@ function addDiyDom(treeId, treeNode) {
             aIco.css('background-position','-242px -168px');
             if ($("#diyBtn_"+treeNode.id).length>0) return;
             var editStr2 = "<div style='margin-right: 26px;' class='info info0' id='diyBtn_space_" +treeNode.id+ "'><i class='"+isCheck('结算对象',treeNode.partnerCategorys) +"'></i></div>" +
-                "<div class='info info1' id='diyBtn_space_" +treeNode.id+ "' ><i class='"+isCheck('收发货人',treeNode.partnerCategorys) +"'></i></div>" +
+               /* "<div class='info info1' id='diyBtn_space_" +treeNode.id+ "' ><i class='"+isCheck('收发货人',treeNode.partnerCategorys) +"'></i></div>" +*/
                 "<div class='info info2' id='diyBtn_space_" +treeNode.id+ "' ><i class='"+isCheck('延伸服务供应商',treeNode.partnerCategorys) +"'></i></div>" +
                 "<div class='info info3' id='diyBtn_space_" +treeNode.id+ "' ><i class='"+isCheck('不可控供应商',treeNode.partnerCategorys) +"'></i></div>" +
                 "<div class='info info4' id='diyBtn_space_" +treeNode.id+ "' ><i class='"+isCheck('干线承运人',treeNode.partnerCategorys) +"'></i></div>" +
@@ -701,4 +815,13 @@ function isflag(flagName){
             return '';
         }
 }
+/*function openWin(url){
+    var winObj = window.open(url);
+    var loop = setInterval(function() {
+        if(winObj.closed) {
+            clearInterval(loop);
+            gettotalCount();
+        }
+    }, 1);
+}*/
 

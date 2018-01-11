@@ -1,20 +1,21 @@
 package com.pj.conf.utils;
 
+import com.pj.Aspect.BasicProperties;
+import com.pj.partner.pojo.PartnerDetails;
+import com.pj.partner.service.PartnerDetailsService;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
-import java.util.*;
-import javax.servlet.ServletOutputStream;
-import com.pj.Aspect.BasicProperties;
-import com.pj.partner.pojo.PartnerDetails;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 
 
 /***
@@ -23,9 +24,12 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
  * @author SenevBoy
  * @date 2018/1/3 16:42   
  **/
+@Component
 public class ExcelUtils {
 
-    public   void customerOutExcel(HttpServletRequest request, HttpServletResponse response,     List<PartnerDetails> listData     ) throws ParseException {
+
+
+    public   void customerOutExcel(HttpServletRequest request, HttpServletResponse response, List<PartnerDetails> listData, PartnerDetailsService partnerDetailsService) throws ParseException {
         // --->创建了一个excel文件
         String excelname ="合作伙伴.xls";
         // --->创建了一个excel文件
@@ -48,7 +52,8 @@ public class ExcelUtils {
         int line = 5;
         // 设置行宽
         // 第一个参数代表列id(从0开始),第2个参数代表宽度值
-        sheet.setColumnWidth(0, 13000);
+        sheet.setColumnWidth(0, 9000);
+        sheet.setColumnWidth(1, 13000);
         sheet.setVerticallyCenter(true);
         HSSFRow line0 = sheet.createRow(0);
         /* 导出执行 */
@@ -117,27 +122,42 @@ public class ExcelUtils {
         int i = 0;
 
         /*正文数据添加*/
-    String name= "";
+ //   String name= "";
         for (int j = 0 ; j <listData.size(); j++){
             HSSFRow row = sheet.createRow(j + 1);
-            name ="";
-                  /*合作伙伴中文名*/
-                for (int s = 0 ; s <listData.get(j).getHierarchy(); s++){
-                    name +="---";
-                }
+            /*h获取所有父级code*/
+            Integer id = listData.get(j).getId();
+
+            Object[] parentCodeList =  partnerDetailsService.getParentCodeList(id);
+            StringBuffer codes = new StringBuffer();
+            for(int q=0;q<parentCodeList.length;q++){
+                codes.append(parentCodeList[q]);
+            }
             HSSFCell cell = row.createCell(i);
-            cell.setCellValue(name+listData.get(j).getChineseName());
+            cell.setCellValue(String.valueOf(codes));
             style1.setAlignment(XSSFCellStyle.ALIGN_LEFT);
             cell.setCellStyle(style1);
+           /* name ="";
+                  *//*合作伙伴中文名*//*
+                for (int s = 0 ; s <listData.get(j).getHierarchy(); s++){
+                    name +="   ";
+                }*/
+            HSSFCell cell2 = row.createCell(i+1);
+        //    cell2.setCellValue(name+listData.get(j).getChineseName());
+            cell2.setCellValue( listData.get(j).getChineseName());
+            style1.setAlignment(XSSFCellStyle.ALIGN_LEFT);
+            cell2.setCellStyle(style1);
                   /*合作伙伴中文名*/
            //    row.createCell(i+1).setCellValue();
 
                   /* 黑名单 */
-                row.createCell(i+2).setCellValue(listData.get(j).getIsBlacklist());
-
-                  /* 停用 */
-                row.createCell(i+3).setCellValue(listData.get(j).getIsDisable());
-
+                  if(listData.get(j).getIsBlacklist()==1){
+                      row.createCell(i+2).setCellValue(listData.get(j).getIsBlacklist() );
+                  }
+            /* 停用 */
+            if(listData.get(j).getIsDisable()==1){
+                row.createCell(i+3).setCellValue( listData.get(j).getIsDisable() );
+            }
 
                   /* 附属功能 */
                   if(null  != listData.get(j).getPartnerCategorys() ){
@@ -145,28 +165,28 @@ public class ExcelUtils {
                       for (int k = 0 ; k < partnerCategorys.length ; k++){
 
                           if(partnerCategorys[k].equals("外部客户")){
-                           row.createCell(4).setCellValue(partnerCategorys[k]);
+                           row.createCell(4).setCellValue(1);
 
                           } else if(partnerCategorys[k].equals("互为代理")){
-                               row.createCell(5).setCellValue(partnerCategorys[k]);
+                               row.createCell(5).setCellValue(1);
 
                           } else if(partnerCategorys[k].equals("海外代理")){
-                              row.createCell(6).setCellValue(partnerCategorys[k]);
+                              row.createCell(6).setCellValue(1);
 
-                          } else if(partnerCategorys[k].equals("干线承运")){
-                             row.createCell(7).setCellValue(partnerCategorys[k]);
+                          } else if(partnerCategorys[k].equals("干线承运人")){
+                             row.createCell(7).setCellValue(1);
 
-                          } else if(partnerCategorys[k].equals("不可控")){
-                              row.createCell(8).setCellValue(partnerCategorys[k]);
+                          } else if(partnerCategorys[k].equals("不可控供应商")){
+                              row.createCell(8).setCellValue(1);
 
-                          } else if(partnerCategorys[k].equals("延伸服务")){
-                             row.createCell(9).setCellValue(partnerCategorys[k]);
+                          } else if(partnerCategorys[k].equals("延伸服务供应商")){
+                             row.createCell(9).setCellValue(1);
 
-                          } else if(partnerCategorys[k].equals("收发货人")){
-                          row.createCell(10).setCellValue(partnerCategorys[k]);
+                          }/* else if(partnerCategorys[k].equals("收发货人")){
+                          row.createCell(10).setCellValue(1);
 
-                          } else if(partnerCategorys[k].equals("结算对象")){
-                          row.createCell(11).setCellValue(partnerCategorys[k]);
+                          } */else if(partnerCategorys[k].equals("结算对象")){
+                          row.createCell(10).setCellValue(1);
                           }
                       }
                   }

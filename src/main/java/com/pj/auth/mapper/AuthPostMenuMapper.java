@@ -15,9 +15,9 @@ import java.util.List;
 @Mapper
 public interface AuthPostMenuMapper extends BaseMapper<AuthPostMenu> {
 
-   List<AuthPostMenuVo> findMenuByPostId(@Param("postId") Integer postId,@Param("menuIds") Integer[] menuIds);
+   List<AuthPostMenuVo> findMenuByPostId(@Param("postId") String postId,@Param("menuIds") Integer[] menuIds);
 
-   List<AuthPostMenuVo> findMenuOrButtonByPostId(@Param("postId")Integer postId, @Param("menuId") Integer menuId, @Param("isMenu") boolean isMenu);
+   List<AuthPostMenuVo> findMenuOrButtonByPostId(@Param("postId")String postId, @Param("menuId") Integer menuId, @Param("isMenu") boolean isMenu);
 
    //根据userId查询 x.gao
    List<AuthPostMenuVo> findMenuOrButtonByUserId(@Param("userId")String userId, @Param("menuId") Integer menuId, @Param("isMenu") boolean isMenu);
@@ -30,5 +30,12 @@ public interface AuthPostMenuMapper extends BaseMapper<AuthPostMenu> {
     * @param postId
     * @return
     */
-    List<AuthPostMenuVo> selectMenuVos(@Param("postId")Integer postId);
+    List<AuthPostMenuVo> selectMenuVos(@Param("postId")String postId);
+    
+    /**
+     * 只通过userId查询
+     * @param postId
+     * @return
+     */
+     List<AuthPostMenuVo> selectByUserId(@Param("userId")String userId);
 }

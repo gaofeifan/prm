@@ -3,9 +3,12 @@
  */
 var oaPathUrl = '10.0.0.18:8083';
 var ssoPathUrl = '10.0.0.18:8085';
-var gPathUrl = '192.168.4.213:8083';
-// var gPathUrl = '10.0.0.105:8083';//测试环境
-// var gPathUrl = '192.168.4.168:8083';//刘哲测试
+var eamsPathUrl = '10.0.0.105:8080';
+// var eamsPathUrl = '192.168.4.213:8082';
+// var gPathUrl = '192.168.4.213:8083';//非凡
+var gPathUrl = '10.0.0.105:8083';//测试环境
+// var gPathUrl = '192.168.4.168:8083';//自哲的url
+// var gPathUrl = '192.168.4.224:8083';//高翔的url
 
 
 /*var oaPathUrl = '139.129.236.180:8080';
@@ -22,7 +25,7 @@ vipspa.start({
             templateUrl: 'view/serve.html',
             controller: 'script/module/serve.js'
         },
-        'credit': { //信用等级x
+        'credit': { //信用等级
             templateUrl: 'view/credit.html',
             controller: 'script/module/credit.js'
         },
@@ -38,10 +41,10 @@ vipspa.start({
             templateUrl: 'view/partnerManage2.html',
             controller: 'script/module/partnerManage2.js'
         },
-       /* 'partnerManage2': { //合作伙伴管理 有操作权限
-            templateUrl: 'view/partnerManage2.html',
-            controller: 'script/module/partnerManage2.js'
-        },*/
+        'internalCustomer': { //内部客户查询
+            templateUrl: 'view/internalCustomer.html',
+            controller: 'script/module/internalCustomer.js'
+        },
         'partnerNew': { //合作伙伴 新增
             templateUrl: 'view/partnerNew.html',
             controller: 'script/module/partnerNew.js'

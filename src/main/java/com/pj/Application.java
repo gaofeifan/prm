@@ -26,6 +26,7 @@ public class Application
 		SpringApplication.run(Application.class, args);
 	}
 
+
 	@Bean
 	public MultipartConfigElement multipartConfigElement() {
 		MultipartConfigFactory factory = new MultipartConfigFactory();

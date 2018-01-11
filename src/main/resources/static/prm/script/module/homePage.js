@@ -41,7 +41,6 @@ $(function(){
                 newUserName:alter_username
             },
             success: function (data) {
-                console.log(data);
                 if(data.status == '200'){
                     $.cookie('back_username',alter_username);
                     $('.nameEdit').hide();
@@ -137,7 +136,6 @@ $(function(){
                 newEmail:alter_email
             },
             success: function (data) {
-                console.log(data)
                 if(data.status == 200){
                     $.cookie('back_useremail',alter_email);
                     $('.emailShow').show();
@@ -158,29 +156,41 @@ $(function(){
     /*加载日志*/
     operationLog();
 
-
     /* createBY sevenboyLiu  2017年12月19日18:03:48  自动报表 邮件发送功能 */
-        $("#seek1").click(function(){
-            var statu = confirm("您确认要发送上月新增Partner清单邮件给管理者吗？");
-            if(statu){
-                sendEmail("email/lastNew");
-            }
-        })
+    $("#seek1").click(function(){
+        var statu = confirm("您确认要发送上月新增Partner清单邮件给管理者吗？");
+        if(statu){
+            sendEmail("email/lastNew");
+        }
+    })
 
-        $("#seek2").click(function(){
-            var statu = confirm("您确认要发送签约在途Partner清单邮件给接收者吗？");
-            if(statu){
-                sendEmail("email/signing");
-            }
-        })
+    $("#seek2").click(function(){
+        var statu = confirm("您确认要发送签约在途Partner清单邮件给接收者吗？");
+        if(statu){
+            sendEmail("email/signing");
+        }
+    })
 
-        $("#seek3").click(function(){
-            var statu = confirm("您确认要发即将到期Partner清单邮件给接收者吗？");
-            if(statu){
-                sendEmail("email/warning");
-            }
-        })
+    $("#seek3").click(function(){
+        var statu = confirm("您确认要发即将到期Partner清单邮件给接收者吗？");
+        if(statu){
+            sendEmail("email/warning");
+        }
+    })
+
 });
+/*邮件请求ajax*/
+function sendEmail(url) {
+    $.ajax({
+        type: 'get',
+        url: 'http://' + gPathUrl + '/' + url,
+        crossDomain: true,//支持跨域发送cookie
+        dataType: 'json',
+        success: function (data) {
+            alert(data.data);
+        }
+    })
+}
 function  operationLog(){
     $.ajax({
         type: 'get',
@@ -213,18 +223,4 @@ function  operationLog(){
 
         }
     });
-
-}
-
-/*邮件请求ajax*/
-function sendEmail(url){
-    $.ajax({
-        type: 'get',
-        url: 'http://'+gPathUrl+'/'+url,
-        crossDomain: true,//支持跨域发送cookie
-        dataType:'json',
-        success:function(data){
-            alert(data.data);
-        }
-    })
 }

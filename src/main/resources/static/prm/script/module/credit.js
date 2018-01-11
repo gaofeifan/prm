@@ -134,24 +134,24 @@ $(function(){
         commitDate+="],//email//://"+$.cookie('front_useremail')+"//}";
         var commitDate2 = commitDate.replace(",", "");
         var commitDate3 = commitDate2.replace(new RegExp("//","g"), '"');
-if(flage){
-        $.ajax({
-            type:'post',
-            url:'http://'+gPathUrl+'/user/levelUpdate',
-            crossDomain: false,//支持跨域发送cookie
-            contentType: "application/json; charset=utf-8",
-            data: commitDate3,
-            dataType:'json',
-            success:function(data){
-                location.reload();
-            },
-            error:function(){
+        if(flage){
+            $.ajax({
+                type:'post',
+                url:'http://'+gPathUrl+'/user/levelUpdate',
+                crossDomain: false,//支持跨域发送cookie
+                contentType: "application/json; charset=utf-8",
+                data: commitDate3,
+                dataType:'json',
+                success:function(data){
+                    location.reload();
+                },
+                error:function(){
 
-            }
-        });
+                }
+            });
         } else {
             alert("数据格式错误");
-    }
+        }
     })
 
     /*取消按钮*/
@@ -172,15 +172,15 @@ if(flage){
     });
 
 });
-    /*  校验 */
-    function checkNUm(obj ) {
+/*  校验 */
+function checkNUm(obj ) {
 
-         if(!(/^[0-9]+\.?[0-9]*$/).test(obj.value)){
-             alert("只能输入数字或小数");
-             $(this).html("");
-             $(this).focus();
-         }
+    if(!(/^[0-9]+\.?[0-9]*$/).test(obj.value)){
+        alert("只能输入数字或小数");
+        $(this).html("");
+        $(this).focus();
     }
+}
 
 
 function   checkedType(obj){

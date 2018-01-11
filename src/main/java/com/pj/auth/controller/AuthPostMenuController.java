@@ -42,7 +42,7 @@ public class AuthPostMenuController extends BaseController{
     @ApiOperation(value = "根据岗位id查询菜单" ,httpMethod = "GET", response = Object.class)
     @RequestMapping(value = "/findMenuByPostId")
     @ResponseBody
-    public Object findMenuByPostId(@ApiParam("岗位id") @RequestParam(name="postId") Integer postId){
+    public Object findMenuByPostId(@ApiParam("岗位id") @RequestParam(name="postId") String postId){
         List<AuthPostMenuVo> menuVo = authPostMenuService.findMenuByPostId(postId);
         return this.success(menuVo);
     }
@@ -51,7 +51,7 @@ public class AuthPostMenuController extends BaseController{
     @RequestMapping(value = "/findButtonByMenuIds")
     @ResponseBody
     public Object findButtonByMenuIds(
-            @ApiParam("岗位id") @RequestParam(name="postId") Integer postId,
+            @ApiParam("岗位id") @RequestParam(name="postId") String postId,
             @ApiParam("菜单ids") @RequestParam(name="menuIds") Integer[] menuIds){
         List<AuthPostMenuVo> authPostMenus = this.authPostMenuService.findButtonByPostIdAndMenuIds(postId,menuIds);
         return this.success(authPostMenus);
@@ -65,22 +65,22 @@ public class AuthPostMenuController extends BaseController{
                                            @ApiParam(value = "是否是菜单 1是（默认） 0 否",required = false) @RequestParam(name="isMenu",required = false) boolean isMenu
                                            ){
 //        User user = this.getSessionUser();
-        User user = this.userService.selectUserByEmail(email);
+        User user = this.userService.selectPersonByEmail(email);
         //新加一个逻辑，通过userId查询中间表user_menu来判断这个用户是不是有自定义菜单权限，如果有，就读取自定义权限，没有的话还走原来的Post权限; x.gao 20171227
         List<AuthMenu> selectByUserId = userMenuService.selectByUserId(user.getId().toString());
         List<AuthPostMenuVo> authPostMenus = null;
         //size==0还是原来的
         if(selectByUserId.size()==0){
-          authPostMenus = this.authPostMenuService.findMenuOrButtonByPostId(user.getPostid(),menuId,isMenu);
+          authPostMenus = this.authPostMenuService.findMenuOrButtonByPostId(user.getPositionId(),menuId,isMenu);
         }else{
-          authPostMenus =  authPostMenuService.findMenuOrButtonByUserId(user.getId().toString(), menuId, isMenu);
+          authPostMenus =  authPostMenuService.findMenuOrButtonByUserId(user.getId().toString(), menuId, isMenu,user.getPositionId());
         }
         return this.successJsonp(authPostMenus);
     }
     @ApiOperation(value = "设置岗位权限" ,httpMethod = "POST", response = Object.class)
     @RequestMapping(value = "/editPostAuthority")
     @ResponseBody
-    public Object editPostAuthority(@ApiParam("岗位id") @RequestParam(name="postId") Integer postId,
+    public Object editPostAuthority(@ApiParam("岗位id") @RequestParam(name="postId") String postId,
                                            @ApiParam(value = "菜单ids") @RequestParam(name="menuIds") Integer[] menuIds,
                                            @ApiParam(value="用户id")@RequestParam(name="userId",required=false) String userId){
         //增加一个通过用户id更新的方法，当不传userId的时候还是按以前的来，传了userId要按userId更新此用户的菜单权限x.gao 20171227
@@ -97,7 +97,7 @@ public class AuthPostMenuController extends BaseController{
     @ResponseBody
     public Object getLoginUserDetails(@ApiParam(value = "登录人邮箱") @RequestParam(name="email") String email, HttpServletRequest request){
         System.out.println(request.getSession().getId().toString());
-        User user = userService.selectUserByEmail(email);
+        User user = userService.selectPersonByEmail(email);
         Object obj = getRequest().getSession().getAttribute(TAG);
         if(obj == null){
             getRequest().setAttribute(TAG,user);
@@ -117,8 +117,8 @@ public class AuthPostMenuController extends BaseController{
   @RequestMapping(value = "/findMenuByUserId")
   @ResponseBody
   public Object findMenuByUserId(@ApiParam(value = "用户id") @RequestParam(name = "userId") String userId,
-      @ApiParam("岗位id") @RequestParam(name = "postId",required=false) Integer postId) {
-    List<AuthPostMenuVo> selectVOByUserId = userMenuService.selectVOByUserId(userId);
+      @ApiParam("岗位id") @RequestParam(name = "postId",required=false) String postId) {
+    List<AuthPostMenuVo> selectVOByUserId = userMenuService.selectVOByUserId(userId,postId);
     //List<AuthMenu> selectByUserId = userMenuService.selectByUserId(userId);
     return this.successJsonp(selectVOByUserId);
   }

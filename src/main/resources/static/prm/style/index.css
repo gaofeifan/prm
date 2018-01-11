@@ -20,7 +20,7 @@
   width: 10%;
 }
 #business .content .thead-outer .thead-core .thead-content .business {
-  width: 20%;
+  width: 12%;
 }
 #business .content .thead-outer .thead-core .thead-content .description {
   width: 40%;
@@ -40,7 +40,7 @@
   width: 10%;
 }
 #business .content .body-box .bodyList .business {
-  width: 20%;
+  width: 12%;
 }
 #business .content .body-box .bodyList .description {
   width: 40%;
@@ -55,12 +55,68 @@
     padding: 15px 0;
   }
 }
-#business .content {
+#server .content {
   padding: 20px 20px 50px;
   background-color: #fff;
 }
-#business .content table {
-  width: 100%;
+#server .content .thead-outer {
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 10px;
+}
+#server .content .thead-outer .thead-core {
+  padding: 15px 0;
+  border-bottom: 1px solid #dddddd;
+}
+#server .content .thead-outer .thead-core .thead-content div {
+  float: left;
+  text-align: center;
+  color: #333;
+}
+#server .content .thead-outer .thead-core .thead-content .no {
+  width: 10%;
+}
+#server .content .thead-outer .thead-core .thead-content .code {
+  width: 10%;
+}
+#server .content .thead-outer .thead-core .thead-content .business {
+  width: 10%;
+}
+#server .content .thead-outer .thead-core .thead-content .description {
+  width: 30%;
+  text-align: left;
+  text-indent: 120px;
+}
+#server .content .body-box .bodyList {
+  padding: 15px 0;
+  border-bottom: 1px solid #dddddd;
+}
+#server .content .body-box .bodyList div {
+  float: left;
+  text-align: center;
+  color: #666;
+}
+#server .content .body-box .bodyList .no {
+  width: 10%;
+}
+#server .content .body-box .bodyList .code {
+  width: 10%;
+}
+#server .content .body-box .bodyList .business {
+  width: 10%;
+}
+#server .content .body-box .bodyList .description {
+  width: 30%;
+  text-align: left;
+  text-indent: 100px;
+}
+@media screen and (max-width: 1600px) {
+  #business {
+    font-size: 14px;
+  }
+  #business .content .body-box .bodyList {
+    padding: 15px 0;
+  }
 }
 #credit .content {
   padding: 20px 20px 50px;
@@ -90,11 +146,17 @@
 #credit .content .thead-outer .thead-core .thead-content .protocolType {
   width: 26%;
 }
+#credit .content .thead-outer .thead-core .thead-content .defaultLine {
+  width: 10%;
+}
+#credit .content .thead-outer .thead-core .thead-content .defaultDeadline {
+  width: 10%;
+}
 #credit .content .thead-outer .thead-core .thead-content .valid {
   width: 10%;
 }
 #credit .content .thead-outer .thead-core .thead-content .remark {
-  width: 30%;
+  width: 20%;
 }
 #credit .content .body-box .bodyList {
   padding: 10px 0;
@@ -114,11 +176,17 @@
 #credit .content .body-box .bodyList .protocolType {
   width: 26%;
 }
+#credit .content .body-box .bodyList .defaultLine {
+  width: 10%;
+}
+#credit .content .body-box .bodyList .defaultDeadline {
+  width: 10%;
+}
 #credit .content .body-box .bodyList .valid {
   width: 10%;
 }
 #credit .content .body-box .bodyList .remark {
-  width: 30%;
+  width: 20%;
 }
 #credit .content #editBtn {
   display: none;
@@ -309,8 +377,11 @@
   top: 1px;
 }
 #partnerManage .content .searchBar .searchBtn {
-  margin: 0 120px 0 0;
+  margin: 0 20px 0 0;
   cursor: pointer;
+}
+#partnerManage .content .searchBar #queryAll {
+  margin-right: 100px;
 }
 #partnerManage .content .searchBar .clickLink {
   color: #ed6e56;
@@ -330,6 +401,27 @@
 }
 #partnerManage .content .handleBar a {
   color: #ed6e56;
+}
+#partnerManage .content .pIcon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: 4px;
+  margin-right: 2px;
+  background-image: url(../image/sprite.png);
+}
+#partnerManage .content .addIcon {
+  background-position: -124px 2px;
+}
+#partnerManage .content .efitIcon {
+  background-position: -124px -26px;
+}
+#partnerManage .content .transferIcon {
+  background-position: -124px -60px;
+}
+#partnerManage .content .deleteIcon {
+  background-position: -124px -94px;
 }
 #partnerManage .treeHome .thead-outer {
   height: 50px;
@@ -477,7 +569,6 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 999;
   display: none;
 }
 #partnerManage .clickLink {
@@ -840,6 +931,14 @@
 #power #cancel {
   background-color: #f49633;
 }
+#power input.staffIn {
+  width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  margin-right: 10px;
+  position: relative;
+  top: -1px;
+}
 #log .content .topBar ol {
   margin-left: 10px;
 }
@@ -942,14 +1041,32 @@
   background-position: 122px -228px;
   cursor: default;
 }
+#partnerNew input#upload {
+  background-color: #dddddd;
+  color: #333;
+}
+#partnerNew #download {
+  display: inline-block;
+  width: 60px;
+  padding-left: 0;
+  color: #333;
+  height: 30px;
+  background-color: #ddd;
+  text-align: center;
+  line-height: 30px;
+  position: relative;
+  top: 2px;
+  left: 10px;
+  border-radius: 5px;
+}
 #partnerNew .content {
   color: #666;
-  padding-bottom: 360px;
-  margin-top: 210px;
+  padding-bottom: 700px;
+  margin-top: 170px;
 }
 #partnerNew .content h4 {
   color: #333;
-  margin-bottom: 15px;
+  margin-top: 30px;
   font-weight: 600;
   font-size: 16px;
 }
@@ -1056,6 +1173,9 @@
 #partnerNew .content .thead-outer .thead-core .no {
   width: 5%;
 }
+#partnerNew .content .thead-outer .thead-core .no2 {
+  width: 3%;
+}
 #partnerNew .content .thead-outer .thead-core .addressType {
   width: 12%;
 }
@@ -1076,7 +1196,7 @@
   line-height: 42px;
 }
 #partnerNew .content .thead-outer .thead-core .obligation {
-  width: 6%;
+  width: 4%;
   line-height: 42px;
 }
 #partnerNew .content .thead-outer .thead-core .demp {
@@ -1086,7 +1206,7 @@
   width: 6%;
 }
 #partnerNew .content .thead-outer .thead-core .tel {
-  width: 10%;
+  width: 8%;
 }
 #partnerNew .content .thead-outer .thead-core .phone {
   width: 10%;
@@ -1094,12 +1214,19 @@
 }
 #partnerNew .content .thead-outer .thead-core .email {
   width: 12%;
+  line-height: 42px;
+}
+#partnerNew .content .thead-outer .thead-core .qq {
+  width: 7%;
+}
+#partnerNew .content .thead-outer .thead-core .weChat {
+  width: 7%;
 }
 #partnerNew .content .thead-outer .thead-core .address2 {
-  width: 22%;
+  width: 20%;
 }
 #partnerNew .content .thead-outer .thead-core .operation {
-  width: 10%;
+  width: 6%;
 }
 #partnerNew .content .listBoxStyle .list {
   padding: 10px 0;
@@ -1107,10 +1234,12 @@
 }
 #partnerNew .content .listBoxStyle .list > div {
   float: left;
-  height: 20px;
 }
 #partnerNew .content .listBoxStyle .list .no {
   width: 5%;
+}
+#partnerNew .content .listBoxStyle .list .no2 {
+  width: 3%;
 }
 #partnerNew .content .listBoxStyle .list .addressType {
   width: 12%;
@@ -1135,7 +1264,7 @@
   width: 6%;
 }
 #partnerNew .content .listBoxStyle .list .obligation {
-  width: 6%;
+  width: 4%;
 }
 #partnerNew .content .listBoxStyle .list .demp {
   width: 8%;
@@ -1144,7 +1273,7 @@
   width: 6%;
 }
 #partnerNew .content .listBoxStyle .list .tel {
-  width: 10%;
+  width: 8%;
 }
 #partnerNew .content .listBoxStyle .list .phone {
   width: 10%;
@@ -1152,11 +1281,17 @@
 #partnerNew .content .listBoxStyle .list .email {
   width: 12%;
 }
+#partnerNew .content .listBoxStyle .list .qq {
+  width: 7%;
+}
+#partnerNew .content .listBoxStyle .list .weChat {
+  width: 7%;
+}
 #partnerNew .content .listBoxStyle .list .address2 {
-  width: 22%;
+  width: 20%;
 }
 #partnerNew .content .listBoxStyle .list .operation {
-  width: 10%;
+  width: 6%;
 }
 #partnerNew .content .listBoxStyle .addingAdd,
 #partnerNew .content .listBoxStyle .editingAdd,
@@ -1176,6 +1311,12 @@
 #partnerNew .content .listBoxStyle .addingCon .no,
 #partnerNew .content .listBoxStyle .editingCon .no {
   width: 5%;
+}
+#partnerNew .content .listBoxStyle .addingAdd .no2,
+#partnerNew .content .listBoxStyle .editingAdd .no2,
+#partnerNew .content .listBoxStyle .addingCon .no2,
+#partnerNew .content .listBoxStyle .editingCon .no2 {
+  width: 3%;
 }
 #partnerNew .content .listBoxStyle .addingAdd .addressType,
 #partnerNew .content .listBoxStyle .editingAdd .addressType,
@@ -1238,7 +1379,7 @@
 #partnerNew .content .listBoxStyle .editingAdd .obligation,
 #partnerNew .content .listBoxStyle .addingCon .obligation,
 #partnerNew .content .listBoxStyle .editingCon .obligation {
-  width: 6%;
+  width: 4%;
 }
 #partnerNew .content .listBoxStyle .addingAdd .demp,
 #partnerNew .content .listBoxStyle .editingAdd .demp,
@@ -1256,7 +1397,7 @@
 #partnerNew .content .listBoxStyle .editingAdd .tel,
 #partnerNew .content .listBoxStyle .addingCon .tel,
 #partnerNew .content .listBoxStyle .editingCon .tel {
-  width: 10%;
+  width: 8%;
 }
 #partnerNew .content .listBoxStyle .addingAdd .phone,
 #partnerNew .content .listBoxStyle .editingAdd .phone,
@@ -1270,6 +1411,18 @@
 #partnerNew .content .listBoxStyle .editingCon .email {
   width: 12%;
 }
+#partnerNew .content .listBoxStyle .addingAdd .qq,
+#partnerNew .content .listBoxStyle .editingAdd .qq,
+#partnerNew .content .listBoxStyle .addingCon .qq,
+#partnerNew .content .listBoxStyle .editingCon .qq {
+  width: 7%;
+}
+#partnerNew .content .listBoxStyle .addingAdd .weChat,
+#partnerNew .content .listBoxStyle .editingAdd .weChat,
+#partnerNew .content .listBoxStyle .addingCon .weChat,
+#partnerNew .content .listBoxStyle .editingCon .weChat {
+  width: 7%;
+}
 #partnerNew .content .listBoxStyle .addingAdd .address2,
 #partnerNew .content .listBoxStyle .editingAdd .address2,
 #partnerNew .content .listBoxStyle .addingCon .address2,
@@ -1280,7 +1433,7 @@
 #partnerNew .content .listBoxStyle .editingAdd .operation,
 #partnerNew .content .listBoxStyle .addingCon .operation,
 #partnerNew .content .listBoxStyle .editingCon .operation {
-  width: 10%;
+  width: 6%;
 }
 #partnerNew .content .listBoxStyle .delAdd:hover {
   color: #ed6e56;
@@ -1300,7 +1453,7 @@
 }
 #partnerNew .content .businessScope label {
   width: auto;
-  margin-right: 3.6%;
+  /* margin-right: 3.6%;*/
 }
 #partnerNew .content .businessScope .businessCheckbox {
   padding: 10px 0;
@@ -1308,6 +1461,20 @@
   border-bottom: 1px solid #dddddd;
   border-top: 1px solid #dddddd;
   margin-top: 5px;
+}
+#partnerNew .content .businessScope .businessCheckbox div {
+  position: relative;
+  margin-right: 3%;
+}
+#partnerNew .content .businessScope .businessCheckbox div:hover .hoverSpan {
+  display: inline-block;
+}
+#partnerNew .content .businessScope .businessCheckbox .hoverSpan {
+  width: 300px;
+  position: absolute;
+  top: -12px;
+  left: -8px;
+  display: none;
 }
 #partnerNew .content .classificationOfPartners input[type="checkbox"] {
   width: 16px;
@@ -1427,7 +1594,11 @@
   width: 22%;
 }
 #partnerNew .content .wbkhStyle .fl3 .comAddress {
-  width: 70%;
+  width: 52%;
+  margin-right: 2%;
+}
+#partnerNew .content .wbkhStyle .fl3 .outputRate {
+  width: 10%;
 }
 #partnerNew .content .wbkhStyle .fl3 .fl3Div {
   margin-bottom: 10px;
@@ -1460,7 +1631,7 @@
   background-color: #f8f7fa;
   position: absolute;
   z-index: 1002;
-  right: 0;
+  left: 0;
 }
 #partnerNew .userNameLi li {
   height: 34px;
@@ -1526,11 +1697,75 @@
 #partnerNew .mark.disableMark {
   color: #fff;
 }
+#partnerNew .businessItem .mark {
+  margin-right: 0;
+}
 #partnerNew .wbkhStyle .mark {
   background-color: #fff;
 }
+#partnerNew .businessItem {
+  display: none;
+  width: 16.6%;
+  margin: 10px 0;
+}
+#partnerNew .businessItem label {
+  width: 100px;
+  margin-right: 0;
+}
+#partnerNew .businessItem input[type="text"] {
+  width: 40%;
+  height: 26px;
+}
+#partnerNew .businessItem select {
+  width: 44%;
+}
+#partnerNew #addTo .div1,
+#partnerNew #addTo .div2 {
+  width: 18%;
+}
+#partnerNew #addTo .div1 label,
+#partnerNew #addTo .div2 label {
+  margin-right: 0;
+}
+#partnerNew #addTo .div1 input,
+#partnerNew #addTo .div2 input {
+  width: 40%;
+}
+#partnerNew #addTo .div1 select,
+#partnerNew #addTo .div2 select {
+  width: 50%;
+}
+#partnerNew #addTo .div3 {
+  width: 30%;
+}
+#partnerNew #addTo .div3 label {
+  width: 70px;
+  margin-right: 0;
+}
+#partnerNew #addTo .div3 input {
+  width: 120px;
+}
+#partnerNew #addTo .div4 {
+  width: 30%;
+}
+#partnerNew #addTo .div4 input {
+  width: 60%;
+}
+#partnerNew #profitCenter {
+  width: 60%;
+}
+#partnerNew #currency {
+  width: 60%;
+}
+#partnerNew #endDate,
+#partnerNew #startDate {
+  width: 30%;
+  background-image: url(../image/sprite.png);
+  background-position: 103px -228px;
+  cursor: default;
+}
 #specialNav {
-  height: 230px;
+  height: 190px;
   position: fixed;
   z-index: 99;
   top: 60px;
@@ -1548,13 +1783,14 @@
   font-size: 18px;
   color: #ed6e56;
   position: relative;
-  top: 25px;
+  top: 15px;
 }
 #specialNav #navigationBar .title {
   font-size: 18px;
   color: #333;
   text-align: center;
-  margin: 0 0 10px 0;
+  position: relative;
+  top: -10px;
 }
 #specialNav h2 {
   margin-top: 20px;
@@ -1564,8 +1800,8 @@
   text-indent: 16px;
 }
 #specialNav #flow > div {
-  width: 7.68%;
-  height: 90px;
+  width: 8.2%;
+  height: 60px;
   float: left;
   cursor: pointer;
 }
@@ -1625,7 +1861,7 @@
 }
 #specialNav .status {
   height: 45px;
-  margin-top: 30px;
+  margin-top: 15px;
 }
 #specialNav .status.active p {
   color: #ed6e56;
@@ -1639,6 +1875,15 @@
   color: #666;
 }
 @media screen and (max-width: 1600px) {
+  #specialNav {
+    height: 190px;
+    position: fixed;
+    z-index: 99;
+    top: 60px;
+    left: 200px;
+    right: 20px;
+    background-color: #f8f7fa;
+  }
   #partnerNew .content form {
     font-size: 12px;
   }
@@ -1658,7 +1903,7 @@
   }
   #partnerNew .content form .wbkhStyle .fl1 .topLayer label {
     width: auto;
-    margin-right: 8%;
+    /* margin-right: 8%;*/
   }
   #partnerNew .content form .wbkhStyle .fl1 .topLayer label.income {
     width: 80px;
@@ -1699,10 +1944,118 @@
   }
   #partnerNew select {
     padding-left: 5px;
+    font-size: 12px;
   }
   #partnerNew .status p {
     font-size: 14px;
     line-height: 16px;
+  }
+  #partnerNew .businessItem {
+    display: none;
+    width: 16.6%;
+  }
+  #partnerNew .businessItem label {
+    width: 80px;
+    margin-right: 0;
+  }
+  #partnerNew .businessItem input[type="text"] {
+    width: 40%;
+    height: 26px;
+  }
+  #partnerNew .businessItem select {
+    width: 43%;
+    padding-left: 0;
+  }
+  #partnerNew #addTo .div3 {
+    width: 30%;
+  }
+  #partnerNew #addTo .div3 label {
+    width: 70px;
+    margin-right: 0;
+  }
+  #partnerNew #addTo .div3 input {
+    width: 100px;
+  }
+  #partnerNew #addTo .div4 {
+    width: 30%;
+  }
+  #partnerNew #addTo .div4 input {
+    width: 60%;
+  }
+  #partnerNew #addTo #endDate,
+  #partnerNew #addTo #startDate {
+    background-image: url(../image/sprite.png);
+    background-position: 80px -228px;
+    cursor: default;
+  }
+}
+@media screen and (max-width: 1400px) {
+  #partnerNew #addTo .div3 {
+    width: 34%;
+  }
+  #partnerNew #addTo .div3 label {
+    width: 70px;
+    margin-right: 0;
+  }
+  #partnerNew #addTo .div3 input {
+    width: 100px;
+  }
+  #partnerNew #addTo #endDate,
+  #partnerNew #addTo #startDate {
+    background-image: url(../image/sprite.png);
+    background-position: 80px -228px;
+    cursor: default;
+  }
+}
+#internalCustomer .content {
+  padding: 20px 20px 50px;
+  background-color: #fff;
+}
+#internalCustomer .content .thead-outer {
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 10px;
+}
+#internalCustomer .content .thead-outer .thead-core {
+  padding: 15px 0;
+  border-bottom: 1px solid #dddddd;
+}
+#internalCustomer .content .thead-outer .thead-core .thead-content div {
+  float: left;
+  text-align: center;
+  color: #333;
+}
+#internalCustomer .content .thead-outer .thead-core .thead-content .no {
+  width: 10%;
+}
+#internalCustomer .content .thead-outer .thead-core .thead-content .name {
+  width: 40%;
+  text-align: left;
+  padding-left: 100px;
+}
+#internalCustomer .content .body-box .bodyList {
+  padding: 15px 0;
+  border-bottom: 1px solid #dddddd;
+}
+#internalCustomer .content .body-box .bodyList div {
+  float: left;
+  text-align: center;
+  color: #666;
+}
+#internalCustomer .content .body-box .bodyList .no {
+  width: 10%;
+}
+#internalCustomer .content .body-box .bodyList .name {
+  width: 40%;
+  text-align: left;
+  padding-left: 60px;
+}
+@media screen and (max-width: 1600px) {
+  #internalCustomer {
+    font-size: 14px;
+  }
+  #internalCustomer .content .body-box .bodyList {
+    padding: 15px 0;
   }
 }
 html,
@@ -1824,6 +2177,7 @@ body {
   margin-top: 15px;
   color: #666;
   padding-left: 25px;
+  font-size: 16px;
 }
 #wrapper #left ul li .business::before {
   background-position: 0 0;
@@ -1843,10 +2197,10 @@ body {
 #wrapper #left ul li .credit.active::before {
   background-position: -37px -62px;
 }
-#wrapper #left ul li .hierarchy::before {
+#wrapper #left ul li .internalCustomer::before {
   background-position: 0 -98px;
 }
-#wrapper #left ul li .hierarchy.active::before {
+#wrapper #left ul li .internalCustomer.active::before {
   background-position: -37px -98px;
 }
 #wrapper #left ul li .partnerClassify::before {
@@ -2050,4 +2404,40 @@ input.date_in {
 }
 .hidden {
   display: none;
+}
+@media screen and (max-width: 1600px) {
+  #wrapper #main {
+    padding-left: 180px;
+  }
+  #wrapper #left {
+    width: 180px;
+  }
+  #wrapper #header .logo {
+    width: 179px;
+  }
+  .right .right_content {
+    padding: 20px 15px;
+  }
+}
+.alertShow {
+  display: none;
+}
+.alertModal {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: 0.3;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 999;
+}
+.alertContent {
+  display: none;
+  width: 420px;
+  height: 200px;
+  left: 50%;
+  top: 100px;
+  margin-left: -210px;
 }

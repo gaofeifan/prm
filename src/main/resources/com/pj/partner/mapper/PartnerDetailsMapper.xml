@@ -87,12 +87,6 @@
         <result column="industrial_credit_period" property="industrialCreditPeriod" jdbcType="DECIMAL" />
         <!--默认币种-->
         <result column="default_currency" property="defaultCurrency" jdbcType="VARCHAR" />
-        <!--利润中心名称-->
-        <result column="profits_center_name" property="profitsCenterName" jdbcType="VARCHAR" />
-        <!--利润中心id-->
-        <result column="profits_center_id" property="profitsCenterId" jdbcType="INTEGER" />
-        <!--上传下载文件名-->
-        <result column="file_name" property="fileName" jdbcType="INTEGER" />
 
     </resultMap>
     <resultMap id="BaseResultMap" type="com.pj.partner.pojo.PartnerDetails" >
@@ -124,17 +118,17 @@
         FROM
             partner_details
         <where>
-          is_delete = 0 AND  p_id is not NULL
+          is_delete = 0
             <if test="isBlacklist == 1">
             AND is_blacklist = #{isBlacklist}
           </if>
           <if test="isDisable == 1">
             AND is_disable = #{isDisable}
           </if>
-          <if test="partnerCategorys">
+          <if test="partnerCategorys != null">
             AND
-            <foreach  collection="partnerCategorys" item="partnerCategory" open="(" close=")" separator="OR">
-                partner_category LIKE CONCAT('%',#{partnerCategory},'%')
+            <foreach  collection="partnerCategorys" item="pc" open="(" close=")" separator="OR">
+                partner_category LIKE CONCAT('%',#{pc},'%')
             </foreach>
           </if>
 

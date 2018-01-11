@@ -87,15 +87,49 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         PartnerDetails pd = new PartnerDetails();
         pd.setIsDisable(offPartner);
         pd.setIsBlacklist(blacklistPartner);
-//        if(StringUtils.isNotBlank(partnerCategory)){
+        if(StringUtils.isNotBlank(partnerCategory)){
 //            String[] strings = partnerCategory.split(",");
             pd.setPartnerCategory(partnerCategory);
-//        }
-        pd.setDirName(name);
-        List<PartnerDetails> pds = this.partnerDetailsMapper.selectListByQuery(pd);
-//        List<PartnerDetails> pds = this.partnerDetailsMapper.selectByExample(example);
-        return pds;
+        }
+        if(StringUtils.isNoneBlank(name)){
+        	pd.setDirName(name);
+        }
+            List<PartnerDetails> pds = this.partnerDetailsMapper.selectListByQuery(pd);
+            
+            if(StringUtils.isBlank(name) && StringUtils.isBlank(partnerCategory) && offPartner == 0 && blacklistPartner == 0){
+            	return selectPartnerDetailsList();
+            }
+            //        List<PartnerDetails> pds = this.partnerDetailsMapper.selectByExample(example);
+            List<PartnerDetails> data = new ArrayList<>();
+            Set<PartnerDetails> details = selectSon(pds, new HashSet<PartnerDetails>(), null);
+            for (PartnerDetails p:details) {
+                List<PartnerDetails> parentList = this.partnerDetailsMapper.getParentList(p.getId());
+                data.addAll(parentList);
+            }
+            return windowsSort(data);
     }
+        /**
+         *  获取查询最末级的数据
+         * @param pds
+         * @param endData
+         * @param id
+         * @return
+         */
+        public Set<PartnerDetails> selectSon(List<PartnerDetails> pds , Set<PartnerDetails> endData ,Integer id){
+            for (PartnerDetails p: pds) {
+                if(p.getId().equals(id)){
+                    continue;
+                }
+                id = p.getId();
+                List<PartnerDetails> parentList = this.partnerDetailsMapper.getChildList(p.getId());
+                parentList.remove(p);
+                if(parentList.size() <= 1){
+                    endData.add(p);
+                }
+                selectSon(parentList,endData,id);
+            }
+            return endData;
+        }
 
     @Override
     public PartnerDetails selectByPrimaryKey(Integer key) {
@@ -135,8 +169,9 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
 //        this.partnerLinkmanService.deletePartnerLinkmanByDetailsId(record.getId(),email);
 //        this.partnerAddressService.deletePartnerAddressByDetails(record.getId(),email);
         /*更新联系人*/
+        List<PartnerLinkman> partnerLinkmen = new ArrayList<PartnerLinkman>();
         if(linkmans != null){
-            this.updatePartnerLinkman(linkmans,record,email,request);
+         partnerLinkmen = this.updatePartnerLinkman(linkmans, record, email, request);
         }
               /*更新联系地址*/
         if(address != null){
@@ -147,7 +182,15 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
 
         super.updateByPrimaryKey(record);   /*    根据主键更新*/
 
-        deleteParentMnemonicCode(record.getId());    /* 删除所有父集的助记码*/
+        deleteParentMnemonicCode(record.getId());/* 删除所有父集的助记码*/
+
+        if( partnerLinkmen.size()!=0){
+                // 校验手机号 发送邮件
+                ThreadEmail thread =  new  ThreadEmail( partnerDetailsService,   authUserService,   emailService,partnerLinkmanService);
+                thread.checkPhoneSendEmail(request,linkmans, record ) ;
+
+        }
+
     }
 
     /**
@@ -161,7 +204,9 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         request.getSession().setAttribute("old_state_list",list);
         for (PartnerDetails pd : list){
             if(!pd.getId().equals(details.getId())) {
-                if ((!pd.getIsBlacklist().equals(record.getIsBlacklist())) || (!pd.getIsDisable().equals(record.getIsDisable())) || (!pd.getDisableRemark().equals(record.getDisableRemark()))) {
+                if ((!pd.getIsBlacklist().equals(record.getIsBlacklist()))
+                        || (!pd.getIsDisable().equals(record.getIsDisable()))
+                        || ((null!=pd.getDisableRemark()) && (!pd.getDisableRemark().equals(record.getDisableRemark())))) {
                     pd.setIsBlacklist(record.getIsBlacklist());
                     pd.setIsDisable(record.getIsDisable());
                     pd.setDisableRemark(record.getDisableRemark());
@@ -220,10 +265,10 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
      * @param partnerDetails
      * @param request
      */
-    private void updatePartnerLinkman(List<PartnerLinkman> linkmans, PartnerDetails partnerDetails, String email, HttpServletRequest request) {
+    private List<PartnerLinkman> updatePartnerLinkman(List<PartnerLinkman> linkmans, PartnerDetails partnerDetails, String email, HttpServletRequest request) {
         List<PartnerLinkman> deleteLinkman = new ArrayList<>();
         // 存储 更新手机好的信息
-        List<PartnerLinkman> deleteLinkman2 = new ArrayList<>();
+        List<PartnerLinkman> updateLinkman2 = new ArrayList<>();
         //  查询原数据
         List<PartnerLinkman> oPartnerLinkmen = this.partnerLinkmanService.selectPartnerLinkmansByDetailsId(partnerDetails.getId());
         for(PartnerLinkman pl : oPartnerLinkmen){
@@ -238,7 +283,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
                         this.partnerLinkmanService.updateByPrimaryKey(partnerLinkman, email);
                         // 判断 手机号是否发生了改变
                     if(!pl.getPhone().equals(partnerLinkman.getPhone())){
-                        deleteLinkman2.add(partnerLinkman);
+                        updateLinkman2.add(partnerLinkman);
                     }
                 }
                     //  删除该条更新的数据
@@ -261,12 +306,9 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             this.partnerLinkmanService.delete(pl,email);
         }
         // 执行 邮件方法 通知手机号重复
-        linkmans.addAll(deleteLinkman2);
-        if(linkmans.size()!=0){
-            // 校验手机号 发送邮件
-            ThreadEmail thread =  new  ThreadEmail( partnerDetailsService,   authUserService,   emailService,partnerLinkmanService);
-            thread.checkPhoneSendEmail(request,linkmans, partnerDetails ) ;
-        }
+        linkmans.addAll(updateLinkman2);
+
+        return linkmans;
     }
 
     private <T> boolean  contains( List<T> objs, Integer detailsId,String filedName){
@@ -528,13 +570,15 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
      * @param id
      */
     private void deleteParentMnemonicCode(Integer id){
+
         List<PartnerDetails> parentList = this.getParentList(id);
         parentList.remove(parentList.size()-1);
         for (PartnerDetails pd : parentList){
             PartnerDetails details = this.partnerDetailsMapper.selectByPrimaryKey(pd.getId());
             details.setMnemonicCode(null);
-            this.partnerDetailsMapper.updateByPrimaryKey(details);
+              this.partnerDetailsMapper.updateByPrimaryKey(details);
         }
+
     }
 
     @Override

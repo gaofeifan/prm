@@ -1,11 +1,24 @@
 #partnerNew{
+  input#upload{
+    background-color: #dddddd;
+    color:#333;
+  }
+  #download{
+    display: inline-block;width: 60px;padding-left: 0;color:#333;height: 30px;background-color:#ddd;
+    text-align: center;
+    line-height: 30px;
+    position: relative;
+    top:2px;
+    left:10px;
+    border-radius: 5px;
+  }
   .content{
     color: #666;
-    padding-bottom: 360px;
-    margin-top: 210px;
+    padding-bottom: 700px;
+    margin-top: 170px;
     h4{
       color: #333;
-      margin-bottom: 15px;
+      margin-top:30px;
       font-weight: 600;
       font-size: 16px;
     }
@@ -108,8 +121,11 @@
           color: #333;
         }
         .no{
-           width: 5%;
-         }
+            width: 5%;
+          }
+        .no2{
+          width: 3%;
+        }
         .addressType{
           width: 12%;
         }
@@ -130,7 +146,7 @@
           line-height: 42px;
         }
         .obligation{
-          width: 6%;
+          width: 4%;
           line-height: 42px;
         }
         .demp{
@@ -140,7 +156,7 @@
           width: 6%;
         }
         .tel{
-          width: 10%;
+          width: 8%;
         }
         .phone{
           width: 10%;
@@ -148,12 +164,19 @@
         }
         .email{
           width: 12%;
+          line-height: 42px;
+        }
+        .qq{
+          width: 7%;
+        }
+        .weChat{
+          width: 7%;
         }
         .address2{
-          width: 22%;
+          width: 20%;
         }
         .operation{
-          width: 10%;
+          width: 6%;
         }
       }
     }
@@ -163,10 +186,12 @@
         border-bottom: 1px solid #dddddd;
         >div{
           float: left;
-          height: 20px;
         }
         .no{
           width: 5%;
+        }
+        .no2{
+          width: 3%;
         }
         .addressType{
           width: 12%;
@@ -191,7 +216,7 @@
           width: 6%;
         }
         .obligation{
-          width: 6%;
+          width: 4%;
         }
         .demp{
           width: 8%;
@@ -200,7 +225,7 @@
           width: 6%;
         }
         .tel{
-          width: 10%;
+          width: 8%;
         }
         .phone{
           width: 10%;
@@ -208,11 +233,17 @@
         .email{
           width: 12%;
         }
+        .qq{
+          width: 7%;
+        }
+        .weChat{
+          width: 7%;
+        }
         .address2{
-          width: 22%;
+          width: 20%;
         }
         .operation{
-          width: 10%;
+          width: 6%;
         }
       }
       .addingAdd,.editingAdd,.addingCon,.editingCon{
@@ -223,6 +254,9 @@
         }
         .no{
           width: 5%;
+        }
+        .no2{
+          width: 3%;
         }
         .addressType{
           width: 12%;
@@ -255,7 +289,7 @@
           width: 6%;
         }
         .obligation{
-          width: 6%;
+          width: 4%;
         }
         .demp{
           width: 8%;
@@ -264,7 +298,7 @@
           width: 6%;
         }
         .tel{
-          width: 10%;
+          width: 8%;
         }
         .phone{
           width: 10%;
@@ -272,11 +306,17 @@
         .email{
           width: 12%;
         }
+        .qq{
+          width: 7%;
+        }
+        .weChat{
+          width: 7%;
+        }
         .address2{
           width: 20%;
         }
         .operation{
-          width: 10%;
+          width: 6%;
         }
       }
       .delAdd{
@@ -302,7 +342,7 @@
       }
       label{
         width: auto;
-        margin-right: 3.6%;
+       /* margin-right: 3.6%;*/
       }
       .businessCheckbox{
         padding: 10px 0;
@@ -310,6 +350,22 @@
         border-bottom: 1px solid #dddddd;
         border-top: 1px solid #dddddd;
         margin-top: 5px;
+        div{
+          position: relative;
+          margin-right: 3%;
+          &:hover{
+            .hoverSpan{
+              display: inline-block;
+            }
+          }
+        }
+        .hoverSpan{
+          width: 300px;
+          position: absolute;
+          top:-12px;
+          left:-8px;
+          display: none;
+        }
       }
     }
     .classificationOfPartners{
@@ -430,7 +486,11 @@
           width: 22%;
         }
         .comAddress{
-          width: 70%;
+          width: 52%;
+          margin-right: 2%;
+        }
+        .outputRate{
+          width: 10%;
         }
         .fl3Div{
           margin-bottom: 10px;
@@ -470,7 +530,7 @@
     background-color: #f8f7fa;
     position: absolute;
     z-index: 1002;
-    right:0;
+    left:0;
     li{
       height: 34px;
       line-height: 34px;
@@ -536,12 +596,75 @@
       color: #fff;
     }
   }
+  .businessItem{
+    .mark{
+      margin-right:0;
+    }
+  }
   .wbkhStyle .mark{
     background-color: #fff;
   }
+  .businessItem{
+    display: none;
+    width: 16.6%;
+    margin: 10px 0;
+    label{
+      width: 100px;
+      margin-right: 0;
+    }
+    input[type="text"]{
+      width: 40%;
+      height: 26px;
+    }
+    select{
+      width: 44%;
+    }
+  }
+  #addTo{
+      .div1,.div2{
+        label{
+          margin-right: 0;
+        }
+        width: 18%;
+        input{
+          width: 40%;
+        }
+        select{
+          width: 50%;
+        }
+      }
+      .div3{
+        width: 30%;
+        label{
+          width:70px;
+          margin-right: 0;
+        }
+        input{
+          width: 120px;
+        }
+      }
+      .div4{
+        width: 30%;
+        input{
+          width: 60%;
+        }
+      }
+    }
+  #profitCenter{
+    width:60%;
+  }
+  #currency{
+    width: 60%;
+  }
+  #endDate,#startDate{
+    width: 30%;
+    background-image: url(../image/sprite.png);
+    background-position: 103px -228px;
+    cursor: default;
+  }
 }
 #specialNav{
-  height: 230px;
+  height: 190px;
   position: fixed;
   z-index: 99;
   top:60px;
@@ -557,13 +680,14 @@
       font-size: 18px;
       color: #ed6e56;
       position: relative;
-      top: 25px;
+      top: 15px;
     }
     .title{
       font-size: 18px;
       color: #333;
       text-align: center;
-      margin:0 0 10px 0;
+      position: relative;
+      top: -10px;
     }
   }
   h2{
@@ -574,8 +698,8 @@
     text-indent: 16px;
   }
   #flow>div{
-    width: 7.68%;
-    height: 90px;
+    width: 8.2%;
+    height: 60px;
     float:left;
     cursor: pointer;
   }
@@ -635,7 +759,7 @@
   }
   .status {
     height:45px;
-    margin-top:30px;
+    margin-top:15px;
   }
   .status.active p {
     color:#ed6e56;
@@ -650,6 +774,15 @@
   }
 }
 @media screen and (max-width: 1600px) {
+  #specialNav{
+    height: 190px;
+    position: fixed;
+    z-index: 99;
+    top:60px;
+    left:200px;
+    right:20px;
+    background-color: #f8f7fa;
+  }
   #partnerNew{
     .content{
       form{
@@ -667,7 +800,7 @@
               padding:8px 15px;
               label{
                 width: auto;
-                margin-right: 8%;
+               /* margin-right: 8%;*/
               }
               label.income{
                 width: 80px;
@@ -713,10 +846,73 @@
     }
     select {
       padding-left: 5px;
+      font-size: 12px;
     }
     .status p {
       font-size: 14px;
       line-height: 16px;
     }
+    .businessItem{
+      display: none;
+      width: 16.6%;
+      label{
+        width: 80px;
+        margin-right: 0;
+      }
+      input[type="text"]{
+        width:40%;
+        height: 26px;
+      }
+      select{
+        width: 43%;
+        padding-left:0;
+      }
+    }
+    #addTo{
+      .div3{
+        width: 30%;
+        label{
+          width:70px;
+          margin-right: 0;
+        }
+        input{
+          width: 100px;
+        }
+      }
+      .div4{
+        width: 30%;
+        input{
+          width: 60%;
+        }
+      }
+      #endDate,#startDate{
+        background-image: url(../image/sprite.png);
+        background-position: 80px -228px;
+        cursor: default;
+      }
+    }
   }
+
+}
+@media screen and (max-width: 1400px) {
+  #partnerNew{
+    #addTo{
+      .div3{
+        width: 34%;
+        label{
+          width:70px;
+          margin-right: 0;
+        }
+        input{
+          width: 100px;
+        }
+      }
+      #endDate,#startDate{
+        background-image: url(../image/sprite.png);
+        background-position: 80px -228px;
+        cursor: default;
+      }
+    }
+  }
+
 }

@@ -14,8 +14,8 @@ public class BasicProperties {
             public static  final  String[]  Basic_UserLevel_paramName ={"id",   "level",    "protocolType","effectiveness","mark","defaultQuota","defaultTtime"};
             public static  final  String[]  Basic_UserLevel_paramVal  ={"序列号","信用等级","协议类型",    "是否有效","备注","默认额度","默认期限"};
     // 层级位数
-            public static  final  String[]  Basic_Operation_paramName ={"layerOne",   "layerTwo",    "layerThree","layerFour" };
-            public static  final  String[]  Basic_Operation_paramVal  ={"第一层级",     "第二层级",       "第三层级",    "第四层级"};
+//            public static  final  String[]  Basic_Operation_paramName ={"layerOne",   "layerTwo",    "layerThree","layerFour" };
+//            public static  final  String[]  Basic_Operation_paramVal  ={"第一层级",     "第二层级",       "第三层级",    "第四层级"};
     //联系地址
 
             public static final String Basic_address_paramName[] = {"id" ,"addressType","abbreviation","address","zipCode"};
@@ -83,29 +83,7 @@ public class BasicProperties {
 
 
 
-
-     //  手机号校验邮箱发送total信息 error信息
-     //重复联系人
-  public static final  String  total_repetition_telephone = " 以下提醒重复联系人（Owner）无效，请注意跟进。";
-  public static final   String  error_repetition_telephone = "---重复联系人（Owner）无效发送给管理者的异常信息统计邮件发送失败  ： ";
-
-  // 新增Partner
-    public static final  String  total_The_new_Partner = "月 新增Partner如下，如有问题，请联系相应Owner.";
-    public static final   String  error_The_new_Partner = "月新增Partner清单 邮件信息获取异常请检查 exception   :";
-
-    //  签约在途告警邮件
-    public static final  String  total_signing_In_Transit =  " 以下客户信用等级为签约在途，保存时间已经超过15/30个自然日，请注意跟进。";
-    public static final   String  error_signing_In_Transit = "-- 发送给提醒接受者 的邮件发送失败 已存储并已转发通知管理员--";
-
-    // 信用等级
-    public static final  String  total_A_credit_rating =  " 以下客户信用等级为签约在途，保存时间已经超过15/30个自然日，请注意跟进。";
-    public static final   String  error_A_credit_rating = "-- 发送给提醒接受者 的邮件发送失败 已存储并已转发通知管理员--";
-
-    // total
-
-    public static final  String  total_basic_data =   " 以下提醒接收者（Owner）无效，请注意跟进。";
-
     // 导出excel 数组列
-    public static final String[] excelData = { "合作伙伴中文名","停用","黑名单","外部客户","互为代理","海外代理","干线承运","不可控","延伸服务","收发货人","结算对象"};
+    public static final String[] excelData = { "ID","合作伙伴中文名","停用","黑名单","外部客户","互为代理","海外代理","干线承运人","不可控供应商","延伸服务供应商","结算对象"};
 
 }

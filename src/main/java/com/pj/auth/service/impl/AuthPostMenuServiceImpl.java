@@ -36,7 +36,7 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
     }
 
     @Override
-    public List<AuthPostMenuVo> findMenuByPostId(Integer postId) {
+    public List<AuthPostMenuVo> findMenuByPostId(String postId) {
         AuthPostMenu record = new AuthPostMenu();
         record.setPostId(postId);
         List<AuthPostMenu> menus = this.authPostMenuMapper.select(record);
@@ -55,7 +55,7 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
 
     }
     @Override
-    public List<AuthPostMenuVo> findButtonByPostIdAndMenuIds(Integer postId, Integer[] menuIds) {
+    public List<AuthPostMenuVo> findButtonByPostIdAndMenuIds(String postId, Integer[] menuIds) {
         if(menuIds == null || menuIds.length == 0){
             return null;
         }
@@ -63,7 +63,7 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
     }
     @Override
 
-    public List<AuthPostMenuVo> findMenuOrButtonByPostId(Integer postId, Integer menuId, boolean isMenu){
+    public List<AuthPostMenuVo> findMenuOrButtonByPostId(String postId, Integer menuId, boolean isMenu){
         AuthPostMenu am = new AuthPostMenu();
         am.setPostId(postId);
         List<AuthPostMenu> list = authPostMenuMapper.select(am);
@@ -74,18 +74,20 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
     }
 
     @Override
-    public void editPostAuthority(Integer postId, Integer[] menuIds) {
+    public void editPostAuthority(String postId, Integer[] menuIds) {
 
         this.authPostMenuMapper.delete(new AuthPostMenu(postId));
         //加一个新的逻辑，当用户没有勾选到人的时候，按部门修改时要把之前按人修改的记录给删除也就是user_menu表中跟此postId相关的数删掉.x.gao 20171229
-        userMenuMapper.delete(new UserMenu(postId));
+        UserMenu um = new UserMenu();
+        um.setPostId(postId);
+        userMenuMapper.delete(um);
         for(Integer id : menuIds){
             this.authPostMenuMapper.insert(new AuthPostMenu(id,postId));
         }
 
     }
     @Override
-    public boolean findOperatingAuthorizationByPostIdAndByButton(Integer postId , Integer button) {
+    public boolean findOperatingAuthorizationByPostIdAndByButton(String postId , Integer button) {
         List<AuthPostMenu> list = this.authPostMenuMapper.select(new AuthPostMenu(button, postId));
         if(list.size() > 0){
             return true;
@@ -93,7 +95,7 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
         return false;
     }
     @Override
-    public void editDefaultAuth(Integer postId){
+    public void editDefaultAuth(String postId){
         List<AuthMenu> menus = this.authMenuService.selectDefaultMenu();
         AuthPostMenu apm = null;
         for (AuthMenu am:menus) {
@@ -105,8 +107,11 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
     }
 
     @Override
-    public void editPostAuthorityByuserId(String userId, Integer[] menuIds,Integer postId) {
-        userMenuMapper.delete(new UserMenu(userId));
+    public void editPostAuthorityByuserId(String userId, Integer[] menuIds,String postId) {
+        UserMenu um = new UserMenu();
+        um.setUserId(userId);
+        userMenuMapper.delete(um);
+       // userMenuMapper.delete(new UserMenu(userId));
         for(Integer menuid : menuIds){
           UserMenu userMenu = new UserMenu();
           userMenu.setUserId(userId);
@@ -117,9 +122,15 @@ public class AuthPostMenuServiceImpl extends AbstractBaseServiceImpl<AuthPostMen
     }
       
     @Override
-    public List<AuthPostMenuVo> findMenuOrButtonByUserId(String userId, Integer menuId, boolean isMenu) {
-     
-      return authPostMenuMapper.findMenuOrButtonByUserId(userId, menuId, isMenu);
+    public List<AuthPostMenuVo> findMenuOrButtonByUserId(String userId, Integer menuId, boolean isMenu,String postId) {
+      List<AuthPostMenuVo> findMenuOrButtonByUserId = null;
+      //1先去authPostMenu表中查询是不是有默认过个人权限，如果有就直接反回
+      findMenuOrButtonByUserId  =  authPostMenuMapper.findMenuOrButtonByUserId(userId, menuId, isMenu);
+      //2.如果表中没有数据通过postid查询默认权限。
+      if(findMenuOrButtonByUserId.size()==0){
+        findMenuOrButtonByUserId= authPostMenuMapper.findMenuOrButtonByPostId(postId, menuId, isMenu);
+      }
+      return findMenuOrButtonByUserId;
 
     }
 
