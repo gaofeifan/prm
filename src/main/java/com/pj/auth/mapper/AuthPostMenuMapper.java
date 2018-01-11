@@ -38,4 +38,14 @@ public interface AuthPostMenuMapper extends BaseMapper<AuthPostMenu> {
      * @return
      */
      List<AuthPostMenuVo> selectByUserId(@Param("userId")String userId);
+     
+     
+     
+     /**
+      * 查询默认权限
+      * x.gao 2018 1.11
+      * @param postId
+      * @return
+      */
+      List<AuthPostMenuVo> selectDefault();
 }

@@ -17,11 +17,10 @@
         from
                 auth_menu
         where
-                  1=1
-        and
-                id  in (select  menu_id from auth_post_menu where post_id =  #{postId,jdbcType=INTEGER})
-         or
-                id  in (select   p_id  from  auth_menu where id  in (select  menu_id from auth_post_menu where post_id =  #{postId,jdbcType=INTEGER}) )
+        EXISTS( select  menu_id from auth_post_menu b where post_id =  #{postId,jdbcType=VARCHAR} and a.id = b.menu_id)
+
+
+--                 id  in (select   p_id  from  auth_menu where id  in (select  menu_id from auth_post_menu where post_id =  #{postId,jdbcType=INTEGER}) )
     </select>
     <select id="selectByUserId" resultMap="BaseResultMap">
         select * from auth_menu 

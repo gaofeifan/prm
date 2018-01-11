@@ -1,12 +1,11 @@
 target/
 .idea/
-.factorypath
 ### Example user template template
 ### Example user template
+
 # IntelliJ project files
+.idea
 *.iml
-.idea/*
 out
 gen
-.settings/*
-.idea
+/bin/

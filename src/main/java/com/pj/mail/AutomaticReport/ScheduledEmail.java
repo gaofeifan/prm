@@ -363,7 +363,8 @@ public class ScheduledEmail {
         if(null!=PartnerDetailsList){
             Integer i   = 1;
             for (PartnerDetails partnerDetails : PartnerDetailsList){
-                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetailsService.getParentCodeList(partnerDetails.getId())+"</td><td>"+(partnerDetails.getMnemonicCode() ==null?"":partnerDetails.getMnemonicCode() )+"</td><td>"+(partnerDetails.getChineseName() ==null?"":partnerDetails.getChineseName() )+"</td>" +
+
+                theMessage.append("<tr><td>"+ i++ +"</td><td>"+getAllCode(partnerDetails)+"</td><td>"+(partnerDetails.getMnemonicCode() ==null?"":partnerDetails.getMnemonicCode() )+"</td><td>"+(partnerDetails.getChineseName() ==null?"":partnerDetails.getChineseName() )+"</td>" +
                         "<td>"+(partnerDetails.getChineseAbbreviation() ==null?"":partnerDetails.getChineseAbbreviation() )+"</td><td>"+(partnerDetails.getEnglishName() ==null?"":partnerDetails.getEnglishName() )+"</td>" +
                         "<td>"+(partnerDetails.getEnglishAbbreviation() ==null?"":partnerDetails.getEnglishAbbreviation() )+"</td><td>"+(partnerDetails.getReceiverName() ==null?"":partnerDetails.getReceiverName() )+"</td><td>"+(partnerDetails.getScopeBusiness() ==null?"":partnerDetails.getScopeBusiness() )+"</td>" +
                         "<td>"+(partnerDetails.getPartnerCategory() ==null?"":partnerDetails.getPartnerCategory() )+"</td></tr>");
@@ -388,7 +389,7 @@ public class ScheduledEmail {
         if(null!=PartnerDetailsList){
             Integer i   = 1;
             for (PartnerDetails partnerDetails : PartnerDetailsList){
-                theMessage.append("<tr><td>"+ i++ +"</td><td>"+partnerDetailsService.getParentCodeList(partnerDetails.getId()) +"</td><td>"+(partnerDetails.getMnemonicCode()==null?"":partnerDetails.getMnemonicCode()) +"</td>" +
+                theMessage.append("<tr><td>"+ i++ +"</td><td>"+getAllCode(partnerDetails) +"</td><td>"+(partnerDetails.getMnemonicCode()==null?"":partnerDetails.getMnemonicCode()) +"</td>" +
                         "<td>"+(partnerDetails.getChineseName()==null?"":partnerDetails.getChineseName()) +"</td><td>"+(partnerDetails.getChineseAbbreviation() ==null?"":partnerDetails.getChineseAbbreviation() )+"</td><td>"+(partnerDetails.getEnglishName()==null?"":partnerDetails.getEnglishName()) +"</td>" +
                         "<td>"+(partnerDetails.getEnglishAbbreviation()==null?"":partnerDetails.getEnglishAbbreviation()) +"</td><td>"+(partnerDetails.getReceiverName()==null?"":partnerDetails.getReceiverName()) +"</td><td>"+(partnerDetails.getScopeBusiness()==null?"":partnerDetails.getScopeBusiness()) +"</td><td>"+(partnerDetails.getPartnerCategory() ==null?"":partnerDetails.getPartnerCategory() )+"</td>" +
                         "<td>"+(partnerDetails.getMaturityDateBegan()==null?"":date.format(partnerDetails.getMaturityDateBegan())) +"</td><td>"+(partnerDetails.getMaturityDateEnd()==null?"":date.format(partnerDetails.getMaturityDateEnd())) +"</td></tr>");
@@ -432,5 +433,14 @@ public class ScheduledEmail {
      return authUserService.selectAdminUserById().getEmail();
  }
 
-
+/*获取父级代码*/
+private StringBuffer getAllCode(PartnerDetails partnerDetails){
+    // 获取本级以及所有父级代码
+    Object[] parentCodeList = partnerDetailsService.getParentCodeList(partnerDetails.getId());
+    StringBuffer sb = new StringBuffer();
+    for (int q = 0 ; q<parentCodeList.length ; q++){
+        sb.append(parentCodeList[q]);
+    }
+return sb;
+        }
 }
