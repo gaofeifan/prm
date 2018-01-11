@@ -40,7 +40,8 @@ public class UserMenuServiceImpl implements UserMenuService {
     List<AuthPostMenuVo> apmv=null;
     List<AuthPostMenuVo> selectByUserId = authPostMenuMapper.selectByUserId(userId);
     if(selectByUserId.size()==0){
-      apmv = authPostMenuMapper.findMenuByPostId(postId, null);
+      apmv= authPostMenuMapper.selectDefault();
+      //apmv = authPostMenuMapper.findMenuByPostId(postId, null);
     }else{
       apmv = authPostMenuMapper.selectVOByUserId(userId);
     }

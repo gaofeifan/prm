@@ -89,7 +89,7 @@ public class AuthPostMenuController extends BaseController{
         }else{
           authPostMenuService.editPostAuthorityByuserId(userId, menuIds,postId);
         }
-        return this.success(null);
+        return this.success();
     }
 
     @ApiOperation(value = "登录成功后调用接口" ,httpMethod = "GET", response = Object.class)
