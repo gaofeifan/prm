@@ -1,22 +1,28 @@
 package com.pj.mail.AutomaticReport;
-import com.alibaba.dubbo.common.logger.Logger;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.pj.auth.pojo.User;
+import com.pj.auth.service.AuthUserService;
 import com.pj.mail.util.SendEmailUtils;
 import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.pojo.PartnerLinkman;
 import com.pj.partner.service.PartnerDetailsService;
 import com.pj.user.service.EmailService;
-import com.pj.auth.service.AuthUserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
 /**
  * Created by SenevBoy on 2017/11/15.
  */
