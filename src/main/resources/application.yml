@@ -46,7 +46,7 @@ server:
  
 eams : 
   adminId: 8732
-  url: http://10.0.0.105:8082
+  url: http://192.168.4.213:8082
   ssoUrl: http://10.0.0.18:8085
     
 ---
