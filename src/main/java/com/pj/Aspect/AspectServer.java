@@ -512,7 +512,7 @@ public class AspectServer {
         boolean flage = false;
           /*获取  权限操作涉及人*/
 //        User user = authUserService.selectUserUserId(args[0].toString());
-        User user = new User() ; // authUserService.selectUserUserId(args[0].toString());
+        User user =  authUserService.selectPersonById(args[0].toString());
         // 获取 新增的 权限  根基postID 去查询
         List<AuthMenu> authMenuList = userMenuService.selectByUserId(args[0].toString());
         // 获取 旧的 权限  根基postID 去查询

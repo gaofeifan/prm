@@ -141,14 +141,12 @@ public class PartnerDetailsController extends BaseController {
                                        @ApiParam("联系地址") @RequestParam(name = "address" ,required = false) String address,
                                        @ApiParam("email") @RequestParam(name = "email" ,required = false) String email,
                                        HttpServletRequest request   ){
-
+        List<PartnerLinkman> linkmanlist = new ArrayList<PartnerLinkman>();
         if(linkmans != null){
             JSONArray array = JSONArray.fromString(linkmans);
-            List<PartnerLinkman> list = JSONArray.toList(array, PartnerLinkman.class);
-            partnerDetails.setLinkmansList(list);
-            // 校验手机号 发送邮件
-            ThreadEmail thread =  new  ThreadEmail( partnerDetailsService ,authUserService, emailService,partnerLinkmanService);
-            thread.checkPhoneSendEmail(request,list, partnerDetails);
+            linkmanlist = JSONArray.toList(array, PartnerLinkman.class);
+            partnerDetails.setLinkmansList(linkmanlist);
+
         }
         if(address != null){
             JSONArray array = JSONArray.fromString(address);
@@ -162,8 +160,17 @@ public class PartnerDetailsController extends BaseController {
             }
         }
         partnerDetails = (PartnerDetails) ObjectTrim.beanAttributeValueTrim(partnerDetails);
-        this.partnerDetailsService.insertSelective(partnerDetails,getRequest(),email);
-        return this.success();
+        try {
+            this.partnerDetailsService.insertSelective(partnerDetails,getRequest(),email);
+            // 校验手机号 发送邮件
+            ThreadEmail thread =  new  ThreadEmail( partnerDetailsService ,authUserService, emailService,partnerLinkmanService);
+            thread.checkPhoneSendEmail(request,linkmanlist, partnerDetails);
+            return this.success();
+        }catch (Exception e){
+            return this.error();
+        }
+
+
     }
 
     /**

@@ -250,38 +250,44 @@ public class ScheduledEmail {
         }
         // 存储失败接受者人员信息
         HashSet<Integer> failurePersonnel = new HashSet<Integer>();
-
-        for (Integer  detailsId  : partnerDetaisl){
-            if(null!=detailsId) {
-                List<PartnerLinkman> emailListData = new ArrayList<PartnerLinkman>(); // 所有待发送邮件的 人员集合 根据 接受者分类
+        HashSet<Integer> emailListData = new HashSet<>(); // 所有待发送邮件的 人员集合 根据 提醒接受者分类
+        for (Integer  detailsId  : partnerDetaisl) {
+            if (null != detailsId) {
                 for (PartnerLinkman parData : partnerLinkmenAl) {
                     if (parData.getDetailsId().equals(detailsId)) {
                         PartnerDetails partnerDetails = partnerDetailsService.selectByPrimaryKey(detailsId);
                         parData.setOldchineseName(partnerDetails.getChineseName());
                         parData.setReceiverId(partnerDetails.getReceiverId());
-                        emailListData.add(parData);
-                    }
-                }
-
-                if (null != emailListData && emailListData.size() != 0) {
-                    // 获取 邮箱并发送邮件
-                    //发送邮件到接受者
-                    // 调用接口 获取 email 发给 接收者
-                    User user = this.authUserService.selectUserByEmail(emailListData.get(0).getReceiverId());
-                    try {
-
-                        // 邮件正文
-                        String total = "新增合作伙伴维护了新的联系人，与您名下的原合作伙伴中的以下联系人重复，请核实。。";
-                        StringBuffer mesagesVal = getMesagesValPartnerLinkman(emailListData, total);
-                        SendEmailUtils.sendEWmail(mesagesVal, ScheduledEmail.basic_myEmailAccount, basic_myEmailPassword, user.getEmail());
-                    } catch (Exception e) {
-
-                        failurePersonnel.add(emailListData.get(0).getReceiverId());
-                        logger.error("  邮件信息获取异常请检查 exception 信息已存储稍后发送给管理员失败接受者信息   :" + e);
+                        emailListData.add(partnerDetails.getReceiverId());
                     }
                 }
             }
         }
+
+                for(Integer emailDateId :emailListData ){
+            List<PartnerLinkman> parList = new ArrayList<PartnerLinkman>();
+                    for (PartnerLinkman parData : partnerLinkmenAl) {
+                        if(parData.getReceiverId().equals(emailDateId)){
+                            parList.add(parData);
+                        }
+                    }
+                    // 获取 邮箱并发送邮件
+                    //发送邮件到接受者
+                    // 调用接口 获取 email 发给 接收者
+                    User user = this.authUserService.selectUserByEmail(emailDateId);
+                    try {
+                        // 邮件正文
+                        String total = "新增合作伙伴维护了新的联系人，与您名下的原合作伙伴中的以下联系人重复，请核实。。";
+                        StringBuffer mesagesVal = getMesagesValPartnerLinkman(parList, total);
+                        SendEmailUtils.sendEWmail(mesagesVal, ScheduledEmail.basic_myEmailAccount, basic_myEmailPassword, user.getEmail());
+                    } catch (Exception e) {
+
+                        failurePersonnel.add(emailDateId);
+                        logger.error("  邮件信息获取异常请检查 exception 信息已存储稍后发送给管理员失败接受者信息   :" + e);
+                    }
+
+                }
+
 
         // 发送失败人员信息到管理员
         // 发送给接受者邮件失败后整体发送给 管理者
@@ -331,7 +337,7 @@ public class ScheduledEmail {
                         "<td>"+(partnerDetails.getName()==null?"":partnerDetails.getName()) +"</td><td>"+(partnerDetails.getObligation()==null?"":partnerDetails.getObligation()) +"</td><td>"+ (partnerDetails.getDemp()==null?"":partnerDetails.getDemp()) +"</td>" +
                         "<td>"+(partnerDetails.getDuty()==null?"":partnerDetails.getDuty())+"</td><td>"+(partnerDetails.getFixPhone()==null?"":partnerDetails.getFixPhone())+"</td><td>"+(partnerDetails.getPhone()==null?"":partnerDetails.getPhone()) +"</td>" +
                         "<td>"+ (partnerDetails.getEmail()==null?"":partnerDetails.getEmail()) +"</td><td>"+(partnerDetails.getWeChat()==null?"":partnerDetails.getWeChat())+"</td><td>"+ (partnerDetails.getQq()==null?"":partnerDetails.getQq()) +"</td>" +
-                        "<td>"+ (partnerDetails.getEmail()==null?"":partnerDetails.getEmail()) +"</td></tr>");
+                        "<td>"+ (partnerDetails.getAddress()==null?"":partnerDetails.getAddress()) +"</td></tr>");
             }
         }
         theMessage.append("</table>");

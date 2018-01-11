@@ -55,7 +55,7 @@ public class ThreadEmail  {
                 if(null!=parList.getId()){//m  判断 此信息为更新 或者 新增
                     for (PartnerLinkman par:partnerLinkmen){   //更新 则 循环添加入集合中
                         if(!par.getId().equals(parList.getId())){
-                            //  赋值 新旧合作伙伴中文名去全称
+                            //  赋值 新旧合作伙伴中文名全称
                             par.setNewchineseName(partnerDetails.getChineseName());
                             partnerLinkmenAl.add(par);
                         }
