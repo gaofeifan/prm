@@ -90,9 +90,13 @@ $(function(){
                 newPassword:$('#passwordInput').val()
             },
             success: function (data) {
-                $('#passwordConfirm').hide();
-                $('.passwordShow').show();
-                $('.passwordEdit').val('').hide();
+                if(data.status == '200'){
+                    $('#passwordConfirm').hide();
+                    $('.passwordShow').show();
+                    $('.passwordEdit').val('').hide();
+                }else {
+                    alert(data.error);
+                }
             },
             error: function () {
 

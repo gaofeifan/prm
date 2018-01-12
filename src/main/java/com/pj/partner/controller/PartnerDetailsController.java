@@ -136,6 +136,10 @@ public class PartnerDetailsController extends BaseController {
         if(address != null){
             JSONArray array = JSONArray.fromString(address);
             List<PartnerAddress> list = JSONArray.toList(array, PartnerAddress.class);
+            for (PartnerAddress partnerAddress : list) {
+            	partnerAddress.setDetailsId(partnerDetails.getId());
+			}
+            
             partnerDetails.setAddressList(list);
         }
         partnerDetails = (PartnerDetails) ObjectTrim.beanAttributeValueTrim(partnerDetails);

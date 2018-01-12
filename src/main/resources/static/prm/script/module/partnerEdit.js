@@ -1764,6 +1764,15 @@ var  options ={
                     },300);
                     $('.Taxpayers').focus();
                 });
+            }else if(errorCode == 6){
+                $('#alertWords').text('代码不能重复！');
+                $('.alertShow').show().delay(3000).hide(300,function(){
+                    $('#alertWords').text('');
+                    $('html,body').animate({
+                        scrollTop: parseInt($('.code').offset().top)-200
+                    },300);
+                    $('.code').focus();
+                });
             }
         }
     },error:function() {
