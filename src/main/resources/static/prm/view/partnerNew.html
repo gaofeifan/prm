@@ -230,9 +230,9 @@
                 <div class="status clearfix">
                     <input id="isBlacklist" type="checkbox"><label for="">黑名单</label>
                     <!--隐藏黑名单-->
-                    <input class="hiddenInput" name="isBlacklist" type="text" value="0">
+                    <input id="blackList" class="hiddenInput" name="isBlacklist" type="text" value="0">
                     <input id="isDisable" type="checkbox"><label for="">停用</label>
-                    <input class="hiddenInput" name="isDisable" type="text" value="0">
+                    <input id="disable" class="hiddenInput" name="isDisable" type="text" value="0">
                     <span class="mark disableMark">*</span><label for="">停用备注</label><input id="disableRemark" name="disableRemark" class="reason" type="text">
                 </div>
             </div>
@@ -768,7 +768,7 @@
                                 <option value="发票日期">发票日期</option>
                             </select>
                             </div>
-                            <div style=" margin-top: 5px;"><span class="mark">*</span><label for="">信用期限(天)</label><input class="aeCreditPeriod" type="text"></div>
+                            <div style=" margin-top: 5px;"><span class="mark">*</span><label for="">信用期限(天)</label><input class="aeCreditPeriod" type="text" disabled></div>
                         </div>
                         <div class="SI businessItem fl">
                             <p>SI</p>
@@ -778,7 +778,7 @@
                                 <option value="发票日期">发票日期</option>
                             </select>
                             </div>
-                            <div style=" margin-top: 5px;"><span class="mark">*</span><label for="">信用期限(天)</label><input class="siCreditPeriod" type="text"></div>
+                            <div style=" margin-top: 5px;"><span class="mark">*</span><label for="">信用期限(天)</label><input class="siCreditPeriod" type="text" disabled></div>
                         </div>
                         <div class="SE businessItem fl">
                             <p>SE</p>
