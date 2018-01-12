@@ -244,22 +244,24 @@ public class ScheduledEmail {
 
 
     //  联系人电话重复提醒邮件
-    public void sendPhoneEmail(HttpServletRequest request, PartnerDetailsService partnerDetailsService, AuthUserService authUserService, EmailService emailService) throws Exception {
+    public void sendPhoneEmail(HashSet<PartnerLinkman> PartnerLinkmanList, PartnerDetailsService partnerDetailsService, AuthUserService authUserService, EmailService emailService) throws Exception {
         this.authUserService = authUserService;
         this.emailService = emailService;
         HashSet<Integer> partnerDetaisl = new HashSet<Integer>();  // 所有合作伙伴id集合
 
         // 获取请求中的  联系人集合
-        List<PartnerLinkman> partnerLinkmenAl = (  ArrayList<PartnerLinkman>)request.getSession().getAttribute("partnerLinkmenAl");
-        for  ( PartnerLinkman parData : partnerLinkmenAl){
+
+        for  ( PartnerLinkman parData : PartnerLinkmanList){
+            if(null!=parData.getDetailsId()){
             partnerDetaisl.add(parData.getDetailsId());
+            }
         }
         // 存储失败接受者人员信息
         HashSet<String> failurePersonnel = new HashSet<String>();
         HashSet<String> emailListData = new HashSet<String>(); // 所有待发送邮件的 人员集合 根据 提醒接受者分类
         for (Integer  detailsId  : partnerDetaisl) {
             if (null != detailsId) {
-                for (PartnerLinkman parData : partnerLinkmenAl) {
+                for (PartnerLinkman parData : PartnerLinkmanList) {
                     if (parData.getDetailsId().equals(detailsId)) {
                         PartnerDetails partnerDetails = partnerDetailsService.selectByPrimaryKey(detailsId);
                         parData.setOldchineseName(partnerDetails.getChineseName());
@@ -272,7 +274,7 @@ public class ScheduledEmail {
 
                 for(String emailDateId :emailListData ){
             List<PartnerLinkman> parList = new ArrayList<PartnerLinkman>();
-                    for (PartnerLinkman parData : partnerLinkmenAl) {
+                    for (PartnerLinkman parData : PartnerLinkmanList) {
                         if(parData.getReceiverId().equals(emailDateId)){
                             parList.add(parData);
                         }

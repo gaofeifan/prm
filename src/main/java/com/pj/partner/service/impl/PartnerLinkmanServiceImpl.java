@@ -8,6 +8,7 @@ import com.pj.partner.service.PartnerLinkmanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -61,8 +62,9 @@ public class PartnerLinkmanServiceImpl extends AbstractBaseServiceImpl<PartnerLi
      */
     @Override
     public List<PartnerLinkman> selectListByPhone(PartnerLinkman partnerLinkman) {
-        PartnerLinkman partnerLinkman1 = new PartnerLinkman();
-        partnerLinkman1.setPhone(partnerLinkman.getPhone());
-        return partnerLinkmanMapper.select(partnerLinkman1);
+        Example example = new Example(PartnerLinkman.class);
+        example.createCriteria().andCondition("phone = ",partnerLinkman.getPhone())
+        .andIsNotNull("detailsId");
+       return partnerLinkmanMapper.selectByExample(example);
     }
 }

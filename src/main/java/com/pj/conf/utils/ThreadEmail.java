@@ -47,7 +47,7 @@ public class ThreadEmail  {
      *  验证 是否存在重复联系人 并发送邮件到提醒接受者
      */
     public   void checkPhoneSendEmail(HttpServletRequest requseet, List<PartnerLinkman> partnerLinkmanList, PartnerDetails partnerDetails){
-        List<PartnerLinkman> partnerLinkmenAl = new ArrayList<PartnerLinkman>();
+      HashSet<PartnerLinkman> partnerLinkmenAl = new HashSet<PartnerLinkman>();
         if(null!=partnerLinkmanList  && partnerLinkmanList.size()!=0){
             for (PartnerLinkman parList : partnerLinkmanList){        // 循环联系人检测 是否存在重复联系人电话
                 List<PartnerLinkman> partnerLinkmen = this.partnerLinkmanService.selectListByPhone(parList);
@@ -68,22 +68,20 @@ public class ThreadEmail  {
         // 线程执行获取所有 提醒接受者信息 然后发送邮件
         if(null!=partnerLinkmenAl&& partnerLinkmenAl.size()!=0){
             requseet.getSession().setAttribute("partnerLinkmenAl", partnerLinkmenAl);
-            CheckPhoneToSendEmail checkPhoneToSendEmail = new CheckPhoneToSendEmail(requseet,partnerDetailsService,   authUserService , emailService);
+            CheckPhoneToSendEmail checkPhoneToSendEmail = new CheckPhoneToSendEmail(partnerLinkmenAl,partnerDetailsService,   authUserService , emailService);
             checkPhoneToSendEmail.start();
         }
     }
 };
-@Component
+
 class CheckPhoneToSendEmail extends Thread{
 
-    private Queue<Integer> queue =  new LinkedList<Integer>();
-    private int maxSize=1;
-    private HttpServletRequest request;
+    private HashSet<PartnerLinkman> PartnerLinkmanList;
     private PartnerDetailsService partnerDetailsService;
     private AuthUserService authUserService;
     private EmailService emailService;
-    public CheckPhoneToSendEmail(HttpServletRequest request, PartnerDetailsService partnerDetailsService, AuthUserService authUserService, EmailService emailService) {
-        this.request =request;
+    public CheckPhoneToSendEmail(HashSet<PartnerLinkman> req, PartnerDetailsService partnerDetailsService, AuthUserService authUserService, EmailService emailService) {
+        this.PartnerLinkmanList =req;
         this.partnerDetailsService =partnerDetailsService;
         this.authUserService=authUserService;
         this.emailService=emailService;
@@ -91,11 +89,10 @@ class CheckPhoneToSendEmail extends Thread{
 
     @Override
     public void run() {
-        synchronized (queue) {
             try {
                 ScheduledEmail scheduledEmail = new ScheduledEmail();
                 // 发送邮件
-                scheduledEmail.sendPhoneEmail(request,partnerDetailsService,authUserService,emailService);
+                scheduledEmail.sendPhoneEmail(PartnerLinkmanList,partnerDetailsService,authUserService,emailService);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }finally {
@@ -103,7 +100,6 @@ class CheckPhoneToSendEmail extends Thread{
                 System.out.println("重复电话邮件发送完毕！");
                 //queue.notifyAll();
             }
-        }
     }
 
 };
