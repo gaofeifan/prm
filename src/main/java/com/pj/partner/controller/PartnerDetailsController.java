@@ -53,9 +53,9 @@ public class PartnerDetailsController extends BaseController {
     private EmailService emailService;
 
 
-    public static final String [] fields = {"mnemonicCode","chineseName","chineseAbbreviation","englishName","englishAbbreviation","headingCode","code"};
-    public static final String [] fieldName = {"助记码","中文名称","中文简称","英文名称","英文简称","纳税人识别码","代码"};
-    public static final String [] fieldIndex = {"0","1","2","3","4","5","6"};
+    public static final String [] fields = {"chineseName","chineseAbbreviation","englishName","englishAbbreviation","headingCode","code"};
+    public static final String [] fieldName = {"中文名称","中文简称","英文名称","英文简称","纳税人识别码","代码"};
+    public static final String [] fieldIndex = {"1","2","3","4","5","6"};
 
     /**
      *  查询树桩数据
@@ -119,7 +119,7 @@ public class PartnerDetailsController extends BaseController {
     ){
     	
 	  for (int i = 0 ; i < fields.length ; i++) {
-          boolean b = this.partnerDetailsService.verifyValueRepeat(partnerDetails.getId(), fields[i], TypeConversionUtils.selectFieldValueByName(partnerDetails, fields[i]));
+          boolean b = this.partnerDetailsService.verifyValueRepeat(partnerDetails.getId(), fields[i], TypeConversionUtils.selectFieldValueByName(partnerDetails, fields[i]),partnerDetails.getPId());
           if (!b) {
               return this.error(fieldIndex[i]);
           }
@@ -174,7 +174,7 @@ public class PartnerDetailsController extends BaseController {
             partnerDetails.setAddressList(list);
         }
         for (int i = 0 ; i < fields.length ; i++) {
-            boolean b = this.partnerDetailsService.verifyValueRepeat(partnerDetails.getId(), fields[i], TypeConversionUtils.selectFieldValueByName(partnerDetails, fields[i]));
+            boolean b = this.partnerDetailsService.verifyValueRepeat(partnerDetails.getId(), fields[i], TypeConversionUtils.selectFieldValueByName(partnerDetails, fields[i]),partnerDetails.getPId());
             if (!b) {
                 return this.error(fieldIndex[i]);
             }
@@ -223,9 +223,10 @@ public class PartnerDetailsController extends BaseController {
     @ResponseBody
     public Object verifyValueRepeat(@ApiParam("字段名称") @RequestParam(name = "fieldName") String fieldName ,
                                      @ApiParam("字段值") @RequestParam(name = "fieldValue") String fieldValue ,
+                                     @ApiParam("pId") @RequestParam(name = "pId") Integer pId ,
                                      @ApiParam("id" ) @RequestParam(name = "id" , required = false) Integer id
     ){
-        boolean flag = this.partnerDetailsService.verifyValueRepeat(id,fieldName,fieldValue);
+        boolean flag = this.partnerDetailsService.verifyValueRepeat(id,fieldName,fieldValue,pId);
         return this.success(flag);
     }
     
@@ -296,7 +297,6 @@ public class PartnerDetailsController extends BaseController {
      */
     @ApiOperation(value = "修改转移目录" ,httpMethod = "GET", response = Object.class)
     @RequestMapping(value = "/shiftPartnerDetailsFileByIds")
-
     @ResponseBody
     public Object shiftPartnerDetailsFileByIds(@ApiParam("id") @RequestParam(name = "id") Integer id,
     @ApiParam("email") @RequestParam(name = "email") String email){

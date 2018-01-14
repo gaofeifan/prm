@@ -33,7 +33,7 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
      * @param fieldValue
      * @return
      */
-    boolean verifyValueRepeat(Integer id, String fieldName, String fieldValue);
+    boolean verifyValueRepeat(Integer id, String fieldName, String fieldValue,Integer pId);
 
     /**
      *  根据主键删除id

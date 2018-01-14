@@ -59,7 +59,7 @@ $(function(){
             }else{
                 $('#isDisable').attr('checked',false)
             }
-            $('#disableRemark').val(data.data.disableRemark);//停用备注
+            $('.disableRemark').val(data.data.disableRemark);//停用备注
             addressList = data.data.addressList;//联系地址
             contactsList = data.data.linkmansList;//联系人
             $('#scopeBusiness').val(data.data.scopeBusiness);//业务范畴
@@ -474,6 +474,7 @@ $(function(){
             $('#externalClientBox').slideUp();
             externalClientMark.css('color','#fff');
             externalClientMust.prop('required',false);
+            $('.Taxpayers1 ').val('');
         }
     });
     /*客户分类*/
@@ -557,6 +558,7 @@ $(function(){
         }else{//取消勾选干线承运人
             eachAgentMark.css('color','#fff');
             eachAgentMust.prop('required',false);
+            $('.Taxpayers2').val('');
         }
     });
     /*开票类型 2*/
@@ -789,6 +791,7 @@ $(function(){
             $('#settlementObjectBox').slideUp();
             settlementObjectMark.css('color','#fff');
             settlementObjectMust.prop('required',false);
+            $('.Taxpayers3').val('');
         }
     });
     /*开票类型 3*/
@@ -1163,18 +1166,17 @@ $(function(){
                             contactsList.push(newConObj);
                             contactsObj.getContactsList();
                         } else {
-                            alert("联系人电话已存在，请重新填写");
                             $('.addingCon .phone input').focus();
                             return false;
                         }
                     }else{
-                        // 无重复联系人时 校验 新是否与增联系人集合中的其他联系人重复并提醒
+						// 无重复联系人时 校验 新是否与增联系人集合中的其他联系人重复并提醒
                         var RepeatedPhoneCount = 0;
                         $(contactsList).each(function(){
                             if($(this).attr("phone")==addLinkmanPhone ){
                                 RepeatedPhoneCount++;
                             }
-                        })
+                        });
                         if(RepeatedPhoneCount>0){
                             var statu = confirm("联系人电话已存在，是否确认保存？");
                             if(statu) {
@@ -1304,7 +1306,7 @@ $(function(){
         mm.removeObjWithArr(contactsList,EditConObj.id);
         contactsList.push(EditConObj);
         contactsObj.getContactsList();
-        /*校验联系人是否存在*/
+		/*校验联系人是否存在*/
         $.ajax({
             url: 'http://' + gPathUrl + '/partner/details/checkPhone',
             type:'post',
@@ -1316,7 +1318,7 @@ $(function(){
             success:function(data){
                 if(data.code == 200){
                     if(data.data){
-                        if (confirm("联系人已存在，是否确认保存？")) {
+                        if (confirm("联系人电话已存在，是否确认保存？")) {
                             EditConObj.id = EditingCon.attr('data-listId');
                             EditConObj.name = editLinkmanName;
                             EditConObj.obligation = editLinkmanObl;
@@ -1332,7 +1334,6 @@ $(function(){
                             contactsList.push(EditConObj);
                             contactsObj.getContactsList();
                         } else {
-                            alert("联系人已存在，请重新填写");
                             $('.addingCon .phone input').focus();
                             return false;
                         }
@@ -1347,7 +1348,7 @@ $(function(){
                      })
                         if(RepeatedPhoneCount>1){
 
-                            var statu = confirm("联系人已存在，是否确认保存？");
+                            var statu = confirm("联系人电话已存在，是否确认保存？");
                             if(statu){
                                 EditConObj.id = EditingCon.attr('data-listId');
                                 EditConObj.name = editLinkmanName;

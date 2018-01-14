@@ -669,6 +669,8 @@ var seePartner = {
                 }
             }
         });
+        $('input[type="text"]').prop('readonly',true);
+        $('select').prop('disabled',true);
     }
 };
 /*

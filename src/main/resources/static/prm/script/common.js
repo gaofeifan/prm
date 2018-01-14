@@ -267,3 +267,7 @@ function uploadFile(){
     $("#uploadForm").ajaxSubmit(options); // jquery.form.js提交
     return false;
 }
+function PartnertoUpperCase(obj)
+{
+    obj.value = obj.value.toUpperCase()
+}
