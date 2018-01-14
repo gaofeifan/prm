@@ -147,17 +147,17 @@
                     <div class="fl flDiv">
                         <span class="mark">*</span>
                         <label for="">代码</label>
-                        <input name="code" class="code code1" type="text" required>
+                        <input name="code" class="code code1"  onkeyup="PartnertoUpperCase(this)" type="text" required>
                         <span class="line">—</span>
-                        <input name="code" class="code code2" type="text" required>
+                        <input name="code" class="code code2" onkeyup="PartnertoUpperCase(this)" type="text" required>
                         <span class="line">—</span>
-                        <input name="code" class="code code3" type="text" required>
+                        <input name="code" class="code code3"  onkeyup="PartnertoUpperCase(this)" type="text" required>
                         <span class="line">—</span>
-                        <input name="code" class="code code4" type="text" required>
+                        <input name="code" class="code code4" onkeyup="PartnertoUpperCase(this)" type="text" required>
                         <span class="line">—</span>
-                        <input name="code" class="code code5" type="text" required>
+                        <input name="code" class="code code5"  onkeyup="PartnertoUpperCase(this)" type="text" required>
                         <span class="line">—</span>
-                        <input name="code" class="code code6" type="text" required>
+                        <input name="code" class="code code6"  onkeyup="PartnertoUpperCase(this)" type="text" required>
                     </div>
                     <div class="fr frDiv">
                         <span class="mark">*</span>
@@ -1054,5 +1054,10 @@
     </div>
 </div>
 <script id="addAddressTemplate" type="text/x-dot-template">
-
+</script>
+<script language="JavaScript">
+    function PartnertoUpperCase(obj)
+    {
+        obj.value = obj.value.toUpperCase()
+    }
 </script>
