@@ -124,7 +124,7 @@ public class PartnerDetailsController extends BaseController {
               return this.error(fieldIndex[i]);
           }
       }
-        if(linkmans != null){
+            if(linkmans != null){
             JSONArray array = JSONArray.fromString(linkmans);
             List<PartnerLinkman> list = JSONArray.toList(array, PartnerLinkman.class);
             for (PartnerLinkman partnerLinkman : list) {
