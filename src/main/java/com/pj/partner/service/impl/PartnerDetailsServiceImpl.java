@@ -17,6 +17,9 @@ import com.pj.partner.service.PartnerDetailsService;
 import com.pj.partner.service.PartnerDetailsUtilService;
 import com.pj.partner.service.PartnerLinkmanService;
 import com.pj.user.service.EmailService;
+
+import jnr.ffi.types.gid_t;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -381,7 +384,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
     }
 
     @Override
-    public boolean verifyValueRepeat(Integer id, String fieldName, String fieldValue) {
+    public boolean verifyValueRepeat(Integer id, String fieldName, String fieldValue,Integer pId) {
         try {
         boolean b = verifyfeildIsExist(fieldName);
         } catch (NoSuchFieldException e) {
@@ -393,13 +396,11 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         criteria.andCondition(fieldName+"=",fieldValue).andCondition("is_delete = 0");
         if(id != null){
             criteria.andCondition("id != ",id);
-            if(fieldName.equals("code")){
-            	PartnerDetails key = this.selectByPrimaryKey(id);
-            	criteria.andCondition("p_id =",key.getPId());
-            }
+        }  
+        if(fieldName.equals("code")){
+        	criteria.andCondition("p_id =",pId);
         }
         List<PartnerDetails> pds =super.selectByExample(example);
-
         if(pds.size() != 0){
             return false;
         }
@@ -486,8 +487,8 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         TreeSet<PartnerDetails> tree = new TreeSet<>(new Comparator<PartnerDetails>() {
             @Override
             public int compare(PartnerDetails a1, PartnerDetails a2) {
-                String s1 = ((String) a1.getChineseName()).toLowerCase();
-                String s2 = ((String) a2.getChineseName()).toLowerCase();
+                String s1 = ((String) a1.getCode()).toLowerCase();
+                String s2 = ((String) a2.getCode()).toLowerCase();
                 return s1.compareTo(s2);
             }
         });
@@ -498,7 +499,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         TreeSet<PartnerDetails> endTree = new TreeSet<>(new Comparator<PartnerDetails>() {
             @Override
             public int compare(PartnerDetails a1, PartnerDetails a2) {
-                int to = a1.getChineseName().compareTo(a2.getChineseName());
+                int to = a1.getCode().compareTo(a2.getCode());
                 return to;
             }
         });

@@ -148,17 +148,17 @@
                     <div class="fl flDiv">
                         <span class="mark">*</span>
                         <label for="">代码</label>
-                        <input name="code" class="code code1" type="text" required>
+                        <input name="code" class="code code1" type="text" onkeyup="PartnertoUpperCase(this)" required>
                         <span class="line">—</span>
-                        <input name="code" class="code code2" type="text" required>
+                        <input name="code" class="code code2" type="text" onkeyup="PartnertoUpperCase(this)" required>
                         <span class="line">—</span>
-                        <input name="code" class="code code3" type="text" required>
+                        <input name="code" class="code code3" type="text" onkeyup="PartnertoUpperCase(this)" required>
                         <span class="line">—</span>
-                        <input name="code" class="code code4" type="text" required>
+                        <input name="code" class="code code4" type="text" onkeyup="PartnertoUpperCase(this)" required>
                         <span class="line">—</span>
-                        <input name="code" class="code code5" type="text" required>
+                        <input name="code" class="code code5" type="text" onkeyup="PartnertoUpperCase(this)" required>
                         <span class="line">—</span>
-                        <input name="code" class="code code6" type="text" required>
+                        <input name="code" class="code code6" type="text" onkeyup="PartnertoUpperCase(this)" required>
                     </div>
                     <div class="fr frDiv">
                         <span class="mark">*</span>
@@ -235,7 +235,8 @@
                     <input id="blackList" class="hiddenInput" name="isBlacklist" type="text" value="0">
                     <input id="isDisable" type="checkbox"><label for="isDisable">停用</label>
                     <input id="disable" class="hiddenInput" name="isDisable" type="text" value="0">
-                    <span class="mark disableMark">*</span><label for="disableRemark">停用备注</label><input id="disableRemark" name="disableRemark" class="reason" type="text">
+                    <span class="mark disableMark">*</span><label for="">停用备注</label><input id="disableRemarkShow" class="disableRemark reason" type="text">
+                    <input class="disableRemark hiddenInput reason" name="disableRemark" type="text">
                 </div>
             </div>
             <div class="lump">

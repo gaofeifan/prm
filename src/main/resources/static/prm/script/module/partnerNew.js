@@ -93,9 +93,9 @@ $(function(){
                 }else{
                     $('#isDisable').attr('checked',false)
                 }
-                $('#disableRemark').val(data.data.disableRemark);//停用备注
+                $('.disableRemark').val(data.data.disableRemark);//停用备注
                 if(!!data.data.disableRemark){
-                    $('#disableRemark').attr('disabled',true);
+                    $('#disableRemarkShow').attr('disabled',true);
                 }
                 addressList = data.data.addressList;//联系地址
                 contactsList = data.data.linkmansList;//联系人
@@ -493,6 +493,7 @@ $(function(){
             $('#externalClientBox').slideUp();
             externalClientMark.css('color','#fff');
             externalClientMust.prop('required',false);
+            $('.Taxpayers1 ').val('');
         }
     });
     /*客户分类*/
@@ -577,6 +578,7 @@ $(function(){
             $('#eachAgentBox').slideUp();
             eachAgentMark.css('color','#fff');
             eachAgentMust.prop('required',false);
+            $('.Taxpayers2').val('');
         }
     });
     /*开票类型 2*/
@@ -807,6 +809,7 @@ $(function(){
             $('#settlementObjectBox').slideUp();
             settlementObjectMark.css('color','#fff');
             settlementObjectMust.prop('required',false);
+            $('.Taxpayers3').val('');
         }
     });
     /*开票类型 3*/
@@ -1166,7 +1169,7 @@ $(function(){
             success:function(data){
                 if(data.code == 200){
                     if(data.data){
-                        if (confirm("联系人已存在，是否确认保存？")) {
+                        if (confirm("联系人电话已存在，是否确认保存？")) {
                             newConObj.id = addingCon.find('.no2').find('span').text();
                             newConObj.name = addLinkmanName;
                             newConObj.obligation = addLinkmanObl;
@@ -1181,24 +1184,52 @@ $(function(){
                             contactsList.push(newConObj);
                             contactsObj.getContactsList();
                         } else {
-                            alert("联系人已存在，请重新填写");
                             $('.addingCon .phone input').focus();
                             return false;
                         }
                     }else{
-                        newConObj.id = addingCon.find('.no2').find('span').text();
-                        newConObj.name = addLinkmanName;
-                        newConObj.obligation = addLinkmanObl;
-                        newConObj.demp = addingCon.find('.demp input').val();
-                        newConObj.duty = addingCon.find('.duty input').val();
-                        newConObj.fixPhone = addingCon.find('.tel input').val();
-                        newConObj.phone = addLinkmanPhone;
-                        newConObj.email = addLinkmanEmail;
-                        newConObj.qq = addingCon.find('.qq input').val();
-                        newConObj.weChat = addingCon.find('.weChat input').val();
-                        newConObj.address = addingCon.find('.address2 input').val();
-                        contactsList.push(newConObj);
-                        contactsObj.getContactsList();
+                        // 无重复联系人时 校验 新是否与增联系人集合中的其他联系人重复并提醒
+                        var RepeatedPhoneCount = 0;
+                        $(contactsList).each(function(){
+                            if($(this).attr("phone")==addLinkmanPhone ){
+                                RepeatedPhoneCount++;
+                            }
+                        })
+                        if(RepeatedPhoneCount>0){
+                            var statu = confirm("联系人电话已存在，是否确认保存？");
+                            if(statu) {
+                                newConObj.id = addingCon.find('.no2').find('span').text();
+                                newConObj.name = addLinkmanName;
+                                newConObj.obligation = addLinkmanObl;
+                                newConObj.demp = addingCon.find('.demp input').val();
+                                newConObj.duty = addingCon.find('.duty input').val();
+                                newConObj.fixPhone = addingCon.find('.tel input').val();
+                                newConObj.phone = addLinkmanPhone;
+                                newConObj.email = addLinkmanEmail;
+                                newConObj.qq = addingCon.find('.qq input').val();
+                                newConObj.weChat = addingCon.find('.weChat input').val();
+                                newConObj.address = addingCon.find('.address2 input').val();
+                                contactsList.push(newConObj);
+                                contactsObj.getContactsList();
+                            }    else{
+                                $('.addingCon .phone input').focus();
+                                return false;
+                            }
+                        } else {
+                            newConObj.id = addingCon.find('.no2').find('span').text();
+                            newConObj.name = addLinkmanName;
+                            newConObj.obligation = addLinkmanObl;
+                            newConObj.demp = addingCon.find('.demp input').val();
+                            newConObj.duty = addingCon.find('.duty input').val();
+                            newConObj.fixPhone = addingCon.find('.tel input').val();
+                            newConObj.phone = addLinkmanPhone;
+                            newConObj.email = addLinkmanEmail;
+                            newConObj.qq = addingCon.find('.qq input').val();
+                            newConObj.weChat = addingCon.find('.weChat input').val();
+                            newConObj.address = addingCon.find('.address2 input').val();
+                            contactsList.push(newConObj);
+                            contactsObj.getContactsList();
+                        }
                     }
                 }
             },
@@ -1291,7 +1322,7 @@ $(function(){
             success:function(data){
                 if(data.code == 200){
                     if(data.data){
-                        if (confirm("联系人已存在，是否确认保存？")) {
+                        if (confirm("联系人电话已存在，是否确认保存？")) {
                             EditConObj.id = EditingCon.attr('data-listId');
                             EditConObj.name = editLinkmanName;
                             EditConObj.obligation = editLinkmanObl;
@@ -1307,25 +1338,56 @@ $(function(){
                             contactsList.push(EditConObj);
                             contactsObj.getContactsList();
                         } else {
-                            alert("联系人已存在，请重新填写");
                             $('.addingCon .phone input').focus();
                             return false;
                         }
                     }else{
-                        EditConObj.id = EditingCon.attr('data-listId');
-                        EditConObj.name = editLinkmanName;
-                        EditConObj.obligation = editLinkmanObl;
-                        EditConObj.demp = EditingCon.find('.demp input').val();
-                        EditConObj.duty = EditingCon.find('.duty input').val();
-                        EditConObj.fixPhone = EditingCon.find('.tel input').val();
-                        EditConObj.phone = editLinkmanPhone;
-                        EditConObj.email = editLinkmanEmail;
-                        EditConObj.qq = EditingCon.find('.qq input').val();
-                        EditConObj.weChat = EditingCon.find('.weChat input').val();
-                        EditConObj.address = EditingCon.find('.address2 input').val();
-                        mm.removeObjWithArr(contactsList,EditConObj.id);
-                        contactsList.push(EditConObj);
-                        contactsObj.getContactsList();
+                        // 无重复联系人时 校验 新是否与增联系人集合中的其他联系人重复并提醒
+                        var RepeatedPhoneCount = 0;
+                        $(contactsList).each(function(){
+
+                            if($(this).attr("phone")==addLinkmanPhone ){
+                                RepeatedPhoneCount++;
+                            }
+                        })
+                        if(RepeatedPhoneCount>1){
+                            var statu = confirm("联系人电话已存在，是否确认保存？");
+                            if(statu) {
+                                EditConObj.id = EditingCon.attr('data-listId');
+                                EditConObj.name = editLinkmanName;
+                                EditConObj.obligation = editLinkmanObl;
+                                EditConObj.demp = EditingCon.find('.demp input').val();
+                                EditConObj.duty = EditingCon.find('.duty input').val();
+                                EditConObj.fixPhone = EditingCon.find('.tel input').val();
+                                EditConObj.phone = editLinkmanPhone;
+                                EditConObj.email = editLinkmanEmail;
+                                EditConObj.qq = EditingCon.find('.qq input').val();
+                                EditConObj.weChat = EditingCon.find('.weChat input').val();
+                                EditConObj.address = EditingCon.find('.address2 input').val();
+                                mm.removeObjWithArr(contactsList, EditConObj.id);
+                                contactsList.push(EditConObj);
+                                contactsObj.getContactsList();
+                            } else{
+                                $('.addingCon .phone input').focus();
+                                return false;
+                            }
+                        }
+                        else {
+                            EditConObj.id = EditingCon.attr('data-listId');
+                            EditConObj.name = editLinkmanName;
+                            EditConObj.obligation = editLinkmanObl;
+                            EditConObj.demp = EditingCon.find('.demp input').val();
+                            EditConObj.duty = EditingCon.find('.duty input').val();
+                            EditConObj.fixPhone = EditingCon.find('.tel input').val();
+                            EditConObj.phone = editLinkmanPhone;
+                            EditConObj.email = editLinkmanEmail;
+                            EditConObj.qq = EditingCon.find('.qq input').val();
+                            EditConObj.weChat = EditingCon.find('.weChat input').val();
+                            EditConObj.address = EditingCon.find('.address2 input').val();
+                            mm.removeObjWithArr(contactsList, EditConObj.id);
+                            contactsList.push(EditConObj);
+                            contactsObj.getContactsList();
+                        }
                     }
                 }
             },
