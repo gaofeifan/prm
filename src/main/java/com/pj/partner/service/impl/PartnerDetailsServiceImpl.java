@@ -507,7 +507,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
          * 	遍历集合将包含特殊字符添加到特殊字符集合中 同事将该数据添加到需要删除的集合中
          */
         for (PartnerDetails PartnerDetails : set) {
-            String name = PartnerDetails.getChineseAbbreviation();
+            String name = PartnerDetails.getCode();
             if (RegExpUtils.verify(name.charAt(0) + "")) {
                 endTree.add(PartnerDetails);
                 rmList.add(PartnerDetails);
