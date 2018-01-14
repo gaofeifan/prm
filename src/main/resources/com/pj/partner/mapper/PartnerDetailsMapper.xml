@@ -113,13 +113,29 @@
          SELECT Max(LENGTH(code)) FROM partner_details
     </select>
     <select id="selectPartnerDetailsList" resultMap="BaseResultMapAll">
-         SELECT *, GROUP_CONCAT(code) AS codes FROM
+         SELECT *, 
+		(
+			SELECT
+				GROUP_CONCAT(CODE) AS codes
+			FROM
+				partner_details
+			WHERE
+				FIND_IN_SET(id, getParentList(193))
+		) AS codes
             partner_details where is_delete = 0
     </select>
 
     <select id="selectListByQuery" parameterType="com.pj.partner.pojo.PartnerDetails"  resultMap="BaseResultMapAll">
         SELECT
-            *, GROUP_CONCAT(code) AS codes
+            *, 
+		(
+			SELECT
+				GROUP_CONCAT(CODE) AS codes
+			FROM
+				partner_details
+			WHERE
+				FIND_IN_SET(id, getParentList(193))
+		) AS codes
         FROM
             partner_details
         <where>
