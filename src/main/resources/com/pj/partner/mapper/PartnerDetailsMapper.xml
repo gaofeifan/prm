@@ -113,14 +113,14 @@
          SELECT Max(LENGTH(code)) FROM partner_details
     </select>
     <select id="selectPartnerDetailsList" resultMap="BaseResultMapAll">
-         SELECT *, 
+         SELECT *,
 		(
 			SELECT
 				GROUP_CONCAT(CODE) AS codes
 			FROM
 				partner_details
 			WHERE
-				FIND_IN_SET(id, getParentList(193))
+				FIND_IN_SET(id, getParentList(id))
 		) AS codes from
             partner_details where is_delete = 0
     </select>
@@ -134,7 +134,7 @@
 			FROM
 				partner_details
 			WHERE
-				FIND_IN_SET(id, getParentList(193))
+				FIND_IN_SET(id, getParentList(id))
 		) AS codes
         FROM
             partner_details

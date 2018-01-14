@@ -452,5 +452,14 @@ public @Data @Table(name="partner_details") class PartnerDetails extends BasicDa
         return createDate;
     }
 
+    public String getCodes(){
+         StringBuffer sb = new StringBuffer();
+        String[] strings = codes.split(",");
+        for (String str:strings) {
+            sb.append(str);
+        }
+        return sb.toString();
+
+    }
 
 }
