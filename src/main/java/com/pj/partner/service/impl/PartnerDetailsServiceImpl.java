@@ -17,9 +17,6 @@ import com.pj.partner.service.PartnerDetailsService;
 import com.pj.partner.service.PartnerDetailsUtilService;
 import com.pj.partner.service.PartnerLinkmanService;
 import com.pj.user.service.EmailService;
-
-import jnr.ffi.types.gid_t;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
