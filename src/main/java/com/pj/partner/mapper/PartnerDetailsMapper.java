@@ -59,4 +59,12 @@ public interface PartnerDetailsMapper extends BaseMapper<PartnerDetails>{
      * @return
      */
     public List<PartnerDetails> getChildList(@Param("id") Integer id);
+
+    /**
+     * 	查询list
+     *	@author 	GFF
+     *	@date		2018年1月14日下午5:40:46	
+     * 	@return
+     */
+	public List<PartnerDetails> selectPartnerDetailsList();
 }

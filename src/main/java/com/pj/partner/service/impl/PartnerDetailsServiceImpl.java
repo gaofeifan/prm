@@ -66,10 +66,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
 
     @Override
     public List<PartnerDetails> selectPartnerDetailsList() {
-
-        PartnerDetails pd = new PartnerDetails();
-        pd.setIsDelete(0);
-        List<PartnerDetails> list = windowsSort(this.partnerDetailsMapper.select(pd));
+        List<PartnerDetails> list = windowsSort(this.partnerDetailsMapper.selectPartnerDetailsList());
         return list;
     }
 
@@ -218,7 +215,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             }
         }
     }
-
+    
     /**
      *  更新联系地址
      * @param address
@@ -398,7 +395,11 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             criteria.andCondition("id != ",id);
         }  
         if(fieldName.equals("code")){
-        	criteria.andCondition("p_id =",pId);
+        	if(pId == null){
+        		criteria.andIsNull("p_id");
+        	}else{
+        		criteria.andCondition("p_id =",pId);
+        	}
         }
         List<PartnerDetails> pds =super.selectByExample(example);
         if(pds.size() != 0){
@@ -487,8 +488,8 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         TreeSet<PartnerDetails> tree = new TreeSet<>(new Comparator<PartnerDetails>() {
             @Override
             public int compare(PartnerDetails a1, PartnerDetails a2) {
-                String s1 = ((String) a1.getCode()).toLowerCase();
-                String s2 = ((String) a2.getCode()).toLowerCase();
+                String s1 = ((String) a1.getCodes()).toLowerCase();
+                String s2 = ((String) a2.getCodes()).toLowerCase();
                 return s1.compareTo(s2);
             }
         });
@@ -499,7 +500,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         TreeSet<PartnerDetails> endTree = new TreeSet<>(new Comparator<PartnerDetails>() {
             @Override
             public int compare(PartnerDetails a1, PartnerDetails a2) {
-                int to = a1.getCode().compareTo(a2.getCode());
+                int to = a1.getCodes().compareTo(a2.getCodes());
                 return to;
             }
         });
@@ -510,7 +511,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
          * 	遍历集合将包含特殊字符添加到特殊字符集合中 同事将该数据添加到需要删除的集合中
          */
         for (PartnerDetails PartnerDetails : set) {
-            String name = PartnerDetails.getCode();
+            String name = PartnerDetails.getCodes();
             if (RegExpUtils.verify(name.charAt(0) + "")) {
                 endTree.add(PartnerDetails);
                 rmList.add(PartnerDetails);

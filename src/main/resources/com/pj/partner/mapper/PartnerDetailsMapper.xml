@@ -78,6 +78,7 @@
         <result column="it_type_credit_period" property="itTypeCreditPeriod" jdbcType="VARCHAR" />
         <result column="it_credit_period" property="itCreditPeriod" jdbcType="DECIMAL" />
         <result column="ddn_type_credit_period" property="ddnTypeCreditPeriod" jdbcType="VARCHAR" />
+        <result column="codes" property="codes" jdbcType="VARCHAR" />
         <result column="company_id" property="companyId" jdbcType="VARCHAR" />
         <result column="company_name" property="companyName" jdbcType="VARCHAR" />
         <result column="ddn_credit_period" property="ddnCreditPeriod" jdbcType="DECIMAL" />
@@ -111,10 +112,14 @@
     <select id="selectDetailsMaxCode" resultType="int">
          SELECT Max(LENGTH(code)) FROM partner_details
     </select>
+    <select id="selectPartnerDetailsList" resultMap="BaseResultMapAll">
+         SELECT *, GROUP_CONCAT(code) AS codes FROM
+            partner_details where is_delete = 0
+    </select>
 
     <select id="selectListByQuery" parameterType="com.pj.partner.pojo.PartnerDetails"  resultMap="BaseResultMapAll">
         SELECT
-            *
+            *, GROUP_CONCAT(code) AS codes
         FROM
             partner_details
         <where>
