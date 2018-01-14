@@ -121,7 +121,7 @@
 				partner_details
 			WHERE
 				FIND_IN_SET(id, getParentList(193))
-		) AS codes
+		) AS codes from
             partner_details where is_delete = 0
     </select>
 
