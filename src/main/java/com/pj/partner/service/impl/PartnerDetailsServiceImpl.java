@@ -485,16 +485,17 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         TreeSet<PartnerDetails> tree = new TreeSet<>(new Comparator<PartnerDetails>() {
             @Override
             public int compare(PartnerDetails a1, PartnerDetails a2) {
-                String s1 = ((String) a1.getCodes()).toLowerCase();
-                String s2 = ((String) a2.getCodes()).toLowerCase();
-                return s1.compareTo(s2);
+                return a1.getCodes().compareTo(a2.getCodes());
             }
         });
-
+        tree.addAll(set);
+        List<PartnerDetails> pds = new ArrayList<PartnerDetails>();
+        pds.addAll(tree);
+        return pds;
         /**
          * 	排序特殊字符
          */
-        TreeSet<PartnerDetails> endTree = new TreeSet<>(new Comparator<PartnerDetails>() {
+      /*  TreeSet<PartnerDetails> endTree = new TreeSet<>(new Comparator<PartnerDetails>() {
             @Override
             public int compare(PartnerDetails a1, PartnerDetails a2) {
                 int to = a1.getCodes().compareTo(a2.getCodes());
@@ -503,20 +504,20 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         });
         List<PartnerDetails> endList = new ArrayList<>();
         List<PartnerDetails> rmList = new ArrayList<>();
-
+*/
         /**
          * 	遍历集合将包含特殊字符添加到特殊字符集合中 同事将该数据添加到需要删除的集合中
          */
-        for (PartnerDetails PartnerDetails : set) {
+      /*  for (PartnerDetails PartnerDetails : set) {
             String name = PartnerDetails.getCodes();
             if (RegExpUtils.verify(name.charAt(0) + "")) {
                 endTree.add(PartnerDetails);
                 rmList.add(PartnerDetails);
             }
         }
-        /**
+        *//**
          * 	删除包含特殊字符数据
-         */
+         *//*
         set.removeAll(rmList);
         tree.addAll(set);
         Iterator<PartnerDetails> iterator2 = endTree.iterator();
@@ -527,7 +528,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         while (iterator.hasNext()) {
             endList.add(iterator.next());
         }
-        return endList;
+        return endList;*/
     }
 
     @Override
