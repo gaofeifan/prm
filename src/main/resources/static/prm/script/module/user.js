@@ -69,7 +69,7 @@ function InitData(pageIndex) {
                 var tr = ' <div class="bodyList clearfix">\
                         <div class="loginId">'+value.ssoId+'</div>\
                         <div class="name">'+value.name+'</div>\
-                        <div class="number">'+(value.birthday||'')+'</div>\
+                        <div class="number">'+(value.number||'')+'</div>\
                         <div class="company">'+(value.companyName||'')+'</div>\
                         <div class="department">'+(value.deptName||'')+'</div>\
                         <div class="post">'+(value.positionName||'')+'</div>\

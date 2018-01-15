@@ -5,7 +5,7 @@
 	<groupId>com.pj.prm</groupId>
 	<artifactId>prm</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<name>prm</name>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -303,6 +303,12 @@
 			<artifactId>smtp</artifactId>
 			<version>0.0.1</version>
 		</dependency>
+		<!--tomcat 部署-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<!--java poi-->
 		<!--Office格式档案读和写的功能 -->
 		<!--<dependency>
@@ -325,11 +331,7 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.9</version>
 		</dependency>-->
-<!-- 		 <dependency>
-              <groupId>org.springframework.boot</groupId>
-              <artifactId>spring-boot-starter-tomcat</artifactId>
-              <scope>provided</scope>
-         </dependency> -->
+
 		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>

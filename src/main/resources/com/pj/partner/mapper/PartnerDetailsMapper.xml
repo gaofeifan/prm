@@ -123,6 +123,7 @@
 				FIND_IN_SET(id, getParentList(id))
 		) AS codes from
             partner_details where is_delete = 0
+            order by code asc;
     </select>
 
     <select id="selectListByQuery" parameterType="com.pj.partner.pojo.PartnerDetails"  resultMap="BaseResultMapAll">

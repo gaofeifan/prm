@@ -6,8 +6,8 @@ var ssoPathUrl = '10.0.0.18:8085';
 var eamsPathUrl = '10.0.0.105:8080';
 // var eamsPathUrl = '192.168.4.213:8082';
 // var gPathUrl = '192.168.4.213:8083';//非凡
-var gPathUrl = '10.0.0.105:8083';//测试环境
-// var gPathUrl = '192.168.4.168:8083';//自哲的url
+// var gPathUrl = '10.0.0.105:8083';//测试环境
+var gPathUrl = '192.168.4.168:8083';//自哲的url
 // var gPathUrl = '192.168.4.224:8083';//高翔的url
 
 

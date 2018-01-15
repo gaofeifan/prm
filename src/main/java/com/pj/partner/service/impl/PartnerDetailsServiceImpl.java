@@ -63,8 +63,10 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
 
     @Override
     public List<PartnerDetails> selectPartnerDetailsList() {
-        List<PartnerDetails> list = windowsSort(this.partnerDetailsMapper.selectPartnerDetailsList());
+//        List<PartnerDetails> list = windowsSort(this.partnerDetailsMapper.selectPartnerDetailsList());
+        List<PartnerDetails> list = this.partnerDetailsMapper.selectPartnerDetailsList();
         return list;
+
     }
 
     @Override
@@ -103,7 +105,15 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
                 List<PartnerDetails> parentList = this.partnerDetailsMapper.getParentList(p.getId());
                 data.addAll(parentList);
             }
-            return windowsSort(data);
+            List<PartnerDetails> list=  new ArrayList<PartnerDetails>();
+           /* for (PartnerDetails set:details){
+                list.add(set);
+            }
+            if(list.size()!=0){
+
+            }*/
+ //     return windowsSort(data);
+        return  (data);
     }
         /**
          *  获取查询最末级的数据
@@ -393,7 +403,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         }  
         if(fieldName.equals("code")){
         	if(pId == null){
-        		criteria.andIsNull("p_id");
+        		criteria.andIsNull("pId");
         	}else{
         		criteria.andCondition("p_id =",pId);
         	}
@@ -485,13 +495,25 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         TreeSet<PartnerDetails> tree = new TreeSet<>(new Comparator<PartnerDetails>() {
             @Override
             public int compare(PartnerDetails a1, PartnerDetails a2) {
-                return a1.getCodes().compareTo(a2.getCodes());
+                return (a1.getCodes()==null?"":a1.getCodes()).compareTo(a2.getCodes()==null?"":a2.getCodes());
             }
         });
-        tree.addAll(set);
-        List<PartnerDetails> pds = new ArrayList<PartnerDetails>();
-        pds.addAll(tree);
-        return pds;
+        List<String> pds = new ArrayList<String>();
+        for (  PartnerDetails se :  set){
+            pds.add(se.getCode());
+        }
+        HashSet<PartnerDetails> pds2 = new HashSet<PartnerDetails>();
+        List<PartnerDetails> pds3 = new ArrayList<PartnerDetails>();
+        Collections.sort(pds);
+        for (  String se2 :  pds){
+            for (  PartnerDetails se :  set){
+                if(se.getCode().equals(se2)){
+                    pds2.add(se);
+                }
+            }
+        }
+        pds3.addAll(pds2);
+        return pds3;
         /**
          * 	排序特殊字符
          */

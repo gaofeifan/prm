@@ -65,8 +65,8 @@ spring:
 spring:
   profiles: master
   datasource:
-    username: eams
-    password: pjdb@EAMS
+    username: root
+    password: 123456
     url: jdbc:mysql://139.129.236.180:3306/prm
   
   redis:
@@ -75,6 +75,6 @@ spring:
 
 
 eams:
-  url: http://139.129.236.180:8080
+  url: http://139.129.236.180:86
   ssoUrl: http://139.129.236.180:8081
 
