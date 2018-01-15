@@ -48,7 +48,8 @@ public class UploadController {
 			String contentType = file.getContentType();
 			String fileName =  makeFileName(file.getOriginalFilename());
 
-			String filePath = request.getSession().getServletContext().getRealPath("/upload/" + dateDir + "/");
+//			String filePath = request.getSession().getServletContext().getRealPath("/upload/" + dateDir + "/");
+			String filePath = "/www/prm/file";
 			try {
 				uploadFile(file.getBytes(), filePath, fileName);
 				result.put("filePath", filePath+fileName);

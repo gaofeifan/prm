@@ -2,6 +2,14 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver 
     type: com.alibaba.druid.pool.DruidDataSource
+#    minIdle: 1
+#    maxActive: 300
+#    initialSize: 30
+#    timeBetweenEvictionRunsMillis: 3000
+#    minEvictableIdleTimeMillis: 300000
+#    validationQuery: SELECT 'ZTM' FROM DUAL
+#    testWhileIdle: true
+#    testOnBorrow: true
     
   redis:
     port: 6379
@@ -14,7 +22,7 @@ spring:
     cache: false      
     
   profiles:
-    active: dev
+    active: master
 
  
 
@@ -23,13 +31,13 @@ logging:
   config: classpath:logback/logback-boot.xml
 
 #    minIdle: 1
-#    maxActive: 2
-#    initialSize: 1
+#    maxActive: 300
+#    initialSize: 30
 #    timeBetweenEvictionRunsMillis: 3000
 #    minEvictableIdleTimeMillis: 300000
 #    validationQuery: SELECT 'ZTM' FROM DUAL
 #    testWhileIdle: true
-#    testOnBorrow: false
+#    testOnBorrow: true
 #    testOnReturn: false
 
 mybatis:
