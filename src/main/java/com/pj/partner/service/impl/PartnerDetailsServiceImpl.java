@@ -27,6 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
 import java.util.*;
 
+import static com.pj.partner.pojo.PartnerDetails.ageComparator;
+
 /**
  * Created by Administrator on 2017/11/8.
  */
@@ -99,21 +101,21 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
             	return selectPartnerDetailsList();
             }
             //        List<PartnerDetails> pds = this.partnerDetailsMapper.selectByExample(example);
-            List<PartnerDetails> data = new ArrayList<>();
+            HashSet<PartnerDetails> data = new HashSet<PartnerDetails>();
             Set<PartnerDetails> details = selectSon(pds, new HashSet<PartnerDetails>(), null);
             for (PartnerDetails p:details) {
                 List<PartnerDetails> parentList = this.partnerDetailsMapper.getParentList(p.getId());
                 data.addAll(parentList);
             }
             List<PartnerDetails> list=  new ArrayList<PartnerDetails>();
-           /* for (PartnerDetails set:details){
+            for (PartnerDetails set:data){
                 list.add(set);
             }
-            if(list.size()!=0){
 
-            }*/
- //     return windowsSort(data);
-        return  (data);
+  //   return windowsSort(data);
+     Collections.sort(list,ageComparator);
+
+        return   list ;
     }
         /**
          *  获取查询最末级的数据

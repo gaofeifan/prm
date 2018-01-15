@@ -8,11 +8,12 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 
-public @Data @Table(name="partner_details") class PartnerDetails extends BasicData implements   Serializable {
+public @Data @Table(name="partner_details") class PartnerDetails extends BasicData implements Serializable {
     @GeneratedValue(generator = "JDBC")
     @Id
     @ApiModelProperty(value = "id", required = false)
@@ -452,7 +453,28 @@ public @Data @Table(name="partner_details") class PartnerDetails extends BasicDa
         return createDate;
     }
 
- /*   @Override
+
+    public static Comparator ageComparator = new Comparator() {
+        @Override
+        public int compare(Object o1, Object o2) {
+            return ( toHash(((PartnerDetails) o1).getCode()) < toHash(((PartnerDetails) o2).getCode()) ? -1 :
+                    toHash( ((PartnerDetails) o1).getCode()) ==toHash(((PartnerDetails) o2).getCode()) ? 0 : 1);
+        }
+    };
+    public PartnerDetails() {
+        super();
+    }
+    public static int toHash(String key) {
+        int arraySize = 11113; // 数组大小一般取质数
+        int hashCode = 0;
+        for (int i = 0; i < key.length(); i++) { // 从字符串的左边开始计算
+            int letterValue = key.charAt(i) - 96;// 将获取到的字符串转换成数字，比如a的码值是97，则97-96=1
+            // 就代表a的值，同理b=2；
+            hashCode = ((hashCode << 5) + letterValue) % arraySize;// 防止编码溢出，对每步结果都进行取模运算
+        }
+        return hashCode;
+    }
+ /* @Override
     public int compareTo(Object o) {
         return (toHash(this.getCode()) < toHash(((PartnerDetails) o).getCode()) ? -1 :
                 (toHash(this.getCode()) == toHash(((PartnerDetails) o).getCode()) ? 0 : 1));
