@@ -1,6 +1,7 @@
 package com.pj.user.controller;
 
 import com.pj.conf.base.BaseController;
+
 import com.pj.user.pojo.RequestParams;
 import com.pj.user.pojo.UserLevel;
 import com.pj.user.service.EmailService;
@@ -8,11 +9,12 @@ import com.pj.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by SenevBoy on 2017/11/8.

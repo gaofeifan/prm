@@ -6,7 +6,7 @@
 	<artifactId>prm</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>jar</name>
+	<name>prm</name>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -303,12 +303,13 @@
 			<artifactId>smtp</artifactId>
 			<version>0.0.1</version>
 		</dependency>
-		<!--tomcat 部署-->
-	<!--	<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
-		</dependency>-->
+		</dependency>
+		<!--tomcat 部署-->
+
 		<!--java poi-->
 		<!--Office格式档案读和写的功能 -->
 		<!--<dependency>
