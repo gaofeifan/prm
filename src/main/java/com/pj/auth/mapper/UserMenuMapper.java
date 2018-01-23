@@ -5,6 +5,7 @@ import java.util.List;
 import com.pj.auth.pojo.AuthMenu;
 import com.pj.auth.pojo.UserMenu;
 import com.pj.conf.base.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**  
 * @desc:   
@@ -13,7 +14,7 @@ import com.pj.conf.base.BaseMapper;
 * @history:  
 * @version: v1.0    
 */
-
+@Mapper
 public interface UserMenuMapper  extends BaseMapper<UserMenu>{
 
   //通过用户id查询菜单
