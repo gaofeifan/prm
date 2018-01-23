@@ -9,16 +9,16 @@
     <script src="lib/jquery.form.js"></script>
     <script src="lib/jquery.cookie.js"></script>
     <script>
-        var oaPathUrl = '10.0.0.18:8083';
-        var ssoPathUrl = '10.0.0.18:8085';
+       //测试环境
+      /* var ssoPathUrl = '10.0.0.18:8085';
+        var gPathUrl = '10.0.0.105:8083';*/
 //        var ssoPathUrl = '192.168.4.224:8080';
 //        var gPathUrl = '192.168.4.213:8083';
-//        var gPathUrl = '10.0.0.105:8083';//测试环境
         var gPathUrl = '192.168.4.168:8083';//自哲的url
 
-       /* var oaPathUrl = '139.129.236.180:8080';
+       //生产地址
         var ssoPathUrl = '139.129.236.180:8081';
-        var dPathUrl = '139.129.236.180:86';*/
+//        var gPathUrl = '139.129.236.180:8083';//测试环境
     </script>
     <style>
         .logo{
@@ -77,6 +77,7 @@
             //登录接口
             var account;
             var reg = /[@]+/;
+            var reg1 = /^\d{8}$/;
             var options = {
                 url : 'http://'+ssoPathUrl+'/sso/user/dologin',
                 type : "get",
@@ -98,7 +99,9 @@
                 },
                 success : function(data) {
                     if(parseInt(data.status) == 200){
-                        if(!reg.test(account)){
+                        console.log(!reg.test(account));
+                        console.log(!reg1.test(account));
+                        if(!reg.test(account) && !reg1.test(account)){
                             //后台
                             $.cookie('back_id',data.id);
                             $.cookie('back_username',data.username);

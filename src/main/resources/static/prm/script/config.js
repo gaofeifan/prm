@@ -1,19 +1,22 @@
 /**
  * Created by Administrator on 2017/9/12.
  */
-var oaPathUrl = '10.0.0.18:8083';
-var ssoPathUrl = '10.0.0.18:8085';
-var eamsPathUrl = '10.0.0.105:8080';
+/*
 // var eamsPathUrl = '192.168.4.213:8082';
 // var gPathUrl = '192.168.4.213:8083';//非凡
-// var gPathUrl = '10.0.0.105:8083';//测试环境
+*/
 var gPathUrl = '192.168.4.168:8083';//自哲的url
 // var gPathUrl = '192.168.4.224:8083';//高翔的url
 
+/*//测试地址
+var ssoPathUrl = '10.0.0.18:8085';
+var eamsPathUrl = '10.0.0.105:8080';
+var gPathUrl = '10.0.0.105:8083';*/
 
-/*var oaPathUrl = '139.129.236.180:8080';
+//生产地址
 var ssoPathUrl = '139.129.236.180:8081';
-var gPathUrl = '192.168.4.213:8083';*/
+var eamsPathUrl = '139.129.236.180:8080';
+// var gPathUrl = '139.129.236.180:8083';
 vipspa.start({
     view: '#ui-view',
     router: {
