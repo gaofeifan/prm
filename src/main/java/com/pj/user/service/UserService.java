@@ -1,10 +1,11 @@
 package com.pj.user.service;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import com.pj.user.pojo.Hierarchy;
 import com.pj.user.pojo.UserLevel;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
-
-import java.util.List;
 
 /**
  * Created by SenevBoy on 2017/11/8.

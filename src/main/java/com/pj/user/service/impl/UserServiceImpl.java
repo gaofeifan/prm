@@ -1,23 +1,24 @@
 package com.pj.user.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.pj.partner.mapper.PartnerDetailsMapper;
 import com.pj.partner.mapper.PartnerDetailsShifFileMapper;
 import com.pj.partner.pojo.PartnerDetails;
-import com.pj.partner.pojo.PartnerDetailsShifFile;
 import com.pj.user.mapper.HierarchyMapper;
 import com.pj.user.mapper.UsaerLevelMapper;
 import com.pj.user.pojo.Hierarchy;
 import com.pj.user.pojo.UserLevel;
 import com.pj.user.service.UserService;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 import tk.mybatis.mapper.entity.Example;
-
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by SenevBoy on 2017/11/8.

@@ -21,7 +21,7 @@ spring:
     suffix: .html
     cache: false      
     
-  profiles:
+profiles:
     active: master
 
  
@@ -85,3 +85,4 @@ spring:
 eams:
   url: http://139.129.236.180:86
   ssoUrl: http://139.129.236.180:8081
+
