@@ -52,7 +52,7 @@ public class BasicProperties {
             ,"seTypeCreditPeriod","seCreditPeriod","tiTypeCreditPeriod","tiCreditPeriod","teTypeCreditPeriod","teCreditPeriod"
             ,"oiTypeCreditPeriod","oiCreditPeriod","oeTypeCreditPeriod","oeCreditPeriod","itTypeCreditPeriod","itCreditPeriod"
             ,"ddnTypeCreditPeriod","ddnCreditPeriod","yyoxTypeCreditPeriod","yyoxCreditPeriod","IndustrialTypeCreditPeriod","IndustrialCreditPeriod",
-            "profitsCenterName","profitsCenterId"
+            "profitsCenterName","shortName","profitsCenterId"
             };
             public static final String Basic_PartnerDeta_paramVal  [] = {"名称",    "ID","代码",  "助记码",
                      "中文全称","中文简称","英文全称","英文简称","财务代码",
@@ -78,7 +78,7 @@ public class BasicProperties {
                     ,"SE 信用期限类型","SE 信用期限","TI 信用期限类型","TI 信用期限","TE 信用期限类型","TE 信用期限"
                     ,"OI 信用期限类型","OI 信用期限","OE 信用期限类型","OE 信用期限","IT 信用期限类型","IT 信用期限"
                     ,"DDN 信用期限类型","DDN 信用期限","YYOX 信用期限类型","YYOX 信用期限","Industrial 信用期限类型","Industrial 信用期限",
-                    "利润中心名称","利润中心ID"
+                    "利润中心名称","利润中心简称","利润中心ID"
             };
 
 

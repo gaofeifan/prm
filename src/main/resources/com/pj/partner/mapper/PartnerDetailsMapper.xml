@@ -88,6 +88,8 @@
         <result column="industrial_credit_period" property="industrialCreditPeriod" jdbcType="DECIMAL" />
         <!--默认币种-->
         <result column="default_currency" property="defaultCurrency" jdbcType="VARCHAR" />
+        <!--利润中心简称-->
+        <result column="short_name" property="shortName" jdbcType="VARCHAR" />
 
     </resultMap>
     <resultMap id="BaseResultMap" type="com.pj.partner.pojo.PartnerDetails" >

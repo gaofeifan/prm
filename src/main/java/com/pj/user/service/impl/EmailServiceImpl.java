@@ -5,7 +5,9 @@ import com.pj.partner.pojo.PartnerDetails;
 import com.pj.user.mapper.EmailMapper;
 import com.pj.user.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -16,7 +18,8 @@ import java.util.List;
  */
 
 @Service
-@Transactional
+@Transactional( )
+@Order(value = 1)
 public class EmailServiceImpl implements EmailService {
     //TODO支持 邮件内容获取的接口  待 复制之后有本人进行删除代码操作
     @Autowired
