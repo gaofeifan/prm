@@ -266,6 +266,11 @@ public class BasicData {
     @ApiModelProperty(value = " profits_center_name  利润中心名称" ,required = false)
     private String profitsCenterName; //
 
+    /*利润中心简称*/
+    @Column
+    @ApiModelProperty(value = " shot_name  利润中心简称" ,required = false)
+    private String shortName; //
+
     /*利润中心 id */
     @Column
     @ApiModelProperty(value = " profits_center_id 利润中心ID" ,required = false)
