@@ -96,7 +96,6 @@ public class AuthPostMenuController extends BaseController{
     @RequestMapping(value = "/getLoginUserDetails")
     @ResponseBody
     public Object getLoginUserDetails(@ApiParam(value = "登录人邮箱") @RequestParam(name="email") String email, HttpServletRequest request){
-        System.out.println(request.getSession().getId().toString());
         User user = userService.selectPersonByEmail(email);
         Object obj = getRequest().getSession().getAttribute(TAG);
         if(obj == null){

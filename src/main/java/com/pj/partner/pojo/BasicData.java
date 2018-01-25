@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.Column;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -294,6 +295,33 @@ public class BasicData {
     @ApiModelProperty(value = "到期日结束" ,required = false)
     private Date maturityDateEnd;
 
+
+
+
+    /**
+     *  黑名单是否可以修改
+     */
+    @Column
+    @Transient
+    @ApiModelProperty(value = "黑名单是否置灰 true 代表置灰。 false代表不置灰" ,required = false)
+    public Boolean isBlacklistStatus = false ;
+
+
+    /**
+     *停用是否可以修改
+     */
+    @Column
+    @Transient
+    @ApiModelProperty(value = "停用是否置灰 true 代表可置灰。 false代表不置灰" ,required = false)
+    public Boolean isDisableStatus = false;
+
+    /**
+     *  停用 备注是否可以修改
+     */
+
+    @Transient
+    @ApiModelProperty(value = "停用 备注是否置灰 true 代表置灰。 false代表不置灰" ,required = false)
+    public Boolean disableRemarkStatus = false;
 
 
 
