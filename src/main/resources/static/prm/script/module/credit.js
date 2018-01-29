@@ -140,7 +140,7 @@ $(function(){
                 url:'http://'+gPathUrl+'/user/levelUpdate',
                 crossDomain: false,//支持跨域发送cookie
                 contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(commitDate3),
+                data: commitDate3,
                 dataType:'json',
                 success:function(data){
                     location.reload();

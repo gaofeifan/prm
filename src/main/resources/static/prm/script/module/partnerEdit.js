@@ -60,6 +60,12 @@ $(function(){
                 $('#isDisable').attr('checked',false)
             }
             $('.disableRemark').val(data.data.disableRemark);//停用备注
+            if(data.data.isBlacklistStatus){
+                $('#isBlacklist').attr('disabled',true);
+            }
+            if(data.data.isDisableStatus){
+                $('#isDisable').attr('disabled',true);
+            }
             addressList = data.data.addressList;//联系地址
             contactsList = data.data.linkmansList;//联系人
             $('#scopeBusiness').val(data.data.scopeBusiness);//业务范畴
@@ -355,6 +361,10 @@ $(function(){
                 return false;
             }
         }
+    });
+    //转换大写
+    $('.code,#mnemonicCode,#currency').blur(function(){
+        $(this).val($(this).val().toUpperCase());
     });
     /*默认币种*/
     $('#currency').blur(function(){
@@ -873,6 +883,10 @@ $(function(){
             $('input[name="wbkhIsPayForAnother"]').val('0');
             $('.daiDian').val('').attr('disabled',true);
         }
+    });
+    /*停用备注*/
+    $('#partnerNew').on('keyup','.disableRemark',function(){
+        $('.disableRemark').val($(this).val());
     });
     /*代垫天数*/
     $('.wbkhPaymentTerm').keyup(function(){

@@ -1733,7 +1733,8 @@
 }
 #partnerNew #addTo .div1 select,
 #partnerNew #addTo .div2 select {
-  width: 50%;
+  width: 52%;
+  padding-left: 0;
 }
 #partnerNew #addTo .div3 {
   width: 30%;
@@ -2028,6 +2029,9 @@
 #internalCustomer .content .thead-outer .thead-core .thead-content .no {
   width: 10%;
 }
+#internalCustomer .content .thead-outer .thead-core .thead-content .shortName {
+  width: 30%;
+}
 #internalCustomer .content .thead-outer .thead-core .thead-content .name {
   width: 40%;
   text-align: left;
@@ -2044,6 +2048,9 @@
 }
 #internalCustomer .content .body-box .bodyList .no {
   width: 10%;
+}
+#internalCustomer .content .body-box .bodyList .shortName {
+  width: 30%;
 }
 #internalCustomer .content .body-box .bodyList .name {
   width: 40%;
