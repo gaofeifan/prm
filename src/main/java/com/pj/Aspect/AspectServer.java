@@ -831,7 +831,10 @@ public class AspectServer {
         boolean flage = false;
         for (int i = 0; i < oldfields.length; i++) {
             if (checkSeralize(oldfields[i].getName())) {
+                if(oldfields[i].getName()!="ageComparator"){
                 PropertyDescriptor pd = new PropertyDescriptor(oldfields[i].getName(), oldData.getClass());
+                System.out.println(i);
+                System.out.println(oldfields[i].getName());
                 Method getMethod = pd.getReadMethod();//获得get方法  
                 Object o = getMethod.invoke(oldData);//执行get方法返回一个Object
                 PropertyDescriptor pd2 = new PropertyDescriptor(newfields[i].getName(), oldData.getClass());
@@ -847,7 +850,7 @@ public class AspectServer {
                             break;
                         }
                     }
-
+                }
                 }
             }
         }

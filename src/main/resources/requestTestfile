@@ -4,3 +4,53 @@ http://localhost:8083/swagger-ui.html#
 liyang@medilink.com.cn  123456
 20160813
 后台 admin  123456
+--  全局异常
+   类注解      @ControllerAdvice
+   方法注解    @ExceptionHandler(RuntimeException.class)
+                @ResponseBody
+
+--  Freemarker  模板引擎 动态页面静态化
+          1 添加 pom依赖
+                	<!-- -->
+                		<dependency>
+                			<groupId>org.springframework.boot</groupId>
+                			<artifactId>spring-boot-starter-freemarker</artifactId>
+                		</dependency>
+           2  直接写接口 返回前端然后 用 ${获取值}
+           3 特殊应用 sex 循环  <#if> </#if>
+----  集成 jsp
+          1。   使用 jsp 需要将 pom.xml pargent 改成 war
+          2 .   springBoot  引入 springBoot 依赖包 必须包 web 与  tomcat   与  tomcat-embed-jasper
+          3.    application 配置文件 添加配置  配置模板解析器
+                spring.mvc.view.prefix = /WEB-INFO/jsp/
+                                       = .jsp
+          4.
+---  集成 jpa 略
+-- 集成事务管理 略  分布式事务回滚 使用  MQ两段提交协议  或者（pringBoot 默认支持多数据源事务回滚）automatic+jta
+-- 集成多数据源
+            1. springBoot 默认读取 applkication.properties 文件的 spring.datesource 数据源  剩下的 spring.datesource.test1  或者 test2 均为 自定义数据源
+            2. 使用注解 @MapperScan
+            3  添加datesource数据源 bean配置
+            4  使用 注解 @Primary 注解声明单例
+            5  分布式事务管理
+                    多数据源事务解决方案
+                     最基本的 automatic+jta  两段提交协议   MQ
+                     于 pom.xml中添加 automatic+jta的依赖
+                     用 automatic 配置新的资源文件数据源
+                     然后生成新的 bean    把所有数据源交给 automatic 管理
+                     生成实体类读取所有数据源的配置信息 使用注解 @ConfigurationProperties 找到统一路径 比如 com.mysql.test
+                     在入口处使用注解开启读取以上配置文件的注解  @EnableConfigurationproperties (value = {两个读取配置信息的实体类名称})
+
+----  集成日志
+               1 、创建 log4j 资源文件
+               2 。调用时添加  loggerfactory  static  logger log  = logger.getlogger(XXX.class);
+               3  。打印详细规范的日志
+                      1 创建切面 获取http请求 读取参数 输出 请求信息
+--    集成缓存
+                  jvm 缓存
+
+                   内存缓存
+
+
+
+

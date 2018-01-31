@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -412,6 +413,8 @@ public @Data @Table(name="partner_details") class PartnerDetails extends BasicDa
     /**
      * 本信息第几层级
      */
+
+
     @Transient
     @ApiModelProperty(value = "仅参与excel导出", required = false)
     private Integer hierarchy;

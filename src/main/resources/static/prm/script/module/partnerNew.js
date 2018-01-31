@@ -153,6 +153,7 @@ $(function(){
                         $('.wbkhCreditPeriod').attr('disabled',false);
                         $('.wbkhLineCredit').attr('disabled',false);
                         $('.wbkhIsPayForAnother').attr('disabled',false);
+                        getDefault(data.data.wbkhCreditRating);//加载默认额度和默认期限
                         $('.businessBox').find('select,input').attr('disabled',false);
                     }else if(data.data.wbkhCreditRating.slice(2,7) == '签约在途'){
                         $('.wbkhIsPayForAnother').attr('disabled',false);
@@ -161,7 +162,6 @@ $(function(){
                         $('.businessBox').find('select,input').attr('disabled',true);
                     }
                 }
-                getDefault(data.data.wbkhCreditRating);//加载默认额度和默认期限
                 $('.wbkhTypeCreditPeriod').val(data.data.wbkhTypeCreditPeriod);//信用期限类型
                 $('.wbkhCreditPeriod').val(data.data.wbkhCreditPeriod);//信用期限（天）
                 $('.wbkhLineCredit').val(data.data.wbkhLineCredit);//信用额度(万元)
@@ -337,6 +337,10 @@ $(function(){
             }
         }
     });
+    //转换大写
+    $('.code,#mnemonicCode,#currency').blur(function(){
+        $(this).val($(this).val().toUpperCase());
+    });
     /*/!*校验中文名称*!/
     $('#chineseName').blur(function(){
         var that = this;
@@ -372,6 +376,7 @@ $(function(){
             checkRepeat('headingCode',that,'纳税人识别码')
         }
     });*/
+
     /*默认币种*/
     $('#currency').blur(function(){
         if(parseInt($(this).val().length) != 3){
@@ -849,6 +854,7 @@ $(function(){
            /* $('.businessBox select').attr('disabled',false);*/
             $('.businessBox input').attr('disabled',false);
             $('.businessBox input.must').attr('required',true)
+            getDefault($(this).val());
         }else if(selectVal=='签约在途'){
             $('.wbkhCreditPeriod').val('').attr('disabled',true);
             $('.wbkhLineCredit').val('').attr('disabled',true);
@@ -866,7 +872,6 @@ $(function(){
             $('.businessBox input.must').attr('required',false)
             $('.businessBox input').val('').attr('disabled',true);
         }
-        getDefault($(this).val());
     });
     /*信用期限类型*/
     $('.wbkhTypeCreditPeriod').change(function(){
@@ -892,6 +897,10 @@ $(function(){
             $('input[name="wbkhIsPayForAnother"]').val('0');
             $('.daiDian').attr('disabled',true);
         }
+    });
+    /*停用备注*/
+    $('.disableRemark').keyup(function(){
+        $('.disableRemark').val($(this).val());
     });
     /*代垫天数*/
     $('.wbkhPaymentTerm').keyup(function(){

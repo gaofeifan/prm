@@ -24,7 +24,6 @@ spring:
   profiles:
     active: dev
 
- 
 
 
 logging:
@@ -56,7 +55,8 @@ eams :
   adminId: 8732
   url: http://10.0.0.105:8080
   ssoUrl: http://10.0.0.18:8085
-    
+
+
 ---
 spring:
   profiles: dev

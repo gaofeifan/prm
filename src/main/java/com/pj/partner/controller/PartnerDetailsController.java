@@ -97,11 +97,33 @@ public class PartnerDetailsController extends BaseController {
     @ApiOperation(value = "根据id查询合作伙伴详情" ,httpMethod = "GET", response = Object.class)
     @RequestMapping(value = "/selectPartnerDetailsById")
     @ResponseBody
-    public Object selectPartnerDetailsById(@ApiParam("id") @RequestParam(name = "id") Integer id ){
+    public Object selectPartnerDetailsById(@ApiParam("id") @RequestParam(name = "id") Integer id ) {
         PartnerDetails pd = this.partnerDetailsService.selectByPrimaryKey(id);
+
+//        获取合作伙伴之后 查询是否存在父级 是否可以对本对象的 禁用黑名单以及备注进行修改
+
+        //            没有父级
+        if (null == pd.getPId()) {
+            if (pd.getIsDisable() == 1) {
+                pd.setIsDisableStatus(true);
+            }
+
+            if (pd.getIsBlacklist() == 1) {
+                pd.setIsBlacklistStatus(true);
+            }
+        } else {
+//     有父级  查询父级信息
+            PartnerDetails partnerDetails = this.partnerDetailsService.selectByPrimaryKey(pd.getPId());
+            if (partnerDetails.getIsDisable() == 1) {
+                pd.setIsDisableStatus(true);
+            }
+            if (partnerDetails.getIsBlacklist() == 1) {
+                pd.setIsBlacklistStatus(true);
+            }
+        }
+
         return this.success(pd);
     }
-
     /**
      * 更新合作伙伴详情
      * @User  GFF

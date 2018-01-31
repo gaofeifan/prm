@@ -29,12 +29,12 @@ function selectLastCompanyList(dom) {
     $.ajax({
         type: 'get',
         async:false,
-        url: 'http://'+eamsPathUrl+'/base/frameWork/selectLastCompanyList',
+        url: 'http://'+eamsPathUrl+'/base/frameWork/selectShortNameCompanyList',
         success: function (data) {
             if(data.code ==200) {
                 var str ;
                 $.each(data.data, function (index, value) {
-                    var option =$('<option value="'+value.id+'" >'+value.name+'</option>');
+                    var option =$('<option value="'+value.id+'" >'+value.shortName+'</option>');
                     $(dom).append(option);
                 });
             }else{

@@ -20,11 +20,12 @@ var internalCustomerObj = {
                 $.each(resp.data,function(index,value){
                     str =str +'<div class="bodyList clearfix">\
                             <div class="no">'+(index+1)+'</div>\
+                            <div style="height:19px;" class="shortName">'+(value.shortName||"")+'</div>\
                             <div class="name">'+value.name+'</div>\
                         </div>'
 
                 });
-                $(str).appendTo('.body-box')
+                $(str).appendTo('#customerList')
             }
         })
     }

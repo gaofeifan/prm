@@ -10,11 +10,11 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
  *	@parameter		@Override
  *  @since		1.8
  */
-public class ServletInitializer //  extends SpringBootServletInitializer
+public class ServletInitializer    extends SpringBootServletInitializer
 {
-/*	@Override
+ 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(Application.class);
-}*/
+} 
 }
 
