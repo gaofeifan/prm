@@ -478,6 +478,7 @@ public @Data @Table(name="partner_details") class PartnerDetails extends BasicDa
     public int compareTo(Object o) {
         return (toHash(this.getCode()) < toHash(((PartnerDetails) o).getCode()) ? -1 :
                 (toHash(this.getCode()) == toHash(((PartnerDetails) o).getCode()) ? 0 : 1));
+
     }
 
 

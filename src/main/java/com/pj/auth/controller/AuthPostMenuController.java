@@ -107,11 +107,11 @@ public class AuthPostMenuController extends BaseController{
     }
     /**
      * 
-            * @author: x.gao  
-            * @createTime: 2017年12月27日 上午10:15:22  
-            * @history:  
-            * @param userId 用户id
-            * @return Object
+     * @author: x.gao
+     * @createTime: 2017年12月27日 上午10:15:22
+     * @history:
+     * @param userId 用户id
+     * @return Object
      */
   @ApiOperation(value = "根据用户查询菜单",httpMethod = "GET", response = Object.class)
   @RequestMapping(value = "/findMenuByUserId")
