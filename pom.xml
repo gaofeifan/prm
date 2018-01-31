@@ -303,12 +303,19 @@
 			<artifactId>smtp</artifactId>
 			<version>0.0.1</version>
 		</dependency>
-	<!--	<dependency>
+
+	<!--邮件发送-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		<!--tomcat 部署-->
+ 	<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
-		</dependency>-->
-		<!--tomcat 部署-->
+		</dependency>
 
 		<!--java poi-->
 		<!--Office格式档案读和写的功能 -->
@@ -358,6 +365,15 @@
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.15</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>5.0.2.RELEASE</version>
 		</dependency>
 	</dependencies>
 	<build>

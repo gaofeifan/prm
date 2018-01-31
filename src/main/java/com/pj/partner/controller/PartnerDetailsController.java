@@ -99,7 +99,9 @@ public class PartnerDetailsController extends BaseController {
     @ResponseBody
     public Object selectPartnerDetailsById(@ApiParam("id") @RequestParam(name = "id") Integer id ) {
         PartnerDetails pd = this.partnerDetailsService.selectByPrimaryKey(id);
+
 //        获取合作伙伴之后 查询是否存在父级 是否可以对本对象的 禁用黑名单以及备注进行修改
+
         //            没有父级
         if (null == pd.getPId()) {
             if (pd.getIsDisable() == 1) {
@@ -119,6 +121,7 @@ public class PartnerDetailsController extends BaseController {
                 pd.setIsBlacklistStatus(true);
             }
         }
+
         return this.success(pd);
     }
     /**
