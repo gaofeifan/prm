@@ -657,6 +657,8 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
                     responseData.setCode(datass.getCode());
                     responseData.setChineseName(datass.getChineseName());
                     responseData.setEnglishName(  datass.getEnglishName());
+                    responseData.setCodes(  datass.getCodes());
+                    responseData.setMnemonicCode(  datass.getMnemonicCode());
                     list.add(responseData);
                 }
             }
