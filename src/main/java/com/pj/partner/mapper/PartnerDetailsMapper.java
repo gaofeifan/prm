@@ -1,8 +1,8 @@
 package com.pj.partner.mapper;
 
+import com.pj.aeserviceapi.pojo.ResponseData;
 import com.pj.conf.base.BaseMapper;
 import com.pj.partner.pojo.PartnerDetails;
-import com.pj.partner.pojo.PartnerDetailsShifFile;
 import com.pj.partner.service.PartnerDetailsService;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -67,4 +67,22 @@ public interface PartnerDetailsMapper extends BaseMapper<PartnerDetails>{
      * 	@return
      */
 	public List<PartnerDetails> selectPartnerDetailsList();
+
+    /***
+     * PRM 支持 AE 项目 航司 对外接口
+     * @param
+     * @param
+     * @return
+     */
+    List<PartnerDetails> aeAirlineFindPartnerDateilsList(@Param("chineseName")String chineseName, @Param("englishName")String englishName, @Param("mnemonicCode")String mnemonicCode);
+
+    /***
+     * PRM 支持 AE 项目 客商对外接口
+     * @param
+     * @return
+     */
+    List<PartnerDetails> aePartnerFindPartnerDateilsList(ResponseData responseData);
+
+
+
 }

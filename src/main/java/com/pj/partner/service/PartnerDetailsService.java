@@ -1,9 +1,9 @@
 package com.pj.partner.service;
 
+import com.pj.aeserviceapi.pojo.ResponseData;
 import com.pj.conf.base.BaseService;
 import com.pj.partner.pojo.PartnerDetails;
 import com.pj.partner.pojo.PartnerDetailsShifFile;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -84,5 +84,20 @@ public interface PartnerDetailsService extends BaseService<PartnerDetails,Intege
     boolean selectIsChild(Integer id);
 
 
+    /**
+     * PRM 支持 AE 项目 航司 对外接口
+     * @return
+     * @param
+     * @param responseData
+     */
+    List<ResponseData> aeAirlineFindPartnerDateilsList(ResponseData responseData);
 
+
+    /**
+     * PRM 支持 AE 项目 客商 对外接口
+     * @return
+     * @param
+     * @param responseData
+     */
+    List<ResponseData> aePartnerFindPartnerDateilsList(ResponseData responseData);
 }
