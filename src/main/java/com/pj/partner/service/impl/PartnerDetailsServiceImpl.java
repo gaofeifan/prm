@@ -1,10 +1,10 @@
 package com.pj.partner.service.impl;
 
+import com.pj.aeserviceapi.pojo.ResponseData;
 import com.pj.auth.service.AuthUserService;
 import com.pj.cache.PartnerDetailsCache;
 import com.pj.conf.base.AbstractBaseServiceImpl;
 import com.pj.conf.base.BaseMapper;
-import com.pj.conf.utils.RegExpUtils;
 import com.pj.conf.utils.ThreadEmail;
 import com.pj.partner.mapper.PartnerDetailsMapper;
 import com.pj.partner.mapper.PartnerDetailsShifFileMapper;
@@ -301,7 +301,6 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
                 // 不存在则数据已删除保存删除的集合中
                 deleteLinkman.add(pl);
             }
-
         }
         //  新增集合中数据都为新增的
         for(PartnerLinkman pl : linkmans){
@@ -618,4 +617,53 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
         }
         return false;
     }
+
+    /*** PRM 支持 AE 项目 对外接口
+     * createData 2018年2月6日11:11:25
+     * @param
+     * @param responseData
+     * @return
+     */
+    @Override
+    public List<ResponseData> aeAirlineFindPartnerDateilsList(ResponseData responseData) {
+
+        // 根据 条件查询所有
+        List<PartnerDetails> pds = this.partnerDetailsMapper.aeAirlineFindPartnerDateilsList(responseData.getChineseName(),responseData.getEnglishName(),responseData.getMnemonicCode());
+          return getDateIls(pds);
+    }
+
+    @Override
+    public List<ResponseData> aePartnerFindPartnerDateilsList(ResponseData responseData) {
+        // 根据 条件查询所有
+        List<PartnerDetails> pds = this.partnerDetailsMapper.aePartnerFindPartnerDateilsList( responseData);
+        return getDateIls(pds);
+    }
+
+    public List<ResponseData> getDateIls(   List<PartnerDetails> pds){
+              /* 获取所有父级 */
+        Set<PartnerDetails> details = selectSon(pds, new HashSet<PartnerDetails>(), null);
+        HashSet<PartnerDetails> data = new HashSet<PartnerDetails>();
+        for (PartnerDetails p:details) {
+            List<PartnerDetails> parentList = this.partnerDetailsMapper.getParentList(p.getId());
+            data.addAll(parentList);
+        }
+        List<ResponseData> list= new ArrayList<ResponseData>();
+        for (PartnerDetails data1:data)
+        {
+            for (PartnerDetails datass:details){
+                if(data1.getId().equals(datass.getId())){
+                    ResponseData responseData = new ResponseData();
+                    responseData.setId(datass.getId());
+                    responseData.setCode(datass.getCode());
+                    responseData.setChineseName(datass.getChineseName());
+                    responseData.setEnglishName(  datass.getEnglishName());
+                    responseData.setCodes(  datass.getCodes());
+                    responseData.setMnemonicCode(  datass.getMnemonicCode());
+                    list.add(responseData);
+                }
+            }
+        }
+        return list;
+    }
+
 }

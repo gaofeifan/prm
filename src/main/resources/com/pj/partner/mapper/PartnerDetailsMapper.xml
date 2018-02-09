@@ -167,4 +167,69 @@
         </where>
         GROUP BY id
     </select>
+
+    <!-- 支持Ae 航司信息 对外接口查询 -->
+    <select id="aeAirlineFindPartnerDateilsList" resultMap="BaseResultMapAll">
+            SELECT
+                    *,  (
+                        SELECT
+                            GROUP_CONCAT(CODE) AS codes
+                        FROM
+                            partner_details
+                        WHERE
+                            FIND_IN_SET(id, getParentList(id))
+                    ) AS codes
+        FROM
+            partner_details
+        <where>
+            AND  is_disable  =0
+            AND         is_disable = 0
+            AND        instr(scope_business,"AE")>0
+            AND        instr(partner_category,"干线承运人")>0
+          <if test="chineseName!=null and chineseName != ''">
+                AND instr(chinese_name,#{chineseName,jdbcType=VARCHAR})>0
+            </if>
+            <if test="englishName!=null and englishName != ''">
+                AND instr(english_name,#{englishName,jdbcType=VARCHAR})>0
+            </if>
+            <if test="mnemonicCode!=null and mnemonicCode != ''">
+                AND instr(mnemonic_code,#{mnemonicCode,jdbcType=VARCHAR})>0
+            </if>
+
+        </where>
+    </select>
+
+    <!-- 支持Ae 客商 对外接口查询 -->
+    <select id="aePartnerFindPartnerDateilsList" resultMap="BaseResultMapAll">
+        SELECT
+        *,  (
+        SELECT
+        GROUP_CONCAT(CODE) AS codes
+        FROM
+        partner_details
+        WHERE
+        FIND_IN_SET(id, getParentList(id))
+        ) AS codes
+        FROM
+        partner_details
+        <where>
+            <if test="chineseName!=null and chineseName != ''">
+                AND instr(chinese_name,#{chineseName,jdbcType=VARCHAR})>0
+            </if>
+            <if test="englishName!=null and englishName != ''">
+                AND instr(english_name,#{englishName,jdbcType=VARCHAR})>0
+            </if>
+            <if test="mnemonicCode!=null and mnemonicCode != ''">
+                AND instr(mnemonic_code,#{mnemonicCode,jdbcType=VARCHAR})>0
+            </if>
+            AND     is_disable  =0
+            AND         is_disable = 0
+            AND        instr(scope_business,"AE")>0
+            AND   (
+                  instr(wbkh_customer_class,"外部客户")>0
+            or  instr(wbkh_customer_class,"互为代理")>0
+            or   instr(wbkh_customer_class,"海外代理")>0
+            )
+        </where>
+    </select>
 </mapper>
