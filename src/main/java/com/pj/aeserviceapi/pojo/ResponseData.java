@@ -1,9 +1,12 @@
 package com.pj.aeserviceapi.pojo;
 
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import javax.persistence.*;
+import io.swagger.annotations.ApiModelProperty;
 
 /***
  * @ClassName: ResponseData

@@ -142,7 +142,7 @@ public class PartnerDetailsServiceImpl extends AbstractBaseServiceImpl<PartnerDe
 
     @Override
     public PartnerDetails selectByPrimaryKey(Integer key) {
-        PartnerDetails pd = super.selectByPrimaryKey(key);
+        PartnerDetails pd = this.partnerDetailsMapper.selectPartnerDetailsById(key);
         PartnerAddress address = new PartnerAddress();
         address.setDetailsId(key);
         List<PartnerAddress> addresss = this.partnerAddressService.select(address);

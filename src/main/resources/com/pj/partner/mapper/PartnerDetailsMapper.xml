@@ -104,6 +104,17 @@
         <result column="file_path" property="filePath" jdbcType="VARCHAR" />
     </resultMap>
 
+	<select id="selectPartnerDetailsById" resultMap="BaseResultMapAll" >
+		select *,(
+			SELECT
+				GROUP_CONCAT(CODE) AS codes
+			FROM
+				partner_details
+			WHERE
+				FIND_IN_SET(id, getParentList(id))
+		) AS codes
+	 from partner_details where id = #{id}
+	</select>
 
     <select id="getParentList" resultMap="BaseResultMapAll">
         select * FROM partner_details 	where FIND_IN_SET(id,getParentList(#{id}))

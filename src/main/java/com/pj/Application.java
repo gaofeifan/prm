@@ -20,6 +20,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @ServletComponentScan
 @EnableScheduling
 public class Application
+
 {
 
 	public static void main(String[] args) throws Exception {
@@ -33,6 +34,6 @@ public class Application
 		factory.setMaxFileSize("1024MB"); // KB,MB     
 		// 设置总上传数据总大小
 		factory.setMaxRequestSize("10240MB");
-		return factory.createMultipartConfig();
+		return factory.createMultipartConfig(); 
 	}
 }

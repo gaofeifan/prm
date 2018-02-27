@@ -14,6 +14,7 @@ import tk.mybatis.mapper.entity.Example;
  * @version 1.0.0
  * @parameter
  * @since 1.8
+ *
  */
 public abstract class AbstractBaseServiceImpl<T, ID extends Serializable> implements BaseService<T, ID> {
 	/**

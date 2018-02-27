@@ -311,11 +311,11 @@
 		</dependency>
 
 		<!--tomcat 部署-->
- 	<dependency>
+<!--  	<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
-		</dependency>
+		</dependency> -->
 
 		<!--java poi-->
 		<!--Office格式档案读和写的功能 -->

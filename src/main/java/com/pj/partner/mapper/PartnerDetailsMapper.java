@@ -83,6 +83,15 @@ public interface PartnerDetailsMapper extends BaseMapper<PartnerDetails>{
      */
     List<PartnerDetails> aePartnerFindPartnerDateilsList(ResponseData responseData);
 
+    /**
+     * 	根据id查询
+     *	@author 	GFF
+     *	@date		2018年2月11日下午5:18:04	
+     * 	@param key
+     * 	@return
+     */
+	PartnerDetails selectPartnerDetailsById(@Param("id")Integer id);
+
 
 
 }
